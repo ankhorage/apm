@@ -1,12 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { toPortablePath } from '@ankhorage/utility/node/path';
 import { isRecord } from '@ankhorage/utility/object';
 
-import type { ApmManagerInspectionInput, ApmManagerInspectionResult } from '../../../types/status-inventory.js';
-import type { ApmLockedDependencyEdge, ApmLockedPackageEvidence, ApmStatusDiagnostic } from '../../../types/status.js';
-import { declarationResolutionKey } from '../utils/declarationResolutionKey.js';
-import { readInstalledPackageVersionAsync } from '../utils/readInstalledPackageVersionAsync.js';
+import type { ApmManagerInspectionInput, ApmManagerInspectionResult } from '../../../../types/status-inventory.js';
+import type { ApmLockedDependencyEdge, ApmLockedPackageEvidence, ApmStatusDiagnostic } from '../../../../types/status.js';
+import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
+import { readInstalledPackageVersionAsync } from '../../utils/readInstalledPackageVersionAsync.js';
 
 /*** Inspect npm package-lock v2/v3 plus physical node_modules package versions as read-only evidence. */
 export async function inspectNpmRootAsync(input: ApmManagerInspectionInput): Promise<ApmManagerInspectionResult> {
@@ -14,8 +15,14 @@ export async function inspectNpmRootAsync(input: ApmManagerInspectionInput): Pro
     (item) => item.manager === 'npm' && item.fileName === 'package-lock.json',
   );
   if (candidate === undefined) return missingLockfile(input.root.id, 'package-lock.json');
-  const parsed = JSON.parse(await readFile(path.join(input.root.rootPath, 'package-lock.json'), 'utf8')) as unknown;
-  if (!isRecord(parsed) || (parsed.lockfileVersion !== 2 && parsed.lockfileVersion !== 3) || !isRecord(parsed.packages)) {
+  const parsed = JSON.parse(
+    await readFile(path.join(input.root.rootPath, 'package-lock.json'), 'utf8'),
+  ) as unknown;
+  if (
+    !isRecord(parsed) ||
+    (parsed.lockfileVersion !== 2 && parsed.lockfileVersion !== 3) ||
+    !isRecord(parsed.packages)
+  ) {
     return unsupportedLockfile(input.root.id, candidate.path, parsed);
   }
 
@@ -23,16 +30,7 @@ export async function inspectNpmRootAsync(input: ApmManagerInspectionInput): Pro
   const lockedPackages = Object.entries(parsed.packages).flatMap(([location, value]) =>
     location === '' || !isRecord(value) ? [] : [readNpmPackage(location, value, locations)],
   );
-  const directResolutions = new Map<string, string>();
-  for (const manifest of input.root.manifests) {
-    const ownerLocation = portableRelative(input.root.rootPath, manifest.packageRoot);
-    for (const name of declaredNames(manifest)) {
-      const resolved = resolveNpmTarget(ownerLocation === '.' ? '' : ownerLocation, name, locations);
-      if (resolved !== undefined) {
-        directResolutions.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
-      }
-    }
-  }
+  const directResolutions = buildDirectResolutions(input, locations);
   const installedPackages = await Promise.all(
     lockedPackages.map((pkg) =>
       readInstalledPackageVersionAsync({
@@ -58,6 +56,24 @@ export async function inspectNpmRootAsync(input: ApmManagerInspectionInput): Pro
     complete: true,
     diagnostics: [],
   };
+}
+
+/*** Resolve every direct declaration to npm's nearest physical lock location. */
+function buildDirectResolutions(
+  input: ApmManagerInspectionInput,
+  locations: ReadonlySet<string>,
+): ReadonlyMap<string, string> {
+  const result = new Map<string, string>();
+  for (const manifest of input.root.manifests) {
+    const ownerLocation = portableRelative(input.root.rootPath, manifest.packageRoot);
+    for (const name of declaredNames(manifest)) {
+      const resolved = resolveNpmTarget(ownerLocation === '.' ? '' : ownerLocation, name, locations);
+      if (resolved !== undefined) {
+        result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
+      }
+    }
+  }
+  return result;
 }
 
 /*** Convert one npm packages entry into a stable physical instance identity. */
@@ -92,7 +108,9 @@ function resolveNpmTarget(
 ): string | undefined {
   const search = [fromLocation];
   for (const current of search) {
-    const candidate = current === '' ? `node_modules/${dependencyName}` : `${current}/node_modules/${dependencyName}`;
+    const candidate = current === ''
+      ? `node_modules/${dependencyName}`
+      : `${current}/node_modules/${dependencyName}`;
     if (locations.has(candidate)) return candidate;
     if (current === '') continue;
     const marker = current.lastIndexOf('/node_modules/');
@@ -112,7 +130,9 @@ function inferPackageName(location: string): string {
 /*** Read string dependency edges from npm lock data. */
 function readDependencyMap(value: unknown): readonly [string, string][] {
   if (!isRecord(value)) return [];
-  return Object.entries(value).filter((entry): entry is [string, string] => typeof entry[1] === 'string');
+  return Object.entries(value).flatMap(([name, entryValue]) =>
+    typeof entryValue === 'string' ? [[name, entryValue] as [string, string]] : [],
+  );
 }
 
 /*** List declared names across package dependency sections for direct-lock resolution. */
@@ -138,9 +158,9 @@ function sourceFromResolved(resolved: string | undefined): ApmLockedPackageEvide
   return 'registry';
 }
 
-/*** Normalize adapter-local path serialization to POSIX separators. */
+/*** Normalize adapter-local path serialization with the shared Utility primitive. */
 function portableRelative(root: string, target: string): string {
-  const relative = path.relative(root, target).split(path.sep).join('/');
+  const relative = toPortablePath(path.relative(root, target));
   return relative === '' ? '.' : relative;
 }
 
