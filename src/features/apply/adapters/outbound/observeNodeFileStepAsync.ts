@@ -18,23 +18,31 @@ export async function observeNodeFileStepAsync(
       reason: 'Reviewed file step references a path absent from the frozen plan file changes.',
     };
   }
-  const states = await Promise.all(
-    changes.map(async (change) => classifyChangeAsync(rootPath, change, digest)),
+  const observations = await Promise.all(
+    changes.map(async (change): Promise<FileChangeObservation> => ({
+      path: change.path,
+      state: await classifyChangeAsync(rootPath, change, digest),
+    })),
   );
-  if (states.every((state) => state === 'after')) {
-    return { state: 'satisfied', evidence: changes.map(({ path }) => path) };
+  if (observations.every(({ state }) => state === 'after')) {
+    return { state: 'satisfied', evidence: observations.map(({ path }) => path) };
   }
-  if (states.every((state) => state === 'before' || state === 'after')) {
-    return { state: 'pending', evidence: changes.map(({ path }) => path) };
+  if (observations.every(({ state }) => state === 'before' || state === 'after')) {
+    return { state: 'pending', evidence: observations.map(({ path }) => path) };
   }
   return {
-    state: states.some((state) => state === 'conflict') ? 'conflict' : 'unknown',
-    evidence: changes.map(({ path }, index) => `${path}:${states[index] ?? 'unknown'}`),
+    state: observations.some(({ state }) => state === 'conflict') ? 'conflict' : 'unknown',
+    evidence: observations.map(({ path, state }) => `${path}:${state}`),
     reason: 'Current file content does not match the reviewed before/after state for this step.',
   };
 }
 
 type ChangeState = 'before' | 'after' | 'conflict' | 'unknown';
+
+interface FileChangeObservation {
+  readonly path: string;
+  readonly state: ChangeState;
+}
 
 /*** Classify one file against its exact frozen before/after digest contract. */
 async function classifyChangeAsync(
