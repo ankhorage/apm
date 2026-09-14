@@ -31,6 +31,9 @@ jobs:
       - name: Resolve updated dependencies
         run: bun install
 
+      - name: Check types first
+        run: bun run check-types
+
       - name: Generate Paradox documentation
         run: bun run docs
 
