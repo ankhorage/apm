@@ -31,6 +31,7 @@ export type ApmPlanStepExecution =
     }
   | {
       readonly kind: 'install';
+      readonly installRootPath: string;
       readonly manager: ApmPackageManagerName;
       readonly managerVersion?: string;
       readonly linker?: string;
