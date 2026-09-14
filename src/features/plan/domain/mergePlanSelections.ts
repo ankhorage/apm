@@ -19,10 +19,13 @@ export function mergePlanSelections(
       blockers: requiredSelections.map(policyForbidsSelectionBlocker),
     };
   }
-  const merged = [...requiredSelections].sort(compareSelections).reduce<PlanSelectionMergeState>(
-    (state, required) => mergeOneSelection(state, required),
-    { selections: policy.selections, changed: false, blockers: [] },
-  );
+  const merged = [...requiredSelections]
+    .sort(compareSelections)
+    .reduce<PlanSelectionMergeState>((state, required) => mergeOneSelection(state, required), {
+      selections: policy.selections,
+      changed: false,
+      blockers: [],
+    });
   return {
     policy: { ...policy, selections: [...merged.selections].sort(compareSelections) },
     changed: merged.changed,
