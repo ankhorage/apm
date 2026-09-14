@@ -1,7 +1,4 @@
-import { readFile } from 'node:fs/promises';
-
 import {
-  isMissingPathError,
   removeFileWithinRoot,
   writeFileWithinRoot,
 } from '@ankhorage/utility/node/fs';
@@ -9,8 +6,8 @@ import { resolvePathWithinRoot } from '@ankhorage/utility/node/path';
 
 import type { ApmApplyJournal } from '../../../../types/apply.js';
 import type { ApmPlanStep } from '../../../../types/plan.js';
-import { parseApplyStepSnapshot } from '../../domain/parseApplyStepSnapshot.js';
 import { applySnapshotPath } from '../../utils/applySnapshotPath.js';
+import { readApplyStepSnapshotAsync } from './readApplyStepSnapshotAsync.js';
 
 /*** Restore only files captured for one reviewed reversible step without touching unrelated project state. */
 export async function restoreApplyStepSnapshotAsync(
@@ -18,7 +15,7 @@ export async function restoreApplyStepSnapshotAsync(
   step: ApmPlanStep,
 ): Promise<readonly string[]> {
   const snapshotPath = applySnapshotPath(journal.rootPath, journal.operationId, step.id);
-  const snapshot = await readSnapshotAsync(snapshotPath, step.id);
+  const snapshot = await readApplyStepSnapshotAsync(snapshotPath, step.id);
   if (snapshot === undefined) throw new Error(`Apply snapshot is unavailable for step '${step.id}'.`);
   await Promise.all(
     snapshot.files.map(async (file) => {
@@ -39,17 +36,4 @@ export async function restoreApplyStepSnapshotAsync(
     }),
   );
   return snapshot.files.map(({ path }) => path);
-}
-
-/*** Read one validated snapshot by exact step identity. */
-async function readSnapshotAsync(snapshotPath: string, stepId: string) {
-  try {
-    const content = await readFile(snapshotPath, 'utf8');
-    const parsedValue: unknown = JSON.parse(content);
-    const parsed = parseApplyStepSnapshot(parsedValue);
-    return parsed?.stepId === stepId ? parsed : undefined;
-  } catch (error) {
-    if (isMissingPathError(error) || error instanceof SyntaxError) return undefined;
-    throw error;
-  }
 }
