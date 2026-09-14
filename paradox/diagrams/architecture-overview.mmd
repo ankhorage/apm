@@ -162,6 +162,9 @@ graph TD
   module_src_features_status_application_statusAsync_ts --> module_src_features_status_application_buildAvailabilityRequests_ts
   module_src_features_status_application_statusAsync_ts --> module_src_features_status_domain_evaluateStatus_ts
   module_src_features_status_application_statusAsync_ts --> module_src_types_status_ts
+  module_src_features_status_composition_statusProjectAsync_test_ts["src/features/status/composition/statusProjectAsync.test.ts"]
+  package__ankhorage_apm -.-> module_src_features_status_composition_statusProjectAsync_test_ts
+  module_src_features_status_composition_statusProjectAsync_test_ts --> module_src_features_status_composition_statusProjectAsync_ts
   module_src_features_status_composition_statusProjectAsync_ts["src/features/status/composition/statusProjectAsync.ts"]
   package__ankhorage_apm -.-> module_src_features_status_composition_statusProjectAsync_ts
   module_src_features_status_composition_statusProjectAsync_ts --> module_package_json

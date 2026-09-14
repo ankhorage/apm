@@ -537,7 +537,7 @@
             <div class="summary">
               <div><strong>44</strong><span class="muted">public exports</span></div>
               <div><strong>0</strong><span class="muted">components</span></div>
-              <div><strong>53</strong><span class="muted">modules</span></div>
+              <div><strong>54</strong><span class="muted">modules</span></div>
               <div><strong>3</strong><span class="muted">entrypoints</span></div>
             </div>
             <h3>Entrypoints</h3>
@@ -998,6 +998,18 @@
                 <code>src/types/status.ts</code>
               </p>
               <p><strong>Exports:</strong> <code>statusAsync</code></p>
+            </article>
+            <article
+              class="item"
+              data-search="src/features/status/composition/statusProjectAsync.test.ts src/features/status/composition/statusProjectAsync.ts"
+            >
+              <h3>src/features/status/composition/statusProjectAsync.test.ts</h3>
+              <p class="muted">Referenced module</p>
+              <p>
+                <strong>Dependencies:</strong>
+                <code>src/features/status/composition/statusProjectAsync.ts</code>
+              </p>
+              <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
               class="item"
@@ -3988,6 +4000,11 @@
                 module_src_features_status_domain_evaluateStatus_ts
                 module_src_features_status_application_statusAsync_ts --&gt;
                 module_src_types_status_ts
+                module_src_features_status_composition_statusProjectAsync_test_ts[&quot;src/features/status/composition/statusProjectAsync.test.ts&quot;]
+                package__ankhorage_apm -.-&gt;
+                module_src_features_status_composition_statusProjectAsync_test_ts
+                module_src_features_status_composition_statusProjectAsync_test_ts --&gt;
+                module_src_features_status_composition_statusProjectAsync_ts
                 module_src_features_status_composition_statusProjectAsync_ts[&quot;src/features/status/composition/statusProjectAsync.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_status_composition_statusProjectAsync_ts
@@ -4230,6 +4247,9 @@ graph TD
   module_src_features_status_application_statusAsync_ts --&gt; module_src_features_status_application_buildAvailabilityRequests_ts
   module_src_features_status_application_statusAsync_ts --&gt; module_src_features_status_domain_evaluateStatus_ts
   module_src_features_status_application_statusAsync_ts --&gt; module_src_types_status_ts
+  module_src_features_status_composition_statusProjectAsync_test_ts[&quot;src/features/status/composition/statusProjectAsync.test.ts&quot;]
+  package__ankhorage_apm -.-&gt; module_src_features_status_composition_statusProjectAsync_test_ts
+  module_src_features_status_composition_statusProjectAsync_test_ts --&gt; module_src_features_status_composition_statusProjectAsync_ts
   module_src_features_status_composition_statusProjectAsync_ts[&quot;src/features/status/composition/statusProjectAsync.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_status_composition_statusProjectAsync_ts
   module_src_features_status_composition_statusProjectAsync_ts --&gt; module_package_json
@@ -4328,6 +4348,7 @@ graph TD
                 module_src_features_status_application_buildAvailabilityRequests_ts[&quot;src/features/status/application/buildAvailabilityRequests.ts&quot;]
                 module_src_features_status_application_statusAsync_test_ts[&quot;src/features/status/application/statusAsync.test.ts&quot;]
                 module_src_features_status_application_statusAsync_ts[&quot;src/features/status/application/statusAsync.ts&quot;]
+                module_src_features_status_composition_statusProjectAsync_test_ts[&quot;src/features/status/composition/statusProjectAsync.test.ts&quot;]
                 module_src_features_status_composition_statusProjectAsync_ts[&quot;src/features/status/composition/statusProjectAsync.ts&quot;]
                 module_src_features_status_constants_support_ts[&quot;src/features/status/constants/support.ts&quot;]
                 module_src_features_status_domain_buildDependencyPaths_ts[&quot;src/features/status/domain/buildDependencyPaths.ts&quot;]
@@ -4496,6 +4517,8 @@ graph TD
                 module_src_features_status_domain_evaluateStatus_ts
                 module_src_features_status_application_statusAsync_ts --&gt;
                 module_src_types_status_ts
+                module_src_features_status_composition_statusProjectAsync_test_ts --&gt;
+                module_src_features_status_composition_statusProjectAsync_ts
                 module_src_features_status_composition_statusProjectAsync_ts --&gt;
                 module_package_json module_src_features_status_composition_statusProjectAsync_ts
                 --&gt;
@@ -4570,6 +4593,7 @@ graph LR
   module_src_features_status_application_buildAvailabilityRequests_ts[&quot;src/features/status/application/buildAvailabilityRequests.ts&quot;]
   module_src_features_status_application_statusAsync_test_ts[&quot;src/features/status/application/statusAsync.test.ts&quot;]
   module_src_features_status_application_statusAsync_ts[&quot;src/features/status/application/statusAsync.ts&quot;]
+  module_src_features_status_composition_statusProjectAsync_test_ts[&quot;src/features/status/composition/statusProjectAsync.test.ts&quot;]
   module_src_features_status_composition_statusProjectAsync_ts[&quot;src/features/status/composition/statusProjectAsync.ts&quot;]
   module_src_features_status_constants_support_ts[&quot;src/features/status/constants/support.ts&quot;]
   module_src_features_status_domain_buildDependencyPaths_ts[&quot;src/features/status/domain/buildDependencyPaths.ts&quot;]
@@ -4673,6 +4697,7 @@ graph LR
   module_src_features_status_application_statusAsync_ts --&gt; module_src_features_status_application_buildAvailabilityRequests_ts
   module_src_features_status_application_statusAsync_ts --&gt; module_src_features_status_domain_evaluateStatus_ts
   module_src_features_status_application_statusAsync_ts --&gt; module_src_types_status_ts
+  module_src_features_status_composition_statusProjectAsync_test_ts --&gt; module_src_features_status_composition_statusProjectAsync_ts
   module_src_features_status_composition_statusProjectAsync_ts --&gt; module_package_json
   module_src_features_status_composition_statusProjectAsync_ts --&gt; module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
   module_src_features_status_composition_statusProjectAsync_ts --&gt; module_src_features_status_adapters_outbound_inspectDependencyInventoryAsync_ts
@@ -4735,6 +4760,7 @@ graph LR
                 module_src_features_status_application_buildAvailabilityRequests_ts[&quot;src/features/status/application/buildAvailabilityRequests.ts&quot;]
                 module_src_features_status_application_statusAsync_test_ts[&quot;src/features/status/application/statusAsync.test.ts&quot;]
                 module_src_features_status_application_statusAsync_ts[&quot;src/features/status/application/statusAsync.ts&quot;]
+                module_src_features_status_composition_statusProjectAsync_test_ts[&quot;src/features/status/composition/statusProjectAsync.test.ts&quot;]
                 module_src_features_status_composition_statusProjectAsync_ts[&quot;src/features/status/composition/statusProjectAsync.ts&quot;]
                 module_src_features_status_constants_support_ts[&quot;src/features/status/constants/support.ts&quot;]
                 module_src_features_status_domain_buildDependencyPaths_ts[&quot;src/features/status/domain/buildDependencyPaths.ts&quot;]
@@ -4936,6 +4962,7 @@ graph LR
   module_src_features_status_application_buildAvailabilityRequests_ts[&quot;src/features/status/application/buildAvailabilityRequests.ts&quot;]
   module_src_features_status_application_statusAsync_test_ts[&quot;src/features/status/application/statusAsync.test.ts&quot;]
   module_src_features_status_application_statusAsync_ts[&quot;src/features/status/application/statusAsync.ts&quot;]
+  module_src_features_status_composition_statusProjectAsync_test_ts[&quot;src/features/status/composition/statusProjectAsync.test.ts&quot;]
   module_src_features_status_composition_statusProjectAsync_ts[&quot;src/features/status/composition/statusProjectAsync.ts&quot;]
   module_src_features_status_constants_support_ts[&quot;src/features/status/constants/support.ts&quot;]
   module_src_features_status_domain_buildDependencyPaths_ts[&quot;src/features/status/domain/buildDependencyPaths.ts&quot;]

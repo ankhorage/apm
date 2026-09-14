@@ -417,6 +417,12 @@
       "exports": ["statusAsync"]
     },
     {
+      "path": "src/features/status/composition/statusProjectAsync.test.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/features/status/composition/statusProjectAsync.ts"],
+      "exports": []
+    },
+    {
       "path": "src/features/status/composition/statusProjectAsync.ts",
       "isEntrypoint": false,
       "dependencies": [
@@ -4545,6 +4551,11 @@
         "sourcePath": "src/features/status/application/statusAsync.ts"
       },
       {
+        "fromPath": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toPath": "src/features/status/composition/statusProjectAsync.ts",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
         "fromPath": "src/features/status/composition/statusProjectAsync.ts",
         "toPath": "package.json",
         "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
@@ -5173,6 +5184,60 @@
         "toSymbol": "inspectExtensionEvidenceAsync",
         "callExpression": "port.inspectExtensionEvidenceAsync",
         "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "mkdtemp",
+        "callExpression": "mkdtemp",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "tmpdir",
+        "callExpression": "tmpdir",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "writeFile",
+        "callExpression": "writeFile",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "statusProjectAsync",
+        "callExpression": "statusProjectAsync",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "readFile",
+        "callExpression": "readFile",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "pathExists",
+        "callExpression": "pathExists",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
+        "toSymbol": "rm",
+        "callExpression": "rm",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
       },
       {
         "fromSymbol": "statusProjectAsync",
