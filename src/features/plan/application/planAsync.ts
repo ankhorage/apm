@@ -35,7 +35,7 @@ export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promi
     ...evidence,
   });
   const id = await ports.digest.digestAsync(buildPlanIdSource(planCore));
-  return { schemaVersion: 1, operation: 'plan', id, ...planCore };
+  return { schemaVersion: 2, operation: 'plan', id, ...planCore };
 }
 
 interface PlanEvidence {
