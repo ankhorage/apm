@@ -42,6 +42,9 @@ jobs:
       - name: Generate documentation
         run: bun run docs
 
+      - name: Remove one-time bootstrap workflow
+        run: rm .github/workflows/bootstrap-apm.yml
+
       - name: Canonically format and fix imports
         run: |
           bun run format

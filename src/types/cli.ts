@@ -1,4 +1,4 @@
-export type ApmOperation = 'status' | 'plan' | 'apply' | 'verify';
+type ApmOperation = 'status' | 'plan' | 'apply' | 'verify';
 
 export type ApmUnavailableOperation = Exclude<ApmOperation, 'status'>;
 
