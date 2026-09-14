@@ -35,18 +35,52 @@ describe('runAsync', () => {
     }
   });
 
-  test('returns a distinct non-success exit code for reserved operations', async () => {
+  test('apply resume reports a missing durable operation as blocked', async () => {
+    const rootPath = await mkdtemp(path.join(tmpdir(), 'apm-apply-'));
     const stdout: string[] = [];
     const stderr: string[] = [];
-    const exitCode = await runAsync(['apply', '--json'], {
-      cwd: '.',
-      writeStdout: (text) => stdout.push(text),
-      writeStderr: (text) => stderr.push(text),
-    });
+    try {
+      const exitCode = await runAsync(
+        ['apply', '--resume', 'missing-operation', rootPath, '--json'],
+        {
+          cwd: rootPath,
+          writeStdout: (text) => stdout.push(text),
+          writeStderr: (text) => stderr.push(text),
+        },
+      );
+      const output = stdout.join('');
+      expect(exitCode).toBe(2);
+      expect(stderr).toEqual([]);
+      expect(output).toContain('"operation": "apply"');
+      expect(output).toContain('"status": "blocked"');
+      expect(output).toContain('"apply.operation-not-found"');
+    } finally {
+      await rm(rootPath, { recursive: true, force: true });
+    }
+  });
 
-    expect(exitCode).toBe(3);
-    expect(stderr).toEqual([]);
-    expect(stdout.join('')).toContain('"status": "unavailable"');
+  test('verify reports a missing durable operation as unverified', async () => {
+    const rootPath = await mkdtemp(path.join(tmpdir(), 'apm-verify-'));
+    const stdout: string[] = [];
+    const stderr: string[] = [];
+    try {
+      const exitCode = await runAsync(
+        ['verify', '--operation', 'missing-operation', rootPath, '--json'],
+        {
+          cwd: rootPath,
+          writeStdout: (text) => stdout.push(text),
+          writeStderr: (text) => stderr.push(text),
+        },
+      );
+      const output = stdout.join('');
+      expect(exitCode).toBe(2);
+      expect(stderr).toEqual([]);
+      expect(output).toContain('"operation": "verify"');
+      expect(output).toContain('"verified": false');
+      expect(output).toContain('"operation:journal"');
+    } finally {
+      await rm(rootPath, { recursive: true, force: true });
+    }
   });
 });
 
