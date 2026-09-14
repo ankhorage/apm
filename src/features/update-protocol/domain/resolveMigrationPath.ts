@@ -31,6 +31,7 @@ export function resolveMigrationPath(input: ApmMigrationPathInput): ApmMigration
 type MigrationState = {
   readonly version: string;
   readonly stateRevision?: string;
+  readonly completedMigrationIds: readonly string[];
   readonly migrations: readonly ApmMigrationDescriptor[];
 };
 
@@ -83,6 +84,7 @@ function migrationPaths(input: ApmMigrationPathInput): readonly (readonly ApmMig
     {
       version: input.sourceVersion,
       ...(input.sourceStateRevision === undefined ? {} : { stateRevision: input.sourceStateRevision }),
+      completedMigrationIds: input.completedMigrationIds ?? [],
       migrations: [],
     },
     input.targetVersion,
@@ -117,17 +119,18 @@ function migrationApplicable(
   if (migration.from.stateRevision !== undefined && migration.from.stateRevision !== state.stateRevision) {
     return false;
   }
-  const completed = new Set(state.migrations.map((item) => item.id));
+  const completed = new Set(state.completedMigrationIds);
   return migration.prerequisites
     .filter((prerequisite) => prerequisite.owner === owner)
     .every((prerequisite) => completed.has(prerequisite.migrationId));
 }
 
-/*** Apply one graph edge to immutable path-search state. */
+/*** Apply one graph edge to immutable path-search state and completed-history evidence. */
 function nextState(state: MigrationState, migration: ApmMigrationDescriptor): MigrationState {
   return {
     version: migration.to.packageVersion,
     ...(migration.to.stateRevision === undefined ? {} : { stateRevision: migration.to.stateRevision }),
+    completedMigrationIds: [...state.completedMigrationIds, migration.id],
     migrations: [...state.migrations, migration],
   };
 }
