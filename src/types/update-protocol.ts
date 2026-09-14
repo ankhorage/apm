@@ -46,8 +46,13 @@ export interface ApmCompatibilityConstraint {
   readonly reason?: string;
 }
 
-export interface ApmMigrationEndpoint {
+export interface ApmMigrationSource {
   readonly packageRange: string;
+  readonly stateRevision?: string;
+}
+
+export interface ApmMigrationTarget {
+  readonly packageVersion: string;
   readonly stateRevision?: string;
 }
 
@@ -101,8 +106,8 @@ export interface ApmMigrationRecoveryDescriptor {
 export interface ApmMigrationDescriptor {
   readonly id: string;
   readonly checksum: string;
-  readonly from: ApmMigrationEndpoint;
-  readonly to: ApmMigrationEndpoint;
+  readonly from: ApmMigrationSource;
+  readonly to: ApmMigrationTarget;
   readonly phase: 'pre-install' | 'post-install';
   readonly implementation: ApmMigrationImplementation;
   readonly prerequisites: readonly ApmMigrationPrerequisite[];
