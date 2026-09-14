@@ -2,15 +2,16 @@ import { createHash } from 'node:crypto';
 
 import { expect, test } from 'bun:test';
 
-import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import type {
   ApmPlanDigestPort,
   ApmPlanPorts,
   ApmPlanProtocolPort,
   ApmPlanResolutionPort,
+  ApmPlanStep,
 } from '../../../types/plan.js';
 import type { ApmStatusResult } from '../../../types/status.js';
 import { validateSavedPlanAsync } from '../domain/validateSavedPlanAsync.js';
+import { planExecutionFixtures } from './fixtures/planExecutionFixtures.js';
 import { planAsync } from './planAsync.js';
 
 const DIGEST: ApmPlanDigestPort = {
@@ -79,10 +80,9 @@ test('incomplete status blocks native resolution instead of manufacturing a part
 
 test('saved plans reject changed semantic input and incompatible executors', async () => {
   const plan = await planAsync(planInput(statusFixture()), portsFixture());
-  const changed = changedStatusFixture();
   const blockers = await validateSavedPlanAsync(
     plan,
-    changed,
+    changedStatusFixture(),
     { ...EXECUTOR, apmVersion: '0.4.0' },
     DIGEST,
   );
@@ -173,26 +173,7 @@ function protocolPortFixture(): ApmPlanProtocolPort {
           },
         ],
         artifacts: [],
-        steps: [
-          {
-            id: 'migration:@owner/package:m1',
-            kind: 'migration',
-            prerequisites: ['install:root'],
-            owner: '@owner/package',
-            reason: 'Transform supported schema state.',
-            evidence: ['m1'],
-            execution: migrationExecutionFixture(),
-          },
-          {
-            id: 'projection:@owner/package:generated',
-            kind: 'projection',
-            prerequisites: ['migration:@owner/package:m1'],
-            owner: '@owner/package',
-            reason: 'Materialize target generator projection.',
-            evidence: ['generated'],
-            execution: projectionExecutionFixture(),
-          },
-        ],
+        steps: protocolStepsFixture(),
         effects: [
           {
             kind: 'web-rebuild',
@@ -208,77 +189,49 @@ function protocolPortFixture(): ApmPlanProtocolPort {
   };
 }
 
-/*** Build reviewed executable migration evidence for the protocol composition fixture. */
-function migrationExecutionFixture(): Extract<
-  ApmPlanStepExecution,
-  { readonly kind: 'migration' }
-> {
-  return {
-    kind: 'migration',
-    descriptor: {
-      id: 'm1',
-      checksum: 'sha256:m1',
-      from: { packageRange: '^1.0.0' },
-      to: { packageVersion: '1.2.0' },
-      phase: 'post-install',
-      implementation: { artifact: 'target' },
-      prerequisites: [],
-      affectedScopes: [{ kind: 'file', path: 'schema.json' }],
-      sideEffects: ['project-files'],
-      verification: [{ kind: 'manual', description: 'Verify migrated schema state.' }],
-      recovery: { idempotent: true, restartable: true, reversible: false },
-    },
-    artifact: {
-      role: 'target',
-      packageName: '@owner/package',
-      version: '1.2.0',
-      integrity: 'sha512-owner-v1.2.0',
-      descriptorDigest: 'sha256:owner-update-descriptor',
-    },
-    plan: {
-      migrationId: 'm1',
-      mutations: [],
-      evidence: ['sha256:m1'],
-      inputFingerprint: 'migration-input:m1',
-    },
+/*** Build executable owner steps used by the protocol composition fixture. */
+function protocolStepsFixture(): readonly ApmPlanStep[] {
+  const migrationDescriptor = {
+    id: 'm1',
+    checksum: 'sha256:m1',
+    from: { packageRange: '^1.0.0' },
+    to: { packageVersion: '1.2.0' },
+    phase: 'post-install' as const,
+    implementation: { artifact: 'target' as const },
+    prerequisites: [],
+    affectedScopes: [{ kind: 'file' as const, path: 'schema.json' }],
+    sideEffects: ['project-files' as const],
+    verification: [{ kind: 'manual' as const, description: 'Verify migrated schema state.' }],
+    recovery: { idempotent: true, restartable: true, reversible: false },
   };
-}
-
-/*** Build reviewed executable projection evidence for the protocol composition fixture. */
-function projectionExecutionFixture(): Extract<
-  ApmPlanStepExecution,
-  { readonly kind: 'projection' }
-> {
-  const claim = { kind: 'file' as const, path: 'generated.json' };
-  return {
-    kind: 'projection',
-    descriptor: { id: 'generated', claims: [claim], requiresExtension: true },
-    artifact: {
-      role: 'target',
-      packageName: '@owner/package',
-      version: '1.2.0',
-      integrity: 'sha512-owner-v1.2.0',
-      descriptorDigest: 'sha256:owner-update-descriptor',
+  return [
+    {
+      id: 'migration:@owner/package:m1',
+      kind: 'migration',
+      prerequisites: ['install:root'],
+      owner: '@owner/package',
+      reason: 'Transform supported schema state.',
+      evidence: ['m1'],
+      execution: planExecutionFixtures.migration(migrationDescriptor),
     },
-    plan: {
-      projectionId: 'generated',
-      mutations: [
-        {
-          id: 'projection:generated:write',
-          claim,
-          kind: 'write-file',
-          path: 'generated.json',
-          encoding: 'utf8',
-          content: '{"version":2}',
-          expectedBeforeDigest: 'generated-before',
-          afterDigest: 'generated-after',
-        },
-      ],
-      inputFingerprint: 'projection-input',
-      generatorFingerprint: 'generator:v2',
+    {
+      id: 'projection:@owner/package:generated',
+      kind: 'projection',
+      prerequisites: ['migration:@owner/package:m1'],
+      owner: '@owner/package',
+      reason: 'Materialize target generator projection.',
       evidence: ['generated'],
+      execution: planExecutionFixtures.projection({
+        projectionId: 'generated',
+        path: 'generated.json',
+        content: '{"version":2}',
+        beforeDigest: 'generated-before',
+        afterDigest: 'generated-after',
+        generatorFingerprint: 'generator:v2',
+        version: '1.2.0',
+      }),
     },
-  };
+  ];
 }
 
 /*** Build one complete npm status snapshot with a compatible direct update. */
