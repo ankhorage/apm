@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant participant_expect as expect
+  participant participant_inspectProjectAsync as inspectProjectAsync
+  participant participant_statusAsync as statusAsync
+  participant participant_statusProjectAsync as statusProjectAsync
+  participant_statusProjectAsync->>participant_statusAsync: statusAsync()
+  participant_statusAsync->>participant_inspectProjectAsync: inspectionPort.inspectProjectAsync()
+  participant_inspectProjectAsync->>participant_expect: expect()
+  participant_expect-->>participant_inspectProjectAsync: return
+  participant_inspectProjectAsync-->>participant_statusAsync: return
+  participant_statusAsync-->>participant_statusProjectAsync: return

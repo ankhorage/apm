@@ -1,0 +1,1166 @@
+{
+  "packageName": "@ankhorage/apm",
+  "packageId": "@ankhorage/apm",
+  "description": "Headless project update analysis, planning, execution, recovery, and verification.",
+  "collaborators": null,
+  "donation": null,
+  "badges": [
+    {
+      "id": "license",
+      "label": "license",
+      "value": "MIT",
+      "color": "2563eb"
+    },
+    {
+      "id": "npm",
+      "label": "npm",
+      "value": "v0.0.0",
+      "color": "cb3837"
+    },
+    {
+      "id": "runtime",
+      "label": "runtime",
+      "value": "bun",
+      "color": "f59e0b"
+    },
+    {
+      "id": "typescript",
+      "label": "typescript",
+      "value": "strict",
+      "color": "2563eb"
+    },
+    {
+      "id": "eslint",
+      "label": "eslint",
+      "value": "checked",
+      "color": "0a7f3f"
+    },
+    {
+      "id": "prettier",
+      "label": "prettier",
+      "value": "checked",
+      "color": "0a7f3f"
+    },
+    {
+      "id": "build",
+      "label": "build",
+      "value": "checked",
+      "color": "0a7f3f"
+    },
+    {
+      "id": "tests",
+      "label": "tests",
+      "value": "checked",
+      "color": "0a7f3f"
+    },
+    {
+      "id": "docs",
+      "label": "docs",
+      "value": "paradox",
+      "color": "0f766e"
+    }
+  ],
+  "usage": {
+    "packageName": "@ankhorage/apm",
+    "commands": [
+      {
+        "name": "apm",
+        "command": "bunx @ankhorage/apm"
+      }
+    ]
+  },
+  "readmeUsageDescription": null,
+  "readmeUsage": [],
+  "readmeCli": null,
+  "readmeConfig": null,
+  "config": null,
+  "entrypoints": ["src/apm.ts", "src/cli/createCliProvider.ts", "src/nodeApm.ts"],
+  "modules": [
+    {
+      "path": "examples/basic-usage/status.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": []
+    },
+    {
+      "path": "package.json",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": []
+    },
+    {
+      "path": "paradox.config.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": ["default"]
+    },
+    {
+      "path": "src/apm.ts",
+      "isEntrypoint": true,
+      "dependencies": [],
+      "exports": [
+        "APM_BOOTSTRAP_SUPPORT",
+        "ApmStatusDiagnostic",
+        "ApmStatusInput",
+        "ApmStatusInspectionPort",
+        "ApmStatusLanguage",
+        "ApmStatusProjectSummary",
+        "ApmStatusResult",
+        "statusAsync"
+      ]
+    },
+    {
+      "path": "src/cli/commands/apply.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/cli/renderUnavailableOperation.ts", "src/types/cli.ts"],
+      "exports": ["apply"]
+    },
+    {
+      "path": "src/cli/commands/plan.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/cli/renderUnavailableOperation.ts", "src/types/cli.ts"],
+      "exports": ["plan"]
+    },
+    {
+      "path": "src/cli/commands/status.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/features/status/composition/statusProjectAsync.ts", "src/types/cli.ts"],
+      "exports": ["status"]
+    },
+    {
+      "path": "src/cli/commands/verify.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/cli/renderUnavailableOperation.ts", "src/types/cli.ts"],
+      "exports": ["verify"]
+    },
+    {
+      "path": "src/cli/createCliProvider.test.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/cli/createCliProvider.ts"],
+      "exports": []
+    },
+    {
+      "path": "src/cli/createCliProvider.ts",
+      "isEntrypoint": true,
+      "dependencies": [
+        "src/cli/commands/apply.ts",
+        "src/cli/commands/plan.ts",
+        "src/cli/commands/status.ts",
+        "src/cli/commands/verify.ts",
+        "src/cli/runAsync.ts"
+      ],
+      "exports": ["createCliProvider"]
+    },
+    {
+      "path": "src/cli/provider.ts",
+      "isEntrypoint": false,
+      "dependencies": ["package.json", "src/cli/createCliProvider.ts"],
+      "exports": ["default"]
+    },
+    {
+      "path": "src/cli/renderUnavailableOperation.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/cli.ts"],
+      "exports": ["renderUnavailableOperation"]
+    },
+    {
+      "path": "src/cli/runAsync.test.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/cli/runAsync.ts"],
+      "exports": []
+    },
+    {
+      "path": "src/cli/runAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/cli/commands/apply.ts",
+        "src/cli/commands/plan.ts",
+        "src/cli/commands/status.ts",
+        "src/cli/commands/verify.ts",
+        "src/types/cli.ts"
+      ],
+      "exports": ["runAsync"]
+    },
+    {
+      "path": "src/constants/support.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": ["APM_BOOTSTRAP_SUPPORT"]
+    },
+    {
+      "path": "src/features/status/application/statusAsync.test.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/features/status/application/statusAsync.ts"],
+      "exports": []
+    },
+    {
+      "path": "src/features/status/application/statusAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/status.ts"],
+      "exports": ["statusAsync"]
+    },
+    {
+      "path": "src/features/status/composition/statusProjectAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/features/status/application/statusAsync.ts", "src/types/status.ts"],
+      "exports": ["statusProjectAsync"]
+    },
+    {
+      "path": "src/nodeApm.ts",
+      "isEntrypoint": true,
+      "dependencies": [],
+      "exports": [
+        "APM_BOOTSTRAP_SUPPORT",
+        "ApmStatusDiagnostic",
+        "ApmStatusInput",
+        "ApmStatusInspectionPort",
+        "ApmStatusLanguage",
+        "ApmStatusProjectSummary",
+        "ApmStatusResult",
+        "statusAsync",
+        "statusProjectAsync"
+      ]
+    },
+    {
+      "path": "src/types/cli.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": ["ApmCliCommand", "ApmCliContext", "ApmUnavailableOperation"]
+    },
+    {
+      "path": "src/types/public.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": [
+        "ApmStatusDiagnostic",
+        "ApmStatusInput",
+        "ApmStatusInspectionPort",
+        "ApmStatusLanguage",
+        "ApmStatusProjectSummary",
+        "ApmStatusResult"
+      ]
+    },
+    {
+      "path": "src/types/status.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": [
+        "ApmStatusDiagnostic",
+        "ApmStatusInput",
+        "ApmStatusInspectionPort",
+        "ApmStatusLanguage",
+        "ApmStatusProjectSummary",
+        "ApmStatusResult"
+      ]
+    }
+  ],
+  "exports": [
+    {
+      "name": "APM_BOOTSTRAP_SUPPORT",
+      "description": "Describe exactly what the bootstrap release proves without claiming update support prematurely.\n\nRuntime: APM itself requires Node 24 or newer. Repository development uses Bun 1.4.2, but APM\ndoes not require inspected customer projects to use Bun.\n\nPackage managers: npm, pnpm, Yarn, and Bun are read-only inspection targets in the bootstrap.\nTheir mutation semantics, supported versions, lock formats, and linker modes are deliberately\nunqualified until the inventory/planning work proves them.\n\nPlatforms: Linux is exercised by bootstrap CI. macOS and Windows update execution remain\nunqualified. Read-only Project Detector behavior is delegated to its published support contract.\n\nOperations: `status` is the first real use case. `plan`, `apply`, and `verify` reserve their\ncommand paths but return an explicit unavailable result until their owning roadmap work lands.\n\nDependency direction is inward: headless status depends on an injected inspection port; Node\ncomposition binds that port to `@ankhorage/project-detector/node`; standalone CLI and Ankh are\ninbound adapters over the same Node composition. The root package has no Node import side effect.",
+      "isReadme": true,
+      "examples": [],
+      "kind": "value",
+      "modulePath": "src/constants/support.ts",
+      "sourceLocation": {
+        "filePath": "src/constants/support.ts",
+        "line": 22,
+        "column": 14
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusDiagnostic",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status.ts",
+        "line": 11,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "code",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "message",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "path",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusInput",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status.ts",
+        "line": 3,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusInspectionPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status.ts",
+        "line": 7,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "inspectProjectAsync",
+          "kind": "property",
+          "type": "(rootPath: string) => Promise<ProjectInspection>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusLanguage",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status.ts",
+        "line": 17,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "id",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "score",
+          "kind": "property",
+          "type": "number",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "sourceRoots",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusProjectSummary",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status.ts",
+        "line": 23,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusLanguage"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "buildTools",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "languages",
+          "kind": "property",
+          "type": "readonly ApmStatusLanguage[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "packageCount",
+          "kind": "property",
+          "type": "number",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "packageManagers",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "traits",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "workspaceCount",
+          "kind": "property",
+          "type": "number",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusResult",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status.ts",
+        "line": 32,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusDiagnostic", "ApmStatusProjectSummary"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "complete",
+          "kind": "property",
+          "type": "boolean",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "diagnostics",
+          "kind": "property",
+          "type": "readonly ApmStatusDiagnostic[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operation",
+          "kind": "property",
+          "type": "\"status\"",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "project",
+          "kind": "property",
+          "type": "ApmStatusProjectSummary",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "schemaVersion",
+          "kind": "property",
+          "type": "1",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "createCliProvider",
+      "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
+      "isReadme": false,
+      "examples": [],
+      "kind": "function",
+      "modulePath": "src/cli/createCliProvider.ts",
+      "sourceLocation": {
+        "filePath": "src/cli/createCliProvider.ts",
+        "line": 10,
+        "column": 1
+      },
+      "exportPaths": ["src/cli/createCliProvider.ts"],
+      "relatedSymbols": [],
+      "signatures": [
+        {
+          "label": "(version: string) => AnkhRuntimeCommandProvider",
+          "parameters": [
+            {
+              "name": "version",
+              "type": "string",
+              "required": true,
+              "description": null
+            }
+          ],
+          "returnType": "AnkhRuntimeCommandProvider",
+          "returnDescription": null
+        }
+      ],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "statusAsync",
+      "description": "Build serializable APM status from read-only project evidence supplied by an outbound port.\n\nHosts can call this use case without a terminal, filesystem access, or Node composition and can\nprovide a deterministic fake port in tests. Status never installs dependencies or executes\nproject lifecycle scripts.",
+      "isReadme": true,
+      "examples": [],
+      "kind": "function",
+      "modulePath": "src/features/status/application/statusAsync.ts",
+      "sourceLocation": {
+        "filePath": "src/features/status/application/statusAsync.ts",
+        "line": 15,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusInput", "ApmStatusInspectionPort", "ApmStatusResult"],
+      "signatures": [
+        {
+          "label": "(input: ApmStatusInput, inspectionPort: ApmStatusInspectionPort) => Promise<ApmStatusResult>",
+          "parameters": [
+            {
+              "name": "input",
+              "type": "ApmStatusInput",
+              "required": true,
+              "description": null
+            },
+            {
+              "name": "inspectionPort",
+              "type": "ApmStatusInspectionPort",
+              "required": true,
+              "description": null
+            }
+          ],
+          "returnType": "Promise<ApmStatusResult>",
+          "returnDescription": null
+        }
+      ],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "statusProjectAsync",
+      "description": "Compose the headless status use case with Project Detector's published Node inspection edge.",
+      "isReadme": false,
+      "examples": [],
+      "kind": "function",
+      "modulePath": "src/features/status/composition/statusProjectAsync.ts",
+      "sourceLocation": {
+        "filePath": "src/features/status/composition/statusProjectAsync.ts",
+        "line": 7,
+        "column": 1
+      },
+      "exportPaths": ["src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
+      "signatures": [
+        {
+          "label": "(input: ApmStatusInput) => Promise<ApmStatusResult>",
+          "parameters": [
+            {
+              "name": "input",
+              "type": "ApmStatusInput",
+              "required": true,
+              "description": null
+            }
+          ],
+          "returnType": "Promise<ApmStatusResult>",
+          "returnDescription": null
+        }
+      ],
+      "members": [],
+      "structuredRows": []
+    }
+  ],
+  "components": [],
+  "sourceFunctions": [
+    {
+      "name": "createCliProvider",
+      "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
+      "sourceLocation": {
+        "filePath": "src/cli/createCliProvider.ts",
+        "line": 10,
+        "column": 1
+      }
+    },
+    {
+      "name": "renderUnavailableOperation",
+      "description": "Render a reserved operation as an explicit non-success until its owning roadmap issue lands.",
+      "sourceLocation": {
+        "filePath": "src/cli/renderUnavailableOperation.ts",
+        "line": 7,
+        "column": 1
+      }
+    },
+    {
+      "name": "runAsync",
+      "description": "Run standalone `apm status|plan|apply|verify` commands.\n\nExit codes are 0 for success, 1 for invalid invocation/execution failure, 2 for incomplete status\nevidence, and 3 for a reserved operation that is not implemented yet. `--json` requests stable\nmachine-readable command output; human status output is the default.",
+      "sourceLocation": {
+        "filePath": "src/cli/runAsync.ts",
+        "line": 16,
+        "column": 1
+      }
+    },
+    {
+      "name": "statusAsync",
+      "description": "Build serializable APM status from read-only project evidence supplied by an outbound port.\n\nHosts can call this use case without a terminal, filesystem access, or Node composition and can\nprovide a deterministic fake port in tests. Status never installs dependencies or executes\nproject lifecycle scripts.",
+      "sourceLocation": {
+        "filePath": "src/features/status/application/statusAsync.ts",
+        "line": 15,
+        "column": 1
+      }
+    },
+    {
+      "name": "statusProjectAsync",
+      "description": "Compose the headless status use case with Project Detector's published Node inspection edge.",
+      "sourceLocation": {
+        "filePath": "src/features/status/composition/statusProjectAsync.ts",
+        "line": 7,
+        "column": 1
+      }
+    }
+  ],
+  "sequenceScenarios": [
+    {
+      "kind": "bin",
+      "name": "apm",
+      "sourcePath": "src/cli/runAsync.ts",
+      "symbolName": "runAsync",
+      "description": "Run standalone `apm status|plan|apply|verify` commands.\n\nExit codes are 0 for success, 1 for invalid invocation/execution failure, 2 for incomplete status\nevidence, and 3 for a reserved operation that is not implemented yet. `--json` requests stable\nmachine-readable command output; human status output is the default.",
+      "isReadme": true
+    },
+    {
+      "kind": "export",
+      "name": "createCliProvider",
+      "sourcePath": "src/cli/createCliProvider.ts",
+      "symbolName": "createCliProvider",
+      "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
+      "isReadme": false
+    },
+    {
+      "kind": "export",
+      "name": "statusAsync",
+      "sourcePath": "src/features/status/application/statusAsync.ts",
+      "symbolName": "statusAsync",
+      "description": "Build serializable APM status from read-only project evidence supplied by an outbound port.\n\nHosts can call this use case without a terminal, filesystem access, or Node composition and can\nprovide a deterministic fake port in tests. Status never installs dependencies or executes\nproject lifecycle scripts.",
+      "isReadme": true
+    },
+    {
+      "kind": "export",
+      "name": "statusProjectAsync",
+      "sourcePath": "src/features/status/composition/statusProjectAsync.ts",
+      "symbolName": "statusProjectAsync",
+      "description": "Compose the headless status use case with Project Detector's published Node inspection edge.",
+      "isReadme": false
+    }
+  ],
+  "graphs": {
+    "imports": [
+      {
+        "fromPath": "src/apm.ts",
+        "toPath": "src/constants/support.ts",
+        "sourcePath": "src/apm.ts"
+      },
+      {
+        "fromPath": "src/apm.ts",
+        "toPath": "src/features/status/application/statusAsync.ts",
+        "sourcePath": "src/apm.ts"
+      },
+      {
+        "fromPath": "src/apm.ts",
+        "toPath": "src/types/public.ts",
+        "sourcePath": "src/apm.ts"
+      },
+      {
+        "fromPath": "src/nodeApm.ts",
+        "toPath": "src/apm.ts",
+        "sourcePath": "src/nodeApm.ts"
+      },
+      {
+        "fromPath": "src/nodeApm.ts",
+        "toPath": "src/features/status/composition/statusProjectAsync.ts",
+        "sourcePath": "src/nodeApm.ts"
+      },
+      {
+        "fromPath": "src/nodeApm.ts",
+        "toPath": "src/types/public.ts",
+        "sourcePath": "src/nodeApm.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.test.ts",
+        "toPath": "src/cli/createCliProvider.ts",
+        "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.ts",
+        "toPath": "src/cli/commands/apply.ts",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.ts",
+        "toPath": "src/cli/commands/plan.ts",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.ts",
+        "toPath": "src/cli/commands/status.ts",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.ts",
+        "toPath": "src/cli/commands/verify.ts",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.ts",
+        "toPath": "src/cli/runAsync.ts",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      },
+      {
+        "fromPath": "src/cli/provider.ts",
+        "toPath": "package.json",
+        "sourcePath": "src/cli/provider.ts"
+      },
+      {
+        "fromPath": "src/cli/provider.ts",
+        "toPath": "src/cli/createCliProvider.ts",
+        "sourcePath": "src/cli/provider.ts"
+      },
+      {
+        "fromPath": "src/cli/renderUnavailableOperation.ts",
+        "toPath": "src/types/cli.ts",
+        "sourcePath": "src/cli/renderUnavailableOperation.ts"
+      },
+      {
+        "fromPath": "src/cli/runAsync.test.ts",
+        "toPath": "src/cli/runAsync.ts",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromPath": "src/cli/runAsync.ts",
+        "toPath": "src/types/cli.ts",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromPath": "src/cli/runAsync.ts",
+        "toPath": "src/cli/commands/apply.ts",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromPath": "src/cli/runAsync.ts",
+        "toPath": "src/cli/commands/plan.ts",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromPath": "src/cli/runAsync.ts",
+        "toPath": "src/cli/commands/status.ts",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromPath": "src/cli/runAsync.ts",
+        "toPath": "src/cli/commands/verify.ts",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromPath": "src/types/public.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/types/public.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/apply.ts",
+        "toPath": "src/types/cli.ts",
+        "sourcePath": "src/cli/commands/apply.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/apply.ts",
+        "toPath": "src/cli/renderUnavailableOperation.ts",
+        "sourcePath": "src/cli/commands/apply.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/plan.ts",
+        "toPath": "src/types/cli.ts",
+        "sourcePath": "src/cli/commands/plan.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/plan.ts",
+        "toPath": "src/cli/renderUnavailableOperation.ts",
+        "sourcePath": "src/cli/commands/plan.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/status.ts",
+        "toPath": "src/features/status/composition/statusProjectAsync.ts",
+        "sourcePath": "src/cli/commands/status.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/status.ts",
+        "toPath": "src/types/cli.ts",
+        "sourcePath": "src/cli/commands/status.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/verify.ts",
+        "toPath": "src/types/cli.ts",
+        "sourcePath": "src/cli/commands/verify.ts"
+      },
+      {
+        "fromPath": "src/cli/commands/verify.ts",
+        "toPath": "src/cli/renderUnavailableOperation.ts",
+        "sourcePath": "src/cli/commands/verify.ts"
+      },
+      {
+        "fromPath": "src/features/status/application/statusAsync.test.ts",
+        "toPath": "src/features/status/application/statusAsync.ts",
+        "sourcePath": "src/features/status/application/statusAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/status/application/statusAsync.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/statusProjectAsync.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/statusProjectAsync.ts",
+        "toPath": "src/features/status/application/statusAsync.ts",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      }
+    ],
+    "calls": [
+      {
+        "fromSymbol": "paradox.config.ts",
+        "toSymbol": "defineParadoxConfig",
+        "callExpression": "defineParadoxConfig",
+        "sourcePath": "paradox.config.ts"
+      },
+      {
+        "fromSymbol": "examples/basic-usage/status.ts",
+        "toSymbol": "statusProjectAsync",
+        "callExpression": "statusProjectAsync",
+        "sourcePath": "examples/basic-usage/status.ts"
+      },
+      {
+        "fromSymbol": "src/cli/createCliProvider.test.ts",
+        "toSymbol": "describe",
+        "callExpression": "describe",
+        "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/createCliProvider.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/createCliProvider.test.ts",
+        "toSymbol": "createCliProvider",
+        "callExpression": "createCliProvider",
+        "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/createCliProvider.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
+        "fromSymbol": "handler",
+        "toSymbol": "runAsync",
+        "callExpression": "runAsync",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      },
+      {
+        "fromSymbol": "src/cli/provider.ts",
+        "toSymbol": "createCliProvider",
+        "callExpression": "createCliProvider",
+        "sourcePath": "src/cli/provider.ts"
+      },
+      {
+        "fromSymbol": "renderUnavailableOperation",
+        "toSymbol": "writeStdout",
+        "callExpression": "context.writeStdout",
+        "sourcePath": "src/cli/renderUnavailableOperation.ts"
+      },
+      {
+        "fromSymbol": "renderUnavailableOperation",
+        "toSymbol": "writeStderr",
+        "callExpression": "context.writeStderr",
+        "sourcePath": "src/cli/renderUnavailableOperation.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "describe",
+        "callExpression": "describe",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "mkdtemp",
+        "callExpression": "mkdtemp",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "tmpdir",
+        "callExpression": "tmpdir",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "writeFile",
+        "callExpression": "writeFile",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "runAsync",
+        "callExpression": "runAsync",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.test.ts",
+        "toSymbol": "rm",
+        "callExpression": "rm",
+        "sourcePath": "src/cli/runAsync.test.ts"
+      },
+      {
+        "fromSymbol": "runAsync",
+        "toSymbol": "writeStdout",
+        "callExpression": "context.writeStdout",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "runAsync",
+        "toSymbol": "executeAsync",
+        "callExpression": "status.executeAsync",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "runAsync",
+        "toSymbol": "executeAsync",
+        "callExpression": "plan.executeAsync",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "runAsync",
+        "toSymbol": "executeAsync",
+        "callExpression": "apply.executeAsync",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "runAsync",
+        "toSymbol": "executeAsync",
+        "callExpression": "verify.executeAsync",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "runAsync",
+        "toSymbol": "writeStderr",
+        "callExpression": "context.writeStderr",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "src/cli/runAsync.ts",
+        "toSymbol": "runAsync",
+        "callExpression": "runAsync",
+        "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "executeAsync",
+        "toSymbol": "renderUnavailableOperation",
+        "callExpression": "renderUnavailableOperation",
+        "sourcePath": "src/cli/commands/apply.ts"
+      },
+      {
+        "fromSymbol": "executeAsync",
+        "toSymbol": "renderUnavailableOperation",
+        "callExpression": "renderUnavailableOperation",
+        "sourcePath": "src/cli/commands/plan.ts"
+      },
+      {
+        "fromSymbol": "executeAsync",
+        "toSymbol": "statusProjectAsync",
+        "callExpression": "statusProjectAsync",
+        "sourcePath": "src/cli/commands/status.ts"
+      },
+      {
+        "fromSymbol": "executeAsync",
+        "toSymbol": "writeStdout",
+        "callExpression": "context.writeStdout",
+        "sourcePath": "src/cli/commands/status.ts"
+      },
+      {
+        "fromSymbol": "executeAsync",
+        "toSymbol": "renderUnavailableOperation",
+        "callExpression": "renderUnavailableOperation",
+        "sourcePath": "src/cli/commands/verify.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/application/statusAsync.test.ts",
+        "toSymbol": "describe",
+        "callExpression": "describe",
+        "sourcePath": "src/features/status/application/statusAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/application/statusAsync.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/status/application/statusAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/application/statusAsync.test.ts",
+        "toSymbol": "statusAsync",
+        "callExpression": "statusAsync",
+        "sourcePath": "src/features/status/application/statusAsync.test.ts"
+      },
+      {
+        "fromSymbol": "inspectProjectAsync",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/status/application/statusAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/application/statusAsync.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/status/application/statusAsync.test.ts"
+      },
+      {
+        "fromSymbol": "statusAsync",
+        "toSymbol": "inspectProjectAsync",
+        "callExpression": "inspectionPort.inspectProjectAsync",
+        "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromSymbol": "statusProjectAsync",
+        "toSymbol": "statusAsync",
+        "callExpression": "statusAsync",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      }
+    ],
+    "typeReferences": [
+      {
+        "fromSymbol": "statusAsync",
+        "toType": "ApmStatusInput",
+        "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromSymbol": "statusAsync",
+        "toType": "ApmStatusInspectionPort",
+        "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromSymbol": "statusAsync",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromSymbol": "ApmStatusInspectionPort",
+        "toType": "ProjectInspection",
+        "sourcePath": "src/types/status.ts"
+      },
+      {
+        "fromSymbol": "ApmStatusProjectSummary",
+        "toType": "ApmStatusLanguage",
+        "sourcePath": "src/types/status.ts"
+      },
+      {
+        "fromSymbol": "ApmStatusResult",
+        "toType": "ApmStatusDiagnostic",
+        "sourcePath": "src/types/status.ts"
+      },
+      {
+        "fromSymbol": "ApmStatusResult",
+        "toType": "ApmStatusProjectSummary",
+        "sourcePath": "src/types/status.ts"
+      },
+      {
+        "fromSymbol": "statusProjectAsync",
+        "toType": "ApmStatusInput",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      },
+      {
+        "fromSymbol": "statusProjectAsync",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      },
+      {
+        "fromSymbol": "createCliProvider",
+        "toType": "AnkhRuntimeCommandProvider",
+        "sourcePath": "src/cli/createCliProvider.ts"
+      }
+    ],
+    "componentComposition": []
+  }
+}

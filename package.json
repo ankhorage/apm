@@ -1,0 +1,108 @@
+{
+  "name": "@ankhorage/apm",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Headless project update analysis, planning, execution, recovery, and verification for Ankhorage tooling.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankhorage/apm.git"
+  },
+  "homepage": "https://github.com/ankhorage/apm#readme",
+  "bugs": {
+    "url": "https://github.com/ankhorage/apm/issues"
+  },
+  "keywords": [
+    "package-manager",
+    "dependencies",
+    "updates",
+    "migrations",
+    "typescript",
+    "cli"
+  ],
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "examples"
+  ],
+  "exports": {
+    "./types": {
+      "types": "./dist/types/public.d.ts",
+      "import": "./dist/types/public.js"
+    },
+    ".": {
+      "types": "./dist/apm.d.ts",
+      "import": "./dist/apm.js"
+    },
+    "./node": {
+      "types": "./dist/nodeApm.d.ts",
+      "import": "./dist/nodeApm.js"
+    },
+    "./cli": {
+      "types": "./dist/cli/createCliProvider.d.ts",
+      "import": "./dist/cli/createCliProvider.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "apm": "./dist/cli/runAsync.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "peerDependencies": {
+    "@ankhorage/ankh": "^0.8.13"
+  },
+  "peerDependenciesMeta": {
+    "@ankhorage/ankh": {
+      "optional": true
+    }
+  },
+  "ankh": {
+    "category": "apm",
+    "provider": "./dist/cli/provider.js",
+    "capabilities": [
+      "apm.status",
+      "apm.plan",
+      "apm.apply",
+      "apm.verify"
+    ]
+  },
+  "ankhorage": {
+    "renovateSyncProtocol": 1
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check-types": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "bun run check-types",
+    "test": "bun test src",
+    "docs": "paradox",
+    "changeset": "ankhorage-changeset",
+    "prepack": "bun run build",
+    "lint": "ankhorage-eslint . --max-warnings=0",
+    "lint:fix": "ankhorage-eslint . --fix --max-warnings=0",
+    "format": "ankhorage-prettier --write .",
+    "format:check": "ankhorage-prettier --check .",
+    "knip:check": "ankhorage-knip",
+    "changeset:status": "ankhorage-changeset status --since=origin/main",
+    "version-packages": "ankhorage-changeset version"
+  },
+  "dependencies": {
+    "@ankhorage/project-detector": "^0.1.0"
+  },
+  "devDependencies": {
+    "@ankhorage/ankh": "^0.8.13",
+    "@ankhorage/devtools": "^1.14.8",
+    "@ankhorage/paradox": "^0.1.26",
+    "@types/bun": "^1.4.1",
+    "@types/node": "^26.5.1",
+    "typescript": "~6.0.3"
+  },
+  "packageManager": "bun@1.4.2"
+}

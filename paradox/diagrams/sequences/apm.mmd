@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant participant_executeAsync as executeAsync
+  participant participant_runAsync as runAsync
+  participant participant_writeStderr as writeStderr
+  participant participant_writeStdout as writeStdout
+  participant_runAsync->>participant_writeStdout: context.writeStdout()
+  participant_writeStdout-->>participant_runAsync: return
+  participant_runAsync->>participant_executeAsync: status.executeAsync()
+  participant_executeAsync-->>participant_runAsync: return
+  participant_runAsync->>participant_executeAsync: plan.executeAsync()
+  participant_executeAsync-->>participant_runAsync: return
+  participant_runAsync->>participant_executeAsync: apply.executeAsync()
+  participant_executeAsync-->>participant_runAsync: return
+  participant_runAsync->>participant_executeAsync: verify.executeAsync()
+  participant_executeAsync-->>participant_runAsync: return
+  participant_runAsync->>participant_writeStderr: context.writeStderr()
+  participant_writeStderr-->>participant_runAsync: return
