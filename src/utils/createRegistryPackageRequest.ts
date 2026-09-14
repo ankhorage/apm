@@ -4,10 +4,10 @@ import type { ApmRegistryConfig } from '../types/status-registry.js';
 export function createRegistryPackageRequest(
   packageName: string,
   config: ApmRegistryConfig,
-): { readonly url: URL; readonly headers: Headers } {
-  const registry = registryForPackage(packageName, config);
-  const url = new URL(encodeURIComponent(packageName), ensureTrailingSlash(registry));
-  return { url, headers: buildAuthHeaders(url, config) };
+): { readonly registry: string; readonly url: URL; readonly headers: Headers } {
+  const registry = ensureTrailingSlash(registryForPackage(packageName, config));
+  const url = new URL(encodeURIComponent(packageName), registry);
+  return { registry, url, headers: buildAuthHeaders(url, config) };
 }
 
 /*** Select a scoped registry before the project default registry. */
