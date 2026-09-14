@@ -1,4 +1,5 @@
 export {
+  APM_PLAN_SUPPORT,
   APM_STATUS_SUPPORT,
   planAsync,
   resolveMigrationPath,
