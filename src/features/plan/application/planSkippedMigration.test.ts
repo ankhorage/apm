@@ -59,6 +59,7 @@ function migrationResolutionPort(): ApmPlanResolutionPort {
     resolveAsync: (request) =>
       Promise.resolve({
         installRootId: request.installRootId,
+        installRootPath: request.installRootPath,
         complete: true,
         manager: request.manager,
         files: [
