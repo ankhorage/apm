@@ -87,7 +87,11 @@ async function releaseOwnedAsync(
   const owned = ownedLocks.get(lockPath);
   if (owned === undefined || owned.operationId !== operationId) return;
   const current = await readLockAsync(rootPath);
-  if (current !== undefined && sameLock(current, owned)) {
+  if (current === undefined) {
+    ownedLocks.delete(lockPath);
+    return;
+  }
+  if (sameLock(current, owned)) {
     await removeFileWithinRoot({ rootPath, filePath: lockPath });
   }
   ownedLocks.delete(lockPath);
