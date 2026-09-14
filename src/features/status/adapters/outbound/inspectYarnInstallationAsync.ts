@@ -71,20 +71,26 @@ interface PnpLocator {
 /*** Extract package ident/reference pairs from Yarn's non-executable PnP data table. */
 function readPnpLocators(value: unknown): readonly PnpLocator[] {
   if (!isRecord(value) || !Array.isArray(value.packageRegistryData)) return [];
-  return value.packageRegistryData.flatMap((identEntry) => {
-    if (
-      !Array.isArray(identEntry) ||
-      typeof identEntry[0] !== 'string' ||
-      !Array.isArray(identEntry[1])
-    ) {
-      return [];
-    }
-    return identEntry[1].flatMap((referenceEntry) =>
-      Array.isArray(referenceEntry) && typeof referenceEntry[0] === 'string'
-        ? [{ name: identEntry[0], reference: referenceEntry[0] }]
-        : [],
-    );
-  });
+  const registryEntries: readonly unknown[] = value.packageRegistryData;
+  return registryEntries.flatMap(readPnpRegistryEntry);
+}
+
+/*** Narrow one packageRegistryData entry before reading its locator references. */
+function readPnpRegistryEntry(value: unknown): readonly PnpLocator[] {
+  if (!Array.isArray(value)) return [];
+  const entry: readonly unknown[] = value;
+  const [name, references] = entry;
+  if (typeof name !== 'string' || !Array.isArray(references)) return [];
+  const referenceEntries: readonly unknown[] = references;
+  return referenceEntries.flatMap((referenceEntry) => readPnpReference(name, referenceEntry));
+}
+
+/*** Narrow one Yarn PnP reference tuple into serializable locator evidence. */
+function readPnpReference(name: string, value: unknown): readonly PnpLocator[] {
+  if (!Array.isArray(value)) return [];
+  const entry: readonly unknown[] = value;
+  const [reference] = entry;
+  return typeof reference === 'string' ? [{ name, reference }] : [];
 }
 
 /*** Convert one PnP locator match into installed/absent package evidence. */
