@@ -13,6 +13,7 @@ import { buildPlanIdSource } from '../domain/buildPlanIdSource.js';
 import { buildPlanInputFingerprintSource } from '../domain/buildPlanInputFingerprintSource.js';
 import { buildPlanResolutionRequests } from '../domain/buildPlanResolutionRequests.js';
 import { buildPlanSteps } from '../domain/buildPlanSteps.js';
+import { mergePlanSelections } from '../domain/mergePlanSelections.js';
 import { normalizePlanPolicy } from '../domain/normalizePlanPolicy.js';
 import { orderPlanSteps } from '../domain/orderPlanSteps.js';
 import { selectDependencyTargets } from '../domain/selectDependencyTargets.js';
@@ -22,17 +23,7 @@ export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promi
   const policy = normalizePlanPolicy(input.policy);
   const inputFingerprint = await fingerprintAsync(input, policy, ports);
   const evidence = await buildPlanEvidenceAsync(input, policy, inputFingerprint, ports);
-  const planCore = stablePlanCore(
-    input,
-    policy,
-    inputFingerprint,
-    evidence.targets,
-    evidence.resolutions,
-    evidence.protocol,
-    evidence.effects,
-    evidence.steps,
-    evidence.blockers,
-  );
+  const planCore = stablePlanCore(input, policy, inputFingerprint, evidence);
   const id = await ports.digest.digestAsync(buildPlanIdSource(planCore));
   return { schemaVersion: 1, operation: 'plan', id, ...planCore };
 }
@@ -46,47 +37,113 @@ interface PlanEvidence {
   readonly blockers: readonly ApmPlanBlocker[];
 }
 
-/*** Resolve dependency, protocol, shipment, and DAG evidence into one deterministic planning snapshot. */
+interface DependencyIterationEvidence {
+  readonly targets: ApmPlanResult['targets'];
+  readonly resolutions: readonly ApmPlanResolutionResult[];
+  readonly blockers: readonly ApmPlanBlocker[];
+}
+
+/*** Resolve dependency and owner requirements repeatedly until the reviewed target graph converges. */
 async function buildPlanEvidenceAsync(
   input: ApmPlanInput,
   policy: ReturnType<typeof normalizePlanPolicy>,
   inputFingerprint: ApmPlanInputFingerprint,
   ports: ApmPlanPorts,
 ): Promise<PlanEvidence> {
-  const statusBlockers = input.status.complete ? [] : [incompleteStatusBlocker(input)];
-  const selected = selectDependencyTargets(input.status, policy);
-  const resolutionRequests = buildPlanResolutionRequests(input.status, policy, selected.targets);
-  const preliminaryBlockers = [
-    ...statusBlockers,
-    ...selected.blockers,
-    ...resolutionRequests.blockers,
-  ];
-  const resolutions =
-    preliminaryBlockers.length === 0
-      ? await resolveAllAsync(resolutionRequests.requests, ports)
-      : [];
+  return runPlanIterationAsync(input, policy, policy, inputFingerprint, ports, 1);
+}
+
+/*** Run one native/protocol planning iteration and either converge, block, or request another pass. */
+async function runPlanIterationAsync(
+  input: ApmPlanInput,
+  requestedPolicy: ReturnType<typeof normalizePlanPolicy>,
+  workingPolicy: ReturnType<typeof normalizePlanPolicy>,
+  inputFingerprint: ApmPlanInputFingerprint,
+  ports: ApmPlanPorts,
+  iteration: number,
+): Promise<PlanEvidence> {
+  const dependency = await resolveDependencyIterationAsync(input, workingPolicy, ports);
+  if (dependency.blockers.length > 0) {
+    return blockedEvidence(dependency, EMPTY_PROTOCOL_RESULT, dependency.blockers);
+  }
   const protocol = await planProtocolAsync(
     input,
-    policy,
+    workingPolicy,
     inputFingerprint,
-    selected.targets,
-    resolutions,
+    dependency.targets,
+    dependency.resolutions,
     ports,
   );
-  const effects = planEffects(selected.targets.length > 0, protocol.effects);
-  const ordered = orderPlanSteps(buildPlanSteps(resolutions, protocol, effects));
-  const blockers = [
-    ...preliminaryBlockers,
-    ...resolutions.flatMap(({ blockers: resolutionBlockers }) => resolutionBlockers),
-    ...protocol.blockers,
-    ...ordered.blockers,
-  ];
+  if (!protocol.complete || protocol.blockers.length > 0) {
+    return blockedEvidence(dependency, protocol, protocol.blockers);
+  }
+  const merged = mergePlanSelections(workingPolicy, protocol.requiredSelections);
+  if (merged.blockers.length > 0) return blockedEvidence(dependency, protocol, merged.blockers);
+  if (!merged.changed) return finalizedEvidence(dependency, protocol);
+  if (iteration >= requestedPolicy.maxGeneratorIterations) {
+    return blockedEvidence(dependency, protocol, [nonconvergentGeneratorBlocker(iteration, protocol)]);
+  }
+  return runPlanIterationAsync(
+    input,
+    requestedPolicy,
+    merged.policy,
+    inputFingerprint,
+    ports,
+    iteration + 1,
+  );
+}
+
+/*** Select targets and run native package-manager resolution for one effective policy iteration. */
+async function resolveDependencyIterationAsync(
+  input: ApmPlanInput,
+  policy: ReturnType<typeof normalizePlanPolicy>,
+  ports: ApmPlanPorts,
+): Promise<DependencyIterationEvidence> {
+  const statusBlockers = input.status.complete ? [] : [incompleteStatusBlocker(input)];
+  const selected = selectDependencyTargets(input.status, policy);
+  const requests = buildPlanResolutionRequests(input.status, policy, selected.targets);
+  const preliminaryBlockers = [...statusBlockers, ...selected.blockers, ...requests.blockers];
+  const resolutions =
+    preliminaryBlockers.length === 0 ? await resolveAllAsync(requests.requests, ports) : [];
   return {
     targets: selected.targets,
     resolutions,
+    blockers: [
+      ...preliminaryBlockers,
+      ...resolutions.flatMap(({ blockers }) => blockers),
+    ],
+  };
+}
+
+/*** Finalize shipment and DAG evidence after dependency/owner selections have converged. */
+function finalizedEvidence(
+  dependency: DependencyIterationEvidence,
+  protocol: ApmPlanProtocolResult,
+): PlanEvidence {
+  const effects = planEffects(dependency.targets.length > 0, protocol.effects);
+  const ordered = orderPlanSteps(buildPlanSteps(dependency.resolutions, protocol, effects));
+  return {
+    targets: dependency.targets,
+    resolutions: dependency.resolutions,
     protocol,
     effects,
     steps: ordered.steps,
+    blockers: ordered.blockers,
+  };
+}
+
+/*** Preserve diagnostics/targets while withholding executable intermediate changes from blocked iterations. */
+function blockedEvidence(
+  dependency: DependencyIterationEvidence,
+  protocol: ApmPlanProtocolResult,
+  blockers: readonly ApmPlanBlocker[],
+): PlanEvidence {
+  return {
+    targets: dependency.targets,
+    resolutions: dependency.resolutions,
+    protocol,
+    effects: [],
+    steps: [],
     blockers,
   };
 }
@@ -183,6 +240,7 @@ async function planProtocolAsync(
 
 const EMPTY_PROTOCOL_RESULT: ApmPlanProtocolResult = {
   complete: true,
+  requiredSelections: [],
   files: [],
   artifacts: [],
   steps: [],
@@ -227,46 +285,48 @@ function stablePlanCore(
   input: ApmPlanInput,
   policy: ReturnType<typeof normalizePlanPolicy>,
   inputFingerprint: ApmPlanInputFingerprint,
-  targets: ApmPlanResult['targets'],
-  resolutions: readonly ApmPlanResolutionResult[],
-  protocol: ApmPlanProtocolResult,
-  effects: readonly ApmReleaseEffect[],
-  steps: ApmPlanResult['steps'],
-  blockers: readonly ApmPlanBlocker[],
+  evidence: PlanEvidence,
 ): Omit<ApmPlanResult, 'schemaVersion' | 'operation' | 'id'> {
-  const files = [...resolutions.flatMap(({ files: items }) => items), ...protocol.files].sort(
-    (left, right) => compareText(left.path, right.path),
-  );
-  const packages = resolutions
-    .flatMap(({ packages: items }) => items)
-    .sort((left, right) => compareText(left.id, right.id));
-  const artifacts = [
-    ...resolutions.flatMap(({ artifacts: items }) => items),
-    ...protocol.artifacts,
-  ].sort((left, right) => compareText(left.id, right.id));
+  const executable =
+    input.status.complete &&
+    evidence.resolutions.every(({ complete }) => complete) &&
+    evidence.protocol.complete &&
+    evidence.blockers.length === 0;
+  const files = executable
+    ? [...evidence.resolutions.flatMap(({ files }) => files), ...evidence.protocol.files].sort(
+        (left, right) => compareText(left.path, right.path),
+      )
+    : [];
+  const packages = executable
+    ? evidence.resolutions
+        .flatMap(({ packages: items }) => items)
+        .sort((left, right) => compareText(left.id, right.id))
+    : [];
+  const artifacts = executable
+    ? [
+        ...evidence.resolutions.flatMap(({ artifacts: items }) => items),
+        ...evidence.protocol.artifacts,
+      ].sort((left, right) => compareText(left.id, right.id))
+    : [];
   const diagnostics = [
     ...input.status.diagnostics,
-    ...resolutions.flatMap(({ diagnostics: items }) => items),
-    ...protocol.diagnostics,
+    ...evidence.resolutions.flatMap(({ diagnostics: items }) => items),
+    ...evidence.protocol.diagnostics,
   ];
   return {
     rootPath: input.status.rootPath,
-    complete:
-      input.status.complete &&
-      resolutions.every(({ complete }) => complete) &&
-      protocol.complete &&
-      blockers.length === 0,
+    complete: executable,
     policy,
     executor: input.executor,
     inputFingerprint,
-    targets,
+    targets: evidence.targets,
     files,
     packages,
     artifacts,
-    steps,
-    effects,
-    findings: [...input.status.findings, ...protocol.findings],
-    blockers,
+    steps: executable ? evidence.steps : [],
+    effects: evidence.effects,
+    findings: [...input.status.findings, ...evidence.protocol.findings],
+    blockers: evidence.blockers,
     diagnostics,
   };
 }
@@ -290,6 +350,23 @@ function resolverFailureBlocker(request: ApmPlanResolutionRequest, error: unknow
     scope: { kind: 'install-root', id: request.installRootId, path: request.installRootPath },
     evidence: [error instanceof Error ? error.message : 'unknown resolver failure'],
     reason: 'Native package-manager resolution failed before a complete target graph was produced.',
+  };
+}
+
+/*** Block owner policies that still demand another dependency graph after the configured iteration bound. */
+function nonconvergentGeneratorBlocker(
+  iteration: number,
+  protocol: ApmPlanProtocolResult,
+): ApmPlanBlocker {
+  return {
+    code: 'plan.generator-nonconvergent',
+    scope: { kind: 'project' },
+    evidence: [
+      `iteration:${iteration}`,
+      ...protocol.requiredSelections.map(({ selector }) => selector.name),
+    ],
+    reason: 'Package-owned dependency requirements did not converge within the planning bound.',
+    nextAction: 'Review owner package policy or raise the explicit iteration bound before re-planning.',
   };
 }
 
