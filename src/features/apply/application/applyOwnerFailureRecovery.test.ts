@@ -5,7 +5,8 @@ import path from 'node:path';
 import { expect, test } from 'bun:test';
 
 import type { ApmApplyJournal, ApmApplyPorts, ApmApplyStepPort } from '../../../types/apply.js';
-import type { ApmPlanStep, ApmPlanStepExecution } from '../../../types/plan.js';
+import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
+import type { ApmPlanStep } from '../../../types/plan.js';
 import type { ApmMigrationDescriptor } from '../../../types/update-protocol.js';
 import { createSha256PlanDigestPort } from '../../plan/adapters/outbound/createSha256PlanDigestPort.js';
 import { planExecutionFixtures } from '../../plan/application/fixtures/planExecutionFixtures.js';
