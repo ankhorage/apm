@@ -7,14 +7,21 @@ import type {
   ApmApplyResult,
 } from '../../../types/apply.js';
 import type { ApmApplyRunOutcome } from '../../../types/apply-runtime.js';
-import type { ApmPlanBlocker, ApmPlanExecutorIdentity, ApmPlanResult } from '../../../types/plan.js';
+import type {
+  ApmPlanBlocker,
+  ApmPlanExecutorIdentity,
+  ApmPlanResult,
+} from '../../../types/plan.js';
 import { applyPermissionBlockers } from '../domain/applyPermissionBlockers.js';
 import { createApplyJournal } from '../domain/createApplyJournal.js';
 import { persistApplyJournalAsync } from './persistApplyJournalAsync.js';
 import { runApplyStepsAsync } from './runApplyStepsAsync.js';
 
 /*** Start or resume one reviewed plan under an exclusive durable project operation lock. */
-export async function applyAsync(input: ApmApplyInput, ports: ApmApplyPorts): Promise<ApmApplyResult> {
+export async function applyAsync(
+  input: ApmApplyInput,
+  ports: ApmApplyPorts,
+): Promise<ApmApplyResult> {
   return input.mode === 'start' ? startApplyAsync(input, ports) : resumeApplyAsync(input, ports);
 }
 
@@ -31,7 +38,13 @@ async function startApplyAsync(
   if (preliminary.length > 0) {
     return blockedResult(operationId, input.plan.rootPath, input.plan.id, preliminary);
   }
-  const lock = await acquireLockAsync(input.plan.rootPath, operationId, input.plan.id, false, ports);
+  const lock = await acquireLockAsync(
+    input.plan.rootPath,
+    operationId,
+    input.plan.id,
+    false,
+    ports,
+  );
   if (lock.state !== 'acquired') {
     return blockedResult(operationId, input.plan.rootPath, input.plan.id, [lockBlocker(lock)]);
   }
@@ -59,30 +72,54 @@ async function startApplyAsync(
   }
 }
 
-/*** Resume one durable operation without revalidating the original pre-mutation project fingerprint. */
+/*** Load one durable operation before delegating resume validation and lock ownership. */
 async function resumeApplyAsync(
   input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
   ports: ApmApplyPorts,
 ): Promise<ApmApplyResult> {
   const journal = await ports.journal.readAsync(input.rootPath, input.operationId);
-  if (journal === undefined) {
-    return blockedResult(input.operationId, input.rootPath, undefined, [operationNotFoundBlocker(input)]);
-  }
+  return journal === undefined
+    ? blockedResult(input.operationId, input.rootPath, undefined, [
+        operationNotFoundBlocker(input),
+      ])
+    : resumeExistingJournalAsync(input, journal, ports);
+}
+
+/*** Validate durable identity, executor and permissions without reusing the original project fingerprint. */
+async function resumeExistingJournalAsync(
+  input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
+  journal: ApmApplyJournal,
+  ports: ApmApplyPorts,
+): Promise<ApmApplyResult> {
   const journalBlockers = validateResumeJournal(input, journal, ports.executor.current());
   if (journalBlockers.length > 0) {
-    return blockedResult(input.operationId, input.rootPath, journal.plan.id, journalBlockers, journal);
-  }
-  if (journal.status === 'completed') return completedDuplicateResult(journal);
-  const permissionBlockers = applyPermissionBlockers(journal.plan, input.permissions);
-  if (permissionBlockers.length > 0) {
     return blockedResult(
       input.operationId,
       input.rootPath,
       journal.plan.id,
-      permissionBlockers,
+      journalBlockers,
       journal,
     );
   }
+  if (journal.status === 'completed') return completedDuplicateResult(journal);
+  const permissionBlockers = applyPermissionBlockers(journal.plan, input.permissions);
+  return permissionBlockers.length > 0
+    ? blockedResult(
+        input.operationId,
+        input.rootPath,
+        journal.plan.id,
+        permissionBlockers,
+        journal,
+      )
+    : resumeUnderLockAsync(input, journal, ports);
+}
+
+/*** Recover/own the writer lock before resuming from persisted step state. */
+async function resumeUnderLockAsync(
+  input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
+  journal: ApmApplyJournal,
+  ports: ApmApplyPorts,
+): Promise<ApmApplyResult> {
   const lock = await acquireLockAsync(
     input.rootPath,
     input.operationId,
@@ -134,7 +171,7 @@ async function acquireLockAsync(
   });
 }
 
-/*** Validate journal identity and executor compatibility without treating intentional applied changes as staleness. */
+/*** Validate journal identity and executor compatibility without treating applied changes as staleness. */
 function validateResumeJournal(
   input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
   journal: ApmApplyJournal,
@@ -241,7 +278,9 @@ function planIncompleteBlocker(plan: ApmPlanResult): ApmApplyBlocker {
 }
 
 /*** Reject a live, mismatched or unprovably stale writer lock. */
-function lockBlocker(lock: Exclude<ApmApplyLockAcquireResult, { readonly state: 'acquired' }>): ApmApplyBlocker {
+function lockBlocker(
+  lock: Exclude<ApmApplyLockAcquireResult, { readonly state: 'acquired' }>,
+): ApmApplyBlocker {
   return {
     code: 'apply.lock-conflict',
     scope: { kind: 'operation', id: lock.lock.operationId },
