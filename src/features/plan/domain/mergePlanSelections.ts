@@ -69,7 +69,8 @@ function policyForbidsSelectionBlocker(selection: ApmPlanPackageSelection): ApmP
     code: 'plan.generator-selection-conflict',
     scope: { kind: 'package', id: selection.selector.name },
     evidence: [selectorKey(selection), targetKey(selection)],
-    reason: 'Package-owned planning requires a dependency change but dependency updates are disabled.',
+    reason:
+      'Package-owned planning requires a dependency change but dependency updates are disabled.',
     nextAction: 'Allow selected dependency updates or keep the current package/projection state.',
   };
 }

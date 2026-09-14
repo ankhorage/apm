@@ -22,7 +22,11 @@ import { selectDependencyTargets } from '../domain/selectDependencyTargets.js';
 /*** Build one serializable reproducible update plan without mutating the inspected project. */
 export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promise<ApmPlanResult> {
   const policy = normalizePlanPolicy(input.policy);
-  const inputFingerprint = await createPlanInputFingerprintAsync(input.status, policy, ports.digest);
+  const inputFingerprint = await createPlanInputFingerprintAsync(
+    input.status,
+    policy,
+    ports.digest,
+  );
   const evidence = await buildPlanEvidenceAsync(input, policy, inputFingerprint, ports);
   const planCore = buildPlanCore({
     planInput: input,
