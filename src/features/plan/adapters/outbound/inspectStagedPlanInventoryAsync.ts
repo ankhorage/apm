@@ -17,7 +17,6 @@ export async function inspectStagedPlanInventoryAsync(
   const root = inventory.roots.find(
     (candidate) => path.resolve(candidate.rootPath) === path.resolve(stage.rootPath),
   );
-  if (root === undefined || root.manager.name !== request.manager || !root.complete)
-    return undefined;
+  if (root?.manager.name !== request.manager || root?.complete !== true) return undefined;
   return root;
 }
