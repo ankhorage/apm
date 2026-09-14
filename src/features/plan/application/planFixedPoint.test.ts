@@ -126,6 +126,7 @@ function resolutionResult(request: ApmPlanResolutionRequest) {
   }));
   return {
     installRootId: request.installRootId,
+    installRootPath: request.installRootPath,
     complete: true,
     manager: request.manager,
     files: [

@@ -36,6 +36,1112 @@
     "structuredRows": []
   },
   {
+    "name": "ApmApplyBlocker",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 118,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyBlockerCode"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "code",
+        "kind": "property",
+        "type": "ApmApplyBlockerCode",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "scope",
+        "kind": "property",
+        "type": "{ readonly kind: \"project\" | \"operation\" | \"step\" | \"host\"; readonly id?: string; readonly path?: string; }",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyBlockerCode",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 103,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyCancellationPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 205,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "isCancellationRequestedAsync",
+        "kind": "property",
+        "type": "(operationId: string) => Promise<boolean>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyClockPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 130,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "nowIso",
+        "kind": "property",
+        "type": "() => string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyExecutorIdentityPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 175,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanExecutorIdentity"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "current",
+        "kind": "property",
+        "type": "() => ApmPlanExecutorIdentity",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyFailure",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 41,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "code",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 15,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyJournal",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 57,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmApplyFailure",
+      "ApmApplyJournalStatus",
+      "ApmApplyPermissions",
+      "ApmApplyStepJournal",
+      "ApmPlanResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "createdAt",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "failure",
+        "kind": "property",
+        "type": "ApmApplyFailure",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "permissions",
+        "kind": "property",
+        "type": "ApmApplyPermissions",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "plan",
+        "kind": "property",
+        "type": "ApmPlanResult",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmApplyJournalStatus",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "steps",
+        "kind": "property",
+        "type": "readonly ApmApplyStepJournal[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "updatedAt",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyJournalPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 154,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyJournal"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "createAsync",
+        "kind": "property",
+        "type": "(journal: ApmApplyJournal) => Promise<void>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "readAsync",
+        "kind": "property",
+        "type": "(rootPath: string, operationId: string) => Promise<ApmApplyJournal | undefined>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "writeAsync",
+        "kind": "property",
+        "type": "(journal: ApmApplyJournal) => Promise<void>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyJournalStatus",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 28,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyLockAcquireResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 79,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyLockIdentity",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 70,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "acquiredAt",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "hostname",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "pid",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "planId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyLockPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 138,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyLockAcquireResult", "ApmApplyLockIdentity"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "acquireAsync",
+        "kind": "property",
+        "type": "(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly resume: boolean; }) => Promise<ApmApplyLockAcquireResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "recoverStaleAsync",
+        "kind": "property",
+        "type": "(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly stale: ApmApplyLockIdentity; }) => Promise<ApmApplyLockAcquireResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "releaseAsync",
+        "kind": "property",
+        "type": "(rootPath: string, operationId: string) => Promise<void>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyOperationIdPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 134,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "createOperationId",
+        "kind": "property",
+        "type": "() => string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyPermissions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 9,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "externalEffects",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "lifecycleScripts",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "ownerCode",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyPlanValidationPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 167,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmPlanBlocker",
+      "ApmPlanExecutorIdentity",
+      "ApmPlanResult",
+      "ApmStatusResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "validateAsync",
+        "kind": "property",
+        "type": "(input: { readonly plan: ApmPlanResult; readonly status: ApmStatusResult; readonly executor: ApmPlanExecutorIdentity; }) => Promise<readonly ApmPlanBlocker[]>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyPorts",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 209,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmApplyCancellationPort",
+      "ApmApplyClockPort",
+      "ApmApplyExecutorIdentityPort",
+      "ApmApplyJournalPort",
+      "ApmApplyLockPort",
+      "ApmApplyOperationIdPort",
+      "ApmApplyPlanValidationPort",
+      "ApmApplyProgressPort",
+      "ApmApplyStatusPort",
+      "ApmApplyStepPort"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "cancellation",
+        "kind": "property",
+        "type": "ApmApplyCancellationPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "clock",
+        "kind": "property",
+        "type": "ApmApplyClockPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "executor",
+        "kind": "property",
+        "type": "ApmApplyExecutorIdentityPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "journal",
+        "kind": "property",
+        "type": "ApmApplyJournalPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "lock",
+        "kind": "property",
+        "type": "ApmApplyLockPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "ApmApplyOperationIdPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "planValidation",
+        "kind": "property",
+        "type": "ApmApplyPlanValidationPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "progress",
+        "kind": "property",
+        "type": "ApmApplyProgressPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmApplyStatusPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "step",
+        "kind": "property",
+        "type": "ApmApplyStepPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyProgressEvent",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 194,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "message",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"pending\" | \"intended\" | \"effect-started\" | \"effect-observed\" | \"committed\" | \"failed\" | \"cancelled\" | \"recovery-required\" | \"running\" | \"completed\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "stepId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyProgressPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 201,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyProgressEvent"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "publishAsync",
+        "kind": "property",
+        "type": "(event: ApmApplyProgressEvent) => Promise<void>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 225,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmApplyBlocker",
+      "ApmApplyJournal",
+      "ApmApplyResultStatus",
+      "ApmStatusDiagnostic"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmApplyBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "journal",
+        "kind": "property",
+        "type": "ApmApplyJournal",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "operation",
+        "kind": "property",
+        "type": "\"apply\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "planId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmApplyResultStatus",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyResultStatus",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 222,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyStatusPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 163,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectStatusAsync",
+        "kind": "property",
+        "type": "(rootPath: string) => Promise<ApmStatusResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyStepExecutionResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 96,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyFailure", "ApmStatusDiagnostic"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "failure",
+        "kind": "property",
+        "type": "ApmApplyFailure",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"unknown\" | \"failed\" | \"completed\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyStepJournal",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 48,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyFailure", "ApmApplyStepState"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "attempts",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "failure",
+        "kind": "property",
+        "type": "ApmApplyFailure",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "ApmApplyStepState",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "stepId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "updatedAt",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyStepObservation",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 90,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"unknown\" | \"pending\" | \"conflict\" | \"satisfied\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyStepPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 179,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmApplyJournal",
+      "ApmApplyStepExecutionResult",
+      "ApmApplyStepObservation",
+      "ApmPlanStep"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "executeAsync",
+        "kind": "property",
+        "type": "(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "observeAsync",
+        "kind": "property",
+        "type": "(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepObservation>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rollbackAsync",
+        "kind": "property",
+        "type": "(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmApplyStepState",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/apply.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply.ts",
+      "line": 31,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "ApmAvailabilityEvidence",
     "description": null,
     "isReadme": false,
@@ -2179,7 +3285,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 120,
+      "line": 121,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2240,7 +3346,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 83,
+      "line": 84,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2294,7 +3400,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 55,
+      "line": 56,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2312,7 +3418,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 77,
+      "line": 78,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2352,7 +3458,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 91,
+      "line": 92,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2455,7 +3561,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 10,
+      "line": 11,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2473,7 +3579,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 195,
+      "line": 196,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2499,7 +3605,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 177,
+      "line": 178,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2539,7 +3645,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 111,
+      "line": 112,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2600,7 +3706,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 183,
+      "line": 184,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2640,7 +3746,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 199,
+      "line": 200,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2680,7 +3786,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 34,
+      "line": 35,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2713,7 +3819,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 12,
+      "line": 13,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2760,7 +3866,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 47,
+      "line": 48,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2814,7 +3920,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 39,
+      "line": 40,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2868,7 +3974,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 250,
+      "line": 252,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2908,7 +4014,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 189,
+      "line": 190,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2948,7 +4054,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 246,
+      "line": 248,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2974,7 +4080,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 242,
+      "line": 244,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3000,7 +4106,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 222,
+      "line": 224,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3060,7 +4166,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 230,
+      "line": 232,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3151,7 +4257,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 152,
+      "line": 153,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3198,7 +4304,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 173,
+      "line": 174,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3224,7 +4330,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 140,
+      "line": 141,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3306,7 +4412,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 159,
+      "line": 160,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3410,7 +4516,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 129,
+      "line": 130,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3485,7 +4591,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 256,
+      "line": 258,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3606,7 +4712,7 @@
       {
         "name": "schemaVersion",
         "kind": "property",
-        "type": "1",
+        "type": "2",
         "required": true,
         "description": null
       },
@@ -3636,17 +4742,24 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 205,
+      "line": 206,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": [],
+    "relatedSymbols": ["ApmPlanStepExecution"],
     "signatures": [],
     "members": [
       {
         "name": "evidence",
         "kind": "property",
         "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "execution",
+        "kind": "property",
+        "type": "ApmPlanStepExecution",
         "required": true,
         "description": null
       },
@@ -3696,6 +4809,24 @@
     "structuredRows": []
   },
   {
+    "name": "ApmPlanStepExecution",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/plan-execution.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan-execution.ts",
+      "line": 27,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "ApmPlanTargetSelection",
     "description": null,
     "isReadme": false,
@@ -3704,7 +4835,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 19,
+      "line": 20,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3722,7 +4853,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 106,
+      "line": 107,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3744,6 +4875,24 @@
         "description": null
       }
     ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanValidationCheck",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/plan-execution.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan-execution.ts",
+      "line": 13,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
     "structuredRows": []
   },
   {
@@ -5641,6 +6790,348 @@
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyCheckKind",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 13,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyCheckResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 16,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyCheckKind", "ApmVerifyCheckStatus"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "ApmVerifyCheckKind",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmVerifyCheckStatus",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyCheckStatus",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 11,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 6,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyJournalPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 25,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyJournal"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "readAsync",
+        "kind": "property",
+        "type": "(rootPath: string, operationId: string) => Promise<ApmApplyJournal | undefined>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyPorts",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 44,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyJournalPort", "ApmVerifyStatusPort", "ApmVerifyStepPort"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "journal",
+        "kind": "property",
+        "type": "ApmVerifyJournalPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmVerifyStatusPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "step",
+        "kind": "property",
+        "type": "ApmVerifyStepPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 50,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmReleaseEffect",
+      "ApmStatusDiagnostic",
+      "ApmStatusFinding",
+      "ApmVerifyCheckResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "checks",
+        "kind": "property",
+        "type": "readonly ApmVerifyCheckResult[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "findings",
+        "kind": "property",
+        "type": "readonly ApmStatusFinding[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "followUp",
+        "kind": "property",
+        "type": "readonly ApmReleaseEffect[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operation",
+        "kind": "property",
+        "type": "\"verify\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "planId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "verified",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyStatusPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 32,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectStatusAsync",
+        "kind": "property",
+        "type": "(rootPath: string) => Promise<ApmStatusResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmVerifyStepPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify.ts",
+      "line": 36,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanResult", "ApmPlanStep", "ApmStatusResult", "ApmVerifyCheckResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "verifyAsync",
+        "kind": "property",
+        "type": "(input: { readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>",
+        "required": true,
+        "description": null
+      }
+    ],
     "structuredRows": []
   },
   {

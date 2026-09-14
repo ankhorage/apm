@@ -1,4 +1,7 @@
+export type * from './apply.js';
+export type * from './apply-project.js';
 export type * from './plan.js';
+export type * from './plan-execution.js';
 export type { ApmRegistryAvailabilityOptions, ApmRegistryFetch } from './registry.js';
 export type {
   ApmAvailabilityEvidence,
@@ -41,3 +44,5 @@ export type {
 export type * from './update-extension.js';
 export type * from './update-protocol.js';
 export type * from './update-validation.js';
+export type * from './verify.js';
+export type * from './verify-project.js';

@@ -26,6 +26,7 @@ export function buildPlanSteps(
 function resolutionSteps(resolution: ApmPlanResolutionResult): readonly ApmPlanStep[] {
   const fileStepId = `dependency-files:${resolution.installRootId}`;
   const installStepId = `install:${resolution.installRootId}`;
+  const filePaths = resolution.files.map(({ path }) => path);
   const fileStep =
     resolution.files.length === 0
       ? []
@@ -36,7 +37,11 @@ function resolutionSteps(resolution: ApmPlanResolutionResult): readonly ApmPlanS
             prerequisites: [],
             installRootId: resolution.installRootId,
             reason: 'Apply reviewed manifest and lockfile changes produced by native resolution.',
-            evidence: resolution.files.map(({ path }) => path),
+            evidence: filePaths,
+            execution: {
+              kind: 'dependency-files' as const,
+              filePaths,
+            },
           },
         ];
   return [
@@ -48,6 +53,17 @@ function resolutionSteps(resolution: ApmPlanResolutionResult): readonly ApmPlanS
       installRootId: resolution.installRootId,
       reason: 'Materialize the already resolved dependency graph without selecting new versions.',
       evidence: resolution.packages.map(({ id }) => id),
+      execution: {
+        kind: 'install',
+        installRootPath: resolution.installRootPath,
+        manager: resolution.manager,
+        ...(resolution.managerVersion === undefined
+          ? {}
+          : { managerVersion: resolution.managerVersion }),
+        ...(resolution.linker === undefined ? {} : { linker: resolution.linker }),
+        packageIds: resolution.packages.map(({ id }) => id),
+        lifecycleScripts: false,
+      },
     },
   ];
 }
@@ -60,6 +76,10 @@ function validationStep(steps: readonly ApmPlanStep[]): ApmPlanStep {
     prerequisites: terminalStepIds(steps),
     reason: 'Verify dependency graph, migrations and projections after reviewed local changes.',
     evidence: [],
+    execution: {
+      kind: 'validation',
+      checks: [{ id: 'dependency-state', kind: 'dependency-state' }],
+    },
   };
 }
 
@@ -83,6 +103,7 @@ function followUpStep(effect: ApmReleaseEffect, index: number, validationId: str
     prerequisites: [validationId],
     reason,
     evidence,
+    execution: { kind: 'follow-up', effect },
   };
 }
 

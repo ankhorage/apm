@@ -4,6 +4,7 @@ import { expect, test } from 'bun:test';
 
 import type { ApmPlanDigestPort, ApmPlanProtocolPort } from '../../../types/plan.js';
 import type { ApmStatusResult } from '../../../types/status.js';
+import { planExecutionFixtures } from './fixtures/planExecutionFixtures.js';
 import { planAsync } from './planAsync.js';
 
 const DIGEST: ApmPlanDigestPort = {
@@ -66,6 +67,14 @@ function projectionProtocolPort(): ApmPlanProtocolPort {
             owner: '@owner/package',
             reason: 'Generator fingerprint changed and the owned projection is stale.',
             evidence: ['generator:v2'],
+            execution: planExecutionFixtures.projection({
+              projectionId: 'generated',
+              path: 'generated.json',
+              content: '{"version":2}',
+              beforeDigest: 'old-generator-output',
+              afterDigest: 'new-generator-output',
+              generatorFingerprint: 'generator:v2',
+            }),
           },
         ],
         effects: [],

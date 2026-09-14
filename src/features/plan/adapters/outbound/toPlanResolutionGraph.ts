@@ -7,6 +7,7 @@ import type {
   ApmInstallRootInventory,
   ApmLockedPackageEvidence,
 } from '../../../../types/status.js';
+import { packageInstanceId } from '../../../../utils/packageInstanceId.js';
 
 /*** Convert one native staged lock inventory into globally unique serializable plan graph evidence. */
 export function toPlanResolutionGraph(
@@ -24,18 +25,18 @@ export function toPlanResolutionGraph(
   );
   const knownPackages = root.lockedPackages.filter(isPlanArtifactPackage);
   const packages = knownPackages.map((pkg) => ({
-    id: globalPackageId(installRootId, pkg.id),
+    id: packageInstanceId(installRootId, pkg.id),
     name: pkg.name,
     ...(pkg.version === undefined ? {} : { version: pkg.version }),
     direct: directIds.has(pkg.id),
     source: pkg.source,
     dependencies: pkg.dependencies.flatMap(({ packageId }) =>
-      packageId === undefined ? [] : [globalPackageId(installRootId, packageId)],
+      packageId === undefined ? [] : [packageInstanceId(installRootId, packageId)],
     ),
     ...(pkg.peerContext === undefined ? {} : { peerContext: pkg.peerContext }),
   }));
   const artifacts = knownPackages.map((pkg) => ({
-    id: globalPackageId(installRootId, pkg.id),
+    id: packageInstanceId(installRootId, pkg.id),
     packageName: pkg.name,
     ...(pkg.version === undefined ? {} : { version: pkg.version }),
     source: pkg.source,
@@ -65,17 +66,12 @@ function unknownArtifactSourceBlocker(
 ): ApmPlanBlocker {
   return {
     code: 'plan.artifact-identity-unknown',
-    scope: { kind: 'package', id: globalPackageId(installRootId, pkg.id) },
+    scope: { kind: 'package', id: packageInstanceId(installRootId, pkg.id) },
     evidence: [pkg.name, pkg.id],
     reason: 'Native lock evidence did not identify a reproducible package artifact source.',
     nextAction:
       'Use a supported registry, workspace, file, or git package source before saving this plan.',
   };
-}
-
-/*** Prefix manager-native instance IDs with the original install-root ID to avoid cross-root collisions. */
-function globalPackageId(rootId: string, packageId: string): string {
-  return `${rootId}::${packageId}`;
 }
 
 /*** Compare graph identities without locale-dependent ordering. */

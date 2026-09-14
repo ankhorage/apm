@@ -13,6 +13,18 @@ graph LR
   module_src_cli_renderUnavailableOperation_ts["src/cli/renderUnavailableOperation.ts"]
   module_src_cli_runAsync_test_ts["src/cli/runAsync.test.ts"]
   module_src_cli_runAsync_ts["src/cli/runAsync.ts"]
+  module_src_features_apply_application_applyAsync_test_ts["src/features/apply/application/applyAsync.test.ts"]
+  module_src_features_apply_application_applyAsync_ts["src/features/apply/application/applyAsync.ts"]
+  module_src_features_apply_application_finishApplyOperationAsync_ts["src/features/apply/application/finishApplyOperationAsync.ts"]
+  module_src_features_apply_application_persistApplyJournalAsync_ts["src/features/apply/application/persistApplyJournalAsync.ts"]
+  module_src_features_apply_application_runApplyStepsAsync_ts["src/features/apply/application/runApplyStepsAsync.ts"]
+  module_src_features_apply_domain_applyPermissionBlockers_ts["src/features/apply/domain/applyPermissionBlockers.ts"]
+  module_src_features_apply_domain_applyStepRecoveryPolicy_ts["src/features/apply/domain/applyStepRecoveryPolicy.ts"]
+  module_src_features_apply_domain_createApplyBlocker_ts["src/features/apply/domain/createApplyBlocker.ts"]
+  module_src_features_apply_domain_createApplyFailure_ts["src/features/apply/domain/createApplyFailure.ts"]
+  module_src_features_apply_domain_createApplyJournal_ts["src/features/apply/domain/createApplyJournal.ts"]
+  module_src_features_apply_domain_decideApplyStepObservation_ts["src/features/apply/domain/decideApplyStepObservation.ts"]
+  module_src_features_apply_domain_transitionApplyJournal_ts["src/features/apply/domain/transitionApplyJournal.ts"]
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts["src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts"]
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_test_ts["src/features/plan/adapters/outbound/buildPackageManagerPlanCommands.test.ts"]
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_ts["src/features/plan/adapters/outbound/buildPackageManagerPlanCommands.ts"]
@@ -122,8 +134,12 @@ graph LR
   module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts["src/features/update-protocol/utils/isProtocolPackageSubpath.ts"]
   module_src_features_update_protocol_utils_isProtocolProjectPath_ts["src/features/update-protocol/utils/isProtocolProjectPath.ts"]
   module_src_features_update_protocol_utils_migrationIdentity_ts["src/features/update-protocol/utils/migrationIdentity.ts"]
+  module_src_features_verify_application_verifyAsync_ts["src/features/verify/application/verifyAsync.ts"]
   module_src_nodeApm_ts["src/nodeApm.ts"]
+  module_src_types_apply_runtime_ts["src/types/apply-runtime.ts"]
+  module_src_types_apply_ts["src/types/apply.ts"]
   module_src_types_cli_ts["src/types/cli.ts"]
+  module_src_types_plan_execution_ts["src/types/plan-execution.ts"]
   module_src_types_plan_staging_ts["src/types/plan-staging.ts"]
   module_src_types_plan_ts["src/types/plan.ts"]
   module_src_types_public_ts["src/types/public.ts"]
@@ -134,6 +150,7 @@ graph LR
   module_src_types_update_extension_ts["src/types/update-extension.ts"]
   module_src_types_update_protocol_ts["src/types/update-protocol.ts"]
   module_src_types_update_validation_ts["src/types/update-validation.ts"]
+  module_src_types_verify_ts["src/types/verify.ts"]
   module_examples_basic_usage_status_ts --> module_dist_apm_d_ts
   module_examples_basic_usage_status_ts --> module_dist_nodeApm_d_ts
   module_src_cli_commands_apply_ts --> module_src_cli_renderUnavailableOperation_ts
@@ -159,6 +176,51 @@ graph LR
   module_src_cli_runAsync_ts --> module_src_cli_commands_status_ts
   module_src_cli_runAsync_ts --> module_src_cli_commands_verify_ts
   module_src_cli_runAsync_ts --> module_src_types_cli_ts
+  module_src_features_apply_application_applyAsync_test_ts --> module_src_features_apply_application_applyAsync_ts
+  module_src_features_apply_application_applyAsync_test_ts --> module_src_features_apply_domain_createApplyJournal_ts
+  module_src_features_apply_application_applyAsync_test_ts --> module_src_types_apply_ts
+  module_src_features_apply_application_applyAsync_test_ts --> module_src_types_plan_ts
+  module_src_features_apply_application_applyAsync_test_ts --> module_src_types_status_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_features_apply_application_persistApplyJournalAsync_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_features_apply_application_runApplyStepsAsync_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_features_apply_domain_applyPermissionBlockers_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_features_apply_domain_createApplyJournal_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_types_apply_runtime_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_types_apply_ts
+  module_src_features_apply_application_applyAsync_ts --> module_src_types_plan_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_features_apply_application_persistApplyJournalAsync_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_features_apply_domain_createApplyBlocker_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_features_apply_domain_createApplyFailure_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_types_apply_runtime_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_types_apply_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_types_plan_ts
+  module_src_features_apply_application_finishApplyOperationAsync_ts --> module_src_types_status_ts
+  module_src_features_apply_application_persistApplyJournalAsync_ts --> module_src_features_apply_domain_transitionApplyJournal_ts
+  module_src_features_apply_application_persistApplyJournalAsync_ts --> module_src_types_apply_ts
+  module_src_features_apply_application_persistApplyJournalAsync_ts --> module_src_types_plan_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_features_apply_application_finishApplyOperationAsync_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_features_apply_application_persistApplyJournalAsync_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_features_apply_domain_applyStepRecoveryPolicy_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_features_apply_domain_createApplyBlocker_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_features_apply_domain_createApplyFailure_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_features_apply_domain_decideApplyStepObservation_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_types_apply_runtime_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_types_apply_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_types_plan_ts
+  module_src_features_apply_application_runApplyStepsAsync_ts --> module_src_types_status_ts
+  module_src_features_apply_domain_applyPermissionBlockers_ts --> module_src_types_apply_ts
+  module_src_features_apply_domain_applyPermissionBlockers_ts --> module_src_types_plan_ts
+  module_src_features_apply_domain_applyStepRecoveryPolicy_ts --> module_src_types_plan_ts
+  module_src_features_apply_domain_createApplyBlocker_ts --> module_src_types_apply_ts
+  module_src_features_apply_domain_createApplyBlocker_ts --> module_src_types_plan_ts
+  module_src_features_apply_domain_createApplyFailure_ts --> module_src_types_apply_ts
+  module_src_features_apply_domain_createApplyFailure_ts --> module_src_types_plan_ts
+  module_src_features_apply_domain_createApplyJournal_ts --> module_src_types_apply_ts
+  module_src_features_apply_domain_createApplyJournal_ts --> module_src_types_plan_ts
+  module_src_features_apply_domain_decideApplyStepObservation_ts --> module_src_features_apply_domain_applyStepRecoveryPolicy_ts
+  module_src_features_apply_domain_decideApplyStepObservation_ts --> module_src_types_apply_ts
+  module_src_features_apply_domain_decideApplyStepObservation_ts --> module_src_types_plan_ts
+  module_src_features_apply_domain_transitionApplyJournal_ts --> module_src_types_apply_ts
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts --> module_src_types_plan_staging_ts
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts --> module_src_types_plan_ts
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_test_ts --> module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_ts
@@ -228,6 +290,7 @@ graph LR
   module_src_features_plan_application_planSkippedMigration_test_ts --> module_src_types_plan_ts
   module_src_features_plan_application_planSkippedMigration_test_ts --> module_src_types_status_ts
   module_src_features_plan_application_planSkippedMigration_test_ts --> module_src_types_update_protocol_ts
+  module_src_features_plan_application_planSkippedMigration_test_ts --> module_src_types_update_validation_ts
   module_src_features_plan_application_planTransitiveUpdate_test_ts --> module_src_features_plan_application_planAsync_ts
   module_src_features_plan_application_planTransitiveUpdate_test_ts --> module_src_types_plan_ts
   module_src_features_plan_application_planTransitiveUpdate_test_ts --> module_src_types_status_ts
@@ -454,9 +517,23 @@ graph LR
   module_src_features_update_protocol_domain_validateUpdateExtensionCapabilities_ts --> module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionCapabilities_ts --> module_src_types_update_validation_ts
   module_src_features_update_protocol_utils_createProtocolBlocker_ts --> module_src_types_update_validation_ts
+  module_src_features_verify_application_verifyAsync_ts --> module_src_types_plan_ts
+  module_src_features_verify_application_verifyAsync_ts --> module_src_types_verify_ts
+  module_src_types_apply_runtime_ts --> module_src_types_apply_ts
+  module_src_types_apply_runtime_ts --> module_src_types_status_ts
+  module_src_types_apply_ts --> module_src_types_plan_ts
+  module_src_types_apply_ts --> module_src_types_status_ts
+  module_src_types_plan_execution_ts --> module_src_types_status_ts
+  module_src_types_plan_execution_ts --> module_src_types_update_extension_ts
+  module_src_types_plan_execution_ts --> module_src_types_update_protocol_ts
+  module_src_types_plan_ts --> module_src_types_plan_execution_ts
   module_src_types_plan_ts --> module_src_types_status_ts
   module_src_types_plan_ts --> module_src_types_update_protocol_ts
   module_src_types_status_inventory_ts --> module_src_types_status_ts
   module_src_types_update_extension_ts --> module_src_types_update_protocol_ts
   module_src_types_update_extension_ts --> module_src_types_update_validation_ts
   module_src_types_update_validation_ts --> module_src_types_update_protocol_ts
+  module_src_types_verify_ts --> module_src_types_apply_ts
+  module_src_types_verify_ts --> module_src_types_plan_ts
+  module_src_types_verify_ts --> module_src_types_status_ts
+  module_src_types_verify_ts --> module_src_types_update_protocol_ts

@@ -8,9 +8,11 @@ import { verify } from './commands/verify.js';
 /***
  * Run standalone `apm status|plan|apply|verify` commands.
  *
- * Exit codes are 0 for success, 1 for invalid invocation/execution failure, 2 for incomplete status
- * evidence, and 3 for a reserved operation that is not implemented yet. `--json` requests stable
- * machine-readable command output; human status output is the default.
+ * Exit codes are 0 for success, 1 for invalid invocation/unhandled execution errors, 2 for
+ * blocked/incomplete/unverified outcomes, 4 for a known failed apply, 5 for cancellation, and 6
+ * when explicit recovery is required. `--json` requests stable machine-readable command output.
+ * Apply starts from `--plan <plan.json>` or resumes with `--resume <operationId> [directory]`;
+ * verify selects a durable operation with `--operation <operationId> [directory]`.
  * @readme
  */
 export async function runAsync(argv: readonly string[], context: ApmCliContext): Promise<number> {
@@ -31,7 +33,20 @@ export async function runAsync(argv: readonly string[], context: ApmCliContext):
   }
 }
 
-const HELP_TEXT = `Usage: apm <status|plan|apply|verify> [directory] [--json]\n\nExit codes:\n  0 success\n  1 invalid invocation or execution failure\n  2 incomplete status evidence\n  3 operation reserved but not implemented\n`;
+const HELP_TEXT = `Usage:
+  apm status [directory] [--json] [--offline]
+  apm plan [directory] [--json] [--offline]
+  apm apply (--plan <plan.json> | --resume <operationId> [directory]) [--json] [--allow-owner-code] [--allow-lifecycle-scripts] [--allow-external-effects]
+  apm verify --operation <operationId> [directory] [--json]
+
+Exit codes:
+  0 success
+  1 invalid invocation or unhandled execution error
+  2 blocked, incomplete, or unverified
+  4 known apply failure
+  5 apply cancelled
+  6 explicit recovery required
+`;
 
 if (import.meta.main) {
   process.exitCode = await runAsync(process.argv.slice(2), {

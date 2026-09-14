@@ -14,7 +14,7 @@
     {
       "id": "npm",
       "label": "npm",
-      "value": "v0.3.0",
+      "value": "v0.4.0",
       "color": "cb3837"
     },
     {
@@ -101,6 +101,33 @@
       "exports": [
         "APM_PLAN_SUPPORT",
         "APM_STATUS_SUPPORT",
+        "ApmApplyBlocker",
+        "ApmApplyBlockerCode",
+        "ApmApplyCancellationPort",
+        "ApmApplyClockPort",
+        "ApmApplyExecutorIdentityPort",
+        "ApmApplyFailure",
+        "ApmApplyInput",
+        "ApmApplyJournal",
+        "ApmApplyJournalPort",
+        "ApmApplyJournalStatus",
+        "ApmApplyLockAcquireResult",
+        "ApmApplyLockIdentity",
+        "ApmApplyLockPort",
+        "ApmApplyOperationIdPort",
+        "ApmApplyPermissions",
+        "ApmApplyPlanValidationPort",
+        "ApmApplyPorts",
+        "ApmApplyProgressEvent",
+        "ApmApplyProgressPort",
+        "ApmApplyResult",
+        "ApmApplyResultStatus",
+        "ApmApplyStatusPort",
+        "ApmApplyStepExecutionResult",
+        "ApmApplyStepJournal",
+        "ApmApplyStepObservation",
+        "ApmApplyStepPort",
+        "ApmApplyStepState",
         "ApmAvailabilityEvidence",
         "ApmAvailabilityRequest",
         "ApmCompatibilityConstraint",
@@ -177,8 +204,10 @@
         "ApmPlanResolvedPackage",
         "ApmPlanResult",
         "ApmPlanStep",
+        "ApmPlanStepExecution",
         "ApmPlanTargetSelection",
         "ApmPlanTargetSelectionResult",
+        "ApmPlanValidationCheck",
         "ApmProjectFileSnapshot",
         "ApmProjectionDescriptor",
         "ApmProjectionHandler",
@@ -224,6 +253,15 @@
         "ApmUpdateProtocolBlocker",
         "ApmUpdateProtocolBlockerCode",
         "ApmUpdateProtocolVersion",
+        "ApmVerifyCheckKind",
+        "ApmVerifyCheckResult",
+        "ApmVerifyCheckStatus",
+        "ApmVerifyInput",
+        "ApmVerifyJournalPort",
+        "ApmVerifyPorts",
+        "ApmVerifyResult",
+        "ApmVerifyStatusPort",
+        "ApmVerifyStepPort",
         "planAsync",
         "resolveMigrationPath",
         "statusAsync",
@@ -305,6 +343,119 @@
         "src/types/cli.ts"
       ],
       "exports": ["runAsync"]
+    },
+    {
+      "path": "src/features/apply/application/applyAsync.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/applyAsync.ts",
+        "src/features/apply/domain/createApplyJournal.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts",
+        "src/types/status.ts"
+      ],
+      "exports": []
+    },
+    {
+      "path": "src/features/apply/application/applyAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/persistApplyJournalAsync.ts",
+        "src/features/apply/application/runApplyStepsAsync.ts",
+        "src/features/apply/domain/applyPermissionBlockers.ts",
+        "src/features/apply/domain/createApplyJournal.ts",
+        "src/types/apply-runtime.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts"
+      ],
+      "exports": ["applyAsync"]
+    },
+    {
+      "path": "src/features/apply/application/finishApplyOperationAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/persistApplyJournalAsync.ts",
+        "src/features/apply/domain/createApplyBlocker.ts",
+        "src/features/apply/domain/createApplyFailure.ts",
+        "src/types/apply-runtime.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts",
+        "src/types/status.ts"
+      ],
+      "exports": ["finishApplyOperationAsync"]
+    },
+    {
+      "path": "src/features/apply/application/persistApplyJournalAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/domain/transitionApplyJournal.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts"
+      ],
+      "exports": ["persistApplyJournalAsync"]
+    },
+    {
+      "path": "src/features/apply/application/runApplyStepsAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/finishApplyOperationAsync.ts",
+        "src/features/apply/application/persistApplyJournalAsync.ts",
+        "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "src/features/apply/domain/createApplyBlocker.ts",
+        "src/features/apply/domain/createApplyFailure.ts",
+        "src/features/apply/domain/decideApplyStepObservation.ts",
+        "src/types/apply-runtime.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts",
+        "src/types/status.ts"
+      ],
+      "exports": ["runApplyStepsAsync"]
+    },
+    {
+      "path": "src/features/apply/domain/applyPermissionBlockers.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/apply.ts", "src/types/plan.ts"],
+      "exports": ["applyPermissionBlockers"]
+    },
+    {
+      "path": "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/plan.ts"],
+      "exports": ["applyStepRecoveryPolicy"]
+    },
+    {
+      "path": "src/features/apply/domain/createApplyBlocker.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/apply.ts", "src/types/plan.ts"],
+      "exports": ["createApplyBlocker"]
+    },
+    {
+      "path": "src/features/apply/domain/createApplyFailure.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/apply.ts", "src/types/plan.ts"],
+      "exports": ["createApplyFailure"]
+    },
+    {
+      "path": "src/features/apply/domain/createApplyJournal.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/apply.ts", "src/types/plan.ts"],
+      "exports": ["createApplyJournal"]
+    },
+    {
+      "path": "src/features/apply/domain/decideApplyStepObservation.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts"
+      ],
+      "exports": ["decideApplyStepObservation"]
+    },
+    {
+      "path": "src/features/apply/domain/transitionApplyJournal.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/apply.ts"],
+      "exports": ["transitionApplyJournal"]
     },
     {
       "path": "src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts",
@@ -486,7 +637,8 @@
         "src/features/update-protocol/domain/resolveMigrationPath.ts",
         "src/types/plan.ts",
         "src/types/status.ts",
-        "src/types/update-protocol.ts"
+        "src/types/update-protocol.ts",
+        "src/types/update-validation.ts"
       ],
       "exports": []
     },
@@ -1252,12 +1404,45 @@
       "exports": ["migrationIdentity"]
     },
     {
+      "path": "src/features/verify/application/verifyAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/plan.ts", "src/types/verify.ts"],
+      "exports": ["verifyAsync"]
+    },
+    {
       "path": "src/nodeApm.ts",
       "isEntrypoint": true,
       "dependencies": [],
       "exports": [
         "APM_PLAN_SUPPORT",
         "APM_STATUS_SUPPORT",
+        "ApmApplyBlocker",
+        "ApmApplyBlockerCode",
+        "ApmApplyCancellationPort",
+        "ApmApplyClockPort",
+        "ApmApplyExecutorIdentityPort",
+        "ApmApplyFailure",
+        "ApmApplyInput",
+        "ApmApplyJournal",
+        "ApmApplyJournalPort",
+        "ApmApplyJournalStatus",
+        "ApmApplyLockAcquireResult",
+        "ApmApplyLockIdentity",
+        "ApmApplyLockPort",
+        "ApmApplyOperationIdPort",
+        "ApmApplyPermissions",
+        "ApmApplyPlanValidationPort",
+        "ApmApplyPorts",
+        "ApmApplyProgressEvent",
+        "ApmApplyProgressPort",
+        "ApmApplyResult",
+        "ApmApplyResultStatus",
+        "ApmApplyStatusPort",
+        "ApmApplyStepExecutionResult",
+        "ApmApplyStepJournal",
+        "ApmApplyStepObservation",
+        "ApmApplyStepPort",
+        "ApmApplyStepState",
         "ApmAvailabilityEvidence",
         "ApmAvailabilityRequest",
         "ApmCompatibilityConstraint",
@@ -1334,8 +1519,10 @@
         "ApmPlanResolvedPackage",
         "ApmPlanResult",
         "ApmPlanStep",
+        "ApmPlanStepExecution",
         "ApmPlanTargetSelection",
         "ApmPlanTargetSelectionResult",
+        "ApmPlanValidationCheck",
         "ApmProjectFileSnapshot",
         "ApmProjectionDescriptor",
         "ApmProjectionHandler",
@@ -1381,6 +1568,15 @@
         "ApmUpdateProtocolBlocker",
         "ApmUpdateProtocolBlockerCode",
         "ApmUpdateProtocolVersion",
+        "ApmVerifyCheckKind",
+        "ApmVerifyCheckResult",
+        "ApmVerifyCheckStatus",
+        "ApmVerifyInput",
+        "ApmVerifyJournalPort",
+        "ApmVerifyPorts",
+        "ApmVerifyResult",
+        "ApmVerifyStatusPort",
+        "ApmVerifyStepPort",
         "createNativePlanResolutionPort",
         "createNpmRegistryAvailabilityPort",
         "createSha256PlanDigestPort",
@@ -1398,10 +1594,60 @@
       ]
     },
     {
+      "path": "src/types/apply-runtime.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/apply.ts", "src/types/status.ts"],
+      "exports": ["ApmApplyRunOutcome"]
+    },
+    {
+      "path": "src/types/apply.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/plan.ts", "src/types/status.ts"],
+      "exports": [
+        "ApmApplyBlocker",
+        "ApmApplyBlockerCode",
+        "ApmApplyCancellationPort",
+        "ApmApplyClockPort",
+        "ApmApplyExecutorIdentityPort",
+        "ApmApplyFailure",
+        "ApmApplyInput",
+        "ApmApplyJournal",
+        "ApmApplyJournalPort",
+        "ApmApplyJournalStatus",
+        "ApmApplyLockAcquireResult",
+        "ApmApplyLockIdentity",
+        "ApmApplyLockPort",
+        "ApmApplyOperationIdPort",
+        "ApmApplyPermissions",
+        "ApmApplyPlanValidationPort",
+        "ApmApplyPorts",
+        "ApmApplyProgressEvent",
+        "ApmApplyProgressPort",
+        "ApmApplyResult",
+        "ApmApplyResultStatus",
+        "ApmApplyStatusPort",
+        "ApmApplyStepExecutionResult",
+        "ApmApplyStepJournal",
+        "ApmApplyStepObservation",
+        "ApmApplyStepPort",
+        "ApmApplyStepState"
+      ]
+    },
+    {
       "path": "src/types/cli.ts",
       "isEntrypoint": false,
       "dependencies": [],
       "exports": ["ApmCliCommand", "ApmCliContext", "ApmUnavailableOperation"]
+    },
+    {
+      "path": "src/types/plan-execution.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/status.ts",
+        "src/types/update-extension.ts",
+        "src/types/update-protocol.ts"
+      ],
+      "exports": ["ApmPlanStepExecution", "ApmPlanValidationCheck"]
     },
     {
       "path": "src/types/plan-staging.ts",
@@ -1417,7 +1663,11 @@
     {
       "path": "src/types/plan.ts",
       "isEntrypoint": false,
-      "dependencies": ["src/types/status.ts", "src/types/update-protocol.ts"],
+      "dependencies": [
+        "src/types/plan-execution.ts",
+        "src/types/status.ts",
+        "src/types/update-protocol.ts"
+      ],
       "exports": [
         "ApmPlanArtifactIdentity",
         "ApmPlanBlocker",
@@ -1456,6 +1706,33 @@
       "isEntrypoint": false,
       "dependencies": [],
       "exports": [
+        "ApmApplyBlocker",
+        "ApmApplyBlockerCode",
+        "ApmApplyCancellationPort",
+        "ApmApplyClockPort",
+        "ApmApplyExecutorIdentityPort",
+        "ApmApplyFailure",
+        "ApmApplyInput",
+        "ApmApplyJournal",
+        "ApmApplyJournalPort",
+        "ApmApplyJournalStatus",
+        "ApmApplyLockAcquireResult",
+        "ApmApplyLockIdentity",
+        "ApmApplyLockPort",
+        "ApmApplyOperationIdPort",
+        "ApmApplyPermissions",
+        "ApmApplyPlanValidationPort",
+        "ApmApplyPorts",
+        "ApmApplyProgressEvent",
+        "ApmApplyProgressPort",
+        "ApmApplyResult",
+        "ApmApplyResultStatus",
+        "ApmApplyStatusPort",
+        "ApmApplyStepExecutionResult",
+        "ApmApplyStepJournal",
+        "ApmApplyStepObservation",
+        "ApmApplyStepPort",
+        "ApmApplyStepState",
         "ApmAvailabilityEvidence",
         "ApmAvailabilityRequest",
         "ApmCompatibilityConstraint",
@@ -1532,8 +1809,10 @@
         "ApmPlanResolvedPackage",
         "ApmPlanResult",
         "ApmPlanStep",
+        "ApmPlanStepExecution",
         "ApmPlanTargetSelection",
         "ApmPlanTargetSelectionResult",
+        "ApmPlanValidationCheck",
         "ApmProjectFileSnapshot",
         "ApmProjectionDescriptor",
         "ApmProjectionHandler",
@@ -1578,7 +1857,16 @@
         "ApmUpdateOwnerIdentity",
         "ApmUpdateProtocolBlocker",
         "ApmUpdateProtocolBlockerCode",
-        "ApmUpdateProtocolVersion"
+        "ApmUpdateProtocolVersion",
+        "ApmVerifyCheckKind",
+        "ApmVerifyCheckResult",
+        "ApmVerifyCheckStatus",
+        "ApmVerifyInput",
+        "ApmVerifyJournalPort",
+        "ApmVerifyPorts",
+        "ApmVerifyResult",
+        "ApmVerifyStatusPort",
+        "ApmVerifyStepPort"
       ]
     },
     {
@@ -1725,6 +2013,27 @@
         "ApmUpdateProtocolBlocker",
         "ApmUpdateProtocolBlockerCode"
       ]
+    },
+    {
+      "path": "src/types/verify.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/apply.ts",
+        "src/types/plan.ts",
+        "src/types/status.ts",
+        "src/types/update-protocol.ts"
+      ],
+      "exports": [
+        "ApmVerifyCheckKind",
+        "ApmVerifyCheckResult",
+        "ApmVerifyCheckStatus",
+        "ApmVerifyInput",
+        "ApmVerifyJournalPort",
+        "ApmVerifyPorts",
+        "ApmVerifyResult",
+        "ApmVerifyStatusPort",
+        "ApmVerifyStepPort"
+      ]
     }
   ],
   "exports": [
@@ -1757,6 +2066,1112 @@
         "filePath": "src/features/status/constants/support.ts",
         "line": 47,
         "column": 14
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyBlocker",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 118,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyBlockerCode"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "code",
+          "kind": "property",
+          "type": "ApmApplyBlockerCode",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "evidence",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "nextAction",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "reason",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "scope",
+          "kind": "property",
+          "type": "{ readonly kind: \"project\" | \"operation\" | \"step\" | \"host\"; readonly id?: string; readonly path?: string; }",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyBlockerCode",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 103,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyCancellationPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 205,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "isCancellationRequestedAsync",
+          "kind": "property",
+          "type": "(operationId: string) => Promise<boolean>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyClockPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 130,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "nowIso",
+          "kind": "property",
+          "type": "() => string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyExecutorIdentityPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 175,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmPlanExecutorIdentity"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "current",
+          "kind": "property",
+          "type": "() => ApmPlanExecutorIdentity",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyFailure",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 41,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "code",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "evidence",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "nextAction",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "reason",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyInput",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 15,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyJournal",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 57,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmApplyFailure",
+        "ApmApplyJournalStatus",
+        "ApmApplyPermissions",
+        "ApmApplyStepJournal",
+        "ApmPlanResult"
+      ],
+      "signatures": [],
+      "members": [
+        {
+          "name": "createdAt",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "failure",
+          "kind": "property",
+          "type": "ApmApplyFailure",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "permissions",
+          "kind": "property",
+          "type": "ApmApplyPermissions",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "plan",
+          "kind": "property",
+          "type": "ApmPlanResult",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "schemaVersion",
+          "kind": "property",
+          "type": "1",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmApplyJournalStatus",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "steps",
+          "kind": "property",
+          "type": "readonly ApmApplyStepJournal[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "updatedAt",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyJournalPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 154,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyJournal"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "createAsync",
+          "kind": "property",
+          "type": "(journal: ApmApplyJournal) => Promise<void>",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "readAsync",
+          "kind": "property",
+          "type": "(rootPath: string, operationId: string) => Promise<ApmApplyJournal | undefined>",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "writeAsync",
+          "kind": "property",
+          "type": "(journal: ApmApplyJournal) => Promise<void>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyJournalStatus",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 28,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyLockAcquireResult",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 79,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyLockIdentity",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 70,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "acquiredAt",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "hostname",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "pid",
+          "kind": "property",
+          "type": "number",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "planId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "schemaVersion",
+          "kind": "property",
+          "type": "1",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyLockPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 138,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyLockAcquireResult", "ApmApplyLockIdentity"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "acquireAsync",
+          "kind": "property",
+          "type": "(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly resume: boolean; }) => Promise<ApmApplyLockAcquireResult>",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "recoverStaleAsync",
+          "kind": "property",
+          "type": "(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly stale: ApmApplyLockIdentity; }) => Promise<ApmApplyLockAcquireResult>",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "releaseAsync",
+          "kind": "property",
+          "type": "(rootPath: string, operationId: string) => Promise<void>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyOperationIdPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 134,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "createOperationId",
+          "kind": "property",
+          "type": "() => string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyPermissions",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 9,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "externalEffects",
+          "kind": "property",
+          "type": "boolean",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "lifecycleScripts",
+          "kind": "property",
+          "type": "boolean",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "ownerCode",
+          "kind": "property",
+          "type": "boolean",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyPlanValidationPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 167,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmPlanBlocker",
+        "ApmPlanExecutorIdentity",
+        "ApmPlanResult",
+        "ApmStatusResult"
+      ],
+      "signatures": [],
+      "members": [
+        {
+          "name": "validateAsync",
+          "kind": "property",
+          "type": "(input: { readonly plan: ApmPlanResult; readonly status: ApmStatusResult; readonly executor: ApmPlanExecutorIdentity; }) => Promise<readonly ApmPlanBlocker[]>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyPorts",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 209,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmApplyCancellationPort",
+        "ApmApplyClockPort",
+        "ApmApplyExecutorIdentityPort",
+        "ApmApplyJournalPort",
+        "ApmApplyLockPort",
+        "ApmApplyOperationIdPort",
+        "ApmApplyPlanValidationPort",
+        "ApmApplyProgressPort",
+        "ApmApplyStatusPort",
+        "ApmApplyStepPort"
+      ],
+      "signatures": [],
+      "members": [
+        {
+          "name": "cancellation",
+          "kind": "property",
+          "type": "ApmApplyCancellationPort",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "clock",
+          "kind": "property",
+          "type": "ApmApplyClockPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "executor",
+          "kind": "property",
+          "type": "ApmApplyExecutorIdentityPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "journal",
+          "kind": "property",
+          "type": "ApmApplyJournalPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "lock",
+          "kind": "property",
+          "type": "ApmApplyLockPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "ApmApplyOperationIdPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "planValidation",
+          "kind": "property",
+          "type": "ApmApplyPlanValidationPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "progress",
+          "kind": "property",
+          "type": "ApmApplyProgressPort",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmApplyStatusPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "step",
+          "kind": "property",
+          "type": "ApmApplyStepPort",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyProgressEvent",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 194,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "message",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "state",
+          "kind": "property",
+          "type": "\"pending\" | \"intended\" | \"effect-started\" | \"effect-observed\" | \"committed\" | \"failed\" | \"cancelled\" | \"recovery-required\" | \"running\" | \"completed\"",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "stepId",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyProgressPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 201,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyProgressEvent"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "publishAsync",
+          "kind": "property",
+          "type": "(event: ApmApplyProgressEvent) => Promise<void>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyResult",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 225,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmApplyBlocker",
+        "ApmApplyJournal",
+        "ApmApplyResultStatus",
+        "ApmStatusDiagnostic"
+      ],
+      "signatures": [],
+      "members": [
+        {
+          "name": "blockers",
+          "kind": "property",
+          "type": "readonly ApmApplyBlocker[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "complete",
+          "kind": "property",
+          "type": "boolean",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "diagnostics",
+          "kind": "property",
+          "type": "readonly ApmStatusDiagnostic[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "journal",
+          "kind": "property",
+          "type": "ApmApplyJournal",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "operation",
+          "kind": "property",
+          "type": "\"apply\"",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "planId",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "schemaVersion",
+          "kind": "property",
+          "type": "1",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmApplyResultStatus",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyResultStatus",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 222,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyStatusPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 163,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusResult"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "inspectStatusAsync",
+          "kind": "property",
+          "type": "(rootPath: string) => Promise<ApmStatusResult>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyStepExecutionResult",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 96,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyFailure", "ApmStatusDiagnostic"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "diagnostics",
+          "kind": "property",
+          "type": "readonly ApmStatusDiagnostic[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "evidence",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "failure",
+          "kind": "property",
+          "type": "ApmApplyFailure",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "state",
+          "kind": "property",
+          "type": "\"unknown\" | \"failed\" | \"completed\"",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyStepJournal",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 48,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyFailure", "ApmApplyStepState"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "attempts",
+          "kind": "property",
+          "type": "number",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "evidence",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "failure",
+          "kind": "property",
+          "type": "ApmApplyFailure",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "state",
+          "kind": "property",
+          "type": "ApmApplyStepState",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "stepId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "updatedAt",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyStepObservation",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 90,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "evidence",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "reason",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "state",
+          "kind": "property",
+          "type": "\"unknown\" | \"pending\" | \"conflict\" | \"satisfied\"",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyStepPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 179,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmApplyJournal",
+        "ApmApplyStepExecutionResult",
+        "ApmApplyStepObservation",
+        "ApmPlanStep"
+      ],
+      "signatures": [],
+      "members": [
+        {
+          "name": "executeAsync",
+          "kind": "property",
+          "type": "(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "observeAsync",
+          "kind": "property",
+          "type": "(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepObservation>",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "rollbackAsync",
+          "kind": "property",
+          "type": "(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmApplyStepState",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/apply.ts",
+      "sourceLocation": {
+        "filePath": "src/types/apply.ts",
+        "line": 31,
+        "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
       "relatedSymbols": [],
@@ -3908,7 +5323,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 120,
+        "line": 121,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3969,7 +5384,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 83,
+        "line": 84,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4023,7 +5438,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 55,
+        "line": 56,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4041,7 +5456,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 77,
+        "line": 78,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4081,7 +5496,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 91,
+        "line": 92,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4184,7 +5599,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 10,
+        "line": 11,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4202,7 +5617,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 195,
+        "line": 196,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4228,7 +5643,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 177,
+        "line": 178,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4268,7 +5683,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 111,
+        "line": 112,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4329,7 +5744,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 183,
+        "line": 184,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4369,7 +5784,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 199,
+        "line": 200,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4409,7 +5824,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 34,
+        "line": 35,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4442,7 +5857,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 12,
+        "line": 13,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4489,7 +5904,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 47,
+        "line": 48,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4543,7 +5958,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 39,
+        "line": 40,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4597,7 +6012,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 250,
+        "line": 252,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4637,7 +6052,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 189,
+        "line": 190,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4677,7 +6092,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 246,
+        "line": 248,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4703,7 +6118,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 242,
+        "line": 244,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4729,7 +6144,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 222,
+        "line": 224,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4789,7 +6204,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 230,
+        "line": 232,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4880,7 +6295,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 152,
+        "line": 153,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4927,7 +6342,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 173,
+        "line": 174,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4953,7 +6368,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 140,
+        "line": 141,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5035,7 +6450,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 159,
+        "line": 160,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5139,7 +6554,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 129,
+        "line": 130,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5214,7 +6629,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 256,
+        "line": 258,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5335,7 +6750,7 @@
         {
           "name": "schemaVersion",
           "kind": "property",
-          "type": "1",
+          "type": "2",
           "required": true,
           "description": null
         },
@@ -5365,17 +6780,24 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 205,
+        "line": 206,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-      "relatedSymbols": [],
+      "relatedSymbols": ["ApmPlanStepExecution"],
       "signatures": [],
       "members": [
         {
           "name": "evidence",
           "kind": "property",
           "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "execution",
+          "kind": "property",
+          "type": "ApmPlanStepExecution",
           "required": true,
           "description": null
         },
@@ -5425,6 +6847,24 @@
       "structuredRows": []
     },
     {
+      "name": "ApmPlanStepExecution",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/plan-execution.ts",
+      "sourceLocation": {
+        "filePath": "src/types/plan-execution.ts",
+        "line": 27,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
       "name": "ApmPlanTargetSelection",
       "description": null,
       "isReadme": false,
@@ -5433,7 +6873,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 19,
+        "line": 20,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5451,7 +6891,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 106,
+        "line": 107,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5473,6 +6913,24 @@
           "description": null
         }
       ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmPlanValidationCheck",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/plan-execution.ts",
+      "sourceLocation": {
+        "filePath": "src/types/plan-execution.ts",
+        "line": 13,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
       "structuredRows": []
     },
     {
@@ -7373,6 +8831,348 @@
       "structuredRows": []
     },
     {
+      "name": "ApmVerifyCheckKind",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 13,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyCheckResult",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 16,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmVerifyCheckKind", "ApmVerifyCheckStatus"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "evidence",
+          "kind": "property",
+          "type": "readonly string[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "id",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "kind",
+          "kind": "property",
+          "type": "ApmVerifyCheckKind",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "nextAction",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "reason",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmVerifyCheckStatus",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyCheckStatus",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 11,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyInput",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 6,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyJournalPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 25,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyJournal"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "readAsync",
+          "kind": "property",
+          "type": "(rootPath: string, operationId: string) => Promise<ApmApplyJournal | undefined>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyPorts",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 44,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmVerifyJournalPort", "ApmVerifyStatusPort", "ApmVerifyStepPort"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "journal",
+          "kind": "property",
+          "type": "ApmVerifyJournalPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmVerifyStatusPort",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "step",
+          "kind": "property",
+          "type": "ApmVerifyStepPort",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyResult",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 50,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmReleaseEffect",
+        "ApmStatusDiagnostic",
+        "ApmStatusFinding",
+        "ApmVerifyCheckResult"
+      ],
+      "signatures": [],
+      "members": [
+        {
+          "name": "checks",
+          "kind": "property",
+          "type": "readonly ApmVerifyCheckResult[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "diagnostics",
+          "kind": "property",
+          "type": "readonly ApmStatusDiagnostic[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "findings",
+          "kind": "property",
+          "type": "readonly ApmStatusFinding[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "followUp",
+          "kind": "property",
+          "type": "readonly ApmReleaseEffect[]",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operation",
+          "kind": "property",
+          "type": "\"verify\"",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "operationId",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "planId",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "schemaVersion",
+          "kind": "property",
+          "type": "1",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "verified",
+          "kind": "property",
+          "type": "boolean",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyStatusPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 32,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusResult"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "inspectStatusAsync",
+          "kind": "property",
+          "type": "(rootPath: string) => Promise<ApmStatusResult>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmVerifyStepPort",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/verify.ts",
+      "sourceLocation": {
+        "filePath": "src/types/verify.ts",
+        "line": 36,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmPlanResult", "ApmPlanStep", "ApmStatusResult", "ApmVerifyCheckResult"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "verifyAsync",
+          "kind": "property",
+          "type": "(input: { readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
       "name": "createCliProvider",
       "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
       "isReadme": false,
@@ -7933,6 +9733,591 @@
       "sourceLocation": {
         "filePath": "src/cli/runAsync.ts",
         "line": 16,
+        "column": 1
+      }
+    },
+    {
+      "name": "portsFixture",
+      "description": "Build in-memory apply ports that expose all externally observable state-machine interactions.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 125,
+        "column": 1
+      }
+    },
+    {
+      "name": "planFixture",
+      "description": "Build one complete executable plan containing a single reversible local file step.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 179,
+        "column": 1
+      }
+    },
+    {
+      "name": "stepFixture",
+      "description": "Build one local file step whose postcondition can be observed after an interrupted process.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 218,
+        "column": 1
+      }
+    },
+    {
+      "name": "completedJournalFixture",
+      "description": "Build a completed operation journal for duplicate invocation behavior.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 231,
+        "column": 1
+      }
+    },
+    {
+      "name": "startedJournalFixture",
+      "description": "Build a journal representing a process lost after the reviewed effect began.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 246,
+        "column": 1
+      }
+    },
+    {
+      "name": "lockIdentity",
+      "description": "Build one lock identity tied to a durable operation and reviewed plan.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 265,
+        "column": 1
+      }
+    },
+    {
+      "name": "statusFixture",
+      "description": "Build status evidence used only by new-operation saved-plan revalidation.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.test.ts",
+        "line": 277,
+        "column": 1
+      }
+    },
+    {
+      "name": "applyAsync",
+      "description": "Start or resume one reviewed plan under an exclusive durable project operation lock.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 21,
+        "column": 1
+      }
+    },
+    {
+      "name": "startApplyAsync",
+      "description": "Revalidate a new reviewed plan before creating any durable mutation journal or project effect.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 29,
+        "column": 1
+      }
+    },
+    {
+      "name": "resumeApplyAsync",
+      "description": "Load one durable operation before delegating resume validation and lock ownership.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 76,
+        "column": 1
+      }
+    },
+    {
+      "name": "resumeExistingJournalAsync",
+      "description": "Validate durable identity, executor and permissions without reusing the original project fingerprint.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 87,
+        "column": 1
+      }
+    },
+    {
+      "name": "resumeUnderLockAsync",
+      "description": "Recover/own the writer lock before resuming from persisted step state.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 110,
+        "column": 1
+      }
+    },
+    {
+      "name": "acquireLockAsync",
+      "description": "Acquire a lock and allow stale-lock recovery only for an explicit resume of the same operation.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 148,
+        "column": 1
+      }
+    },
+    {
+      "name": "validateResumeJournal",
+      "description": "Validate journal identity and executor compatibility without treating applied changes as staleness.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 167,
+        "column": 1
+      }
+    },
+    {
+      "name": "executorMatches",
+      "description": "Compare every executor field frozen into the reviewed plan.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 184,
+        "column": 1
+      }
+    },
+    {
+      "name": "outcomeResult",
+      "description": "Convert a completed run-state outcome to the stable public apply result.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 196,
+        "column": 1
+      }
+    },
+    {
+      "name": "completedDuplicateResult",
+      "description": "Return idempotent success for a duplicate resume of an already completed operation.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 212,
+        "column": 1
+      }
+    },
+    {
+      "name": "blockedResult",
+      "description": "Build one blocked result before or without executing further reviewed steps.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 228,
+        "column": 1
+      }
+    },
+    {
+      "name": "toApplyValidationBlocker",
+      "description": "Map pre-mutation saved-plan validation evidence into apply-specific blocker semantics.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 250,
+        "column": 1
+      }
+    },
+    {
+      "name": "planIncompleteBlocker",
+      "description": "Reject starting or resuming a plan that never passed planning completeness gates.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 262,
+        "column": 1
+      }
+    },
+    {
+      "name": "lockBlocker",
+      "description": "Reject a live, mismatched or unprovably stale writer lock.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 273,
+        "column": 1
+      }
+    },
+    {
+      "name": "operationNotFoundBlocker",
+      "description": "Explain a resume request whose durable operation does not exist.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 289,
+        "column": 1
+      }
+    },
+    {
+      "name": "journalIdentityBlocker",
+      "description": "Explain a durable journal whose project/operation identity differs from the resume request.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 301,
+        "column": 1
+      }
+    },
+    {
+      "name": "executorIncompatibleBlocker",
+      "description": "Reject resume under a host/runtime that differs from the reviewed plan executor identity.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 315,
+        "column": 1
+      }
+    },
+    {
+      "name": "executorKey",
+      "description": "Render one stable executor identity for recovery blocker evidence.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 330,
+        "column": 1
+      }
+    },
+    {
+      "name": "finishApplyOperationAsync",
+      "description": "Persist and report one terminal apply outcome after the last safe journal transition.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "line": 15,
+        "column": 1
+      }
+    },
+    {
+      "name": "completedAsync",
+      "description": "Mark an operation completed only after every reviewed/deferred step is committed.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "line": 59,
+        "column": 1
+      }
+    },
+    {
+      "name": "cancelledAsync",
+      "description": "Persist cancellation at the next safe step boundary without losing resumable state.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "line": 71,
+        "column": 1
+      }
+    },
+    {
+      "name": "failedAsync",
+      "description": "Persist a known failed effect after any permitted rollback has been accounted for.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "line": 98,
+        "column": 1
+      }
+    },
+    {
+      "name": "recoveryRequiredAsync",
+      "description": "Persist an ambiguous or unsafe effect as recovery-required rather than guessing.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "line": 123,
+        "column": 1
+      }
+    },
+    {
+      "name": "persistApplyJournalAsync",
+      "description": "Persist one apply state transition before publishing its optional progress event.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "line": 12,
+        "column": 1
+      }
+    },
+    {
+      "name": "stepJournal",
+      "description": "Apply one immutable step transition before writing the durable journal.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "line": 54,
+        "column": 1
+      }
+    },
+    {
+      "name": "operationJournal",
+      "description": "Transition only the enclosing operation status once no individual step transition is needed.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "line": 73,
+        "column": 1
+      }
+    },
+    {
+      "name": "publishProgressAsync",
+      "description": "Publish progress only after the corresponding journal transition is durably written.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "line": 84,
+        "column": 1
+      }
+    },
+    {
+      "name": "runApplyStepsAsync",
+      "description": "Execute or resume reviewed plan steps using durable observe-before-repeat recovery semantics.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 18,
+        "column": 1
+      }
+    },
+    {
+      "name": "runNextStepAsync",
+      "description": "Process the next uncommitted step or finalize after all reviewed work is accounted for.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 26,
+        "column": 1
+      }
+    },
+    {
+      "name": "processStepAsync",
+      "description": "Observe a step before deciding whether to commit, recover, defer, or execute it.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 54,
+        "column": 1
+      }
+    },
+    {
+      "name": "executeStepAsync",
+      "description": "Persist intent/start markers, invoke the effect port, and verify the reviewed postcondition.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 109,
+        "column": 1
+      }
+    },
+    {
+      "name": "verifyExecutedStepAsync",
+      "description": "Verify actual output after a reported successful effect before committing the step.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 161,
+        "column": 1
+      }
+    },
+    {
+      "name": "knownFailureAsync",
+      "description": "Roll back only explicitly reversible local effects after a known execution failure.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 191,
+        "column": 1
+      }
+    },
+    {
+      "name": "safeStepEffectAsync",
+      "description": "Invoke execute/rollback while preserving ambiguity when an adapter throws unexpectedly.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 226,
+        "column": 1
+      }
+    },
+    {
+      "name": "commitObservedStepAsync",
+      "description": "Persist observed and committed separately so a crash between them remains recoverable.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 247,
+        "column": 1
+      }
+    },
+    {
+      "name": "commitDeferredStepAsync",
+      "description": "Account for shipment/restart follow-up without pretending APM executed the external action.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 280,
+        "column": 1
+      }
+    },
+    {
+      "name": "cancellationRequestedAsync",
+      "description": "Check cancellation only at safe step boundaries.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 300,
+        "column": 1
+      }
+    },
+    {
+      "name": "isCommitted",
+      "description": "Test whether one reviewed step is durably committed.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 310,
+        "column": 1
+      }
+    },
+    {
+      "name": "prerequisitesCommitted",
+      "description": "Require all reviewed prerequisites to be durably committed before a dependent step.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "line": 315,
+        "column": 1
+      }
+    },
+    {
+      "name": "applyPermissionBlockers",
+      "description": "Return every explicit execution capability required by a reviewed plan but absent from consent.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "line": 5,
+        "column": 1
+      }
+    },
+    {
+      "name": "stepPermissionBlockers",
+      "description": "Validate one step's executable trust/effect boundary without prompting the caller.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "line": 13,
+        "column": 1
+      }
+    },
+    {
+      "name": "requiresOwnerCode",
+      "description": "Require executable-owner consent only where a migration/projection actually invokes owner code.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "line": 35,
+        "column": 1
+      }
+    },
+    {
+      "name": "requiresExternalEffects",
+      "description": "Treat external/manual migration side effects as a separately consented capability.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "line": 41,
+        "column": 1
+      }
+    },
+    {
+      "name": "permissionBlocker",
+      "description": "Build stable permission blocker evidence for CLI, Ankh and Studio adapters.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "line": 51,
+        "column": 1
+      }
+    },
+    {
+      "name": "applyStepRecoveryPolicy",
+      "description": "Derive conservative restart/rollback behavior from the reviewed executable step descriptor.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "line": 4,
+        "column": 1
+      }
+    },
+    {
+      "name": "isExternalEffect",
+      "description": "External/manual migration effects are never claimed as transactionally reversible by APM.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "line": 41,
+        "column": 1
+      }
+    },
+    {
+      "name": "createApplyBlocker",
+      "description": "Build stable machine-readable apply blockers from one explicit execution/recovery condition.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyBlocker.ts",
+        "line": 10,
+        "column": 1
+      }
+    },
+    {
+      "name": "createStateBlocker",
+      "description": "Classify cancellation, prerequisite and project-precondition journal state failures.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyBlocker.ts",
+        "line": 67,
+        "column": 1
+      }
+    },
+    {
+      "name": "createRecoveryBlocker",
+      "description": "Classify ambiguous effects, output mismatches and failed automatic rollback.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyBlocker.ts",
+        "line": 106,
+        "column": 1
+      }
+    },
+    {
+      "name": "createFailedStepBlocker",
+      "description": "Preserve one known adapter failure after any permitted reversible-local rollback.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyBlocker.ts",
+        "line": 147,
+        "column": 1
+      }
+    },
+    {
+      "name": "stepBlocker",
+      "description": "Build the common step-scoped blocker representation.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyBlocker.ts",
+        "line": 158,
+        "column": 1
+      }
+    },
+    {
+      "name": "createApplyFailure",
+      "description": "Build durable journal failure evidence from one explicit apply failure condition.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyFailure.ts",
+        "line": 9,
+        "column": 1
+      }
+    },
+    {
+      "name": "createApplyJournal",
+      "description": "Create the durable initial journal for one reviewed plan before any project side effect.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyJournal.ts",
+        "line": 9,
+        "column": 1
+      }
+    },
+    {
+      "name": "initialStep",
+      "description": "Build one untouched step record without inferring execution from plan evidence.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyJournal.ts",
+        "line": 29,
+        "column": 1
+      }
+    },
+    {
+      "name": "decideApplyStepObservation",
+      "description": "Decide whether an observed reviewed step is already complete, executable, or requires recovery.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/decideApplyStepObservation.ts",
+        "line": 6,
+        "column": 1
+      }
+    },
+    {
+      "name": "effectMayHaveStarted",
+      "description": "Identify durable states where an external effect may already have escaped before interruption.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/decideApplyStepObservation.ts",
+        "line": 28,
+        "column": 1
+      }
+    },
+    {
+      "name": "transitionApplyJournal",
+      "description": "Immutably transition one apply step and optionally the enclosing operation status.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/transitionApplyJournal.ts",
+        "line": 9,
+        "column": 1
+      }
+    },
+    {
+      "name": "transitionStep",
+      "description": "Transition one immutable step record and optionally clear stale failure evidence.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/transitionApplyJournal.ts",
+        "line": 40,
         "column": 1
       }
     },
@@ -8805,7 +11190,7 @@
       "description": "Resolve the selected target graph without executing migration code during planning.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 53,
+        "line": 55,
         "column": 1
       }
     },
@@ -8814,7 +11199,16 @@
       "description": "Resolve the real update-protocol migration graph and expose its ordered steps to APM planning.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 100,
+        "line": 102,
+        "column": 1
+      }
+    },
+    {
+      "name": "toPlanBlocker",
+      "description": "Bridge protocol validation evidence into the CLI/Studio-neutral plan blocker schema.",
+      "sourceLocation": {
+        "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
+        "line": 150,
         "column": 1
       }
     },
@@ -8823,7 +11217,7 @@
       "description": "Define a package-owned v1 -> v2 -> v3 path requiring the intermediate v2 artifact.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 148,
+        "line": 170,
         "column": 1
       }
     },
@@ -8832,7 +11226,7 @@
       "description": "Build one immutable migration descriptor edge for the skipped-release fixture.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 171,
+        "line": 193,
         "column": 1
       }
     },
@@ -8841,7 +11235,7 @@
       "description": "Build complete status evidence for an installed v1 package with an explicit v3 target available.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 197,
+        "line": 219,
         "column": 1
       }
     },
@@ -8850,7 +11244,7 @@
       "description": "Build the current direct owner dependency instance.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 236,
+        "line": 258,
         "column": 1
       }
     },
@@ -8859,7 +11253,7 @@
       "description": "Build the npm root containing the current owner package instance.",
       "sourceLocation": {
         "filePath": "src/features/plan/application/planSkippedMigration.test.ts",
-        "line": 269,
+        "line": 291,
         "column": 1
       }
     },
@@ -9165,7 +11559,7 @@
       "description": "Require one final project validation after every local mutation-capable step.",
       "sourceLocation": {
         "filePath": "src/features/plan/domain/buildPlanSteps.ts",
-        "line": 56,
+        "line": 71,
         "column": 1
       }
     },
@@ -9174,7 +11568,7 @@
       "description": "Return step IDs that are not prerequisites of another mutation step.",
       "sourceLocation": {
         "filePath": "src/features/plan/domain/buildPlanSteps.ts",
-        "line": 67,
+        "line": 86,
         "column": 1
       }
     },
@@ -9183,7 +11577,7 @@
       "description": "Convert shipment implications to explicit post-validation follow-up steps.",
       "sourceLocation": {
         "filePath": "src/features/plan/domain/buildPlanSteps.ts",
-        "line": 76,
+        "line": 95,
         "column": 1
       }
     },
@@ -9192,7 +11586,7 @@
       "description": "Compare stable step IDs without locale-dependent ordering.",
       "sourceLocation": {
         "filePath": "src/features/plan/domain/buildPlanSteps.ts",
-        "line": 90,
+        "line": 110,
         "column": 1
       }
     },
@@ -12705,6 +15099,96 @@
         "line": 2,
         "column": 1
       }
+    },
+    {
+      "name": "verifyAsync",
+      "description": "Verify one durable applied operation against fresh project and reviewed step postconditions.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 11,
+        "column": 1
+      }
+    },
+    {
+      "name": "verifiedStepChecksAsync",
+      "description": "Require fresh verification evidence for every local step rather than accepting an empty adapter response.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 49,
+        "column": 1
+      }
+    },
+    {
+      "name": "requiresVerification",
+      "description": "Exclude shipment/restart follow-up from local verification while preserving it in followUp output.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 60,
+        "column": 1
+      }
+    },
+    {
+      "name": "validationCoverageCheck",
+      "description": "Require at least one structured validation step whenever the plan contains local executable work.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 65,
+        "column": 1
+      }
+    },
+    {
+      "name": "completedOperationCheck",
+      "description": "Mark the durable operation itself as a required successful verification precondition.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 84,
+        "column": 1
+      }
+    },
+    {
+      "name": "statusEvidenceCheck",
+      "description": "Treat incomplete fresh project evidence as unknown rather than verified success.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 94,
+        "column": 1
+      }
+    },
+    {
+      "name": "missingOperationResult",
+      "description": "Convert a missing durable operation into a structured verification failure.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 112,
+        "column": 1
+      }
+    },
+    {
+      "name": "incompleteOperationResult",
+      "description": "Refuse verified success while the operation journal itself is unfinished or recovery-required.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 135,
+        "column": 1
+      }
+    },
+    {
+      "name": "missingStepVerificationCheck",
+      "description": "Explain a local step whose adapter supplied no postcondition evidence.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 163,
+        "column": 1
+      }
+    },
+    {
+      "name": "verificationKind",
+      "description": "Map one reviewed execution step to the owning verification evidence category.",
+      "sourceLocation": {
+        "filePath": "src/features/verify/application/verifyAsync.ts",
+        "line": 175,
+        "column": 1
+      }
     }
   ],
   "sequenceScenarios": [
@@ -13020,6 +15504,46 @@
         "sourcePath": "src/cli/runAsync.ts"
       },
       {
+        "fromPath": "src/types/apply-runtime.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/types/apply-runtime.ts"
+      },
+      {
+        "fromPath": "src/types/apply-runtime.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/types/apply-runtime.ts"
+      },
+      {
+        "fromPath": "src/types/apply.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromPath": "src/types/apply.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromPath": "src/types/plan-execution.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/types/plan-execution.ts"
+      },
+      {
+        "fromPath": "src/types/plan-execution.ts",
+        "toPath": "src/types/update-extension.ts",
+        "sourcePath": "src/types/plan-execution.ts"
+      },
+      {
+        "fromPath": "src/types/plan-execution.ts",
+        "toPath": "src/types/update-protocol.ts",
+        "sourcePath": "src/types/plan-execution.ts"
+      },
+      {
+        "fromPath": "src/types/plan.ts",
+        "toPath": "src/types/plan-execution.ts",
+        "sourcePath": "src/types/plan.ts"
+      },
+      {
         "fromPath": "src/types/plan.ts",
         "toPath": "src/types/status.ts",
         "sourcePath": "src/types/plan.ts"
@@ -13031,7 +15555,17 @@
       },
       {
         "fromPath": "src/types/public.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/types/public.ts"
+      },
+      {
+        "fromPath": "src/types/public.ts",
         "toPath": "src/types/plan.ts",
+        "sourcePath": "src/types/public.ts"
+      },
+      {
+        "fromPath": "src/types/public.ts",
+        "toPath": "src/types/plan-execution.ts",
         "sourcePath": "src/types/public.ts"
       },
       {
@@ -13060,6 +15594,11 @@
         "sourcePath": "src/types/public.ts"
       },
       {
+        "fromPath": "src/types/public.ts",
+        "toPath": "src/types/verify.ts",
+        "sourcePath": "src/types/public.ts"
+      },
+      {
         "fromPath": "src/types/status-inventory.ts",
         "toPath": "src/types/status.ts",
         "sourcePath": "src/types/status-inventory.ts"
@@ -13078,6 +15617,26 @@
         "fromPath": "src/types/update-validation.ts",
         "toPath": "src/types/update-protocol.ts",
         "sourcePath": "src/types/update-validation.ts"
+      },
+      {
+        "fromPath": "src/types/verify.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromPath": "src/types/verify.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromPath": "src/types/verify.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromPath": "src/types/verify.ts",
+        "toPath": "src/types/update-protocol.ts",
+        "sourcePath": "src/types/verify.ts"
       },
       {
         "fromPath": "src/cli/commands/apply.ts",
@@ -13118,6 +15677,231 @@
         "fromPath": "src/cli/commands/verify.ts",
         "toPath": "src/cli/renderUnavailableOperation.ts",
         "sourcePath": "src/cli/commands/verify.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.test.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.test.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.test.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.test.ts",
+        "toPath": "src/features/apply/domain/createApplyJournal.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.test.ts",
+        "toPath": "src/features/apply/application/applyAsync.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/types/apply-runtime.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/features/apply/domain/createApplyJournal.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/types/apply-runtime.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/features/apply/domain/createApplyBlocker.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/features/apply/domain/createApplyFailure.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "toPath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "toPath": "src/features/apply/domain/transitionApplyJournal.ts",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/types/apply-runtime.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/features/apply/domain/createApplyBlocker.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/features/apply/domain/createApplyFailure.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/features/apply/domain/decideApplyStepObservation.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/features/apply/application/finishApplyOperationAsync.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toPath": "src/features/apply/application/persistApplyJournalAsync.ts",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/applyPermissionBlockers.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/applyPermissionBlockers.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/applyStepRecoveryPolicy.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/createApplyBlocker.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/createApplyBlocker.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/createApplyFailure.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/createApplyFailure.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/createApplyFailure.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/createApplyFailure.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/createApplyJournal.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/createApplyJournal.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/createApplyJournal.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/createApplyJournal.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/decideApplyStepObservation.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/decideApplyStepObservation.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/decideApplyStepObservation.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/decideApplyStepObservation.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/decideApplyStepObservation.ts",
+        "toPath": "src/features/apply/domain/applyStepRecoveryPolicy.ts",
+        "sourcePath": "src/features/apply/domain/decideApplyStepObservation.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/transitionApplyJournal.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/transitionApplyJournal.ts"
       },
       {
         "fromPath": "src/features/plan/application/planAsync.test.ts",
@@ -13252,6 +16036,11 @@
       {
         "fromPath": "src/features/plan/application/planSkippedMigration.test.ts",
         "toPath": "src/types/update-protocol.ts",
+        "sourcePath": "src/features/plan/application/planSkippedMigration.test.ts"
+      },
+      {
+        "fromPath": "src/features/plan/application/planSkippedMigration.test.ts",
+        "toPath": "src/types/update-validation.ts",
         "sourcePath": "src/features/plan/application/planSkippedMigration.test.ts"
       },
       {
@@ -14110,6 +16899,16 @@
         "sourcePath": "src/features/update-protocol/utils/createProtocolBlocker.ts"
       },
       {
+        "fromPath": "src/features/verify/application/verifyAsync.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/verify/application/verifyAsync.ts",
+        "toPath": "src/types/verify.ts",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
         "fromPath": "src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts",
         "toPath": "src/types/plan.ts",
         "sourcePath": "src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts"
@@ -14787,6 +17586,768 @@
         "toSymbol": "renderUnavailableOperation",
         "callExpression": "renderUnavailableOperation",
         "sourcePath": "src/cli/commands/verify.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "portsFixture",
+        "callExpression": "portsFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "applyAsync",
+        "callExpression": "applyAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "planFixture",
+        "callExpression": "planFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "lockIdentity",
+        "callExpression": "lockIdentity",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "completedJournalFixture",
+        "callExpression": "completedJournalFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
+        "toSymbol": "startedJournalFixture",
+        "callExpression": "startedJournalFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "portsFixture",
+        "toSymbol": "lockIdentity",
+        "callExpression": "lockIdentity",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "inspectStatusAsync",
+        "toSymbol": "statusFixture",
+        "callExpression": "statusFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "planFixture",
+        "toSymbol": "stepFixture",
+        "callExpression": "stepFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "completedJournalFixture",
+        "toSymbol": "createApplyJournal",
+        "callExpression": "createApplyJournal",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "completedJournalFixture",
+        "toSymbol": "planFixture",
+        "callExpression": "planFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "startedJournalFixture",
+        "toSymbol": "createApplyJournal",
+        "callExpression": "createApplyJournal",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "startedJournalFixture",
+        "toSymbol": "planFixture",
+        "callExpression": "planFixture",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "applyAsync",
+        "toSymbol": "startApplyAsync",
+        "callExpression": "startApplyAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "applyAsync",
+        "toSymbol": "resumeApplyAsync",
+        "callExpression": "resumeApplyAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "createOperationId",
+        "callExpression": "ports.operationId.createOperationId",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "planIncompleteBlocker",
+        "callExpression": "planIncompleteBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "applyPermissionBlockers",
+        "callExpression": "applyPermissionBlockers",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "blockedResult",
+        "callExpression": "blockedResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "acquireLockAsync",
+        "callExpression": "acquireLockAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "lockBlocker",
+        "callExpression": "lockBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "inspectStatusAsync",
+        "callExpression": "ports.status.inspectStatusAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "validateAsync",
+        "callExpression": "ports.planValidation.validateAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "current",
+        "callExpression": "ports.executor.current",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "createApplyJournal",
+        "callExpression": "createApplyJournal",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "nowIso",
+        "callExpression": "ports.clock.nowIso",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "createAsync",
+        "callExpression": "ports.journal.createAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "outcomeResult",
+        "callExpression": "outcomeResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "runApplyStepsAsync",
+        "callExpression": "runApplyStepsAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "startApplyAsync",
+        "toSymbol": "releaseAsync",
+        "callExpression": "ports.lock.releaseAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeApplyAsync",
+        "toSymbol": "readAsync",
+        "callExpression": "ports.journal.readAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeApplyAsync",
+        "toSymbol": "blockedResult",
+        "callExpression": "blockedResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeApplyAsync",
+        "toSymbol": "operationNotFoundBlocker",
+        "callExpression": "operationNotFoundBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeApplyAsync",
+        "toSymbol": "resumeExistingJournalAsync",
+        "callExpression": "resumeExistingJournalAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeExistingJournalAsync",
+        "toSymbol": "validateResumeJournal",
+        "callExpression": "validateResumeJournal",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeExistingJournalAsync",
+        "toSymbol": "current",
+        "callExpression": "ports.executor.current",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeExistingJournalAsync",
+        "toSymbol": "blockedResult",
+        "callExpression": "blockedResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeExistingJournalAsync",
+        "toSymbol": "completedDuplicateResult",
+        "callExpression": "completedDuplicateResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeExistingJournalAsync",
+        "toSymbol": "applyPermissionBlockers",
+        "callExpression": "applyPermissionBlockers",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeExistingJournalAsync",
+        "toSymbol": "resumeUnderLockAsync",
+        "callExpression": "resumeUnderLockAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "acquireLockAsync",
+        "callExpression": "acquireLockAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "blockedResult",
+        "callExpression": "blockedResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "lockBlocker",
+        "callExpression": "lockBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "outcomeResult",
+        "callExpression": "outcomeResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "runApplyStepsAsync",
+        "callExpression": "runApplyStepsAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeUnderLockAsync",
+        "toSymbol": "releaseAsync",
+        "callExpression": "ports.lock.releaseAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "acquireLockAsync",
+        "toSymbol": "acquireAsync",
+        "callExpression": "ports.lock.acquireAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "acquireLockAsync",
+        "toSymbol": "recoverStaleAsync",
+        "callExpression": "ports.lock.recoverStaleAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "journalIdentityBlocker",
+        "callExpression": "journalIdentityBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "planIncompleteBlocker",
+        "callExpression": "planIncompleteBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "executorMatches",
+        "callExpression": "executorMatches",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "executorIncompatibleBlocker",
+        "callExpression": "executorIncompatibleBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "executorIncompatibleBlocker",
+        "toSymbol": "executorKey",
+        "callExpression": "executorKey",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "finishApplyOperationAsync",
+        "toSymbol": "completedAsync",
+        "callExpression": "completedAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "finishApplyOperationAsync",
+        "toSymbol": "cancelledAsync",
+        "callExpression": "cancelledAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "finishApplyOperationAsync",
+        "toSymbol": "failedAsync",
+        "callExpression": "failedAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "finishApplyOperationAsync",
+        "toSymbol": "recoveryRequiredAsync",
+        "callExpression": "recoveryRequiredAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "completedAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "cancelledAsync",
+        "toSymbol": "createApplyFailure",
+        "callExpression": "createApplyFailure",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "cancelledAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "cancelledAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "failedAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "failedAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "recoveryRequiredAsync",
+        "toSymbol": "createApplyFailure",
+        "callExpression": "createApplyFailure",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "recoveryRequiredAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/finishApplyOperationAsync.ts"
+      },
+      {
+        "fromSymbol": "persistApplyJournalAsync",
+        "toSymbol": "operationJournal",
+        "callExpression": "operationJournal",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "persistApplyJournalAsync",
+        "toSymbol": "nowIso",
+        "callExpression": "ports.clock.nowIso",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "persistApplyJournalAsync",
+        "toSymbol": "stepJournal",
+        "callExpression": "stepJournal",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "persistApplyJournalAsync",
+        "toSymbol": "writeAsync",
+        "callExpression": "ports.journal.writeAsync",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "persistApplyJournalAsync",
+        "toSymbol": "publishProgressAsync",
+        "callExpression": "publishProgressAsync",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "stepJournal",
+        "toSymbol": "transitionApplyJournal",
+        "callExpression": "transitionApplyJournal",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "publishProgressAsync",
+        "toSymbol": "publishAsync",
+        "callExpression": "ports.progress.publishAsync",
+        "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromSymbol": "runApplyStepsAsync",
+        "toSymbol": "runNextStepAsync",
+        "callExpression": "runNextStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/runApplyStepsAsync.ts",
+        "toSymbol": "isCommitted",
+        "callExpression": "isCommitted",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "runNextStepAsync",
+        "toSymbol": "finishApplyOperationAsync",
+        "callExpression": "finishApplyOperationAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "runNextStepAsync",
+        "toSymbol": "cancellationRequestedAsync",
+        "callExpression": "cancellationRequestedAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "runNextStepAsync",
+        "toSymbol": "prerequisitesCommitted",
+        "callExpression": "prerequisitesCommitted",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "runNextStepAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "runNextStepAsync",
+        "toSymbol": "processStepAsync",
+        "callExpression": "processStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "applyStepRecoveryPolicy",
+        "callExpression": "applyStepRecoveryPolicy",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "commitDeferredStepAsync",
+        "callExpression": "commitDeferredStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "runNextStepAsync",
+        "callExpression": "runNextStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "observeAsync",
+        "callExpression": "ports.step.observeAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "decideApplyStepObservation",
+        "callExpression": "decideApplyStepObservation",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "commitObservedStepAsync",
+        "callExpression": "commitObservedStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "finishApplyOperationAsync",
+        "callExpression": "finishApplyOperationAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "processStepAsync",
+        "toSymbol": "executeStepAsync",
+        "callExpression": "executeStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "executeStepAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "executeStepAsync",
+        "toSymbol": "safeStepEffectAsync",
+        "callExpression": "safeStepEffectAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "executeStepAsync",
+        "toSymbol": "finishApplyOperationAsync",
+        "callExpression": "finishApplyOperationAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "executeStepAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "executeStepAsync",
+        "toSymbol": "knownFailureAsync",
+        "callExpression": "knownFailureAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "executeStepAsync",
+        "toSymbol": "verifyExecutedStepAsync",
+        "callExpression": "verifyExecutedStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyExecutedStepAsync",
+        "toSymbol": "observeAsync",
+        "callExpression": "ports.step.observeAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyExecutedStepAsync",
+        "toSymbol": "finishApplyOperationAsync",
+        "callExpression": "finishApplyOperationAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyExecutedStepAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyExecutedStepAsync",
+        "toSymbol": "commitObservedStepAsync",
+        "callExpression": "commitObservedStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyExecutedStepAsync",
+        "toSymbol": "runNextStepAsync",
+        "callExpression": "runNextStepAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "knownFailureAsync",
+        "toSymbol": "createApplyFailure",
+        "callExpression": "createApplyFailure",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "knownFailureAsync",
+        "toSymbol": "applyStepRecoveryPolicy",
+        "callExpression": "applyStepRecoveryPolicy",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "knownFailureAsync",
+        "toSymbol": "finishApplyOperationAsync",
+        "callExpression": "finishApplyOperationAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "knownFailureAsync",
+        "toSymbol": "safeStepEffectAsync",
+        "callExpression": "safeStepEffectAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "knownFailureAsync",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "safeStepEffectAsync",
+        "toSymbol": "executeAsync",
+        "callExpression": "ports.step.executeAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "safeStepEffectAsync",
+        "toSymbol": "rollbackAsync",
+        "callExpression": "ports.step.rollbackAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "safeStepEffectAsync",
+        "toSymbol": "createApplyFailure",
+        "callExpression": "createApplyFailure",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "commitObservedStepAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "commitDeferredStepAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "cancellationRequestedAsync",
+        "toSymbol": "isCancellationRequestedAsync",
+        "callExpression": "ports.cancellation.isCancellationRequestedAsync",
+        "sourcePath": "src/features/apply/application/runApplyStepsAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/domain/applyPermissionBlockers.ts",
+        "toSymbol": "stepPermissionBlockers",
+        "callExpression": "stepPermissionBlockers",
+        "sourcePath": "src/features/apply/domain/applyPermissionBlockers.ts"
+      },
+      {
+        "fromSymbol": "stepPermissionBlockers",
+        "toSymbol": "requiresOwnerCode",
+        "callExpression": "requiresOwnerCode",
+        "sourcePath": "src/features/apply/domain/applyPermissionBlockers.ts"
+      },
+      {
+        "fromSymbol": "stepPermissionBlockers",
+        "toSymbol": "permissionBlocker",
+        "callExpression": "permissionBlocker",
+        "sourcePath": "src/features/apply/domain/applyPermissionBlockers.ts"
+      },
+      {
+        "fromSymbol": "stepPermissionBlockers",
+        "toSymbol": "requiresExternalEffects",
+        "callExpression": "requiresExternalEffects",
+        "sourcePath": "src/features/apply/domain/applyPermissionBlockers.ts"
+      },
+      {
+        "fromSymbol": "createApplyBlocker",
+        "toSymbol": "createStateBlocker",
+        "callExpression": "createStateBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "createApplyBlocker",
+        "toSymbol": "createFailedStepBlocker",
+        "callExpression": "createFailedStepBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "createApplyBlocker",
+        "toSymbol": "createRecoveryBlocker",
+        "callExpression": "createRecoveryBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "createStateBlocker",
+        "toSymbol": "stepBlocker",
+        "callExpression": "stepBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "createRecoveryBlocker",
+        "toSymbol": "stepBlocker",
+        "callExpression": "stepBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "createFailedStepBlocker",
+        "toSymbol": "stepBlocker",
+        "callExpression": "stepBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/domain/createApplyJournal.ts",
+        "toSymbol": "initialStep",
+        "callExpression": "initialStep",
+        "sourcePath": "src/features/apply/domain/createApplyJournal.ts"
+      },
+      {
+        "fromSymbol": "decideApplyStepObservation",
+        "toSymbol": "effectMayHaveStarted",
+        "callExpression": "effectMayHaveStarted",
+        "sourcePath": "src/features/apply/domain/decideApplyStepObservation.ts"
+      },
+      {
+        "fromSymbol": "decideApplyStepObservation",
+        "toSymbol": "applyStepRecoveryPolicy",
+        "callExpression": "applyStepRecoveryPolicy",
+        "sourcePath": "src/features/apply/domain/decideApplyStepObservation.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/domain/transitionApplyJournal.ts",
+        "toSymbol": "transitionStep",
+        "callExpression": "transitionStep",
+        "sourcePath": "src/features/apply/domain/transitionApplyJournal.ts"
       },
       {
         "fromSymbol": "digestAsync",
@@ -17921,6 +21482,72 @@
         "sourcePath": "src/features/update-protocol/domain/validateUpdateExtensionCapabilities.ts"
       },
       {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "readAsync",
+        "callExpression": "ports.journal.readAsync",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "missingOperationResult",
+        "callExpression": "missingOperationResult",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "incompleteOperationResult",
+        "callExpression": "incompleteOperationResult",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "inspectStatusAsync",
+        "callExpression": "ports.status.inspectStatusAsync",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "completedOperationCheck",
+        "callExpression": "completedOperationCheck",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "statusEvidenceCheck",
+        "callExpression": "statusEvidenceCheck",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/verify/application/verifyAsync.ts",
+        "toSymbol": "verifiedStepChecksAsync",
+        "callExpression": "verifiedStepChecksAsync",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifyAsync",
+        "toSymbol": "validationCoverageCheck",
+        "callExpression": "validationCoverageCheck",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifiedStepChecksAsync",
+        "toSymbol": "verifyAsync",
+        "callExpression": "ports.step.verifyAsync",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "verifiedStepChecksAsync",
+        "toSymbol": "missingStepVerificationCheck",
+        "callExpression": "missingStepVerificationCheck",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
+        "fromSymbol": "missingStepVerificationCheck",
+        "toSymbol": "verificationKind",
+        "callExpression": "verificationKind",
+        "sourcePath": "src/features/verify/application/verifyAsync.ts"
+      },
+      {
         "fromSymbol": "applyStagedPlanTargetsAsync",
         "toSymbol": "groupDirectTargets",
         "callExpression": "groupDirectTargets",
@@ -20381,6 +24008,196 @@
         "sourcePath": "src/types/status.ts"
       },
       {
+        "fromSymbol": "ApmApplyStepJournal",
+        "toType": "ApmApplyFailure",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepJournal",
+        "toType": "ApmApplyStepState",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyJournal",
+        "toType": "ApmApplyFailure",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyJournal",
+        "toType": "ApmApplyJournalStatus",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyJournal",
+        "toType": "ApmApplyPermissions",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyJournal",
+        "toType": "ApmApplyStepJournal",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyJournal",
+        "toType": "ApmPlanResult",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepExecutionResult",
+        "toType": "ApmApplyFailure",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepExecutionResult",
+        "toType": "ApmStatusDiagnostic",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyBlocker",
+        "toType": "ApmApplyBlockerCode",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyLockPort",
+        "toType": "ApmApplyLockAcquireResult",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyLockPort",
+        "toType": "ApmApplyLockIdentity",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyJournalPort",
+        "toType": "ApmApplyJournal",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStatusPort",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPlanValidationPort",
+        "toType": "ApmPlanBlocker",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPlanValidationPort",
+        "toType": "ApmPlanExecutorIdentity",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPlanValidationPort",
+        "toType": "ApmPlanResult",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPlanValidationPort",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyExecutorIdentityPort",
+        "toType": "ApmPlanExecutorIdentity",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepPort",
+        "toType": "ApmApplyJournal",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepPort",
+        "toType": "ApmApplyStepExecutionResult",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepPort",
+        "toType": "ApmApplyStepObservation",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyStepPort",
+        "toType": "ApmPlanStep",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyProgressPort",
+        "toType": "ApmApplyProgressEvent",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyCancellationPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyClockPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyExecutorIdentityPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyJournalPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyLockPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyOperationIdPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyPlanValidationPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyProgressPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyStatusPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyPorts",
+        "toType": "ApmApplyStepPort",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyResult",
+        "toType": "ApmApplyBlocker",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyResult",
+        "toType": "ApmApplyJournal",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyResult",
+        "toType": "ApmApplyResultStatus",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromSymbol": "ApmApplyResult",
+        "toType": "ApmStatusDiagnostic",
+        "sourcePath": "src/types/apply.ts"
+      },
+      {
         "fromSymbol": "ApmPlanPackageSelection",
         "toType": "ApmPlanPackageSelector",
         "sourcePath": "src/types/plan.ts"
@@ -20508,6 +24325,11 @@
       {
         "fromSymbol": "ApmPlanProjectInput",
         "toType": "ApmStatusAvailabilityMode",
+        "sourcePath": "src/types/plan.ts"
+      },
+      {
+        "fromSymbol": "ApmPlanStep",
+        "toType": "ApmPlanStepExecution",
         "sourcePath": "src/types/plan.ts"
       },
       {
@@ -21044,6 +24866,81 @@
         "fromSymbol": "ApmMigrationPathResult",
         "toType": "ApmUpdateProtocolBlocker",
         "sourcePath": "src/types/update-validation.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyCheckResult",
+        "toType": "ApmVerifyCheckKind",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyCheckResult",
+        "toType": "ApmVerifyCheckStatus",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyJournalPort",
+        "toType": "ApmApplyJournal",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyStatusPort",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyStepPort",
+        "toType": "ApmPlanResult",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyStepPort",
+        "toType": "ApmPlanStep",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyStepPort",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyStepPort",
+        "toType": "ApmVerifyCheckResult",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyPorts",
+        "toType": "ApmVerifyJournalPort",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyPorts",
+        "toType": "ApmVerifyStatusPort",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyPorts",
+        "toType": "ApmVerifyStepPort",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyResult",
+        "toType": "ApmReleaseEffect",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyResult",
+        "toType": "ApmStatusDiagnostic",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyResult",
+        "toType": "ApmStatusFinding",
+        "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyResult",
+        "toType": "ApmVerifyCheckResult",
+        "sourcePath": "src/types/verify.ts"
       },
       {
         "fromSymbol": "createNativePlanResolutionPort",

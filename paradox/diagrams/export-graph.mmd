@@ -13,6 +13,18 @@ graph LR
   module_src_cli_renderUnavailableOperation_ts["src/cli/renderUnavailableOperation.ts"]
   module_src_cli_runAsync_test_ts["src/cli/runAsync.test.ts"]
   module_src_cli_runAsync_ts["src/cli/runAsync.ts"]
+  module_src_features_apply_application_applyAsync_test_ts["src/features/apply/application/applyAsync.test.ts"]
+  module_src_features_apply_application_applyAsync_ts["src/features/apply/application/applyAsync.ts"]
+  module_src_features_apply_application_finishApplyOperationAsync_ts["src/features/apply/application/finishApplyOperationAsync.ts"]
+  module_src_features_apply_application_persistApplyJournalAsync_ts["src/features/apply/application/persistApplyJournalAsync.ts"]
+  module_src_features_apply_application_runApplyStepsAsync_ts["src/features/apply/application/runApplyStepsAsync.ts"]
+  module_src_features_apply_domain_applyPermissionBlockers_ts["src/features/apply/domain/applyPermissionBlockers.ts"]
+  module_src_features_apply_domain_applyStepRecoveryPolicy_ts["src/features/apply/domain/applyStepRecoveryPolicy.ts"]
+  module_src_features_apply_domain_createApplyBlocker_ts["src/features/apply/domain/createApplyBlocker.ts"]
+  module_src_features_apply_domain_createApplyFailure_ts["src/features/apply/domain/createApplyFailure.ts"]
+  module_src_features_apply_domain_createApplyJournal_ts["src/features/apply/domain/createApplyJournal.ts"]
+  module_src_features_apply_domain_decideApplyStepObservation_ts["src/features/apply/domain/decideApplyStepObservation.ts"]
+  module_src_features_apply_domain_transitionApplyJournal_ts["src/features/apply/domain/transitionApplyJournal.ts"]
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts["src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts"]
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_test_ts["src/features/plan/adapters/outbound/buildPackageManagerPlanCommands.test.ts"]
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_ts["src/features/plan/adapters/outbound/buildPackageManagerPlanCommands.ts"]
@@ -122,8 +134,12 @@ graph LR
   module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts["src/features/update-protocol/utils/isProtocolPackageSubpath.ts"]
   module_src_features_update_protocol_utils_isProtocolProjectPath_ts["src/features/update-protocol/utils/isProtocolProjectPath.ts"]
   module_src_features_update_protocol_utils_migrationIdentity_ts["src/features/update-protocol/utils/migrationIdentity.ts"]
+  module_src_features_verify_application_verifyAsync_ts["src/features/verify/application/verifyAsync.ts"]
   module_src_nodeApm_ts["src/nodeApm.ts"]
+  module_src_types_apply_runtime_ts["src/types/apply-runtime.ts"]
+  module_src_types_apply_ts["src/types/apply.ts"]
   module_src_types_cli_ts["src/types/cli.ts"]
+  module_src_types_plan_execution_ts["src/types/plan-execution.ts"]
   module_src_types_plan_staging_ts["src/types/plan-staging.ts"]
   module_src_types_plan_ts["src/types/plan.ts"]
   module_src_types_public_ts["src/types/public.ts"]
@@ -134,10 +150,103 @@ graph LR
   module_src_types_update_extension_ts["src/types/update-extension.ts"]
   module_src_types_update_protocol_ts["src/types/update-protocol.ts"]
   module_src_types_update_validation_ts["src/types/update-validation.ts"]
+  module_src_types_verify_ts["src/types/verify.ts"]
   export_APM_PLAN_SUPPORT["APM_PLAN_SUPPORT"]
   module_src_features_plan_constants_support_ts --> export_APM_PLAN_SUPPORT
   export_APM_STATUS_SUPPORT["APM_STATUS_SUPPORT"]
   module_src_features_status_constants_support_ts --> export_APM_STATUS_SUPPORT
+  export_ApmApplyBlocker["ApmApplyBlocker"]
+  module_src_types_apply_ts --> export_ApmApplyBlocker
+  export_ApmApplyBlocker -.-> export_ApmApplyBlockerCode
+  export_ApmApplyBlockerCode["ApmApplyBlockerCode"]
+  module_src_types_apply_ts --> export_ApmApplyBlockerCode
+  export_ApmApplyCancellationPort["ApmApplyCancellationPort"]
+  module_src_types_apply_ts --> export_ApmApplyCancellationPort
+  export_ApmApplyClockPort["ApmApplyClockPort"]
+  module_src_types_apply_ts --> export_ApmApplyClockPort
+  export_ApmApplyExecutorIdentityPort["ApmApplyExecutorIdentityPort"]
+  module_src_types_apply_ts --> export_ApmApplyExecutorIdentityPort
+  export_ApmApplyExecutorIdentityPort -.-> export_ApmPlanExecutorIdentity
+  export_ApmApplyFailure["ApmApplyFailure"]
+  module_src_types_apply_ts --> export_ApmApplyFailure
+  export_ApmApplyInput["ApmApplyInput"]
+  module_src_types_apply_ts --> export_ApmApplyInput
+  export_ApmApplyJournal["ApmApplyJournal"]
+  module_src_types_apply_ts --> export_ApmApplyJournal
+  export_ApmApplyJournal -.-> export_ApmApplyFailure
+  export_ApmApplyJournal -.-> export_ApmApplyJournalStatus
+  export_ApmApplyJournal -.-> export_ApmApplyPermissions
+  export_ApmApplyJournal -.-> export_ApmApplyStepJournal
+  export_ApmApplyJournal -.-> export_ApmPlanResult
+  export_ApmApplyJournalPort["ApmApplyJournalPort"]
+  module_src_types_apply_ts --> export_ApmApplyJournalPort
+  export_ApmApplyJournalPort -.-> export_ApmApplyJournal
+  export_ApmApplyJournalStatus["ApmApplyJournalStatus"]
+  module_src_types_apply_ts --> export_ApmApplyJournalStatus
+  export_ApmApplyLockAcquireResult["ApmApplyLockAcquireResult"]
+  module_src_types_apply_ts --> export_ApmApplyLockAcquireResult
+  export_ApmApplyLockIdentity["ApmApplyLockIdentity"]
+  module_src_types_apply_ts --> export_ApmApplyLockIdentity
+  export_ApmApplyLockPort["ApmApplyLockPort"]
+  module_src_types_apply_ts --> export_ApmApplyLockPort
+  export_ApmApplyLockPort -.-> export_ApmApplyLockAcquireResult
+  export_ApmApplyLockPort -.-> export_ApmApplyLockIdentity
+  export_ApmApplyOperationIdPort["ApmApplyOperationIdPort"]
+  module_src_types_apply_ts --> export_ApmApplyOperationIdPort
+  export_ApmApplyPermissions["ApmApplyPermissions"]
+  module_src_types_apply_ts --> export_ApmApplyPermissions
+  export_ApmApplyPlanValidationPort["ApmApplyPlanValidationPort"]
+  module_src_types_apply_ts --> export_ApmApplyPlanValidationPort
+  export_ApmApplyPlanValidationPort -.-> export_ApmPlanBlocker
+  export_ApmApplyPlanValidationPort -.-> export_ApmPlanExecutorIdentity
+  export_ApmApplyPlanValidationPort -.-> export_ApmPlanResult
+  export_ApmApplyPlanValidationPort -.-> export_ApmStatusResult
+  export_ApmApplyPorts["ApmApplyPorts"]
+  module_src_types_apply_ts --> export_ApmApplyPorts
+  export_ApmApplyPorts -.-> export_ApmApplyCancellationPort
+  export_ApmApplyPorts -.-> export_ApmApplyClockPort
+  export_ApmApplyPorts -.-> export_ApmApplyExecutorIdentityPort
+  export_ApmApplyPorts -.-> export_ApmApplyJournalPort
+  export_ApmApplyPorts -.-> export_ApmApplyLockPort
+  export_ApmApplyPorts -.-> export_ApmApplyOperationIdPort
+  export_ApmApplyPorts -.-> export_ApmApplyPlanValidationPort
+  export_ApmApplyPorts -.-> export_ApmApplyProgressPort
+  export_ApmApplyPorts -.-> export_ApmApplyStatusPort
+  export_ApmApplyPorts -.-> export_ApmApplyStepPort
+  export_ApmApplyProgressEvent["ApmApplyProgressEvent"]
+  module_src_types_apply_ts --> export_ApmApplyProgressEvent
+  export_ApmApplyProgressPort["ApmApplyProgressPort"]
+  module_src_types_apply_ts --> export_ApmApplyProgressPort
+  export_ApmApplyProgressPort -.-> export_ApmApplyProgressEvent
+  export_ApmApplyResult["ApmApplyResult"]
+  module_src_types_apply_ts --> export_ApmApplyResult
+  export_ApmApplyResult -.-> export_ApmApplyBlocker
+  export_ApmApplyResult -.-> export_ApmApplyJournal
+  export_ApmApplyResult -.-> export_ApmApplyResultStatus
+  export_ApmApplyResult -.-> export_ApmStatusDiagnostic
+  export_ApmApplyResultStatus["ApmApplyResultStatus"]
+  module_src_types_apply_ts --> export_ApmApplyResultStatus
+  export_ApmApplyStatusPort["ApmApplyStatusPort"]
+  module_src_types_apply_ts --> export_ApmApplyStatusPort
+  export_ApmApplyStatusPort -.-> export_ApmStatusResult
+  export_ApmApplyStepExecutionResult["ApmApplyStepExecutionResult"]
+  module_src_types_apply_ts --> export_ApmApplyStepExecutionResult
+  export_ApmApplyStepExecutionResult -.-> export_ApmApplyFailure
+  export_ApmApplyStepExecutionResult -.-> export_ApmStatusDiagnostic
+  export_ApmApplyStepJournal["ApmApplyStepJournal"]
+  module_src_types_apply_ts --> export_ApmApplyStepJournal
+  export_ApmApplyStepJournal -.-> export_ApmApplyFailure
+  export_ApmApplyStepJournal -.-> export_ApmApplyStepState
+  export_ApmApplyStepObservation["ApmApplyStepObservation"]
+  module_src_types_apply_ts --> export_ApmApplyStepObservation
+  export_ApmApplyStepPort["ApmApplyStepPort"]
+  module_src_types_apply_ts --> export_ApmApplyStepPort
+  export_ApmApplyStepPort -.-> export_ApmApplyJournal
+  export_ApmApplyStepPort -.-> export_ApmApplyStepExecutionResult
+  export_ApmApplyStepPort -.-> export_ApmApplyStepObservation
+  export_ApmApplyStepPort -.-> export_ApmPlanStep
+  export_ApmApplyStepState["ApmApplyStepState"]
+  module_src_types_apply_ts --> export_ApmApplyStepState
   export_ApmAvailabilityEvidence["ApmAvailabilityEvidence"]
   module_src_types_status_ts --> export_ApmAvailabilityEvidence
   export_ApmAvailabilityEvidence -.-> export_ApmPackageAvailabilityEvidence
@@ -409,12 +518,17 @@ graph LR
   export_ApmPlanResult -.-> export_ApmStatusFinding
   export_ApmPlanStep["ApmPlanStep"]
   module_src_types_plan_ts --> export_ApmPlanStep
+  export_ApmPlanStep -.-> export_ApmPlanStepExecution
+  export_ApmPlanStepExecution["ApmPlanStepExecution"]
+  module_src_types_plan_execution_ts --> export_ApmPlanStepExecution
   export_ApmPlanTargetSelection["ApmPlanTargetSelection"]
   module_src_types_plan_ts --> export_ApmPlanTargetSelection
   export_ApmPlanTargetSelectionResult["ApmPlanTargetSelectionResult"]
   module_src_types_plan_ts --> export_ApmPlanTargetSelectionResult
   export_ApmPlanTargetSelectionResult -.-> export_ApmPlanBlocker
   export_ApmPlanTargetSelectionResult -.-> export_ApmPlanDependencyTarget
+  export_ApmPlanValidationCheck["ApmPlanValidationCheck"]
+  module_src_types_plan_execution_ts --> export_ApmPlanValidationCheck
   export_ApmProjectFileSnapshot["ApmProjectFileSnapshot"]
   module_src_types_update_extension_ts --> export_ApmProjectFileSnapshot
   export_ApmProjectionDescriptor["ApmProjectionDescriptor"]
@@ -566,6 +680,39 @@ graph LR
   module_src_types_update_validation_ts --> export_ApmUpdateProtocolBlockerCode
   export_ApmUpdateProtocolVersion["ApmUpdateProtocolVersion"]
   module_src_types_update_protocol_ts --> export_ApmUpdateProtocolVersion
+  export_ApmVerifyCheckKind["ApmVerifyCheckKind"]
+  module_src_types_verify_ts --> export_ApmVerifyCheckKind
+  export_ApmVerifyCheckResult["ApmVerifyCheckResult"]
+  module_src_types_verify_ts --> export_ApmVerifyCheckResult
+  export_ApmVerifyCheckResult -.-> export_ApmVerifyCheckKind
+  export_ApmVerifyCheckResult -.-> export_ApmVerifyCheckStatus
+  export_ApmVerifyCheckStatus["ApmVerifyCheckStatus"]
+  module_src_types_verify_ts --> export_ApmVerifyCheckStatus
+  export_ApmVerifyInput["ApmVerifyInput"]
+  module_src_types_verify_ts --> export_ApmVerifyInput
+  export_ApmVerifyJournalPort["ApmVerifyJournalPort"]
+  module_src_types_verify_ts --> export_ApmVerifyJournalPort
+  export_ApmVerifyJournalPort -.-> export_ApmApplyJournal
+  export_ApmVerifyPorts["ApmVerifyPorts"]
+  module_src_types_verify_ts --> export_ApmVerifyPorts
+  export_ApmVerifyPorts -.-> export_ApmVerifyJournalPort
+  export_ApmVerifyPorts -.-> export_ApmVerifyStatusPort
+  export_ApmVerifyPorts -.-> export_ApmVerifyStepPort
+  export_ApmVerifyResult["ApmVerifyResult"]
+  module_src_types_verify_ts --> export_ApmVerifyResult
+  export_ApmVerifyResult -.-> export_ApmReleaseEffect
+  export_ApmVerifyResult -.-> export_ApmStatusDiagnostic
+  export_ApmVerifyResult -.-> export_ApmStatusFinding
+  export_ApmVerifyResult -.-> export_ApmVerifyCheckResult
+  export_ApmVerifyStatusPort["ApmVerifyStatusPort"]
+  module_src_types_verify_ts --> export_ApmVerifyStatusPort
+  export_ApmVerifyStatusPort -.-> export_ApmStatusResult
+  export_ApmVerifyStepPort["ApmVerifyStepPort"]
+  module_src_types_verify_ts --> export_ApmVerifyStepPort
+  export_ApmVerifyStepPort -.-> export_ApmPlanResult
+  export_ApmVerifyStepPort -.-> export_ApmPlanStep
+  export_ApmVerifyStepPort -.-> export_ApmStatusResult
+  export_ApmVerifyStepPort -.-> export_ApmVerifyCheckResult
   export_createCliProvider["createCliProvider"]
   module_src_cli_createCliProvider_ts --> export_createCliProvider
   export_createNativePlanResolutionPort["createNativePlanResolutionPort"]
