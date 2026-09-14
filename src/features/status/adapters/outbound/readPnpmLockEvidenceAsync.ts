@@ -24,13 +24,14 @@ export async function readPnpmLockEvidenceAsync(
 
   const packages = isRecord(parsed.packages) ? parsed.packages : {};
   const snapshots = isRecord(parsed.snapshots) ? parsed.snapshots : {};
+  const snapshotsByKey = new Map(Object.entries(snapshots));
   const registryPackages = Object.entries(packages).flatMap(([key, value]) => {
     const identity = parsePnpmPackageKey(key);
     if (identity === undefined || !isRecord(value)) return [];
-    const snapshot = isRecord(snapshots[key]) ? snapshots[key] : {};
-    return [toLockedPnpmPackage(key, identity, snapshot, packages)];
+    const snapshot = snapshotsByKey.get(key);
+    return [toLockedPnpmPackage(key, identity, isRecord(snapshot) ? snapshot : {}, packages)];
   });
-  const workspacePackages = readWorkspacePackages(parsed.importers, input);
+  const workspacePackages = readWorkspacePackages(parsed.importers);
   const lockedPackages = [...registryPackages, ...workspacePackages];
   return {
     lockfile: {
@@ -117,7 +118,6 @@ function toLockedPnpmPackage(
 /*** Materialize pnpm workspace links as package instances instead of independent install roots. */
 function readWorkspacePackages(
   importers: Record<string, unknown>,
-  input: ApmManagerInspectionInput,
 ): readonly ApmLockedPackageEvidence[] {
   return Object.entries(importers).flatMap(([importerPath, importerValue]) => {
     if (!isRecord(importerValue)) return [];
@@ -147,10 +147,11 @@ function readPnpmDirectResolutions(
   lockedPackages: readonly ApmLockedPackageEvidence[],
 ): ReadonlyMap<string, string> {
   const result = new Map<string, string>();
+  const importersByPath = new Map(Object.entries(importers));
   for (const manifest of input.root.manifests) {
     const importerPath = portableRelative(input.root.rootPath, manifest.packageRoot);
-    const importer = isRecord(importers[importerPath]) ? importers[importerPath] : undefined;
-    if (importer === undefined) continue;
+    const importer = importersByPath.get(importerPath);
+    if (!isRecord(importer)) continue;
     const entries = new Map(readImporterDependencies(importer));
     for (const name of declaredNames(manifest)) {
       const reference = readPnpmImporterVersion(entries.get(name));
@@ -202,8 +203,8 @@ function resolvePnpmPackageId(
 
 /*** Read all pnpm importer dependency groups while keeping the raw resolution object. */
 function readImporterDependencies(importer: Record<string, unknown>): readonly [string, unknown][] {
-  return ['dependencies', 'devDependencies', 'optionalDependencies'].flatMap((key) =>
-    isRecord(importer[key]) ? Object.entries(importer[key]) : [],
+  return [importer.dependencies, importer.devDependencies, importer.optionalDependencies].flatMap(
+    (group) => (isRecord(group) ? Object.entries(group) : []),
   );
 }
 
