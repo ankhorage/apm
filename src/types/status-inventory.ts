@@ -33,14 +33,24 @@ export interface ApmLockfileCandidate {
   readonly path: string;
 }
 
-export interface ApmManagerInspectionResult {
-  readonly linker?: string;
+export interface ApmManagerLockEvidence {
   readonly lockfile: ApmLockfileEvidence;
   readonly lockedPackages: readonly ApmLockedPackageEvidence[];
-  readonly installedPackages: readonly ApmInstalledPackageEvidence[];
   readonly directResolutions: ReadonlyMap<string, string>;
   readonly complete: boolean;
   readonly diagnostics: readonly ApmStatusDiagnostic[];
+}
+
+export interface ApmManagerInstallationEvidence {
+  readonly linker: string;
+  readonly installedPackages: readonly ApmInstalledPackageEvidence[];
+  readonly complete: boolean;
+  readonly diagnostics: readonly ApmStatusDiagnostic[];
+}
+
+export interface ApmManagerInspectionResult extends ApmManagerLockEvidence {
+  readonly linker?: string;
+  readonly installedPackages: readonly ApmInstalledPackageEvidence[];
 }
 
 export interface ApmManagerInspectionInput {
