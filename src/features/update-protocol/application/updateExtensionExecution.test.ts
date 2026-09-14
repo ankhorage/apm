@@ -1,5 +1,3 @@
-import { expect, test } from 'bun:test';
-
 import type {
   ApmExtensionExecutionContext,
   ApmExtensionProjectReadPort,
@@ -7,6 +5,7 @@ import type {
   ApmMigrationHandler,
   ApmUpdateExtension,
 } from '@ankhorage/apm/types';
+import { expect, test } from 'bun:test';
 
 import { executeMigrationExtensionAsync } from './executeMigrationExtensionAsync.js';
 import { planMigrationExtensionAsync } from './planMigrationExtensionAsync.js';
@@ -123,7 +122,9 @@ test('blocks executable code that requests a mutation absent from the reviewed p
   expect(result.ok).toBe(false);
   expect(applied).toEqual([]);
   if (result.ok) return;
-  expect(result.blockers.map((blocker) => blocker.code)).toContain('protocol.extension-result-invalid');
+  expect(result.blockers.map((blocker) => blocker.code)).toContain(
+    'protocol.extension-result-invalid',
+  );
 });
 
 /*** Build a deterministic read-only project adapter for protocol fixtures. */

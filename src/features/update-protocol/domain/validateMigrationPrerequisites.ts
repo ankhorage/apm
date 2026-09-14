@@ -1,4 +1,7 @@
-import type { ApmMigrationDescriptor, ApmUpdateDescriptor } from '../../../types/update-protocol.js';
+import type {
+  ApmMigrationDescriptor,
+  ApmUpdateDescriptor,
+} from '../../../types/update-protocol.js';
 import type { ApmUpdateProtocolBlocker } from '../../../types/update-validation.js';
 import { createProtocolBlocker } from '../utils/createProtocolBlocker.js';
 import { migrationIdentity } from '../utils/migrationIdentity.js';
@@ -9,16 +12,13 @@ export function validateMigrationPrerequisites(
   relatedDescriptors: readonly ApmUpdateDescriptor[] = [],
 ): readonly ApmUpdateProtocolBlocker[] {
   const nodes = migrationNodes([descriptor, ...relatedDescriptors]);
-  return [
-    ...missingPrerequisiteBlockers(descriptor, nodes),
-    ...cycleBlockers(nodes),
-  ];
+  return [...missingPrerequisiteBlockers(descriptor, nodes), ...cycleBlockers(nodes)];
 }
 
-type MigrationNode = {
+interface MigrationNode {
   readonly owner: string;
   readonly migration: ApmMigrationDescriptor;
-};
+}
 
 /*** Build one stable node map for all selected owner descriptors. */
 function migrationNodes(
@@ -26,10 +26,13 @@ function migrationNodes(
 ): ReadonlyMap<string, MigrationNode> {
   return new Map(
     descriptors.flatMap((item) =>
-      item.migrations.map((migration) => [
-        migrationIdentity(item.owner.name, migration.id),
-        { owner: item.owner.name, migration },
-      ] as const),
+      item.migrations.map(
+        (migration) =>
+          [
+            migrationIdentity(item.owner.name, migration.id),
+            { owner: item.owner.name, migration },
+          ] as const,
+      ),
     ),
   );
 }
@@ -58,7 +61,9 @@ function missingPrerequisiteBlockers(
 }
 
 /*** Report one graph blocker when selected prerequisite relationships contain a cycle. */
-function cycleBlockers(nodes: ReadonlyMap<string, MigrationNode>): readonly ApmUpdateProtocolBlocker[] {
+function cycleBlockers(
+  nodes: ReadonlyMap<string, MigrationNode>,
+): readonly ApmUpdateProtocolBlocker[] {
   const cyclic = [...nodes.keys()].filter((identity) => hasCycleFrom(identity, nodes, new Set()));
   return cyclic.length === 0
     ? []
@@ -67,7 +72,8 @@ function cycleBlockers(nodes: ReadonlyMap<string, MigrationNode>): readonly ApmU
           code: 'protocol.migration-prerequisite-cycle',
           kind: 'migration',
           evidence: cyclic,
-          reason: 'Migration prerequisites contain a cycle and cannot be ordered deterministically.',
+          reason:
+            'Migration prerequisites contain a cycle and cannot be ordered deterministically.',
           nextAction: 'Break the prerequisite cycle before publishing the owner descriptors.',
         }),
       ];
@@ -84,6 +90,10 @@ function hasCycleFrom(
   if (node === undefined) return false;
   const nextActive = new Set([...active, identity]);
   return node.migration.prerequisites.some((prerequisite) =>
-    hasCycleFrom(migrationIdentity(prerequisite.owner, prerequisite.migrationId), nodes, nextActive),
+    hasCycleFrom(
+      migrationIdentity(prerequisite.owner, prerequisite.migrationId),
+      nodes,
+      nextActive,
+    ),
   );
 }

@@ -19,7 +19,8 @@ export function validateMigrationExecutionResult(
   plan: ApmMigrationPlanResult,
   value: unknown,
 ): MigrationExecutionValidationResult {
-  if (!isMigrationExecutionResult(value)) return { blockers: [invalidResult(migration.id, 'malformed execution result')] };
+  if (!isMigrationExecutionResult(value))
+    return { blockers: [invalidResult(migration.id, 'malformed execution result')] };
   const blockers = [
     ...(value.migrationId === migration.id
       ? []
@@ -54,7 +55,10 @@ function appliedMutationBlockers(
   );
   const unreviewed = execution.appliedMutationIds.filter((id) => !reviewed.has(id));
   return [
-    ...new Set([...duplicate.map((id) => `duplicate:${id}`), ...unreviewed.map((id) => `unreviewed:${id}`)]),
+    ...new Set([
+      ...duplicate.map((id) => `duplicate:${id}`),
+      ...unreviewed.map((id) => `unreviewed:${id}`),
+    ]),
   ].map((evidence) => invalidResult(migrationId, evidence));
 }
 

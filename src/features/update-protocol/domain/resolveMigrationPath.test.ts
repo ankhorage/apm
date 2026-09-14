@@ -1,7 +1,6 @@
-import { expect, test } from 'bun:test';
-
 import { resolveMigrationPath } from '@ankhorage/apm';
 import type { ApmMigrationDescriptor, ApmUpdateDescriptor } from '@ankhorage/apm/types';
+import { expect, test } from 'bun:test';
 
 const migrationV2: ApmMigrationDescriptor = {
   id: 'manifest-v2',
@@ -77,7 +76,10 @@ test('resolves all required migrations when releases were skipped', () => {
   });
 
   expect(result.supported).toBe(true);
-  expect(result.migrations.map((migration) => migration.id)).toEqual(['manifest-v2', 'manifest-v3']);
+  expect(result.migrations.map((migration) => migration.id)).toEqual([
+    'manifest-v2',
+    'manifest-v3',
+  ]);
 });
 
 test('uses explicit historical migration evidence instead of replaying old migrations', () => {
@@ -102,7 +104,9 @@ test('blocks a dependent migration when historical prerequisite evidence is abse
   });
 
   expect(result.supported).toBe(false);
-  expect(result.blockers.map((blocker) => blocker.code)).toContain('protocol.migration-path-missing');
+  expect(result.blockers.map((blocker) => blocker.code)).toContain(
+    'protocol.migration-path-missing',
+  );
 });
 
 test('blocks completed history whose checksum no longer matches the immutable migration', () => {

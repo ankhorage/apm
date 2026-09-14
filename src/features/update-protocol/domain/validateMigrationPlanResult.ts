@@ -78,7 +78,9 @@ function mutationOwnershipBlockers(
   mutations: readonly ApmProjectMutation[],
 ): readonly ApmUpdateProtocolBlocker[] {
   return mutations.flatMap((mutation) => {
-    const declared = migration.affectedScopes.find((scope) => projectScopesEqual(scope, mutation.claim));
+    const declared = migration.affectedScopes.find((scope) =>
+      projectScopesEqual(scope, mutation.claim),
+    );
     if (declared === undefined) {
       return [invalidResult(migration.id, `undeclared claim:${mutation.id}`)];
     }

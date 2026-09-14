@@ -1,11 +1,10 @@
-import { expect, test } from 'bun:test';
-
 import { validateUpdateDescriptor } from '@ankhorage/apm';
 import type {
   ApmMigrationDescriptor,
   ApmProjectionDescriptor,
   ApmUpdateDescriptor,
 } from '@ankhorage/apm/types';
+import { expect, test } from 'bun:test';
 
 const baseDescriptor: ApmUpdateDescriptor = {
   protocolVersion: 1,

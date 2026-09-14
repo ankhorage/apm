@@ -6,10 +6,10 @@ import type {
   ApmMigrationPlanResult,
 } from '../../../types/update-extension.js';
 import type { ApmUpdateProtocolBlocker } from '../../../types/update-validation.js';
-import { createProtocolBlocker } from '../utils/createProtocolBlocker.js';
 import { resolveMigrationExtensionHandler } from '../domain/resolveMigrationExtensionHandler.js';
 import { validateMigrationExecutionResult } from '../domain/validateMigrationExecutionResult.js';
 import { validateMigrationPlanResult } from '../domain/validateMigrationPlanResult.js';
+import { createProtocolBlocker } from '../utils/createProtocolBlocker.js';
 
 /*** Invoke one trusted migration executor while exposing only reviewed mutation IDs for writes. */
 export async function executeMigrationExtensionAsync(
@@ -36,7 +36,10 @@ export async function executeMigrationExtensionAsync(
       : { ok: true, value: validation.execution };
   } catch (error) {
     if (error instanceof UnreviewedMutationError) {
-      return { ok: false, blockers: [unreviewedMutationBlocker(input.migration.id, error.mutationId)] };
+      return {
+        ok: false,
+        blockers: [unreviewedMutationBlocker(input.migration.id, error.mutationId)],
+      };
     }
     throw error;
   }
@@ -50,7 +53,8 @@ function reviewedProjectPort(
   const reviewedIds = new Set(plan.mutations.map((mutation) => mutation.id));
   const writePort: ApmExtensionProjectWritePort = {
     applyReviewedMutationAsync: (mutationId) => {
-      if (!reviewedIds.has(mutationId)) return Promise.reject(new UnreviewedMutationError(mutationId));
+      if (!reviewedIds.has(mutationId))
+        return Promise.reject(new UnreviewedMutationError(mutationId));
       return project.applyReviewedMutationAsync(mutationId);
     },
   };
@@ -81,6 +85,7 @@ function unreviewedMutationBlocker(
     kind: 'extension',
     id: migrationId,
     evidence: [mutationId],
-    reason: 'Migration extension requested a project mutation that was not present in the reviewed plan.',
+    reason:
+      'Migration extension requested a project mutation that was not present in the reviewed plan.',
   });
 }

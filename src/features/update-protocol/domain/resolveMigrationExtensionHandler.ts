@@ -42,7 +42,14 @@ function migrationArtifactContextBlockers(
       : [contextMismatch(migration.id, 'owner', artifact.packageName, context.owner)]),
     ...(artifact.role === migration.implementation.artifact
       ? []
-      : [contextMismatch(migration.id, 'artifact role', artifact.role, migration.implementation.artifact)]),
+      : [
+          contextMismatch(
+            migration.id,
+            'artifact role',
+            artifact.role,
+            migration.implementation.artifact,
+          ),
+        ]),
     ...artifactVersionBlockers(migration, context),
   ];
 }

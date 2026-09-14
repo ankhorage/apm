@@ -7,7 +7,9 @@ export function validateReleaseEffects(
   descriptor: ApmUpdateDescriptor,
 ): readonly ApmUpdateProtocolBlocker[] {
   return descriptor.effects.flatMap((effect) =>
-    effect.kind === 'ota-eligibility' && effect.eligibility === 'eligible' && effect.evidence.length === 0
+    effect.kind === 'ota-eligibility' &&
+    effect.eligibility === 'eligible' &&
+    effect.evidence.length === 0
       ? [
           createProtocolBlocker({
             code: 'protocol.ota-evidence-required',

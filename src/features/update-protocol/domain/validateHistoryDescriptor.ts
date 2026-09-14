@@ -51,11 +51,14 @@ function supportedHistoryOverlaps(
   descriptor: ApmUpdateDescriptor,
 ): readonly ApmUpdateProtocolBlocker[] {
   return descriptor.history.supported.flatMap((entry, index, entries) =>
-    entries.slice(index + 1).flatMap((other) =>
-      sameStateSelector(entry.stateRevision, other.stateRevision) && rangesIntersect(entry.sourceRange, other.sourceRange)
-        ? [historyOverlap(entry.sourceRange, other.sourceRange)]
-        : [],
-    ),
+    entries
+      .slice(index + 1)
+      .flatMap((other) =>
+        sameStateSelector(entry.stateRevision, other.stateRevision) &&
+        rangesIntersect(entry.sourceRange, other.sourceRange)
+          ? [historyOverlap(entry.sourceRange, other.sourceRange)]
+          : [],
+      ),
   );
 }
 

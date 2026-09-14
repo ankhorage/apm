@@ -1,5 +1,3 @@
-import { expect, test } from 'bun:test';
-
 import {
   validateUpdateExtensionBinding,
   validateUpdateExtensionCapabilities,
@@ -12,6 +10,7 @@ import type {
   ApmUpdateDescriptor,
   ApmUpdateExtension,
 } from '@ankhorage/apm/types';
+import { expect, test } from 'bun:test';
 
 const sourceMigration = migration('source-migration', 'source');
 const targetMigration = migration('target-migration', 'target');
@@ -68,7 +67,9 @@ test('selects source and intermediate handlers only from their declared artifact
     [],
   );
 
-  expect(validateUpdateExtensionCapabilities(descriptor, sourceArtifact, sourceExtension)).toEqual([]);
+  expect(validateUpdateExtensionCapabilities(descriptor, sourceArtifact, sourceExtension)).toEqual(
+    [],
+  );
   expect(
     validateUpdateExtensionCapabilities(descriptor, intermediateArtifact, intermediateExtension),
   ).toEqual([]);
@@ -83,7 +84,11 @@ test('blocks a selected artifact that lacks one of its required handlers', () =>
 });
 
 test('blocks loaded code whose runtime protocol or descriptor digest differs', () => {
-  const wrongDigest = updateExtension('different-digest', ['target-migration'], ['generated-config']);
+  const wrongDigest = updateExtension(
+    'different-digest',
+    ['target-migration'],
+    ['generated-config'],
+  );
   const wrongProtocol: unknown = { ...wrongDigest, protocolVersion: 2 };
 
   expect(validateUpdateExtensionBinding(targetArtifact, wrongDigest)[0]?.code).toBe(

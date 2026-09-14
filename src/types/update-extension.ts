@@ -2,8 +2,8 @@ import type {
   ApmJsonValue,
   ApmMigrationArtifactRole,
   ApmMigrationDescriptor,
-  ApmProjectScope,
   ApmProjectionDescriptor,
+  ApmProjectScope,
   ApmUpdateProtocolVersion,
 } from './update-protocol.js';
 import type { ApmUpdateProtocolBlocker } from './update-validation.js';
@@ -120,7 +120,9 @@ export interface ApmMigrationVerificationInput {
 export interface ApmMigrationHandler {
   readonly id: string;
   readonly planAsync: (input: ApmMigrationPlanInput) => Promise<ApmMigrationPlanResult>;
-  readonly executeAsync: (input: ApmMigrationExecutionInput) => Promise<ApmMigrationExecutionResult>;
+  readonly executeAsync: (
+    input: ApmMigrationExecutionInput,
+  ) => Promise<ApmMigrationExecutionResult>;
   readonly verifyAsync: (
     input: ApmMigrationVerificationInput,
   ) => Promise<ApmExtensionVerificationResult>;

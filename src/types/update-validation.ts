@@ -39,7 +39,14 @@ export type ApmUpdateProtocolBlockerCode =
 export interface ApmUpdateProtocolBlocker {
   readonly code: ApmUpdateProtocolBlockerCode;
   readonly scope: {
-    readonly kind: 'package-metadata' | 'descriptor' | 'history' | 'migration' | 'projection' | 'extension' | 'effect';
+    readonly kind:
+      | 'package-metadata'
+      | 'descriptor'
+      | 'history'
+      | 'migration'
+      | 'projection'
+      | 'extension'
+      | 'effect';
     readonly id?: string;
   };
   readonly evidence: readonly string[];

@@ -18,7 +18,9 @@ export function validateMigrationDescriptors(
 }
 
 /*** Reject duplicate migration IDs inside one immutable owner descriptor. */
-function duplicateMigrationIds(descriptor: ApmUpdateDescriptor): readonly ApmUpdateProtocolBlocker[] {
+function duplicateMigrationIds(
+  descriptor: ApmUpdateDescriptor,
+): readonly ApmUpdateProtocolBlocker[] {
   const ids = descriptor.migrations.map((migration) => migration.id);
   const duplicates = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
   return duplicates.map((id) =>
@@ -71,7 +73,8 @@ function implementationVersionBlockers(
         kind: 'migration',
         id: migration.id,
         evidence: [implementation.version],
-        reason: 'Source/target artifact roles derive their version from the reviewed update context.',
+        reason:
+          'Source/target artifact roles derive their version from the reviewed update context.',
       }),
     ];
   }
@@ -107,7 +110,14 @@ function changedMigrationChecksums(
     previous.flatMap((item) =>
       item.migrations.flatMap((historic) =>
         historic.id === migration.id && historic.checksum !== migration.checksum
-          ? [checksumChanged(descriptor.owner.name, migration.id, historic.checksum, migration.checksum)]
+          ? [
+              checksumChanged(
+                descriptor.owner.name,
+                migration.id,
+                historic.checksum,
+                migration.checksum,
+              ),
+            ]
           : [],
       ),
     ),

@@ -1,6 +1,5 @@
-import { expect, test } from 'bun:test';
-
 import { validatePackageUpdateMetadata } from '@ankhorage/apm';
+import { expect, test } from 'bun:test';
 
 test('round-trips canonical package update discovery metadata through the public API', () => {
   const result = validatePackageUpdateMetadata({

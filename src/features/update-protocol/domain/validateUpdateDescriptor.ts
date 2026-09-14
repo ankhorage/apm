@@ -88,7 +88,10 @@ function extensionExportBlockers(
 }
 
 /*** Build one unsupported protocol/schema version blocker without unsafe coercion. */
-function unsupportedVersion(subject: 'protocol' | 'schema', value: unknown): ApmUpdateProtocolBlocker {
+function unsupportedVersion(
+  subject: 'protocol' | 'schema',
+  value: unknown,
+): ApmUpdateProtocolBlocker {
   return createProtocolBlocker({
     code: subject === 'protocol' ? 'protocol.unsupported-version' : 'protocol.unsupported-schema',
     kind: 'descriptor',

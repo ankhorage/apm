@@ -14,14 +14,16 @@ export function validateProjectionDescriptors(
   ];
 }
 
-type ProjectionClaim = {
+interface ProjectionClaim {
   readonly owner: string;
   readonly projectionId: string;
   readonly scope: ApmProjectScope;
-};
+}
 
 /*** Reject duplicate projection IDs within one immutable owner artifact. */
-function duplicateProjectionIds(descriptor: ApmUpdateDescriptor): readonly ApmUpdateProtocolBlocker[] {
+function duplicateProjectionIds(
+  descriptor: ApmUpdateDescriptor,
+): readonly ApmUpdateProtocolBlocker[] {
   const ids = descriptor.projections.map((projection) => projection.id);
   const duplicates = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
   return duplicates.map((id) =>
@@ -66,11 +68,14 @@ function ownershipConflictBlockers(
     ),
   );
   return claims.flatMap((claim, index) =>
-    claims.slice(index + 1).flatMap((other) =>
-      projectionIdentity(claim) !== projectionIdentity(other) && scopesOverlap(claim.scope, other.scope)
-        ? [ownershipConflict(claim, other)]
-        : [],
-    ),
+    claims
+      .slice(index + 1)
+      .flatMap((other) =>
+        projectionIdentity(claim) !== projectionIdentity(other) &&
+        scopesOverlap(claim.scope, other.scope)
+          ? [ownershipConflict(claim, other)]
+          : [],
+      ),
   );
 }
 

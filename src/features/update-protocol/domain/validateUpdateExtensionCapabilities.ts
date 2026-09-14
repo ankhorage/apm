@@ -2,7 +2,10 @@ import type {
   ApmExtensionArtifactIdentity,
   ApmUpdateExtension,
 } from '../../../types/update-extension.js';
-import type { ApmMigrationDescriptor, ApmUpdateDescriptor } from '../../../types/update-protocol.js';
+import type {
+  ApmMigrationDescriptor,
+  ApmUpdateDescriptor,
+} from '../../../types/update-protocol.js';
 import type { ApmUpdateProtocolBlocker } from '../../../types/update-validation.js';
 import { createProtocolBlocker } from '../utils/createProtocolBlocker.js';
 
@@ -14,7 +17,9 @@ export function validateUpdateExtensionCapabilities(
 ): readonly ApmUpdateProtocolBlocker[] {
   return [
     ...requiredMigrationIds(descriptor, artifact).flatMap((id) =>
-      extension.migrations.some((handler) => handler.id === id) ? [] : [missingHandler('migration', id)],
+      extension.migrations.some((handler) => handler.id === id)
+        ? []
+        : [missingHandler('migration', id)],
     ),
     ...requiredProjectionIds(descriptor, artifact).flatMap((id) =>
       extension.projections.some((handler) => handler.id === id)

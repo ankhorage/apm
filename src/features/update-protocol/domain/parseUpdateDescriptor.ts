@@ -39,9 +39,12 @@ interface DescriptorCapabilities {
 }
 
 /*** Narrow static metadata to the protocol/schema header supported by this APM release. */
-function hasSupportedDescriptorHeader(
-  value: unknown,
-): value is Readonly<Record<string, unknown>> & { readonly protocolVersion: 1; readonly schemaVersion: 1 } {
+function hasSupportedDescriptorHeader(value: unknown): value is Readonly<
+  Record<string, unknown>
+> & {
+  readonly protocolVersion: 1;
+  readonly schemaVersion: 1;
+} {
   return isRecord(value) && value.protocolVersion === 1 && value.schemaVersion === 1;
 }
 

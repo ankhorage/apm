@@ -83,11 +83,7 @@ export type ApmProjectScope =
     };
 
 export type ApmMigrationSideEffect =
-  | 'project-files'
-  | 'package-manifest'
-  | 'package-installation'
-  | 'external-service'
-  | 'manual';
+  'project-files' | 'package-manifest' | 'package-installation' | 'external-service' | 'manual';
 
 export interface ApmMigrationVerificationRequirement {
   readonly kind: 'extension' | 'manual';
@@ -124,11 +120,7 @@ export interface ApmProjectionDescriptor {
 }
 
 export type ApmReleaseRequirementEffectKind =
-  | 'web-rebuild'
-  | 'web-redeploy'
-  | 'native-binary'
-  | 'backend-prerequisite'
-  | 'manual-review';
+  'web-rebuild' | 'web-redeploy' | 'native-binary' | 'backend-prerequisite' | 'manual-review';
 
 export interface ApmReleaseRequirementEffect {
   readonly kind: ApmReleaseRequirementEffectKind;

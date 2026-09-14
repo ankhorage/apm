@@ -98,7 +98,9 @@ function historySelectionBlockers(
 }
 
 /*** Resolve every acyclic forward migration graph path that reaches the exact selected target. */
-function migrationPaths(input: ApmMigrationPathInput): readonly (readonly ApmMigrationDescriptor[])[] {
+function migrationPaths(
+  input: ApmMigrationPathInput,
+): readonly (readonly ApmMigrationDescriptor[])[] {
   return traversePaths(
     {
       version: input.sourceVersion,
@@ -154,9 +156,7 @@ function migrationApplicable(
 /*** Require each selected migration edge to advance without overshooting the reviewed target. */
 function isForwardTarget(candidate: string, current: string, target: string): boolean {
   return (
-    valid(candidate) !== null &&
-    compare(candidate, current) > 0 &&
-    compare(candidate, target) <= 0
+    valid(candidate) !== null && compare(candidate, current) > 0 && compare(candidate, target) <= 0
   );
 }
 
