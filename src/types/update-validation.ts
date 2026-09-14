@@ -9,6 +9,7 @@ export type ApmUpdateProtocolBlockerCode =
   | 'protocol.invalid-descriptor-path'
   | 'protocol.invalid-descriptor'
   | 'protocol.invalid-extension-export'
+  | 'protocol.invalid-project-scope'
   | 'protocol.unsupported-version'
   | 'protocol.unsupported-schema'
   | 'protocol.owner-mismatch'
