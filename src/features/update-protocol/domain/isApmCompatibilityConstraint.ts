@@ -4,12 +4,12 @@ import type { ApmCompatibilityConstraint } from '../../../types/update-protocol.
 
 /*** Validate one package/runtime compatibility constraint from static descriptor data. */
 export function isApmCompatibilityConstraint(value: unknown): value is ApmCompatibilityConstraint {
-  if (!isRecord(value) || typeof value.kind !== 'string') return false;
-  const kind = value.kind;
+  if (!isRecord(value)) return false;
+  const { kind, name, range, reason } = value;
   return (
     (kind === 'package' || kind === 'node' || kind === 'host' || kind === 'framework') &&
-    typeof value.name === 'string' &&
-    typeof value.range === 'string' &&
-    (value.reason === undefined || typeof value.reason === 'string')
+    typeof name === 'string' &&
+    typeof range === 'string' &&
+    (reason === undefined || typeof reason === 'string')
   );
 }
