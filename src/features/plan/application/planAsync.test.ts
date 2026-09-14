@@ -313,7 +313,7 @@ function installRootFixture(
       {
         id: dependency.packageId,
         name: dependency.name,
-        version: dependency.lockedVersion,
+        ...(dependency.lockedVersion === undefined ? {} : { version: dependency.lockedVersion }),
         source: 'registry',
         optional: false,
         dependencies: [],
