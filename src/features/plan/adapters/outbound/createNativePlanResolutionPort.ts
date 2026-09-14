@@ -16,6 +16,7 @@ import { collectStagedPlanFileChangesAsync } from './collectStagedPlanFileChange
 import { inspectStagedPlanInventoryAsync } from './inspectStagedPlanInventoryAsync.js';
 import { runPlanCommandAsync } from './runPlanCommandAsync.js';
 import { stagePlanInstallRootAsync } from './stagePlanInstallRootAsync.js';
+import { toPlanCommandFailureBlocker } from './toPlanCommandFailureBlocker.js';
 import { toPlanResolutionGraph } from './toPlanResolutionGraph.js';
 import { validateStagedPlanTargets } from './validateStagedPlanTargets.js';
 
@@ -37,14 +38,14 @@ async function resolveNativePlanAsync(
     );
     if (versionResult.exitCode !== 0) {
       return failedResolution(request, [
-        commandFailureBlocker(request, versionCommand(request), versionResult),
+        toPlanCommandFailureBlocker(request, versionCommand(request), versionResult),
       ]);
     }
     const commands = buildPackageManagerPlanCommands(request);
     const failed = await runCommandsAsync(commands, stage.rootPath);
     if (failed !== undefined) {
       return failedResolution(request, [
-        commandFailureBlocker(request, failed.command, failed.result),
+        toPlanCommandFailureBlocker(request, failed.command, failed.result),
       ]);
     }
     const root = await inspectStagedPlanInventoryAsync(request, stage);
@@ -134,26 +135,6 @@ function failedResolution(
     effects: resolutionEffects(),
     blockers,
     diagnostics: [],
-  };
-}
-
-/*** Classify native package-manager failures without embedding raw credential-bearing output. */
-function commandFailureBlocker(
-  request: ApmPlanResolutionRequest,
-  command: ApmPackageManagerPlanCommand,
-  result: ApmPlanCommandResult,
-): ApmPlanBlocker {
-  const peerConflict = /ERESOLVE|peer dependenc|peerDependencies/iu.test(result.stderr);
-  return {
-    code: peerConflict ? 'plan.peer-conflict' : 'plan.resolution-failed',
-    scope: { kind: 'install-root', id: request.installRootId, path: request.installRootPath },
-    evidence: [command.executable, ...command.args, `exit:${result.exitCode}`],
-    reason: peerConflict
-      ? 'Native package-manager resolution rejected the selected graph because peer requirements conflict.'
-      : 'Native package-manager planning command failed before producing a complete reviewed lock graph.',
-    nextAction: peerConflict
-      ? 'Choose compatible package targets or resolve the peer constraint explicitly.'
-      : 'Run the package manager manually for full diagnostics, then re-run APM status and plan.',
   };
 }
 
