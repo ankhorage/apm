@@ -8,9 +8,9 @@ import type {
   ApmDiscoveredInstallRoot,
   ApmLockfileCandidate,
   ApmParsedPackageManifest,
-} from '../../../types/status-inventory.js';
-import type { ApmPackageManagerName, ApmStatusDiagnostic } from '../../../types/status.js';
-import { STATUS_LOCKFILES } from '../constants/support.js';
+} from '../../../../types/status-inventory.js';
+import type { ApmPackageManagerName, ApmStatusDiagnostic } from '../../../../types/status.js';
+import { STATUS_LOCKFILES } from '../../constants/support.js';
 
 /*** Resolve nested independent install roots and package-manager selection from filesystem evidence. */
 export async function discoverInstallRootsAsync(
@@ -32,12 +32,9 @@ export async function discoverInstallRootsAsync(
 
   return potentialRoots.map(({ manifest, candidates, explicitManager }) => {
     const relativeRoot = portableRelative(inspection.rootPath, manifest.packageRoot);
+    const roots = potentialRoots.map((item) => item.manifest.packageRoot);
     const assignedManifests = manifests.filter((candidate) =>
-      ownsPackage(
-        manifest.packageRoot,
-        candidate.packageRoot,
-        potentialRoots.map((item) => item.manifest.packageRoot),
-      ),
+      ownsPackage(manifest.packageRoot, candidate.packageRoot, roots),
     );
     const selection = selectManager(relativeRoot, candidates, explicitManager, inspection);
     return {
@@ -70,7 +67,7 @@ async function discoverLockfilesAsync(
   return results.filter((result): result is ApmLockfileCandidate => result !== undefined);
 }
 
-/*** Select an explicit packageManager declaration over lockfile heuristics and report conflicts. */
+/*** Select explicit manager metadata before lockfile and detector heuristics. */
 function selectManager(
   relativeRoot: string,
   candidates: readonly ApmLockfileCandidate[],
@@ -78,54 +75,16 @@ function selectManager(
   inspection: ProjectInspection,
 ): ManagerSelection {
   const lockManagers = [...new Set(candidates.map((candidate) => candidate.manager))];
-  if (explicit !== undefined) {
-    const diagnostics = lockManagers
-      .filter((manager) => manager !== explicit.name)
-      .map((manager) => managerConflictDiagnostic(relativeRoot, manager, explicit.name, false));
+  if (explicit !== undefined) return selectExplicitManager(relativeRoot, lockManagers, explicit);
+  const [onlyLockManager] = lockManagers;
+  if (lockManagers.length === 1 && onlyLockManager !== undefined) {
     return {
-      manager: {
-        state: 'selected',
-        name: explicit.name,
-        ...(explicit.version === undefined ? {} : { version: explicit.version }),
-        source: 'package-manager-field',
-      },
-      diagnostics,
-    };
-  }
-  if (lockManagers.length === 1) {
-    return {
-      manager: { state: 'selected', name: lockManagers[0]!, source: 'lockfile' },
+      manager: { state: 'selected', name: onlyLockManager, source: 'lockfile' },
       diagnostics: [],
     };
   }
-  if (lockManagers.length > 1) {
-    return {
-      manager: { state: 'conflict' },
-      diagnostics: lockManagers.map((manager) =>
-        managerConflictDiagnostic(relativeRoot, manager, undefined, true),
-      ),
-    };
-  }
-  const detected = inspection.detection.packageManagers.filter(isSupportedManager);
-  if (relativeRoot === '.' && detected.length === 1) {
-    return {
-      manager: { state: 'selected', name: detected[0]!, source: 'project-detector' },
-      diagnostics: [],
-    };
-  }
-  return {
-    manager: { state: 'unknown' },
-    diagnostics: [
-      {
-        code: 'status.manager.unknown',
-        severity: 'warning',
-        scope: { kind: 'install-root', id: relativeRoot },
-        evidence: [],
-        reason: 'No unambiguous supported package manager could be selected for this install root.',
-        nextAction: 'Declare packageManager or keep exactly one supported package-manager lockfile.',
-      },
-    ],
-  };
+  if (lockManagers.length > 1) return selectConflictingManagers(relativeRoot, lockManagers);
+  return selectDetectedManager(relativeRoot, inspection);
 }
 
 interface ManagerSelection {
@@ -135,15 +94,65 @@ interface ManagerSelection {
 
 interface ParsedPackageManager {
   readonly name: ApmPackageManagerName;
-  readonly version?: string;
+  readonly version: string;
+}
+
+/*** Select packageManager metadata and report stale lockfiles from other managers. */
+function selectExplicitManager(
+  relativeRoot: string,
+  lockManagers: readonly ApmPackageManagerName[],
+  explicit: ParsedPackageManager,
+): ManagerSelection {
+  return {
+    manager: {
+      state: 'selected',
+      name: explicit.name,
+      version: explicit.version,
+      source: 'package-manager-field',
+    },
+    diagnostics: lockManagers
+      .filter((manager) => manager !== explicit.name)
+      .map((manager) => managerConflictDiagnostic(relativeRoot, manager, explicit.name, false)),
+  };
+}
+
+/*** Represent multiple lockfile managers as a blocking ambiguity. */
+function selectConflictingManagers(
+  relativeRoot: string,
+  lockManagers: readonly ApmPackageManagerName[],
+): ManagerSelection {
+  return {
+    manager: { state: 'conflict' },
+    diagnostics: lockManagers.map((manager) =>
+      managerConflictDiagnostic(relativeRoot, manager, undefined, true),
+    ),
+  };
+}
+
+/*** Fall back to Project Detector only for the project root when no lockfile selects a manager. */
+function selectDetectedManager(relativeRoot: string, inspection: ProjectInspection): ManagerSelection {
+  const detected = inspection.detection.packageManagers.filter(isSupportedManager);
+  const [onlyDetectedManager] = detected;
+  if (relativeRoot === '.' && detected.length === 1 && onlyDetectedManager !== undefined) {
+    return {
+      manager: { state: 'selected', name: onlyDetectedManager, source: 'project-detector' },
+      diagnostics: [],
+    };
+  }
+  return {
+    manager: { state: 'unknown' },
+    diagnostics: [unknownManagerDiagnostic(relativeRoot)],
+  };
 }
 
 /*** Parse packageManager metadata without accepting unrelated tool names as APM support. */
 function parsePackageManager(value: string | undefined): ParsedPackageManager | undefined {
   if (value === undefined) return undefined;
   const match = /^(npm|pnpm|yarn|bun)@([^+\s]+)(?:\+.+)?$/u.exec(value.trim());
-  if (match === null || !isSupportedManager(match[1])) return undefined;
-  return { name: match[1], version: match[2] };
+  if (match === null) return undefined;
+  const [, name, version] = match;
+  if (name === undefined || version === undefined || !isSupportedManager(name)) return undefined;
+  return { name, version };
 }
 
 /*** Limit detector/packageManager values to the managers with explicit APM adapters. */
@@ -194,5 +203,17 @@ function managerConflictDiagnostic(
     nextAction: blocking
       ? 'Remove stale lockfiles or declare the intended packageManager.'
       : 'Remove stale lockfiles to keep package-manager evidence unambiguous.',
+  };
+}
+
+/*** Explain an install root whose package manager cannot be selected safely. */
+function unknownManagerDiagnostic(relativeRoot: string): ApmStatusDiagnostic {
+  return {
+    code: 'status.manager.unknown',
+    severity: 'warning',
+    scope: { kind: 'install-root', id: relativeRoot },
+    evidence: [],
+    reason: 'No unambiguous supported package manager could be selected for this install root.',
+    nextAction: 'Declare packageManager or keep exactly one supported package-manager lockfile.',
   };
 }
