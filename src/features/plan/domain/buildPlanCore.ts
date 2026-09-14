@@ -61,9 +61,7 @@ function planFiles(input: BuildPlanCoreInput): ApmPlanResult['files'] {
 }
 
 /*** Flatten the exact resolved package graph only after all plan gates pass. */
-function planPackages(
-  resolutions: readonly ApmPlanResolutionResult[],
-): ApmPlanResult['packages'] {
+function planPackages(resolutions: readonly ApmPlanResolutionResult[]): ApmPlanResult['packages'] {
   return resolutions
     .flatMap(({ packages }) => packages)
     .sort((left, right) => compareText(left.id, right.id));
