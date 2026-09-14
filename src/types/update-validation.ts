@@ -31,6 +31,7 @@ export type ApmUpdateProtocolBlockerCode =
   | 'protocol.projection-ownership-conflict'
   | 'protocol.extension-required'
   | 'protocol.extension-binding-mismatch'
+  | 'protocol.extension-result-invalid'
   | 'protocol.artifact-integrity-required'
   | 'protocol.ota-evidence-required';
 
