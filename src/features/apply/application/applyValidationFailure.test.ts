@@ -20,7 +20,12 @@ test('failed required validation produces a durable failed operation', async () 
   try {
     const plan = validationPlan(rootPath);
     const state = {
-      journal: createApplyJournal(plan, PERMISSIONS, 'validation-failure', '2026-09-14T21:00:00.000Z'),
+      journal: createApplyJournal(
+        plan,
+        PERMISSIONS,
+        'validation-failure',
+        '2026-09-14T21:00:00.000Z',
+      ),
     };
     const outcome = await runApplyStepsAsync(state.journal, applyPorts(state));
 

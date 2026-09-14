@@ -83,7 +83,8 @@ function ownerPort(rootPath: string): ApmApplyStepPort {
         },
       };
     },
-    rollbackAsync: () => Promise.resolve({ state: 'completed', evidence: ['owner-rollback'], diagnostics: [] }),
+    rollbackAsync: () =>
+      Promise.resolve({ state: 'completed', evidence: ['owner-rollback'], diagnostics: [] }),
   };
 }
 
@@ -112,7 +113,11 @@ function ownerFailurePlan(rootPath: string, kind: 'migration' | 'projection') {
       repairProjections: true,
       maxGeneratorIterations: 4,
     },
-    executor: { apmVersion: '0.4.0', runtime: 'node' as const, runtimeVersion: process.versions.node },
+    executor: {
+      apmVersion: '0.4.0',
+      runtime: 'node' as const,
+      runtimeVersion: process.versions.node,
+    },
     inputFingerprint: { value: 'fixture', statusSchemaVersion: 2, availabilityCheckedAt: [] },
     targets: [],
     files: [],
