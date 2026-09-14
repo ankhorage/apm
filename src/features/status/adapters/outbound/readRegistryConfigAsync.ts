@@ -11,10 +11,11 @@ export async function readRegistryConfigAsync(input: {
   readonly env: Readonly<Record<string, string | undefined>>;
   readonly home: string;
 }): Promise<ApmRegistryConfig> {
-  const userValues = await readNpmrcAsync(path.join(input.home, '.npmrc'), input.env);
-  const projectValues = await readNpmrcAsync(path.join(input.rootPath, '.npmrc'), input.env);
+  const envValues = new Map(Object.entries(input.env));
+  const userValues = await readNpmrcAsync(path.join(input.home, '.npmrc'), envValues);
+  const projectValues = await readNpmrcAsync(path.join(input.rootPath, '.npmrc'), envValues);
   const values = new Map([...userValues, ...projectValues]);
-  const envRegistry = input.env.npm_config_registry ?? input.env.NPM_CONFIG_REGISTRY;
+  const envRegistry = envValues.get('npm_config_registry') ?? envValues.get('NPM_CONFIG_REGISTRY');
   const defaultRegistry = ensureTrailingSlash(
     envRegistry ?? values.get('registry') ?? 'https://registry.npmjs.org/',
   );
@@ -31,7 +32,7 @@ export async function readRegistryConfigAsync(input: {
 /*** Parse npmrc key/value lines and expand environment placeholders only at the adapter edge. */
 async function readNpmrcAsync(
   filePath: string,
-  env: Readonly<Record<string, string | undefined>>,
+  env: ReadonlyMap<string, string | undefined>,
 ): Promise<ReadonlyMap<string, string>> {
   try {
     const text = await readFile(filePath, 'utf8');
@@ -51,13 +52,13 @@ async function readNpmrcAsync(
 /*** Parse one npmrc assignment while keeping expansion local to the secret-bearing edge. */
 function parseNpmrcLine(
   line: string,
-  env: Readonly<Record<string, string | undefined>>,
+  env: ReadonlyMap<string, string | undefined>,
 ): readonly (readonly [string, string])[] {
   const separator = line.indexOf('=');
   if (separator < 0) return [];
   const key = line.slice(0, separator).trim();
   const raw = line.slice(separator + 1).trim();
-  const value = raw.replace(/\$\{([^}]+)\}/gu, (_match, name: string) => env[name] ?? '');
+  const value = raw.replace(/\$\{([^}]+)\}/gu, (_match, name: string) => env.get(name) ?? '');
   return [[key, value]];
 }
 
