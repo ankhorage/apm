@@ -165,6 +165,15 @@ async function verifyExecutedStepAsync(
   ports: ApmApplyPorts,
   diagnostics: readonly ApmStatusDiagnostic[],
 ): Promise<ApmApplyRunOutcome> {
+  if (step.execution.kind === 'validation') {
+    const committed = await commitObservedStepAsync(
+      journal,
+      step,
+      { state: 'satisfied', evidence: execution.evidence },
+      ports,
+    );
+    return runNextStepAsync(committed, ports, diagnostics);
+  }
   const observation = await ports.step.observeAsync({ journal, step });
   if (observation.state !== 'satisfied') {
     return finishApplyOperationAsync(
