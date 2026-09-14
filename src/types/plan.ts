@@ -61,6 +61,7 @@ export type ApmPlanBlockerCode =
   | 'plan.downgrade-not-allowed'
   | 'plan.non-registry-selection-unsupported'
   | 'plan.resolution-failed'
+  | 'plan.artifact-identity-unknown'
   | 'plan.peer-conflict'
   | 'plan.protocol-unavailable'
   | 'plan.generator-nonconvergent'
