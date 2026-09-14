@@ -13,7 +13,6 @@ export type ApmJsonValue =
 export interface ApmPackageUpdateMetadata {
   readonly protocolVersion: ApmUpdateProtocolVersion;
   readonly descriptor: string;
-  readonly extension?: string;
 }
 
 export interface ApmUpdateOwnerIdentity {
