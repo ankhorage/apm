@@ -56,6 +56,7 @@ export interface ApmMigrationPathInput {
   readonly descriptor: ApmUpdateDescriptor;
   readonly sourceVersion: string;
   readonly sourceStateRevision?: string;
+  readonly completedMigrationIds?: readonly string[];
   readonly targetVersion: string;
 }
 
