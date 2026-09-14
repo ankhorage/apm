@@ -9,18 +9,12 @@ import type {
 export function transitionApplyJournal(input: TransitionApplyJournalInput): ApmApplyJournal {
   const steps = input.journal.steps.map((step) =>
     step.stepId === input.stepId
-      ? {
-          ...step,
-          state: input.state,
-          attempts: step.attempts + (input.incrementAttempts === true ? 1 : 0),
-          updatedAt: input.now,
-          evidence: input.evidence ?? step.evidence,
-          ...(input.failure === undefined ? {} : { failure: input.failure }),
-        }
+      ? transitionStep(step, input)
       : step,
   );
+  const { failure: currentOperationFailure, ...journalWithoutFailure } = input.journal;
   return {
-    ...input.journal,
+    ...(input.clearOperationFailure === true ? journalWithoutFailure : input.journal),
     updatedAt: input.now,
     steps,
     ...(input.journalStatus === undefined ? {} : { status: input.journalStatus }),
@@ -38,4 +32,24 @@ interface TransitionApplyJournalInput {
   readonly incrementAttempts?: boolean;
   readonly journalStatus?: ApmApplyJournalStatus;
   readonly operationFailure?: ApmApplyFailure;
+  readonly clearFailure?: boolean;
+  readonly clearOperationFailure?: boolean;
+}
+
+type ApplyStepJournal = ApmApplyJournal['steps'][number];
+
+/*** Transition one immutable step record and optionally clear stale failure evidence. */
+function transitionStep(
+  step: ApplyStepJournal,
+  input: TransitionApplyJournalInput,
+): ApplyStepJournal {
+  const { failure: currentFailure, ...stepWithoutFailure } = step;
+  return {
+    ...(input.clearFailure === true ? stepWithoutFailure : step),
+    state: input.state,
+    attempts: step.attempts + (input.incrementAttempts === true ? 1 : 0),
+    updatedAt: input.now,
+    evidence: input.evidence ?? step.evidence,
+    ...(input.failure === undefined ? {} : { failure: input.failure }),
+  };
 }
