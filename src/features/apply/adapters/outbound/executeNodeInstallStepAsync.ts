@@ -6,8 +6,7 @@ import { buildPackageManagerInstallCommand } from './buildPackageManagerInstallC
 type InstallExecution = Extract<ApmPlanStep['execution'], { readonly kind: 'install' }>;
 
 type ManagerIdentityResult =
-  | { readonly observedVersion: string }
-  | { readonly failure: ApmApplyStepExecutionResult };
+  { readonly observedVersion: string } | { readonly failure: ApmApplyStepExecutionResult };
 
 /*** Materialize the exact reviewed lock graph with the frozen package manager and script policy. */
 export async function executeNodeInstallStepAsync(
@@ -48,7 +47,8 @@ async function inspectManagerIdentityAsync(
     return { failure: commandFailure(stepId, execution.manager, 'version', result.exitCode) };
   }
   const actualVersion = result.stdout.trim();
-  const observedVersion = actualVersion === '' ? (execution.managerVersion ?? 'unknown') : actualVersion;
+  const observedVersion =
+    actualVersion === '' ? (execution.managerVersion ?? 'unknown') : actualVersion;
   return execution.managerVersion !== undefined && actualVersion !== execution.managerVersion
     ? { failure: managerVersionMismatch(execution, actualVersion) }
     : { observedVersion };
