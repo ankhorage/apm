@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 
 import { expect, test } from 'bun:test';
 
+import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import type {
   ApmPlanBlocker,
   ApmPlanDigestPort,
@@ -150,26 +151,7 @@ function migrationProtocolPort(): ApmPlanProtocolPort {
 /*** Freeze exact owner artifact and migration-plan identity into one executable plan step. */
 function migrationExecution(
   descriptor: ApmUpdateDescriptor['migrations'][number],
-): Extract<
-  ApmPlanProtocolPort extends never ? never : NonNullable<never>,
-  never
-> | {
-  readonly kind: 'migration';
-  readonly descriptor: ApmUpdateDescriptor['migrations'][number];
-  readonly artifact: {
-    readonly role: 'source' | 'target' | 'intermediate';
-    readonly packageName: string;
-    readonly version: string;
-    readonly integrity: string;
-    readonly descriptorDigest: string;
-  };
-  readonly plan: {
-    readonly migrationId: string;
-    readonly mutations: readonly [];
-    readonly evidence: readonly string[];
-    readonly inputFingerprint: string;
-  };
-} {
+): Extract<ApmPlanStepExecution, { readonly kind: 'migration' }> {
   return {
     kind: 'migration',
     descriptor,
