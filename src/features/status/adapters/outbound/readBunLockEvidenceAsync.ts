@@ -67,11 +67,9 @@ interface BunIdentity {
 /*** Parse Bun text-lock JSONC into a supported v2 shape without executing package code. */
 async function parseBunTextLockAsync(rootPath: string): Promise<ParsedBunTextLock> {
   const errors: ParseError[] = [];
-  const raw = parseJsonc(
-    await readFile(path.join(rootPath, 'bun.lock'), 'utf8'),
-    errors,
-    { allowTrailingComma: true },
-  ) as unknown;
+  const raw = parseJsonc(await readFile(path.join(rootPath, 'bun.lock'), 'utf8'), errors, {
+    allowTrailingComma: true,
+  }) as unknown;
   return {
     ...(errors.length === 0 && isSupportedBunLock(raw) ? { lock: raw } : {}),
     raw,

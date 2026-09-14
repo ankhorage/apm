@@ -13,37 +13,185 @@ graph LR
   module_src_cli_renderUnavailableOperation_ts["src/cli/renderUnavailableOperation.ts"]
   module_src_cli_runAsync_test_ts["src/cli/runAsync.test.ts"]
   module_src_cli_runAsync_ts["src/cli/runAsync.ts"]
-  module_src_constants_support_ts["src/constants/support.ts"]
+  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts["src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts"]
+  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts["src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts"]
+  module_src_features_status_adapters_outbound_discoverInstallRootsAsync_ts["src/features/status/adapters/outbound/discoverInstallRootsAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectBunInstallationAsync_ts["src/features/status/adapters/outbound/inspectBunInstallationAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectBunRootAsync_ts["src/features/status/adapters/outbound/inspectBunRootAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectDependencyInventoryAsync_test_ts["src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts"]
+  module_src_features_status_adapters_outbound_inspectDependencyInventoryAsync_ts["src/features/status/adapters/outbound/inspectDependencyInventoryAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectNpmRootAsync_ts["src/features/status/adapters/outbound/inspectNpmRootAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectPnpmInstallationAsync_ts["src/features/status/adapters/outbound/inspectPnpmInstallationAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectPnpmRootAsync_ts["src/features/status/adapters/outbound/inspectPnpmRootAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectYarnInstallationAsync_ts["src/features/status/adapters/outbound/inspectYarnInstallationAsync.ts"]
+  module_src_features_status_adapters_outbound_inspectYarnRootAsync_ts["src/features/status/adapters/outbound/inspectYarnRootAsync.ts"]
+  module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts["src/features/status/adapters/outbound/parseYarnLockEvidence.ts"]
+  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts["src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"]
+  module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts["src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts"]
+  module_src_features_status_adapters_outbound_readPackageManifestAsync_ts["src/features/status/adapters/outbound/readPackageManifestAsync.ts"]
+  module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts["src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts"]
+  module_src_features_status_adapters_outbound_readRegistryConfigAsync_ts["src/features/status/adapters/outbound/readRegistryConfigAsync.ts"]
+  module_src_features_status_adapters_outbound_readYarnLockEvidenceAsync_ts["src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts"]
+  module_src_features_status_application_buildAvailabilityRequests_ts["src/features/status/application/buildAvailabilityRequests.ts"]
   module_src_features_status_application_statusAsync_test_ts["src/features/status/application/statusAsync.test.ts"]
   module_src_features_status_application_statusAsync_ts["src/features/status/application/statusAsync.ts"]
   module_src_features_status_composition_statusProjectAsync_ts["src/features/status/composition/statusProjectAsync.ts"]
+  module_src_features_status_constants_support_ts["src/features/status/constants/support.ts"]
+  module_src_features_status_domain_buildDependencyPaths_ts["src/features/status/domain/buildDependencyPaths.ts"]
+  module_src_features_status_domain_evaluateDependencies_ts["src/features/status/domain/evaluateDependencies.ts"]
+  module_src_features_status_domain_evaluateDependencyFindings_ts["src/features/status/domain/evaluateDependencyFindings.ts"]
+  module_src_features_status_domain_evaluateExtensionFindings_ts["src/features/status/domain/evaluateExtensionFindings.ts"]
+  module_src_features_status_domain_evaluateHostStatus_ts["src/features/status/domain/evaluateHostStatus.ts"]
+  module_src_features_status_domain_evaluateStatus_ts["src/features/status/domain/evaluateStatus.ts"]
+  module_src_features_status_utils_declarationResolutionKey_ts["src/features/status/utils/declarationResolutionKey.ts"]
+  module_src_features_status_utils_readInstalledPackageVersionAsync_ts["src/features/status/utils/readInstalledPackageVersionAsync.ts"]
   module_src_nodeApm_ts["src/nodeApm.ts"]
   module_src_types_cli_ts["src/types/cli.ts"]
   module_src_types_public_ts["src/types/public.ts"]
+  module_src_types_registry_ts["src/types/registry.ts"]
+  module_src_types_status_inventory_ts["src/types/status-inventory.ts"]
+  module_src_types_status_registry_ts["src/types/status-registry.ts"]
   module_src_types_status_ts["src/types/status.ts"]
-  export_APM_BOOTSTRAP_SUPPORT["APM_BOOTSTRAP_SUPPORT"]
-  module_src_constants_support_ts --> export_APM_BOOTSTRAP_SUPPORT
+  export_APM_STATUS_SUPPORT["APM_STATUS_SUPPORT"]
+  module_src_features_status_constants_support_ts --> export_APM_STATUS_SUPPORT
+  export_ApmAvailabilityEvidence["ApmAvailabilityEvidence"]
+  module_src_types_status_ts --> export_ApmAvailabilityEvidence
+  export_ApmAvailabilityEvidence -.-> export_ApmPackageAvailabilityEvidence
+  export_ApmAvailabilityEvidence -.-> export_ApmStatusDiagnostic
+  export_ApmAvailabilityRequest["ApmAvailabilityRequest"]
+  module_src_types_status_ts --> export_ApmAvailabilityRequest
+  export_ApmDependencyDeclaration["ApmDependencyDeclaration"]
+  module_src_types_status_ts --> export_ApmDependencyDeclaration
+  export_ApmDependencyDeclaration -.-> export_ApmDependencyKind
+  export_ApmDependencyInventory["ApmDependencyInventory"]
+  module_src_types_status_ts --> export_ApmDependencyInventory
+  export_ApmDependencyInventory -.-> export_ApmInstallRootInventory
+  export_ApmDependencyInventory -.-> export_ApmStatusDiagnostic
+  export_ApmDependencyKind["ApmDependencyKind"]
+  module_src_types_status_ts --> export_ApmDependencyKind
+  export_ApmExtensionEvidence["ApmExtensionEvidence"]
+  module_src_types_status_ts --> export_ApmExtensionEvidence
+  export_ApmExtensionEvidence -.-> export_ApmExtensionObservation
+  export_ApmExtensionEvidence -.-> export_ApmStatusDiagnostic
+  export_ApmExtensionObservation["ApmExtensionObservation"]
+  module_src_types_status_ts --> export_ApmExtensionObservation
+  export_ApmExtensionObservation -.-> export_ApmMigrationState
+  export_ApmExtensionObservation -.-> export_ApmProjectionState
+  export_ApmInstallationState["ApmInstallationState"]
+  module_src_types_status_ts --> export_ApmInstallationState
+  export_ApmInstalledPackageEvidence["ApmInstalledPackageEvidence"]
+  module_src_types_status_ts --> export_ApmInstalledPackageEvidence
+  export_ApmInstalledPackageEvidence -.-> export_ApmInstallationState
+  export_ApmInstallRootInventory["ApmInstallRootInventory"]
+  module_src_types_status_ts --> export_ApmInstallRootInventory
+  export_ApmInstallRootInventory -.-> export_ApmDependencyDeclaration
+  export_ApmInstallRootInventory -.-> export_ApmInstalledPackageEvidence
+  export_ApmInstallRootInventory -.-> export_ApmLockedPackageEvidence
+  export_ApmInstallRootInventory -.-> export_ApmLockfileEvidence
+  export_ApmInstallRootInventory -.-> export_ApmPackageManagerEvidence
+  export_ApmInstallRootInventory -.-> export_ApmStatusDiagnostic
+  export_ApmLockedDependencyEdge["ApmLockedDependencyEdge"]
+  module_src_types_status_ts --> export_ApmLockedDependencyEdge
+  export_ApmLockedPackageEvidence["ApmLockedPackageEvidence"]
+  module_src_types_status_ts --> export_ApmLockedPackageEvidence
+  export_ApmLockedPackageEvidence -.-> export_ApmLockedDependencyEdge
+  export_ApmLockfileEvidence["ApmLockfileEvidence"]
+  module_src_types_status_ts --> export_ApmLockfileEvidence
+  export_ApmMigrationState["ApmMigrationState"]
+  module_src_types_status_ts --> export_ApmMigrationState
+  export_ApmPackageAvailabilityEvidence["ApmPackageAvailabilityEvidence"]
+  module_src_types_status_ts --> export_ApmPackageAvailabilityEvidence
+  export_ApmPackageManagerEvidence["ApmPackageManagerEvidence"]
+  module_src_types_status_ts --> export_ApmPackageManagerEvidence
+  export_ApmPackageManagerEvidence -.-> export_ApmPackageManagerName
+  export_ApmPackageManagerName["ApmPackageManagerName"]
+  module_src_types_status_ts --> export_ApmPackageManagerName
+  export_ApmProjectionState["ApmProjectionState"]
+  module_src_types_status_ts --> export_ApmProjectionState
+  export_ApmRegistryAvailabilityOptions["ApmRegistryAvailabilityOptions"]
+  module_src_types_registry_ts --> export_ApmRegistryAvailabilityOptions
+  export_ApmRegistryAvailabilityOptions -.-> export_ApmRegistryFetch
+  export_ApmRegistryFetch["ApmRegistryFetch"]
+  module_src_types_registry_ts --> export_ApmRegistryFetch
+  export_ApmStatusAvailabilityMode["ApmStatusAvailabilityMode"]
+  module_src_types_status_ts --> export_ApmStatusAvailabilityMode
+  export_ApmStatusAvailabilityPort["ApmStatusAvailabilityPort"]
+  module_src_types_status_ts --> export_ApmStatusAvailabilityPort
+  export_ApmStatusAvailabilityPort -.-> export_ApmAvailabilityEvidence
+  export_ApmStatusAvailabilityPort -.-> export_ApmAvailabilityRequest
+  export_ApmStatusAvailabilityPort -.-> export_ApmStatusAvailabilityMode
+  export_ApmStatusCurrency["ApmStatusCurrency"]
+  module_src_types_status_ts --> export_ApmStatusCurrency
+  export_ApmStatusDependency["ApmStatusDependency"]
+  module_src_types_status_ts --> export_ApmStatusDependency
+  export_ApmStatusDependency -.-> export_ApmDependencyDeclaration
+  export_ApmStatusDependency -.-> export_ApmInstalledPackageEvidence
+  export_ApmStatusDependency -.-> export_ApmPackageAvailabilityEvidence
+  export_ApmStatusDependency -.-> export_ApmStatusFinding
+  export_ApmStatusDependencyInventoryPort["ApmStatusDependencyInventoryPort"]
+  module_src_types_status_ts --> export_ApmStatusDependencyInventoryPort
+  export_ApmStatusDependencyInventoryPort -.-> export_ApmDependencyInventory
   export_ApmStatusDiagnostic["ApmStatusDiagnostic"]
   module_src_types_status_ts --> export_ApmStatusDiagnostic
+  export_ApmStatusDiagnostic -.-> export_ApmStatusDiagnosticScope
+  export_ApmStatusDiagnosticScope["ApmStatusDiagnosticScope"]
+  module_src_types_status_ts --> export_ApmStatusDiagnosticScope
+  export_ApmStatusExtensionEvidencePort["ApmStatusExtensionEvidencePort"]
+  module_src_types_status_ts --> export_ApmStatusExtensionEvidencePort
+  export_ApmStatusExtensionEvidencePort -.-> export_ApmDependencyInventory
+  export_ApmStatusExtensionEvidencePort -.-> export_ApmExtensionEvidence
+  export_ApmStatusFinding["ApmStatusFinding"]
+  module_src_types_status_ts --> export_ApmStatusFinding
+  export_ApmStatusFinding -.-> export_ApmStatusDiagnosticScope
+  export_ApmStatusFinding -.-> export_ApmStatusFindingCode
+  export_ApmStatusFindingCode["ApmStatusFindingCode"]
+  module_src_types_status_ts --> export_ApmStatusFindingCode
+  export_ApmStatusHostPackage["ApmStatusHostPackage"]
+  module_src_types_status_ts --> export_ApmStatusHostPackage
+  export_ApmStatusHostPackageResult["ApmStatusHostPackageResult"]
+  module_src_types_status_ts --> export_ApmStatusHostPackageResult
+  export_ApmStatusHostPackageResult -.-> export_ApmPackageAvailabilityEvidence
+  export_ApmStatusHostPackageResult -.-> export_ApmStatusFinding
   export_ApmStatusInput["ApmStatusInput"]
   module_src_types_status_ts --> export_ApmStatusInput
-  export_ApmStatusInspectionPort["ApmStatusInspectionPort"]
-  module_src_types_status_ts --> export_ApmStatusInspectionPort
+  export_ApmStatusInput -.-> export_ApmStatusAvailabilityMode
+  export_ApmStatusInput -.-> export_ApmStatusHostPackage
   export_ApmStatusLanguage["ApmStatusLanguage"]
   module_src_types_status_ts --> export_ApmStatusLanguage
+  export_ApmStatusPorts["ApmStatusPorts"]
+  module_src_types_status_ts --> export_ApmStatusPorts
+  export_ApmStatusPorts -.-> export_ApmStatusAvailabilityPort
+  export_ApmStatusPorts -.-> export_ApmStatusDependencyInventoryPort
+  export_ApmStatusPorts -.-> export_ApmStatusExtensionEvidencePort
+  export_ApmStatusPorts -.-> export_ApmStatusProjectInspectionPort
+  export_ApmStatusProjectInspectionPort["ApmStatusProjectInspectionPort"]
+  module_src_types_status_ts --> export_ApmStatusProjectInspectionPort
   export_ApmStatusProjectSummary["ApmStatusProjectSummary"]
   module_src_types_status_ts --> export_ApmStatusProjectSummary
   export_ApmStatusProjectSummary -.-> export_ApmStatusLanguage
   export_ApmStatusResult["ApmStatusResult"]
   module_src_types_status_ts --> export_ApmStatusResult
+  export_ApmStatusResult -.-> export_ApmExtensionEvidence
+  export_ApmStatusResult -.-> export_ApmInstallRootInventory
+  export_ApmStatusResult -.-> export_ApmStatusCurrency
+  export_ApmStatusResult -.-> export_ApmStatusDependency
   export_ApmStatusResult -.-> export_ApmStatusDiagnostic
+  export_ApmStatusResult -.-> export_ApmStatusFinding
+  export_ApmStatusResult -.-> export_ApmStatusHostPackageResult
   export_ApmStatusResult -.-> export_ApmStatusProjectSummary
   export_createCliProvider["createCliProvider"]
   module_src_cli_createCliProvider_ts --> export_createCliProvider
+  export_createNpmRegistryAvailabilityPort["createNpmRegistryAvailabilityPort"]
+  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --> export_createNpmRegistryAvailabilityPort
+  export_createNpmRegistryAvailabilityPort -.-> export_ApmRegistryAvailabilityOptions
+  export_createNpmRegistryAvailabilityPort -.-> export_ApmStatusAvailabilityPort
+  export_inspectDependencyInventoryAsync["inspectDependencyInventoryAsync"]
+  module_src_features_status_adapters_outbound_inspectDependencyInventoryAsync_ts --> export_inspectDependencyInventoryAsync
+  export_inspectDependencyInventoryAsync -.-> export_ApmDependencyInventory
   export_statusAsync["statusAsync"]
   module_src_features_status_application_statusAsync_ts --> export_statusAsync
   export_statusAsync -.-> export_ApmStatusInput
-  export_statusAsync -.-> export_ApmStatusInspectionPort
+  export_statusAsync -.-> export_ApmStatusPorts
   export_statusAsync -.-> export_ApmStatusResult
   export_statusProjectAsync["statusProjectAsync"]
   module_src_features_status_composition_statusProjectAsync_ts --> export_statusProjectAsync

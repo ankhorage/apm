@@ -133,10 +133,7 @@ test('workspace and file packages are complete without registry requests', async
 
     expect(calls).toEqual([]);
     expect(result.complete).toBe(true);
-    expect(result.packages.map((item) => item.state)).toEqual([
-      'not-applicable',
-      'not-applicable',
-    ]);
+    expect(result.packages.map((item) => item.state)).toEqual(['not-applicable', 'not-applicable']);
   });
 });
 

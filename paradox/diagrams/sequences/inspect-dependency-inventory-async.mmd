@@ -1,0 +1,11 @@
+sequenceDiagram
+  participant participant_discoverInstallRootsAsync as discoverInstallRootsAsync
+  participant participant_inspectDependencyInventoryAsync as inspectDependencyInventoryAsync
+  participant participant_noJavaScriptInventory as noJavaScriptInventory
+  participant participant_readManifestsAsync as readManifestsAsync
+  participant_inspectDependencyInventoryAsync->>participant_readManifestsAsync: readManifestsAsync()
+  participant_readManifestsAsync-->>participant_inspectDependencyInventoryAsync: return
+  participant_inspectDependencyInventoryAsync->>participant_noJavaScriptInventory: noJavaScriptInventory()
+  participant_noJavaScriptInventory-->>participant_inspectDependencyInventoryAsync: return
+  participant_inspectDependencyInventoryAsync->>participant_discoverInstallRootsAsync: discoverInstallRootsAsync()
+  participant_discoverInstallRootsAsync-->>participant_inspectDependencyInventoryAsync: return

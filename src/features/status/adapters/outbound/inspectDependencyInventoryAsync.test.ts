@@ -51,7 +51,11 @@ test('keeps nested apps with their own package manager as independent install ro
     await writeFile(path.join(root, 'packages/app/bun.lock'), bunLock('nested'));
 
     const inventory = await inspectDependencyInventoryAsync({
-      inspection: createInspection(root, ['package.json', 'packages/app/package.json'], ['npm', 'bun']),
+      inspection: createInspection(
+        root,
+        ['package.json', 'packages/app/package.json'],
+        ['npm', 'bun'],
+      ),
     });
 
     expect(inventory.roots.map((item) => item.id).sort()).toEqual(['.', 'packages/app']);
@@ -116,10 +120,9 @@ test('preserves duplicate npm package instances and their physical dependency ed
     });
     const [rootEvidence] = inventory.roots;
     if (rootEvidence === undefined) throw new Error('Expected npm install-root evidence.');
-    expect(rootEvidence.lockedPackages.filter((pkg) => pkg.name === 'dep').map((pkg) => pkg.id)).toEqual([
-      'node_modules/dep',
-      'node_modules/parent/node_modules/dep',
-    ]);
+    expect(
+      rootEvidence.lockedPackages.filter((pkg) => pkg.name === 'dep').map((pkg) => pkg.id),
+    ).toEqual(['node_modules/dep', 'node_modules/parent/node_modules/dep']);
     expect(
       rootEvidence.lockedPackages.find((pkg) => pkg.name === 'parent')?.dependencies[0]?.packageId,
     ).toBe('node_modules/parent/node_modules/dep');

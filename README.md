@@ -3,7 +3,7 @@
 
 # @ankhorage/apm
 
-![license: MIT](././paradox/badges/license.svg) ![npm: v0.0.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
+![license: MIT](././paradox/badges/license.svg) ![npm: v0.1.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
 
 Headless project update analysis, planning, execution, recovery, and verification.
 
@@ -16,37 +16,43 @@ Headless project update analysis, planning, execution, recovery, and verificatio
 - [Module relationships](././paradox/diagrams/module-relationships.mmd)
 - [Export graph](././paradox/diagrams/export-graph.mmd)
 - [apm sequence](././paradox/diagrams/sequences/apm.mmd)
-- [statusAsync sequence](././paradox/diagrams/sequences/status-async.mmd)
-- [statusProjectAsync sequence](././paradox/diagrams/sequences/status-project-async.mmd)
+- [inspectDependencyInventoryAsync sequence](././paradox/diagrams/sequences/inspect-dependency-inventory-async.mmd)
 
 ## Public API
 
 ### Utilities
 
 <details>
-<summary>APM_BOOTSTRAP_SUPPORT</summary>
+<summary>APM_STATUS_SUPPORT</summary>
 
-Describe exactly what the bootstrap release proves without claiming update support prematurely.
+Publish the exact read-only status matrix proven by the evidence adapters.
 
-Runtime: APM itself requires Node 24 or newer. Repository development uses Bun 1.4.2, but APM
-does not require inspected customer projects to use Bun.
+Runtime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer
+projects may use any explicitly supported manager below.
 
-Package managers: npm, pnpm, Yarn, and Bun are read-only inspection targets in the bootstrap.
-Their mutation semantics, supported versions, lock formats, and linker modes are deliberately
-unqualified until the inventory/planning work proves them.
+npm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are
+checked without executing package code. package-lock v1 is detected but remains inspection-only.
 
-Platforms: Linux is exercised by bootstrap CI. macOS and Windows update execution remain
-unqualified. Read-only Project Detector behavior is delegated to its published support contract.
+pnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,
+workspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual
+store lock when present; unknown/custom layouts stay explicit.
 
-Operations: `status` is the first real use case. `plan`, `apply`, and `verify` reserve their
-command paths but return an explicit unavailable result until their owning roadmap work lands.
+Yarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;
+`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined
+PnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected
+but are not claimed as complete inventory modes in this release.
 
-Dependency direction is inward: headless status depends on an injected inspection port; Node
-composition binds that port to `@ankhorage/project-detector/node`; standalone CLI and Ankh are
-inbound adapters over the same Node composition. The root package has no Node import side effect.
+Bun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are
+inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.
 
-Module: `src/constants/support.ts`
-Source: `src/constants/support.ts:22:14`
+Registry availability uses npm-compatible registries selected from project/user npmrc and
+environment overrides. Credentials are used only at the HTTP edge and are never returned in
+reports. Offline cache misses and registry/auth/network failures make availability unknown.
+
+`status` is read-only. `plan`, `apply`, and `verify` remain separate roadmap operations.
+
+Module: `src/features/status/constants/support.ts`
+Source: `src/features/status/constants/support.ts:29:14`
 
 </details>
 
@@ -54,17 +60,18 @@ Source: `src/constants/support.ts:22:14`
 <summary>statusAsync</summary>
 
 ```ts
-statusAsync(input: ApmStatusInput, inspectionPort: ApmStatusInspectionPort) => Promise<ApmStatusResult>
+statusAsync(input: ApmStatusInput, ports: ApmStatusPorts) => Promise<ApmStatusResult>
 ```
 
-Build serializable APM status from read-only project evidence supplied by an outbound port.
+Build evidence-based, serializable APM status without mutating the inspected project.
 
-Hosts can call this use case without a terminal, filesystem access, or Node composition and can
-provide a deterministic fake port in tests. Status never installs dependencies or executes
-project lifecycle scripts.
+The use case separates Project Detector evidence, package-manager inventory, registry
+availability, and optional package-owned projection/migration evidence behind outbound ports.
+Missing or partial evidence makes currency `unknown`; it never becomes a green current result.
+Hosts can call this boundary without a terminal and can test it with deterministic fake ports.
 
 Module: `src/features/status/application/statusAsync.ts`
-Source: `src/features/status/application/statusAsync.ts:15:1`
-Related symbols: `ApmStatusInput`, `ApmStatusInspectionPort`, `ApmStatusResult`
+Source: `src/features/status/application/statusAsync.ts:20:1`
+Related symbols: `ApmStatusInput`, `ApmStatusPorts`, `ApmStatusResult`
 
 </details>
