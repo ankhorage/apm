@@ -85,7 +85,7 @@ async function releaseOwnedAsync(
 ): Promise<void> {
   const { lockPath } = applyStatePaths(rootPath);
   const owned = ownedLocks.get(lockPath);
-  if (owned === undefined || owned.operationId !== operationId) return;
+  if (owned?.operationId !== operationId) return;
   const current = await readLockAsync(rootPath);
   if (current === undefined) {
     ownedLocks.delete(lockPath);
