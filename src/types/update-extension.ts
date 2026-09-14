@@ -6,6 +6,7 @@ import type {
   ApmProjectionDescriptor,
   ApmUpdateProtocolVersion,
 } from './update-protocol.js';
+import type { ApmUpdateProtocolBlocker } from './update-validation.js';
 
 export interface ApmExtensionArtifactIdentity {
   readonly role: ApmMigrationArtifactRole;
@@ -119,6 +120,31 @@ export interface ApmMigrationHandler {
   readonly verifyAsync: (
     input: ApmMigrationVerificationInput,
   ) => Promise<ApmExtensionVerificationResult>;
+}
+
+export type ApmExtensionInvocationResult<T> =
+  | {
+      readonly ok: true;
+      readonly value: T;
+    }
+  | {
+      readonly ok: false;
+      readonly blockers: readonly ApmUpdateProtocolBlocker[];
+    };
+
+export interface ApmMigrationPlanInvocation {
+  readonly migration: ApmMigrationDescriptor;
+  readonly context: ApmExtensionExecutionContext;
+  readonly extension: unknown;
+  readonly project: ApmExtensionProjectReadPort;
+}
+
+export interface ApmMigrationExecutionInvocation {
+  readonly migration: ApmMigrationDescriptor;
+  readonly context: ApmExtensionExecutionContext;
+  readonly extension: unknown;
+  readonly plan: ApmMigrationPlanResult;
+  readonly project: ApmExtensionProjectReadPort & ApmExtensionProjectWritePort;
 }
 
 export interface ApmProjectionInspectionResult {
