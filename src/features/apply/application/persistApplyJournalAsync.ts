@@ -64,9 +64,7 @@ function stepJournal(input: PersistApplyStepInput, now: string): ApmApplyJournal
       : { incrementAttempts: input.incrementAttempts }),
     ...(input.clearFailure === undefined ? {} : { clearFailure: input.clearFailure }),
     ...(input.journalStatus === undefined ? {} : { journalStatus: input.journalStatus }),
-    ...(input.operationFailure === undefined
-      ? {}
-      : { operationFailure: input.operationFailure }),
+    ...(input.operationFailure === undefined ? {} : { operationFailure: input.operationFailure }),
     clearOperationFailure: input.clearFailure === true,
   });
 }

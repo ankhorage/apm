@@ -31,9 +31,7 @@ export function createApplyFailure(input: CreateApplyFailureInput): ApmApplyFail
         code: input.blocker.code,
         reason: input.blocker.reason,
         evidence: input.blocker.evidence,
-        ...(input.blocker.nextAction === undefined
-          ? {}
-          : { nextAction: input.blocker.nextAction }),
+        ...(input.blocker.nextAction === undefined ? {} : { nextAction: input.blocker.nextAction }),
       };
     case 'cancelled':
       return {

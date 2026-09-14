@@ -1,8 +1,4 @@
-import type {
-  ApmApplyBlocker,
-  ApmApplyJournal,
-  ApmApplyResultStatus,
-} from './apply.js';
+import type { ApmApplyBlocker, ApmApplyJournal, ApmApplyResultStatus } from './apply.js';
 import type { ApmStatusDiagnostic } from './status.js';
 
 export interface ApmApplyRunOutcome {

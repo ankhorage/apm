@@ -62,11 +62,12 @@ function requiresVerification(step: ApmPlanStep): boolean {
 }
 
 /*** Require at least one structured validation step whenever the plan contains local executable work. */
-function validationCoverageCheck(
-  steps: readonly ApmPlanStep[],
-): ApmVerifyCheckResult | undefined {
+function validationCoverageCheck(steps: readonly ApmPlanStep[]): ApmVerifyCheckResult | undefined {
   const localSteps = steps.filter(requiresVerification);
-  if (localSteps.length === 0 || localSteps.some(({ execution }) => execution.kind === 'validation')) {
+  if (
+    localSteps.length === 0 ||
+    localSteps.some(({ execution }) => execution.kind === 'validation')
+  ) {
     return undefined;
   }
   return {

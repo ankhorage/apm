@@ -79,9 +79,7 @@ async function resumeApplyAsync(
 ): Promise<ApmApplyResult> {
   const journal = await ports.journal.readAsync(input.rootPath, input.operationId);
   return journal === undefined
-    ? blockedResult(input.operationId, input.rootPath, undefined, [
-        operationNotFoundBlocker(input),
-      ])
+    ? blockedResult(input.operationId, input.rootPath, undefined, [operationNotFoundBlocker(input)])
     : resumeExistingJournalAsync(input, journal, ports);
 }
 
@@ -104,13 +102,7 @@ async function resumeExistingJournalAsync(
   if (journal.status === 'completed') return completedDuplicateResult(journal);
   const permissionBlockers = applyPermissionBlockers(journal.plan, input.permissions);
   return permissionBlockers.length > 0
-    ? blockedResult(
-        input.operationId,
-        input.rootPath,
-        journal.plan.id,
-        permissionBlockers,
-        journal,
-      )
+    ? blockedResult(input.operationId, input.rootPath, journal.plan.id, permissionBlockers, journal)
     : resumeUnderLockAsync(input, journal, ports);
 }
 
@@ -328,7 +320,8 @@ function executorIncompatibleBlocker(
     code: 'apply.executor-incompatible',
     scope: { kind: 'host', id: 'apm' },
     evidence: [executorKey(planned), executorKey(current)],
-    reason: 'Current APM/runtime executor does not match the executor frozen into the operation plan.',
+    reason:
+      'Current APM/runtime executor does not match the executor frozen into the operation plan.',
     nextAction: 'Use the reviewed executor or create a new plan with the current executor.',
   };
 }

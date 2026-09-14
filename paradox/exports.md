@@ -87,6 +87,354 @@ disposable staging and returns reviewed diffs without writing the inspected proj
 operation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate
 roadmap operations.
 
+## ApmApplyBlocker
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:118:1`
+
+### Members
+
+| Name       | Kind     | Type                                                                                                             | Required | Description |
+| ---------- | -------- | ---------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| code       | property | `ApmApplyBlockerCode`                                                                                            | yes      |             |
+| evidence   | property | `readonly string[]`                                                                                              | yes      |             |
+| nextAction | property | `string`                                                                                                         | no       |             |
+| reason     | property | `string`                                                                                                         | yes      |             |
+| scope      | property | `{ readonly kind: "project" \| "operation" \| "step" \| "host"; readonly id?: string; readonly path?: string; }` | yes      |             |
+
+## ApmApplyBlockerCode
+
+Kind: `unknown`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:103:1`
+
+## ApmApplyCancellationPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:205:1`
+
+### Members
+
+| Name                         | Kind     | Type                                        | Required | Description |
+| ---------------------------- | -------- | ------------------------------------------- | -------- | ----------- |
+| isCancellationRequestedAsync | property | `(operationId: string) => Promise<boolean>` | yes      |             |
+
+## ApmApplyClockPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:130:1`
+
+### Members
+
+| Name   | Kind     | Type           | Required | Description |
+| ------ | -------- | -------------- | -------- | ----------- |
+| nowIso | property | `() => string` | yes      |             |
+
+## ApmApplyExecutorIdentityPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:175:1`
+
+### Members
+
+| Name    | Kind     | Type                            | Required | Description |
+| ------- | -------- | ------------------------------- | -------- | ----------- |
+| current | property | `() => ApmPlanExecutorIdentity` | yes      |             |
+
+## ApmApplyFailure
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:41:1`
+
+### Members
+
+| Name       | Kind     | Type                | Required | Description |
+| ---------- | -------- | ------------------- | -------- | ----------- |
+| code       | property | `string`            | yes      |             |
+| evidence   | property | `readonly string[]` | yes      |             |
+| nextAction | property | `string`            | no       |             |
+| reason     | property | `string`            | yes      |             |
+
+## ApmApplyInput
+
+Kind: `unknown`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:15:1`
+
+## ApmApplyJournal
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:57:1`
+
+### Members
+
+| Name          | Kind     | Type                             | Required | Description |
+| ------------- | -------- | -------------------------------- | -------- | ----------- |
+| createdAt     | property | `string`                         | yes      |             |
+| failure       | property | `ApmApplyFailure`                | no       |             |
+| operationId   | property | `string`                         | yes      |             |
+| permissions   | property | `ApmApplyPermissions`            | yes      |             |
+| plan          | property | `ApmPlanResult`                  | yes      |             |
+| rootPath      | property | `string`                         | yes      |             |
+| schemaVersion | property | `1`                              | yes      |             |
+| status        | property | `ApmApplyJournalStatus`          | yes      |             |
+| steps         | property | `readonly ApmApplyStepJournal[]` | yes      |             |
+| updatedAt     | property | `string`                         | yes      |             |
+
+## ApmApplyJournalPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:154:1`
+
+### Members
+
+| Name        | Kind     | Type                                                                               | Required | Description |
+| ----------- | -------- | ---------------------------------------------------------------------------------- | -------- | ----------- |
+| createAsync | property | `(journal: ApmApplyJournal) => Promise<void>`                                      | yes      |             |
+| readAsync   | property | `(rootPath: string, operationId: string) => Promise<ApmApplyJournal \| undefined>` | yes      |             |
+| writeAsync  | property | `(journal: ApmApplyJournal) => Promise<void>`                                      | yes      |             |
+
+## ApmApplyJournalStatus
+
+Kind: `unknown`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:28:1`
+
+## ApmApplyLockAcquireResult
+
+Kind: `unknown`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:79:1`
+
+## ApmApplyLockIdentity
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:70:1`
+
+### Members
+
+| Name          | Kind     | Type     | Required | Description |
+| ------------- | -------- | -------- | -------- | ----------- |
+| acquiredAt    | property | `string` | yes      |             |
+| hostname      | property | `string` | yes      |             |
+| operationId   | property | `string` | yes      |             |
+| pid           | property | `number` | yes      |             |
+| planId        | property | `string` | yes      |             |
+| schemaVersion | property | `1`      | yes      |             |
+
+## ApmApplyLockPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:138:1`
+
+### Members
+
+| Name              | Kind     | Type                                                                                                                                                                         | Required | Description |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| acquireAsync      | property | `(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly resume: boolean; }) => Promise<ApmApplyLockAcquireResult>`             | yes      |             |
+| recoverStaleAsync | property | `(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly stale: ApmApplyLockIdentity; }) => Promise<ApmApplyLockAcquireResult>` | yes      |             |
+| releaseAsync      | property | `(rootPath: string, operationId: string) => Promise<void>`                                                                                                                   | yes      |             |
+
+## ApmApplyOperationIdPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:134:1`
+
+### Members
+
+| Name              | Kind     | Type           | Required | Description |
+| ----------------- | -------- | -------------- | -------- | ----------- |
+| createOperationId | property | `() => string` | yes      |             |
+
+## ApmApplyPermissions
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:9:1`
+
+### Members
+
+| Name             | Kind     | Type      | Required | Description |
+| ---------------- | -------- | --------- | -------- | ----------- |
+| externalEffects  | property | `boolean` | yes      |             |
+| lifecycleScripts | property | `boolean` | yes      |             |
+| ownerCode        | property | `boolean` | yes      |             |
+
+## ApmApplyPlanValidationPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:167:1`
+
+### Members
+
+| Name          | Kind     | Type                                                                                                                                                             | Required | Description |
+| ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| validateAsync | property | `(input: { readonly plan: ApmPlanResult; readonly status: ApmStatusResult; readonly executor: ApmPlanExecutorIdentity; }) => Promise<readonly ApmPlanBlocker[]>` | yes      |             |
+
+## ApmApplyPorts
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:209:1`
+
+### Members
+
+| Name           | Kind     | Type                           | Required | Description |
+| -------------- | -------- | ------------------------------ | -------- | ----------- |
+| cancellation   | property | `ApmApplyCancellationPort`     | no       |             |
+| clock          | property | `ApmApplyClockPort`            | yes      |             |
+| executor       | property | `ApmApplyExecutorIdentityPort` | yes      |             |
+| journal        | property | `ApmApplyJournalPort`          | yes      |             |
+| lock           | property | `ApmApplyLockPort`             | yes      |             |
+| operationId    | property | `ApmApplyOperationIdPort`      | yes      |             |
+| planValidation | property | `ApmApplyPlanValidationPort`   | yes      |             |
+| progress       | property | `ApmApplyProgressPort`         | no       |             |
+| status         | property | `ApmApplyStatusPort`           | yes      |             |
+| step           | property | `ApmApplyStepPort`             | yes      |             |
+
+## ApmApplyProgressEvent
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:194:1`
+
+### Members
+
+| Name        | Kind     | Type                                                                                                                                                            | Required | Description |
+| ----------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| message     | property | `string`                                                                                                                                                        | yes      |             |
+| operationId | property | `string`                                                                                                                                                        | yes      |             |
+| state       | property | `"pending" \| "intended" \| "effect-started" \| "effect-observed" \| "committed" \| "failed" \| "cancelled" \| "recovery-required" \| "running" \| "completed"` | yes      |             |
+| stepId      | property | `string`                                                                                                                                                        | no       |             |
+
+## ApmApplyProgressPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:201:1`
+
+### Members
+
+| Name         | Kind     | Type                                              | Required | Description |
+| ------------ | -------- | ------------------------------------------------- | -------- | ----------- |
+| publishAsync | property | `(event: ApmApplyProgressEvent) => Promise<void>` | yes      |             |
+
+## ApmApplyResult
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:225:1`
+
+### Members
+
+| Name          | Kind     | Type                             | Required | Description |
+| ------------- | -------- | -------------------------------- | -------- | ----------- |
+| blockers      | property | `readonly ApmApplyBlocker[]`     | yes      |             |
+| complete      | property | `boolean`                        | yes      |             |
+| diagnostics   | property | `readonly ApmStatusDiagnostic[]` | yes      |             |
+| journal       | property | `ApmApplyJournal`                | no       |             |
+| operation     | property | `"apply"`                        | yes      |             |
+| operationId   | property | `string`                         | yes      |             |
+| planId        | property | `string`                         | no       |             |
+| rootPath      | property | `string`                         | yes      |             |
+| schemaVersion | property | `1`                              | yes      |             |
+| status        | property | `ApmApplyResultStatus`           | yes      |             |
+
+## ApmApplyResultStatus
+
+Kind: `unknown`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:222:1`
+
+## ApmApplyStatusPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:163:1`
+
+### Members
+
+| Name               | Kind     | Type                                             | Required | Description |
+| ------------------ | -------- | ------------------------------------------------ | -------- | ----------- |
+| inspectStatusAsync | property | `(rootPath: string) => Promise<ApmStatusResult>` | yes      |             |
+
+## ApmApplyStepExecutionResult
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:96:1`
+
+### Members
+
+| Name        | Kind     | Type                                   | Required | Description |
+| ----------- | -------- | -------------------------------------- | -------- | ----------- |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]`       | yes      |             |
+| evidence    | property | `readonly string[]`                    | yes      |             |
+| failure     | property | `ApmApplyFailure`                      | no       |             |
+| state       | property | `"unknown" \| "failed" \| "completed"` | yes      |             |
+
+## ApmApplyStepJournal
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:48:1`
+
+### Members
+
+| Name      | Kind     | Type                | Required | Description |
+| --------- | -------- | ------------------- | -------- | ----------- |
+| attempts  | property | `number`            | yes      |             |
+| evidence  | property | `readonly string[]` | yes      |             |
+| failure   | property | `ApmApplyFailure`   | no       |             |
+| state     | property | `ApmApplyStepState` | yes      |             |
+| stepId    | property | `string`            | yes      |             |
+| updatedAt | property | `string`            | yes      |             |
+
+## ApmApplyStepObservation
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:90:1`
+
+### Members
+
+| Name     | Kind     | Type                                                  | Required | Description |
+| -------- | -------- | ----------------------------------------------------- | -------- | ----------- |
+| evidence | property | `readonly string[]`                                   | yes      |             |
+| reason   | property | `string`                                              | no       |             |
+| state    | property | `"unknown" \| "pending" \| "conflict" \| "satisfied"` | yes      |             |
+
+## ApmApplyStepPort
+
+Kind: `type`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:179:1`
+
+### Members
+
+| Name          | Kind     | Type                                                                                                                  | Required | Description |
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| executeAsync  | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>` | yes      |             |
+| observeAsync  | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepObservation>`     | yes      |             |
+| rollbackAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>` | yes      |             |
+
+## ApmApplyStepState
+
+Kind: `unknown`
+Module: `src/types/apply.ts`
+Source: `src/types/apply.ts:31:1`
+
 ## ApmAvailabilityEvidence
 
 Kind: `type`
@@ -748,7 +1096,7 @@ Source: `src/types/update-validation.ts:57:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:120:1`
+Source: `src/types/plan.ts:121:1`
 
 ### Members
 
@@ -765,7 +1113,7 @@ Source: `src/types/plan.ts:120:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:83:1`
+Source: `src/types/plan.ts:84:1`
 
 ### Members
 
@@ -781,13 +1129,13 @@ Source: `src/types/plan.ts:83:1`
 
 Kind: `unknown`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:55:1`
+Source: `src/types/plan.ts:56:1`
 
 ## ApmPlanBlockerScope
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:77:1`
+Source: `src/types/plan.ts:78:1`
 
 ### Members
 
@@ -801,7 +1149,7 @@ Source: `src/types/plan.ts:77:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:91:1`
+Source: `src/types/plan.ts:92:1`
 
 ### Members
 
@@ -824,13 +1172,13 @@ Source: `src/types/plan.ts:91:1`
 
 Kind: `unknown`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:10:1`
+Source: `src/types/plan.ts:11:1`
 
 ## ApmPlanDigestPort
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:195:1`
+Source: `src/types/plan.ts:196:1`
 
 ### Members
 
@@ -842,7 +1190,7 @@ Source: `src/types/plan.ts:195:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:177:1`
+Source: `src/types/plan.ts:178:1`
 
 ### Members
 
@@ -856,7 +1204,7 @@ Source: `src/types/plan.ts:177:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:111:1`
+Source: `src/types/plan.ts:112:1`
 
 ### Members
 
@@ -873,7 +1221,7 @@ Source: `src/types/plan.ts:111:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:183:1`
+Source: `src/types/plan.ts:184:1`
 
 ### Members
 
@@ -887,7 +1235,7 @@ Source: `src/types/plan.ts:183:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:199:1`
+Source: `src/types/plan.ts:200:1`
 
 ### Members
 
@@ -901,7 +1249,7 @@ Source: `src/types/plan.ts:199:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:34:1`
+Source: `src/types/plan.ts:35:1`
 
 ### Members
 
@@ -914,7 +1262,7 @@ Source: `src/types/plan.ts:34:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:12:1`
+Source: `src/types/plan.ts:13:1`
 
 ### Members
 
@@ -929,7 +1277,7 @@ Source: `src/types/plan.ts:12:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:47:1`
+Source: `src/types/plan.ts:48:1`
 
 ### Members
 
@@ -945,7 +1293,7 @@ Source: `src/types/plan.ts:47:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:39:1`
+Source: `src/types/plan.ts:40:1`
 
 ### Members
 
@@ -961,7 +1309,7 @@ Source: `src/types/plan.ts:39:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:250:1`
+Source: `src/types/plan.ts:252:1`
 
 ### Members
 
@@ -975,7 +1323,7 @@ Source: `src/types/plan.ts:250:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:189:1`
+Source: `src/types/plan.ts:190:1`
 
 ### Members
 
@@ -989,7 +1337,7 @@ Source: `src/types/plan.ts:189:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:246:1`
+Source: `src/types/plan.ts:248:1`
 
 ### Members
 
@@ -1001,7 +1349,7 @@ Source: `src/types/plan.ts:246:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:242:1`
+Source: `src/types/plan.ts:244:1`
 
 ### Members
 
@@ -1013,7 +1361,7 @@ Source: `src/types/plan.ts:242:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:222:1`
+Source: `src/types/plan.ts:224:1`
 
 ### Members
 
@@ -1029,7 +1377,7 @@ Source: `src/types/plan.ts:222:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:230:1`
+Source: `src/types/plan.ts:232:1`
 
 ### Members
 
@@ -1049,7 +1397,7 @@ Source: `src/types/plan.ts:230:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:152:1`
+Source: `src/types/plan.ts:153:1`
 
 ### Members
 
@@ -1064,7 +1412,7 @@ Source: `src/types/plan.ts:152:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:173:1`
+Source: `src/types/plan.ts:174:1`
 
 ### Members
 
@@ -1076,7 +1424,7 @@ Source: `src/types/plan.ts:173:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:140:1`
+Source: `src/types/plan.ts:141:1`
 
 ### Members
 
@@ -1096,7 +1444,7 @@ Source: `src/types/plan.ts:140:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:159:1`
+Source: `src/types/plan.ts:160:1`
 
 ### Members
 
@@ -1118,7 +1466,7 @@ Source: `src/types/plan.ts:159:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:129:1`
+Source: `src/types/plan.ts:130:1`
 
 ### Members
 
@@ -1137,7 +1485,7 @@ Source: `src/types/plan.ts:129:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:256:1`
+Source: `src/types/plan.ts:258:1`
 
 ### Members
 
@@ -1157,7 +1505,7 @@ Source: `src/types/plan.ts:256:1`
 | packages         | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
 | policy           | property | `ApmPlanPolicy`                      | yes      |             |
 | rootPath         | property | `string`                             | yes      |             |
-| schemaVersion    | property | `1`                                  | yes      |             |
+| schemaVersion    | property | `2`                                  | yes      |             |
 | steps            | property | `readonly ApmPlanStep[]`             | yes      |             |
 | targets          | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
 
@@ -1165,13 +1513,14 @@ Source: `src/types/plan.ts:256:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:205:1`
+Source: `src/types/plan.ts:206:1`
 
 ### Members
 
 | Name          | Kind     | Type                                                                                                              | Required | Description |
 | ------------- | -------- | ----------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
 | evidence      | property | `readonly string[]`                                                                                               | yes      |             |
+| execution     | property | `ApmPlanStepExecution`                                                                                            | yes      |             |
 | id            | property | `string`                                                                                                          | yes      |             |
 | installRootId | property | `string`                                                                                                          | no       |             |
 | kind          | property | `"projection" \| "migration" \| "dependency-files" \| "install" \| "validation" \| "host-restart" \| "follow-up"` | yes      |             |
@@ -1179,17 +1528,23 @@ Source: `src/types/plan.ts:205:1`
 | prerequisites | property | `readonly string[]`                                                                                               | yes      |             |
 | reason        | property | `string`                                                                                                          | yes      |             |
 
+## ApmPlanStepExecution
+
+Kind: `unknown`
+Module: `src/types/plan-execution.ts`
+Source: `src/types/plan-execution.ts:27:1`
+
 ## ApmPlanTargetSelection
 
 Kind: `unknown`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:19:1`
+Source: `src/types/plan.ts:20:1`
 
 ## ApmPlanTargetSelectionResult
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:106:1`
+Source: `src/types/plan.ts:107:1`
 
 ### Members
 
@@ -1197,6 +1552,12 @@ Source: `src/types/plan.ts:106:1`
 | -------- | -------- | ------------------------------------ | -------- | ----------- |
 | blockers | property | `readonly ApmPlanBlocker[]`          | yes      |             |
 | targets  | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+
+## ApmPlanValidationCheck
+
+Kind: `unknown`
+Module: `src/types/plan-execution.ts`
+Source: `src/types/plan-execution.ts:13:1`
 
 ## ApmProjectFileSnapshot
 
@@ -1776,6 +2137,119 @@ Source: `src/types/update-validation.ts:7:1`
 Kind: `unknown`
 Module: `src/types/update-protocol.ts`
 Source: `src/types/update-protocol.ts:1:1`
+
+## ApmVerifyCheckKind
+
+Kind: `unknown`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:13:1`
+
+## ApmVerifyCheckResult
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:16:1`
+
+### Members
+
+| Name       | Kind     | Type                   | Required | Description |
+| ---------- | -------- | ---------------------- | -------- | ----------- |
+| evidence   | property | `readonly string[]`    | yes      |             |
+| id         | property | `string`               | yes      |             |
+| kind       | property | `ApmVerifyCheckKind`   | yes      |             |
+| nextAction | property | `string`               | no       |             |
+| reason     | property | `string`               | no       |             |
+| status     | property | `ApmVerifyCheckStatus` | yes      |             |
+
+## ApmVerifyCheckStatus
+
+Kind: `unknown`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:11:1`
+
+## ApmVerifyInput
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:6:1`
+
+### Members
+
+| Name        | Kind     | Type     | Required | Description |
+| ----------- | -------- | -------- | -------- | ----------- |
+| operationId | property | `string` | yes      |             |
+| rootPath    | property | `string` | yes      |             |
+
+## ApmVerifyJournalPort
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:25:1`
+
+### Members
+
+| Name      | Kind     | Type                                                                               | Required | Description |
+| --------- | -------- | ---------------------------------------------------------------------------------- | -------- | ----------- |
+| readAsync | property | `(rootPath: string, operationId: string) => Promise<ApmApplyJournal \| undefined>` | yes      |             |
+
+## ApmVerifyPorts
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:44:1`
+
+### Members
+
+| Name    | Kind     | Type                   | Required | Description |
+| ------- | -------- | ---------------------- | -------- | ----------- |
+| journal | property | `ApmVerifyJournalPort` | yes      |             |
+| status  | property | `ApmVerifyStatusPort`  | yes      |             |
+| step    | property | `ApmVerifyStepPort`    | yes      |             |
+
+## ApmVerifyResult
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:50:1`
+
+### Members
+
+| Name          | Kind     | Type                              | Required | Description |
+| ------------- | -------- | --------------------------------- | -------- | ----------- |
+| checks        | property | `readonly ApmVerifyCheckResult[]` | yes      |             |
+| diagnostics   | property | `readonly ApmStatusDiagnostic[]`  | yes      |             |
+| findings      | property | `readonly ApmStatusFinding[]`     | yes      |             |
+| followUp      | property | `readonly ApmReleaseEffect[]`     | yes      |             |
+| operation     | property | `"verify"`                        | yes      |             |
+| operationId   | property | `string`                          | yes      |             |
+| planId        | property | `string`                          | no       |             |
+| rootPath      | property | `string`                          | yes      |             |
+| schemaVersion | property | `1`                               | yes      |             |
+| verified      | property | `boolean`                         | yes      |             |
+
+## ApmVerifyStatusPort
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:32:1`
+
+### Members
+
+| Name               | Kind     | Type                                             | Required | Description |
+| ------------------ | -------- | ------------------------------------------------ | -------- | ----------- |
+| inspectStatusAsync | property | `(rootPath: string) => Promise<ApmStatusResult>` | yes      |             |
+
+## ApmVerifyStepPort
+
+Kind: `type`
+Module: `src/types/verify.ts`
+Source: `src/types/verify.ts:36:1`
+
+### Members
+
+| Name        | Kind     | Type                                                                                                                                                   | Required | Description |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
+| verifyAsync | property | `(input: { readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes      |             |
 
 ## createCliProvider
 

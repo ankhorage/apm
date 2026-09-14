@@ -1,6 +1,6 @@
 export type * from './apply.js';
-export type * from './plan-execution.js';
 export type * from './plan.js';
+export type * from './plan-execution.js';
 export type { ApmRegistryAvailabilityOptions, ApmRegistryFetch } from './registry.js';
 export type {
   ApmAvailabilityEvidence,

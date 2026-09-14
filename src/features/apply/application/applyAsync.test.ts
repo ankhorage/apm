@@ -26,7 +26,10 @@ test('stale plan blocks before creating a journal or executing project effects',
     },
   ];
 
-  const result = await applyAsync({ mode: 'start', plan: planFixture(), permissions: PERMISSIONS }, fixture.ports);
+  const result = await applyAsync(
+    { mode: 'start', plan: planFixture(), permissions: PERMISSIONS },
+    fixture.ports,
+  );
 
   expect(result.status).toBe('blocked');
   expect(result.blockers.map(({ code }) => code)).toEqual(['apply.plan-stale']);
@@ -42,7 +45,10 @@ test('concurrent apply is rejected by the exclusive operation lock', async () =>
     reason: 'Another live APM operation owns this project.',
   };
 
-  const result = await applyAsync({ mode: 'start', plan: planFixture(), permissions: PERMISSIONS }, fixture.ports);
+  const result = await applyAsync(
+    { mode: 'start', plan: planFixture(), permissions: PERMISSIONS },
+    fixture.ports,
+  );
 
   expect(result.status).toBe('blocked');
   expect(result.blockers.map(({ code }) => code)).toEqual(['apply.lock-conflict']);
@@ -56,7 +62,12 @@ test('duplicate resume of a completed operation is idempotent and does not acqui
   fixture.state.journal = journal;
 
   const result = await applyAsync(
-    { mode: 'resume', rootPath: journal.rootPath, operationId: journal.operationId, permissions: PERMISSIONS },
+    {
+      mode: 'resume',
+      rootPath: journal.rootPath,
+      operationId: journal.operationId,
+      permissions: PERMISSIONS,
+    },
     fixture.ports,
   );
 
@@ -82,7 +93,12 @@ test('lost process resumes an already satisfied started effect without repeating
   fixture.state.observation = { state: 'satisfied', evidence: ['digest:after'] };
 
   const result = await applyAsync(
-    { mode: 'resume', rootPath: journal.rootPath, operationId: journal.operationId, permissions: PERMISSIONS },
+    {
+      mode: 'resume',
+      rootPath: journal.rootPath,
+      operationId: journal.operationId,
+      permissions: PERMISSIONS,
+    },
     fixture.ports,
   );
 
@@ -213,7 +229,12 @@ function stepFixture(): ApmPlanStep {
 
 /*** Build a completed operation journal for duplicate invocation behavior. */
 function completedJournalFixture(): ApmApplyJournal {
-  const journal = createApplyJournal(planFixture(), PERMISSIONS, 'op-completed', '2026-09-14T19:00:00.000Z');
+  const journal = createApplyJournal(
+    planFixture(),
+    PERMISSIONS,
+    'op-completed',
+    '2026-09-14T19:00:00.000Z',
+  );
   return {
     ...journal,
     status: 'completed',
@@ -223,11 +244,20 @@ function completedJournalFixture(): ApmApplyJournal {
 
 /*** Build a journal representing a process lost after the reviewed effect began. */
 function startedJournalFixture(): ApmApplyJournal {
-  const journal = createApplyJournal(planFixture(), PERMISSIONS, 'op-lost', '2026-09-14T19:00:00.000Z');
+  const journal = createApplyJournal(
+    planFixture(),
+    PERMISSIONS,
+    'op-lost',
+    '2026-09-14T19:00:00.000Z',
+  );
   return {
     ...journal,
     status: 'recovery-required',
-    steps: journal.steps.map((step) => ({ ...step, state: 'effect-started' as const, attempts: 1 })),
+    steps: journal.steps.map((step) => ({
+      ...step,
+      state: 'effect-started' as const,
+      attempts: 1,
+    })),
   };
 }
 

@@ -11,11 +11,7 @@ export interface ApmVerifyInput {
 export type ApmVerifyCheckStatus = 'passed' | 'failed' | 'unknown' | 'skipped';
 
 export type ApmVerifyCheckKind =
-  | 'operation'
-  | 'dependency-state'
-  | 'migration'
-  | 'projection'
-  | 'validation';
+  'operation' | 'dependency-state' | 'migration' | 'projection' | 'validation';
 
 export interface ApmVerifyCheckResult {
   readonly id: string;

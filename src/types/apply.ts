@@ -1,4 +1,9 @@
-import type { ApmPlanBlocker, ApmPlanExecutorIdentity, ApmPlanResult, ApmPlanStep } from './plan.js';
+import type {
+  ApmPlanBlocker,
+  ApmPlanExecutorIdentity,
+  ApmPlanResult,
+  ApmPlanStep,
+} from './plan.js';
 import type { ApmStatusDiagnostic, ApmStatusResult } from './status.js';
 
 export interface ApmApplyPermissions {
@@ -21,11 +26,7 @@ export type ApmApplyInput =
     };
 
 export type ApmApplyJournalStatus =
-  | 'running'
-  | 'completed'
-  | 'failed'
-  | 'cancelled'
-  | 'recovery-required';
+  'running' | 'completed' | 'failed' | 'cancelled' | 'recovery-required';
 
 export type ApmApplyStepState =
   | 'pending'
@@ -152,7 +153,10 @@ export interface ApmApplyLockPort {
 
 export interface ApmApplyJournalPort {
   readonly createAsync: (journal: ApmApplyJournal) => Promise<void>;
-  readonly readAsync: (rootPath: string, operationId: string) => Promise<ApmApplyJournal | undefined>;
+  readonly readAsync: (
+    rootPath: string,
+    operationId: string,
+  ) => Promise<ApmApplyJournal | undefined>;
   readonly writeAsync: (journal: ApmApplyJournal) => Promise<void>;
 }
 
@@ -216,11 +220,7 @@ export interface ApmApplyPorts {
 }
 
 export type ApmApplyResultStatus =
-  | 'completed'
-  | 'blocked'
-  | 'failed'
-  | 'cancelled'
-  | 'recovery-required';
+  'completed' | 'blocked' | 'failed' | 'cancelled' | 'recovery-required';
 
 export interface ApmApplyResult {
   readonly schemaVersion: 1;

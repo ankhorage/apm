@@ -21,7 +21,8 @@ export function createApplyBlocker(input: CreateApplyBlockerInput): ApmApplyBloc
   }
 }
 
-type CreateApplyBlockerInput = ApplyStateBlockerInput | ApplyRecoveryBlockerInput | ApplyFailedInput;
+type CreateApplyBlockerInput =
+  ApplyStateBlockerInput | ApplyRecoveryBlockerInput | ApplyFailedInput;
 
 type ApplyStateBlockerInput =
   | { readonly kind: 'cancelled'; readonly step: ApmPlanStep }

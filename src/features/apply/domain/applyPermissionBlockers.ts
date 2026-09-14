@@ -1,7 +1,4 @@
-import type {
-  ApmApplyBlocker,
-  ApmApplyPermissions,
-} from '../../../types/apply.js';
+import type { ApmApplyBlocker, ApmApplyPermissions } from '../../../types/apply.js';
 import type { ApmPlanResult, ApmPlanStep } from '../../../types/plan.js';
 
 /*** Return every explicit execution capability required by a reviewed plan but absent from consent. */
@@ -17,18 +14,20 @@ function stepPermissionBlockers(
   step: ApmPlanStep,
   permissions: ApmApplyPermissions,
 ): readonly ApmApplyBlocker[] {
-  const ownerCode = requiresOwnerCode(step) && !permissions.ownerCode
-    ? [permissionBlocker(step, 'owner-code')]
-    : [];
+  const ownerCode =
+    requiresOwnerCode(step) && !permissions.ownerCode
+      ? [permissionBlocker(step, 'owner-code')]
+      : [];
   const lifecycle =
     step.execution.kind === 'install' &&
     step.execution.lifecycleScripts &&
     !permissions.lifecycleScripts
       ? [permissionBlocker(step, 'lifecycle-scripts')]
       : [];
-  const external = requiresExternalEffects(step) && !permissions.externalEffects
-    ? [permissionBlocker(step, 'external-effects')]
-    : [];
+  const external =
+    requiresExternalEffects(step) && !permissions.externalEffects
+      ? [permissionBlocker(step, 'external-effects')]
+      : [];
   return [...ownerCode, ...lifecycle, ...external];
 }
 
@@ -55,6 +54,7 @@ function permissionBlocker(step: ApmPlanStep, capability: string): ApmApplyBlock
     scope: { kind: 'step', id: step.id },
     evidence: [capability],
     reason: `Reviewed step ${step.id} requires explicit ${capability} permission.`,
-    nextAction: 'Grant the required execution capability explicitly and retry the same reviewed plan.',
+    nextAction:
+      'Grant the required execution capability explicitly and retry the same reviewed plan.',
   };
 }
