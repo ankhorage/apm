@@ -2,6 +2,7 @@ export {
   APM_STATUS_SUPPORT,
   resolveMigrationPath,
   statusAsync,
+  validatePackageUpdateMetadata,
   validateUpdateDescriptor,
   validateUpdateExtensionBinding,
   validateUpdateExtensionCapabilities,
