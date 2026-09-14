@@ -10,6 +10,7 @@ import type { ApmStatusDiagnostic } from '../../../types/status.js';
 import { applyStepRecoveryPolicy } from '../domain/applyStepRecoveryPolicy.js';
 import { createApplyBlocker } from '../domain/createApplyBlocker.js';
 import { createApplyFailure } from '../domain/createApplyFailure.js';
+import { decideApplyStepObservation } from '../domain/decideApplyStepObservation.js';
 import { finishApplyOperationAsync } from './finishApplyOperationAsync.js';
 import { persistApplyJournalAsync } from './persistApplyJournalAsync.js';
 
@@ -56,54 +57,52 @@ async function processStepAsync(
   ports: ApmApplyPorts,
   diagnostics: readonly ApmStatusDiagnostic[],
 ): Promise<ApmApplyRunOutcome> {
-  const policy = applyStepRecoveryPolicy(step);
-  if (policy.deferred) {
+  if (applyStepRecoveryPolicy(step).deferred) {
     const committed = await commitDeferredStepAsync(journal, step, ports);
     return runNextStepAsync(committed, ports, diagnostics);
   }
   const observation = await ports.step.observeAsync({ journal, step });
-  if (observation.state === 'satisfied') {
-    const committed = await commitObservedStepAsync(journal, step, observation, ports);
-    return runNextStepAsync(committed, ports, diagnostics);
+  switch (decideApplyStepObservation(journal, step, observation).action) {
+    case 'commit': {
+      const committed = await commitObservedStepAsync(journal, step, observation, ports);
+      return runNextStepAsync(committed, ports, diagnostics);
+    }
+    case 'recover-precondition':
+      return finishApplyOperationAsync(
+        {
+          kind: 'recovery-required',
+          journal,
+          step,
+          blocker: createApplyBlocker({ kind: 'precondition-changed', step, observation }),
+          diagnostics,
+        },
+        ports,
+      );
+    case 'recover-journal':
+      return finishApplyOperationAsync(
+        {
+          kind: 'recovery-required',
+          journal,
+          step,
+          blocker: createApplyBlocker({ kind: 'journal-step-missing', step }),
+          diagnostics,
+        },
+        ports,
+      );
+    case 'recover-uncertain':
+      return finishApplyOperationAsync(
+        {
+          kind: 'recovery-required',
+          journal,
+          step,
+          blocker: createApplyBlocker({ kind: 'uncertain-effect', step, observation }),
+          diagnostics,
+        },
+        ports,
+      );
+    case 'execute':
+      return executeStepAsync(journal, step, ports, diagnostics);
   }
-  if (observation.state === 'conflict') {
-    return finishApplyOperationAsync(
-      {
-        kind: 'recovery-required',
-        journal,
-        step,
-        blocker: createApplyBlocker({ kind: 'precondition-changed', step, observation }),
-        diagnostics,
-      },
-      ports,
-    );
-  }
-  const record = journal.steps.find(({ stepId }) => stepId === step.id);
-  if (record === undefined) {
-    return finishApplyOperationAsync(
-      {
-        kind: 'recovery-required',
-        journal,
-        step,
-        blocker: createApplyBlocker({ kind: 'journal-step-missing', step }),
-        diagnostics,
-      },
-      ports,
-    );
-  }
-  if (effectMayHaveStarted(record.state) && !policy.restartable) {
-    return finishApplyOperationAsync(
-      {
-        kind: 'recovery-required',
-        journal,
-        step,
-        blocker: createApplyBlocker({ kind: 'uncertain-effect', step, observation }),
-        diagnostics,
-      },
-      ports,
-    );
-  }
-  return executeStepAsync(journal, step, ports, diagnostics);
 }
 
 /*** Persist intent/start markers, invoke the effect port, and verify the reviewed postcondition. */
@@ -198,7 +197,10 @@ async function knownFailureAsync(
 ): Promise<ApmApplyRunOutcome> {
   const failure = createApplyFailure({ kind: 'known-execution', step, execution });
   if (!applyStepRecoveryPolicy(step).reversible) {
-    return finishApplyOperationAsync({ kind: 'failed', journal, step, failure, diagnostics }, ports);
+    return finishApplyOperationAsync(
+      { kind: 'failed', journal, step, failure, diagnostics },
+      ports,
+    );
   }
   const rollback = await safeStepEffectAsync('rollback', journal, step, ports);
   const nextDiagnostics = [...diagnostics, ...rollback.diagnostics];
@@ -312,17 +314,4 @@ function isCommitted(journal: ApmApplyJournal, stepId: string): boolean {
 /*** Require all reviewed prerequisites to be durably committed before a dependent step. */
 function prerequisitesCommitted(journal: ApmApplyJournal, step: ApmPlanStep): boolean {
   return step.prerequisites.every((stepId) => isCommitted(journal, stepId));
-}
-
-/*** Identify journal states where a side effect may already have escaped before interruption. */
-function effectMayHaveStarted(state: ApmApplyJournal['steps'][number]['state']): boolean {
-  switch (state) {
-    case 'effect-started':
-    case 'effect-observed':
-    case 'failed':
-    case 'recovery-required':
-      return true;
-    default:
-      return false;
-  }
 }
