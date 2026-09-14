@@ -1,3 +1,4 @@
+import type { ApmApplyJournal } from '../../../types/apply.js';
 import type { ApmPlanStep } from '../../../types/plan.js';
 import type {
   ApmVerifyCheckKind,
@@ -21,7 +22,7 @@ export async function verifyAsync(
   const evidenceCheck = statusEvidenceCheck(status.complete);
   const steps = journal.plan.steps.filter(requiresVerification);
   const stepChecks = await Promise.all(
-    steps.map(async (step) => verifiedStepChecksAsync(journal.plan, step, status, ports)),
+    steps.map(async (step) => verifiedStepChecksAsync(journal, step, status, ports)),
   );
   const validationCoverage = validationCoverageCheck(journal.plan.steps);
   const checks = [
@@ -47,12 +48,12 @@ export async function verifyAsync(
 
 /*** Require fresh verification evidence for every local step rather than accepting an empty adapter response. */
 async function verifiedStepChecksAsync(
-  plan: Parameters<ApmVerifyPorts['step']['verifyAsync']>[0]['plan'],
+  journal: ApmApplyJournal,
   step: ApmPlanStep,
   status: Parameters<ApmVerifyPorts['step']['verifyAsync']>[0]['status'],
   ports: ApmVerifyPorts,
 ): Promise<readonly ApmVerifyCheckResult[]> {
-  const checks = await ports.step.verifyAsync({ plan, step, status });
+  const checks = await ports.step.verifyAsync({ journal, plan: journal.plan, step, status });
   return checks.length === 0 ? [missingStepVerificationCheck(step)] : checks;
 }
 
