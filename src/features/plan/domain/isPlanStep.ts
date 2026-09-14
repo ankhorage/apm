@@ -30,6 +30,7 @@ function isPlanStepExecution(value: unknown): value is ApmPlanStepExecution {
       return isStringArray(value.filePaths);
     case 'install':
       return (
+        typeof value.installRootPath === 'string' &&
         isPackageManager(value.manager) &&
         optionalString(value.managerVersion) &&
         optionalString(value.linker) &&
