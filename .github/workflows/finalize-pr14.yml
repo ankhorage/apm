@@ -1,0 +1,78 @@
+name: Finalize PR 14
+
+on:
+  push:
+    branches:
+      - feat/13-owner-aware-node-composition
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Use released Utility helper
+        run: |
+          bun add @ankhorage/utility@^1.1.0
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/utils/createRegistryPackageRequest.ts')
+          text = path.read_text()
+          text = "import { ensureTrailingSlash } from '@ankhorage/utility/url';\n\n" + text
+          marker = "\n/*** Normalize registry base URLs before package URL resolution. */\nfunction ensureTrailingSlash(value: string): string {\n  return value.endsWith('/') ? value : `${value}/`;\n}\n"
+          if marker not in text:
+              raise SystemExit('local ensureTrailingSlash helper not found')
+          path.write_text(text.replace(marker, '\n'))
+          PY
+
+      - name: Apply canonical formatting and lint fixes
+        run: |
+          bun run format
+          bun run lint:fix
+          bun run format
+
+      - name: Run complete repository gate
+        run: |
+          bun run build
+          bunx @ankhorage/ankh doctor validate .
+          bun run check-types
+          bun run lint
+          bun run knip:check
+          bun run test
+          bun run changeset
+          bun run format:check
+          bun run docs
+          git diff --check
+
+      - name: Remove temporary workflow and commit validated result
+        run: |
+          rm .github/workflows/finalize-pr14.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix: reuse released URL utility'
+          git push origin HEAD:feat/13-owner-aware-node-composition
+
+      - name: Run canonical CI on final commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref feat/13-owner-aware-node-composition
