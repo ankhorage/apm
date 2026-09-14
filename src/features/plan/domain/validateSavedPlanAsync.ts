@@ -5,7 +5,7 @@ import type {
   ApmPlanResult,
 } from '../../../types/plan.js';
 import type { ApmStatusResult } from '../../../types/status.js';
-import { buildPlanInputFingerprintSource } from './buildPlanInputFingerprintSource.js';
+import { createPlanInputFingerprintAsync } from './createPlanInputFingerprintAsync.js';
 
 /*** Revalidate a saved plan against current project evidence and executor identity before mutation. */
 export async function validateSavedPlanAsync(
@@ -14,13 +14,11 @@ export async function validateSavedPlanAsync(
   executor: ApmPlanExecutorIdentity,
   digest: ApmPlanDigestPort,
 ): Promise<readonly ApmPlanBlocker[]> {
-  const currentFingerprint = await digest.digestAsync(
-    buildPlanInputFingerprintSource(status, plan.policy),
-  );
+  const currentFingerprint = await createPlanInputFingerprintAsync(status, plan.policy, digest);
   return [
-    ...(currentFingerprint === plan.inputFingerprint.value
+    ...(currentFingerprint.value === plan.inputFingerprint.value
       ? []
-      : [inputChangedBlocker(plan.inputFingerprint.value, currentFingerprint)]),
+      : [inputChangedBlocker(plan.inputFingerprint.value, currentFingerprint.value)]),
     ...(executorMatches(plan.executor, executor)
       ? []
       : [executorMismatchBlocker(plan.executor, executor)]),
