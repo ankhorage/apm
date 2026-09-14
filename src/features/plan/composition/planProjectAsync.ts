@@ -4,7 +4,7 @@ import type {
   ApmPlanProjectOptions,
   ApmPlanResult,
 } from '../../../types/plan.js';
-import { statusProjectAsync } from '../../status/composition/statusProjectAsync.js';
+import { inspectProjectStatusAsync } from '../../../utils/inspectProjectStatusAsync.js';
 import { createNativePlanResolutionPort } from '../adapters/outbound/createNativePlanResolutionPort.js';
 import { createSha256PlanDigestPort } from '../adapters/outbound/createSha256PlanDigestPort.js';
 import { planAsync } from '../application/planAsync.js';
@@ -17,10 +17,13 @@ export async function planProjectAsync(
   input: ApmPlanProjectInput,
   options: ApmPlanProjectOptions = {},
 ): Promise<ApmPlanResult> {
-  const status = await statusProjectAsync({
-    rootPath: input.rootPath,
-    availability: input.availability ?? 'refresh',
-  });
+  const status = await inspectProjectStatusAsync(
+    {
+      rootPath: input.rootPath,
+      availability: input.availability ?? 'refresh',
+    },
+    options.status,
+  );
   return planAsync(
     {
       status,
