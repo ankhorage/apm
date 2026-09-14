@@ -77,28 +77,36 @@ function packageObservation(
   const lockedById = new Map(
     root.lockedPackages.map((pkg) => [packageInstanceId(installRootId, pkg.id), pkg]),
   );
-  const classifications = expected.map((pkg) => classifyPackage(root, pkg, lockedById.get(pkg.id)));
-  if (classifications.every((state) => state === 'satisfied')) {
-    return { state: 'satisfied', evidence: expected.map(({ id }) => id) };
+  const observations = expected.map((pkg): PackageObservation => ({
+    id: pkg.id,
+    state: classifyPackage(root, pkg, lockedById.get(pkg.id)),
+  }));
+  if (observations.every(({ state }) => state === 'satisfied')) {
+    return { state: 'satisfied', evidence: observations.map(({ id }) => id) };
   }
-  if (classifications.some((state) => state === 'conflict')) {
+  if (observations.some(({ state }) => state === 'conflict')) {
     return {
       state: 'conflict',
-      evidence: expected.map(({ id }, index) => `${id}:${classifications[index] ?? 'unknown'}`),
+      evidence: observations.map(({ id, state }) => `${id}:${state}`),
       reason: 'Current lock evidence no longer matches the frozen package graph.',
     };
   }
-  if (classifications.some((state) => state === 'unknown')) {
+  if (observations.some(({ state }) => state === 'unknown')) {
     return {
       state: 'unknown',
-      evidence: expected.map(({ id }, index) => `${id}:${classifications[index] ?? 'unknown'}`),
+      evidence: observations.map(({ id, state }) => `${id}:${state}`),
       reason: 'Installed package evidence is incomplete for the frozen package graph.',
     };
   }
-  return { state: 'pending', evidence: expected.map(({ id }) => id) };
+  return { state: 'pending', evidence: observations.map(({ id }) => id) };
 }
 
 type PackageState = 'satisfied' | 'pending' | 'unknown' | 'conflict';
+
+interface PackageObservation {
+  readonly id: string;
+  readonly state: PackageState;
+}
 
 /*** Classify one frozen package against current lock identity and installation state. */
 function classifyPackage(
