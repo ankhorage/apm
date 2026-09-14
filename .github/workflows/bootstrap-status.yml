@@ -1,0 +1,64 @@
+name: Bootstrap status evidence
+
+on:
+  push:
+    branches:
+      - feat/3-evidence-status
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Resolve updated dependencies
+        run: bun install
+
+      - name: Generate Paradox documentation
+        run: bun run docs
+
+      - name: Canonically format and autofix
+        run: |
+          bun run format
+          bun run lint:fix
+          bun run format
+
+      - name: Validate repository
+        run: |
+          bun run build
+          bun run check-types
+          bunx @ankhorage/ankh doctor validate .
+          bun run lint
+          bun run knip:check
+          bun run test
+          bun run format:check
+          bun run changeset:status
+
+      - name: Persist generated non-workflow baseline
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git reset -- .github/workflows
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: sync status dependencies and docs"
+          git push origin HEAD:feat/3-evidence-status
