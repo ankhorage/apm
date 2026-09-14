@@ -8,11 +8,9 @@ import type {
 /*** Immutably transition one apply step and optionally the enclosing operation status. */
 export function transitionApplyJournal(input: TransitionApplyJournalInput): ApmApplyJournal {
   const steps = input.journal.steps.map((step) =>
-    step.stepId === input.stepId
-      ? transitionStep(step, input)
-      : step,
+    step.stepId === input.stepId ? transitionStep(step, input) : step,
   );
-  const { failure: currentOperationFailure, ...journalWithoutFailure } = input.journal;
+  const { failure: _operationFailure, ...journalWithoutFailure } = input.journal;
   return {
     ...(input.clearOperationFailure === true ? journalWithoutFailure : input.journal),
     updatedAt: input.now,
@@ -43,7 +41,7 @@ function transitionStep(
   step: ApplyStepJournal,
   input: TransitionApplyJournalInput,
 ): ApplyStepJournal {
-  const { failure: currentFailure, ...stepWithoutFailure } = step;
+  const { failure: _stepFailure, ...stepWithoutFailure } = step;
   return {
     ...(input.clearFailure === true ? stepWithoutFailure : step),
     state: input.state,
