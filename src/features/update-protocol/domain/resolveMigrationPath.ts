@@ -1,7 +1,11 @@
 import { compare, satisfies, valid, validRange } from 'semver';
 
-import type { ApmMigrationDescriptor, ApmSupportedSourceHistory } from '../../../types/update-protocol.js';
 import type {
+  ApmMigrationDescriptor,
+  ApmSupportedSourceHistory,
+} from '../../../types/update-protocol.js';
+import type {
+  ApmCompletedMigrationEvidence,
   ApmMigrationPathInput,
   ApmMigrationPathResult,
   ApmUpdateProtocolBlocker,
@@ -18,6 +22,8 @@ export function resolveMigrationPath(input: ApmMigrationPathInput): ApmMigration
   if (compare(input.targetVersion, input.sourceVersion) < 0) {
     return unsupportedPath([downgradeBlocker(input)]);
   }
+  const completedBlockers = completedMigrationBlockers(input);
+  if (completedBlockers.length > 0) return unsupportedPath(completedBlockers);
   const history = matchingHistory(input);
   if (history.length !== 1) return unsupportedPath(historySelectionBlockers(input, history));
   const [selectedHistory] = history;
@@ -28,12 +34,12 @@ export function resolveMigrationPath(input: ApmMigrationPathInput): ApmMigration
   return unsupportedPath([migrationPathBlocker(input, paths.length)]);
 }
 
-type MigrationState = {
+interface MigrationState {
   readonly version: string;
   readonly stateRevision?: string;
-  readonly completedMigrationIds: readonly string[];
+  readonly completedMigrations: readonly ApmCompletedMigrationEvidence[];
   readonly migrations: readonly ApmMigrationDescriptor[];
-};
+}
 
 /*** Validate exact source/target version syntax before graph traversal. */
 function pathSyntaxBlockers(input: ApmMigrationPathInput): readonly ApmUpdateProtocolBlocker[] {
@@ -49,6 +55,19 @@ function pathSyntaxBlockers(input: ApmMigrationPathInput): readonly ApmUpdatePro
         ]
       : [],
   );
+}
+
+/*** Reject completed-history evidence that disagrees with a known immutable migration checksum. */
+function completedMigrationBlockers(
+  input: ApmMigrationPathInput,
+): readonly ApmUpdateProtocolBlocker[] {
+  const completed = input.completedMigrations ?? [];
+  return completed.flatMap((evidence) => {
+    const known = input.descriptor.migrations.find((migration) => migration.id === evidence.id);
+    return known === undefined || known.checksum === evidence.checksum
+      ? []
+      : [completedMigrationChecksumMismatch(evidence, known)];
+  });
 }
 
 /*** Select the unique source-history declaration matching version and optional state revision. */
@@ -78,13 +97,15 @@ function historySelectionBlockers(
   ];
 }
 
-/*** Resolve every acyclic migration graph path that reaches the exact selected target version. */
+/*** Resolve every acyclic forward migration graph path that reaches the exact selected target. */
 function migrationPaths(input: ApmMigrationPathInput): readonly (readonly ApmMigrationDescriptor[])[] {
   return traversePaths(
     {
       version: input.sourceVersion,
-      ...(input.sourceStateRevision === undefined ? {} : { stateRevision: input.sourceStateRevision }),
-      completedMigrationIds: input.completedMigrationIds ?? [],
+      ...(input.sourceStateRevision === undefined
+        ? {}
+        : { stateRevision: input.sourceStateRevision }),
+      completedMigrations: input.completedMigrations ?? [],
       migrations: [],
     },
     input.targetVersion,
@@ -101,36 +122,55 @@ function traversePaths(
   if (state.version === targetVersion) return [state.migrations];
   if (state.migrations.length >= descriptor.migrations.length) return [];
   return descriptor.migrations.flatMap((migration) =>
-    migrationApplicable(migration, state, descriptor.owner.name)
+    migrationApplicable(migration, state, descriptor.owner.name, targetVersion)
       ? traversePaths(nextState(state, migration), targetVersion, descriptor)
       : [],
   );
 }
 
-/*** Test source range/state and same-owner prerequisite readiness for one migration edge. */
+/*** Test source state, forward target bounds and same-owner prerequisite readiness. */
 function migrationApplicable(
   migration: ApmMigrationDescriptor,
   state: MigrationState,
   owner: string,
+  targetVersion: string,
 ): boolean {
   if (state.migrations.some((item) => item.id === migration.id)) return false;
   if (validRange(migration.from.packageRange) === null) return false;
   if (!satisfies(state.version, migration.from.packageRange)) return false;
-  if (migration.from.stateRevision !== undefined && migration.from.stateRevision !== state.stateRevision) {
+  if (!isForwardTarget(migration.to.packageVersion, state.version, targetVersion)) return false;
+  if (
+    migration.from.stateRevision !== undefined &&
+    migration.from.stateRevision !== state.stateRevision
+  ) {
     return false;
   }
-  const completed = new Set(state.completedMigrationIds);
+  const completed = new Set(state.completedMigrations.map((item) => item.id));
   return migration.prerequisites
     .filter((prerequisite) => prerequisite.owner === owner)
     .every((prerequisite) => completed.has(prerequisite.migrationId));
+}
+
+/*** Require each selected migration edge to advance without overshooting the reviewed target. */
+function isForwardTarget(candidate: string, current: string, target: string): boolean {
+  return (
+    valid(candidate) !== null &&
+    compare(candidate, current) > 0 &&
+    compare(candidate, target) <= 0
+  );
 }
 
 /*** Apply one graph edge to immutable path-search state and completed-history evidence. */
 function nextState(state: MigrationState, migration: ApmMigrationDescriptor): MigrationState {
   return {
     version: migration.to.packageVersion,
-    ...(migration.to.stateRevision === undefined ? {} : { stateRevision: migration.to.stateRevision }),
-    completedMigrationIds: [...state.completedMigrationIds, migration.id],
+    ...(migration.to.stateRevision === undefined
+      ? {}
+      : { stateRevision: migration.to.stateRevision }),
+    completedMigrations: [
+      ...state.completedMigrations,
+      { id: migration.id, checksum: migration.checksum },
+    ],
     migrations: [...state.migrations, migration],
   };
 }
@@ -138,7 +178,8 @@ function nextState(state: MigrationState, migration: ApmMigrationDescriptor): Mi
 /*** Build an unsupported-history blocker using explicit owner metadata when available. */
 function unsupportedHistory(input: ApmMigrationPathInput): ApmUpdateProtocolBlocker {
   const explicit = input.descriptor.history.unsupported.find(
-    (entry) => validRange(entry.sourceRange) !== null && satisfies(input.sourceVersion, entry.sourceRange),
+    (entry) =>
+      validRange(entry.sourceRange) !== null && satisfies(input.sourceVersion, entry.sourceRange),
   );
   return createProtocolBlocker({
     code: 'protocol.history-unsupported',
@@ -146,6 +187,21 @@ function unsupportedHistory(input: ApmMigrationPathInput): ApmUpdateProtocolBloc
     evidence: [input.sourceVersion, input.targetVersion],
     reason: explicit?.reason ?? 'The owner descriptor does not support this source version/state.',
     ...(explicit?.nextAction === undefined ? {} : { nextAction: explicit.nextAction }),
+  });
+}
+
+/*** Build checksum mismatch evidence for completed project migration history. */
+function completedMigrationChecksumMismatch(
+  evidence: ApmCompletedMigrationEvidence,
+  migration: ApmMigrationDescriptor,
+): ApmUpdateProtocolBlocker {
+  return createProtocolBlocker({
+    code: 'protocol.migration-history-checksum-mismatch',
+    kind: 'history',
+    id: evidence.id,
+    evidence: [evidence.checksum, migration.checksum],
+    reason: 'Recorded project migration history does not match the immutable owner checksum.',
+    nextAction: 'Inspect or repair the recorded project migration history before updating.',
   });
 }
 
