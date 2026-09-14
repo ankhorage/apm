@@ -43,7 +43,7 @@ export function evaluateDependencies(
       dependencyPaths: pathsByPackage.get(pkg.id) ?? [],
       findings: evaluateDependencyFindings({
         packageId,
-        lockfilePath: root.lockfile.path,
+        ...(root.lockfile.path === undefined ? {} : { lockfilePath: root.lockfile.path }),
         pkg,
         ...(declaration === undefined ? {} : { declaration }),
         installed,
