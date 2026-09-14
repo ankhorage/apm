@@ -4,6 +4,7 @@ import path from 'node:path';
 
 import { expect, test } from 'bun:test';
 
+import type { ApmExtensionArtifactIdentityRequest } from '../../../../types/extension-artifact.js';
 import type { ApmRegistryFetch } from '../../../../types/registry.js';
 import { resolveNpmExtensionArtifactIdentityAsync } from './resolveNpmExtensionArtifactIdentityAsync.js';
 
@@ -65,12 +66,12 @@ test('rejects exact versions without immutable dist integrity', async () => {
   }
 });
 
-function artifactRequest(rootPath: string) {
+function artifactRequest(rootPath: string): ApmExtensionArtifactIdentityRequest {
   return {
     rootPath,
     packageName: '@owner/package',
     version: '2.0.0',
-    role: 'target' as const,
+    role: 'target',
     descriptorDigest: 'sha256:descriptor',
   };
 }
