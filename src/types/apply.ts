@@ -1,4 +1,4 @@
-import type { ApmPlanBlocker, ApmPlanResult, ApmPlanStep } from './plan.js';
+import type { ApmPlanBlocker, ApmPlanExecutorIdentity, ApmPlanResult, ApmPlanStep } from './plan.js';
 import type { ApmStatusDiagnostic, ApmStatusResult } from './status.js';
 
 export interface ApmApplyPermissions {
@@ -99,6 +99,33 @@ export interface ApmApplyStepExecutionResult {
   readonly failure?: ApmApplyFailure;
 }
 
+export type ApmApplyBlockerCode =
+  | 'apply.plan-incomplete'
+  | 'apply.plan-stale'
+  | 'apply.executor-incompatible'
+  | 'apply.lock-conflict'
+  | 'apply.operation-not-found'
+  | 'apply.journal-invalid'
+  | 'apply.permission-required'
+  | 'apply.prerequisite-incomplete'
+  | 'apply.precondition-changed'
+  | 'apply.output-mismatch'
+  | 'apply.step-failed'
+  | 'apply.recovery-required'
+  | 'apply.cancelled';
+
+export interface ApmApplyBlocker {
+  readonly code: ApmApplyBlockerCode;
+  readonly scope: {
+    readonly kind: 'project' | 'operation' | 'step' | 'host';
+    readonly id?: string;
+    readonly path?: string;
+  };
+  readonly evidence: readonly string[];
+  readonly reason: string;
+  readonly nextAction?: string;
+}
+
 export interface ApmApplyClockPort {
   readonly nowIso: () => string;
 }
@@ -114,11 +141,12 @@ export interface ApmApplyLockPort {
     readonly planId: string;
     readonly resume: boolean;
   }) => Promise<ApmApplyLockAcquireResult>;
-  readonly replaceStaleAsync: (input: {
+  readonly recoverStaleAsync: (input: {
     readonly rootPath: string;
-    readonly expected: ApmApplyLockIdentity;
-    readonly replacement: ApmApplyLockIdentity;
-  }) => Promise<boolean>;
+    readonly operationId: string;
+    readonly planId: string;
+    readonly stale: ApmApplyLockIdentity;
+  }) => Promise<ApmApplyLockAcquireResult>;
   readonly releaseAsync: (rootPath: string, operationId: string) => Promise<void>;
 }
 
@@ -130,6 +158,18 @@ export interface ApmApplyJournalPort {
 
 export interface ApmApplyStatusPort {
   readonly inspectStatusAsync: (rootPath: string) => Promise<ApmStatusResult>;
+}
+
+export interface ApmApplyPlanValidationPort {
+  readonly validateAsync: (input: {
+    readonly plan: ApmPlanResult;
+    readonly status: ApmStatusResult;
+    readonly executor: ApmPlanExecutorIdentity;
+  }) => Promise<readonly ApmPlanBlocker[]>;
+}
+
+export interface ApmApplyExecutorIdentityPort {
+  readonly current: () => ApmPlanExecutorIdentity;
 }
 
 export interface ApmApplyStepPort {
@@ -168,6 +208,8 @@ export interface ApmApplyPorts {
   readonly lock: ApmApplyLockPort;
   readonly journal: ApmApplyJournalPort;
   readonly status: ApmApplyStatusPort;
+  readonly planValidation: ApmApplyPlanValidationPort;
+  readonly executor: ApmApplyExecutorIdentityPort;
   readonly step: ApmApplyStepPort;
   readonly progress?: ApmApplyProgressPort;
   readonly cancellation?: ApmApplyCancellationPort;
@@ -188,7 +230,7 @@ export interface ApmApplyResult {
   readonly rootPath: string;
   readonly status: ApmApplyResultStatus;
   readonly complete: boolean;
-  readonly journal: ApmApplyJournal;
-  readonly blockers: readonly ApmPlanBlocker[];
+  readonly journal?: ApmApplyJournal;
+  readonly blockers: readonly ApmApplyBlocker[];
   readonly diagnostics: readonly ApmStatusDiagnostic[];
 }
