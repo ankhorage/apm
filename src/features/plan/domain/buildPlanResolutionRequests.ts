@@ -77,7 +77,8 @@ function unavailableRootBlocker(root: ApmInstallRootInventory): ApmPlanBlocker {
     code: 'plan.resolution-failed',
     scope: { kind: 'install-root', id: root.id, path: root.rootPath },
     evidence: [root.manager.state, ...root.lockfile.evidence],
-    reason: 'Install root has no uniquely selected supported package manager for native resolution.',
+    reason:
+      'Install root has no uniquely selected supported package manager for native resolution.',
     nextAction: 'Resolve package-manager/lockfile ambiguity before planning an update.',
   };
 }

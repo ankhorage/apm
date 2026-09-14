@@ -19,8 +19,14 @@ const DIGEST: ApmPlanDigestPort = {
 const EXECUTOR = { apmVersion: '0.3.0', runtime: 'node' as const, runtimeVersion: '24.0.0' };
 
 test('semantic input fingerprints and plan IDs ignore registry freshness timestamps', async () => {
-  const first = await planAsync(planInput(statusFixture('2026-09-14T10:00:00.000Z')), portsFixture());
-  const second = await planAsync(planInput(statusFixture('2026-09-14T11:00:00.000Z')), portsFixture());
+  const first = await planAsync(
+    planInput(statusFixture('2026-09-14T10:00:00.000Z')),
+    portsFixture(),
+  );
+  const second = await planAsync(
+    planInput(statusFixture('2026-09-14T11:00:00.000Z')),
+    portsFixture(),
+  );
 
   expect(first.inputFingerprint.value).toBe(second.inputFingerprint.value);
   expect(first.id).toBe(second.id);
@@ -283,7 +289,7 @@ function dependencyFixture(checkedAt: string): ApmStatusResult['dependencies'][n
 function installRootFixture(
   dependency: ApmStatusResult['dependencies'][number],
 ): ApmStatusResult['installRoots'][number] {
-  const declaration = dependency.declaration;
+  const { declaration } = dependency;
   return {
     id: 'root',
     rootPath: '/project',

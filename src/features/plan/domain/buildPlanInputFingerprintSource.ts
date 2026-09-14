@@ -20,7 +20,9 @@ export function buildPlanInputFingerprintSource(
     currency: status.currency,
     installRoots: [...status.installRoots].sort(compareInstallRoots).map(installRootSnapshot),
     dependencies: [...status.dependencies].sort(compareDependencies).map(dependencySnapshot),
-    hosts: [...status.hosts].sort((left, right) => compareText(left.id, right.id)).map(hostSnapshot),
+    hosts: [...status.hosts]
+      .sort((left, right) => compareText(left.id, right.id))
+      .map(hostSnapshot),
     extensions: {
       state: status.extensions.state,
       complete: status.extensions.complete,
@@ -96,7 +98,9 @@ function availabilitySnapshot(availability: ApmPackageAvailabilityEvidence): obj
     name: availability.name,
     state: availability.state,
     ...(availability.registry === undefined ? {} : { registry: availability.registry }),
-    ...(availability.latestVersion === undefined ? {} : { latestVersion: availability.latestVersion }),
+    ...(availability.latestVersion === undefined
+      ? {}
+      : { latestVersion: availability.latestVersion }),
     ...(availability.compatibleVersion === undefined
       ? {}
       : { compatibleVersion: availability.compatibleVersion }),
@@ -154,7 +158,9 @@ function stableFindings(findings: readonly ApmStatusFinding[]): readonly ApmStat
 function stableDiagnostics(
   diagnostics: readonly ApmStatusDiagnostic[],
 ): readonly ApmStatusDiagnostic[] {
-  return [...diagnostics].sort((left, right) => compareText(diagnosticKey(left), diagnosticKey(right)));
+  return [...diagnostics].sort((left, right) =>
+    compareText(diagnosticKey(left), diagnosticKey(right)),
+  );
 }
 
 /*** Build a stable finding comparison key. */
@@ -181,7 +187,9 @@ function diagnosticKey(diagnostic: ApmStatusDiagnostic): string {
 }
 
 /*** Build a stable extension observation key. */
-function observationKey(observation: ApmStatusResult['extensions']['observations'][number]): string {
+function observationKey(
+  observation: ApmStatusResult['extensions']['observations'][number],
+): string {
   return [
     observation.owner ?? '',
     observation.packageId ?? '',
@@ -192,7 +200,10 @@ function observationKey(observation: ApmStatusResult['extensions']['observations
 }
 
 /*** Sort install roots by canonical root ID. */
-function compareInstallRoots(left: ApmInstallRootInventory, right: ApmInstallRootInventory): number {
+function compareInstallRoots(
+  left: ApmInstallRootInventory,
+  right: ApmInstallRootInventory,
+): number {
   return compareText(left.id, right.id);
 }
 

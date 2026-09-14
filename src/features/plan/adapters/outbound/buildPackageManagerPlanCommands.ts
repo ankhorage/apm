@@ -10,7 +10,9 @@ export function buildPackageManagerPlanCommands(
   const base = direct.length === 0 ? [] : [baseResolutionCommand(request.manager)];
   return [
     ...base,
-    ...transitive.map((target) => transitiveResolutionCommand(request.manager, target.name, target.targetVersion)),
+    ...transitive.map((target) =>
+      transitiveResolutionCommand(request.manager, target.name, target.targetVersion),
+    ),
   ];
 }
 

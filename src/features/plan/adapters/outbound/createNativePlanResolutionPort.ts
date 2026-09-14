@@ -176,7 +176,8 @@ function stagedInventoryBlocker(request: ApmPlanResolutionRequest): ApmPlanBlock
     code: 'plan.resolution-failed',
     scope: { kind: 'install-root', id: request.installRootId, path: request.installRootPath },
     evidence: [request.manager],
-    reason: 'Native package-manager output could not be re-inspected as a complete supported lock graph.',
+    reason:
+      'Native package-manager output could not be re-inspected as a complete supported lock graph.',
     nextAction: 'Use a supported lockfile/linker mode before applying updates.',
   };
 }

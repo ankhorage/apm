@@ -24,7 +24,9 @@ export async function stagePlanInstallRootAsync(
   const stageRoot = await mkdtemp(path.join(tmpdir(), 'ankhorage-apm-plan-'));
   const mutablePaths = mutableRelativePaths(request);
   const mutableFiles = await Promise.all(
-    mutablePaths.map((relativePath) => stageFileAsync(request.installRootPath, stageRoot, relativePath, 'mutable')),
+    mutablePaths.map((relativePath) =>
+      stageFileAsync(request.installRootPath, stageRoot, relativePath, 'mutable'),
+    ),
   );
   const configurationFiles = await Promise.all(
     CONFIG_FILES.map((relativePath) =>
@@ -33,7 +35,10 @@ export async function stagePlanInstallRootAsync(
   );
   return {
     rootPath: stageRoot,
-    files: [...mutableFiles, ...configurationFiles.flatMap((file) => (file === undefined ? [] : [file]))],
+    files: [
+      ...mutableFiles,
+      ...configurationFiles.flatMap((file) => (file === undefined ? [] : [file])),
+    ],
   };
 }
 
@@ -103,7 +108,9 @@ async function readOptionalTextAsync(filePath: string): Promise<string | undefin
 
 /*** Convert absolute or relative evidence paths to a safe portable descendant path. */
 function relativeWithinRoot(rootPath: string, candidate: string, allowRoot: boolean): string {
-  const absoluteCandidate = path.isAbsolute(candidate) ? path.resolve(candidate) : path.resolve(rootPath, candidate);
+  const absoluteCandidate = path.isAbsolute(candidate)
+    ? path.resolve(candidate)
+    : path.resolve(rootPath, candidate);
   const relative = path.relative(path.resolve(rootPath), absoluteCandidate);
   if (relative === '' && allowRoot) return '';
   resolvePathWithinRoot(rootPath, relative);

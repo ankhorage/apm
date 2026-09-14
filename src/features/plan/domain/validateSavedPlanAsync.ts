@@ -14,7 +14,9 @@ export async function validateSavedPlanAsync(
   executor: ApmPlanExecutorIdentity,
   digest: ApmPlanDigestPort,
 ): Promise<readonly ApmPlanBlocker[]> {
-  const currentFingerprint = await digest.digestAsync(buildPlanInputFingerprintSource(status, plan.policy));
+  const currentFingerprint = await digest.digestAsync(
+    buildPlanInputFingerprintSource(status, plan.policy),
+  );
   return [
     ...(currentFingerprint === plan.inputFingerprint.value
       ? []
@@ -57,7 +59,8 @@ function executorMismatchBlocker(
     code: 'plan.executor-incompatible',
     scope: { kind: 'host', id: 'apm' },
     evidence: [executorKey(planned), executorKey(current)],
-    reason: 'Current APM/runtime executor does not match the executor frozen into the reviewed plan.',
+    reason:
+      'Current APM/runtime executor does not match the executor frozen into the reviewed plan.',
     nextAction: 'Re-plan with the current executor before applying project mutations.',
   };
 }

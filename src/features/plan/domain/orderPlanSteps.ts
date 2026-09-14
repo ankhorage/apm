@@ -30,7 +30,8 @@ function traverse(
   const ready = [...byId.values()]
     .filter(
       (step) =>
-        !completed.has(step.id) && step.prerequisites.every((prerequisite) => completed.has(prerequisite)),
+        !completed.has(step.id) &&
+        step.prerequisites.every((prerequisite) => completed.has(prerequisite)),
     )
     .sort((left, right) => compareText(left.id, right.id));
   if (ready.length === 0) return ordered;
@@ -57,7 +58,10 @@ function cycleBlocker(
   return {
     code: 'plan.step-cycle',
     scope: { kind: 'project' },
-    evidence: steps.filter(({ id }) => !completed.has(id)).map(({ id }) => id).sort(compareText),
+    evidence: steps
+      .filter(({ id }) => !completed.has(id))
+      .map(({ id }) => id)
+      .sort(compareText),
     reason: 'Plan steps contain a prerequisite cycle and cannot be executed in a stable order.',
   };
 }

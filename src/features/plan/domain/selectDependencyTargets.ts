@@ -75,7 +75,8 @@ function selectionMatches(
   const { declaration, installRootId, name, packageId } = dependency;
   if (name !== selector.name) return false;
   if (selector.packageId !== undefined && packageId !== selector.packageId) return false;
-  if (selector.installRootId !== undefined && installRootId !== selector.installRootId) return false;
+  if (selector.installRootId !== undefined && installRootId !== selector.installRootId)
+    return false;
   if (selector.ownerPath === undefined) return true;
   return declaration?.ownerPath === selector.ownerPath;
 }

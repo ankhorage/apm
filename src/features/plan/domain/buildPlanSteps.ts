@@ -1,7 +1,7 @@
 import type {
+  ApmPlanProtocolResult,
   ApmPlanResolutionResult,
   ApmPlanStep,
-  ApmPlanProtocolResult,
 } from '../../../types/plan.js';
 import type { ApmReleaseEffect } from '../../../types/update-protocol.js';
 
@@ -73,14 +73,10 @@ function terminalStepIds(steps: readonly ApmPlanStep[]): readonly string[] {
 }
 
 /*** Convert shipment implications to explicit post-validation follow-up steps. */
-function followUpStep(
-  effect: ApmReleaseEffect,
-  index: number,
-  validationId: string,
-): ApmPlanStep {
+function followUpStep(effect: ApmReleaseEffect, index: number, validationId: string): ApmPlanStep {
   const effectKind = effect.kind;
-  const reason = effect.reason;
-  const evidence = effect.evidence;
+  const { reason } = effect;
+  const { evidence } = effect;
   return {
     id: `follow-up:${effectKind}:${index}`,
     kind: 'follow-up',

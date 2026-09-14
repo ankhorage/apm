@@ -15,7 +15,9 @@ export function validateStagedPlanTargets(
   root: ApmInstallRootInventory,
 ): readonly ApmPlanBlocker[] {
   return request.targets.flatMap((target) =>
-    target.direct ? validateDirectTarget(request, root, target) : validateTransitiveTarget(root, target),
+    target.direct
+      ? validateDirectTarget(request, root, target)
+      : validateTransitiveTarget(root, target),
   );
 }
 
@@ -25,8 +27,9 @@ function validateDirectTarget(
   root: ApmInstallRootInventory,
   target: ApmPlanDependencyTarget,
 ): readonly ApmPlanBlocker[] {
-  const ownerPath = target.ownerPath;
-  if (ownerPath === undefined) return [targetMismatchBlocker(target, 'Direct target has no owner manifest.')];
+  const { ownerPath } = target;
+  if (ownerPath === undefined)
+    return [targetMismatchBlocker(target, 'Direct target has no owner manifest.')];
   const stagedOwnerPath = ownerPathWithinInstallRoot(request, ownerPath);
   const declaration = root.declarations.find(
     (candidate) => candidate.ownerPath === stagedOwnerPath && candidate.name === target.name,
@@ -52,8 +55,10 @@ function validateTransitiveTarget(
         code: 'plan.selection-ambiguous',
         scope: { kind: 'package', id: target.packageId },
         evidence: [target.name, `resolved-instances:${candidates.length}`],
-        reason: 'Native resolution cannot prove which duplicate transitive package instance satisfies the reviewed target.',
-        nextAction: 'Use a package-manager constraint or update the owning direct dependency instead.',
+        reason:
+          'Native resolution cannot prove which duplicate transitive package instance satisfies the reviewed target.',
+        nextAction:
+          'Use a package-manager constraint or update the owning direct dependency instead.',
       },
     ];
   }
@@ -72,10 +77,7 @@ function ownerPathWithinInstallRoot(request: ApmPlanResolutionRequest, ownerPath
 }
 
 /*** Report native solver output that differs from the reviewed exact package target. */
-function targetMismatchBlocker(
-  target: ApmPlanDependencyTarget,
-  actual: string,
-): ApmPlanBlocker {
+function targetMismatchBlocker(target: ApmPlanDependencyTarget, actual: string): ApmPlanBlocker {
   return {
     code: 'plan.resolution-failed',
     scope: { kind: 'package', id: target.packageId },

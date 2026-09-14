@@ -12,7 +12,14 @@ test('all direct native resolvers use lock-only planning with lifecycle executio
   expect(commands.map(({ manager, command }) => [manager, command?.args])).toEqual([
     [
       'npm',
-      ['install', '--package-lock-only', '--ignore-scripts', '--no-audit', '--no-fund', '--strict-peer-deps'],
+      [
+        'install',
+        '--package-lock-only',
+        '--ignore-scripts',
+        '--no-audit',
+        '--no-fund',
+        '--strict-peer-deps',
+      ],
     ],
     ['pnpm', ['install', '--lockfile-only', '--ignore-scripts']],
     ['yarn', ['install', '--mode=update-lockfile']],

@@ -278,7 +278,8 @@ function protocolUnavailableBlocker(): ApmPlanBlocker {
     code: 'plan.protocol-unavailable',
     scope: { kind: 'project' },
     evidence: [],
-    reason: 'Migration or projection work is pending but no package-owned protocol planner is available.',
+    reason:
+      'Migration or projection work is pending but no package-owned protocol planner is available.',
     nextAction: 'Load or install the required trusted owner extension before applying updates.',
   };
 }

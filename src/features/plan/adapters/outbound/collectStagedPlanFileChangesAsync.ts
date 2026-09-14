@@ -25,7 +25,9 @@ export async function collectStagedPlanFileChangesAsync(
     stage.files.map((file) => inspectStagedFileAsync(request, file, manifestExpectations)),
   );
   return {
-    files: results.flatMap(({ change }) => (change === undefined ? [] : [change])).sort(compareChanges),
+    files: results
+      .flatMap(({ change }) => (change === undefined ? [] : [change]))
+      .sort(compareChanges),
     blockers: results.flatMap(({ blocker }) => (blocker === undefined ? [] : [blocker])),
   };
 }
@@ -67,9 +69,7 @@ function exactFileChange(
     ...(file.beforeContent === undefined
       ? {}
       : { beforeContent: file.beforeContent, beforeDigest: digest(file.beforeContent) }),
-    ...(afterContent === undefined
-      ? {}
-      : { afterContent, afterDigest: digest(afterContent) }),
+    ...(afterContent === undefined ? {} : { afterContent, afterDigest: digest(afterContent) }),
   };
 }
 

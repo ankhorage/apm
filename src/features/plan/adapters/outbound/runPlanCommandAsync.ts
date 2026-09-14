@@ -3,7 +3,10 @@ import { promisify } from 'node:util';
 
 import { isRecord } from '@ankhorage/utility/object';
 
-import type { ApmPackageManagerPlanCommand, ApmPlanCommandResult } from '../../../../types/plan-staging.js';
+import type {
+  ApmPackageManagerPlanCommand,
+  ApmPlanCommandResult,
+} from '../../../../types/plan-staging.js';
 
 const execFileAsync = promisify(execFile);
 const MAX_BUFFER_BYTES = 64 * 1024;

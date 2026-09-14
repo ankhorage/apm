@@ -30,7 +30,8 @@ function groupDirectTargets(
   targets: readonly ApmPlanDependencyTarget[],
 ): ReadonlyMap<string, readonly ApmPlanDependencyTarget[]> {
   return targets.reduce<Map<string, readonly ApmPlanDependencyTarget[]>>((groups, target) => {
-    if (!target.direct || target.ownerPath === undefined || target.targetRange === undefined) return groups;
+    if (!target.direct || target.ownerPath === undefined || target.targetRange === undefined)
+      return groups;
     const current = groups.get(target.ownerPath) ?? [];
     return new Map(groups).set(target.ownerPath, [...current, target]);
   }, new Map());
@@ -49,12 +50,17 @@ function applyTargetRange(content: string, target: ApmPlanDependencyTarget): str
 }
 
 /*** Read every staged manifest after APM edits so native resolvers cannot add hidden dependencies. */
-async function readManifestExpectationsAsync(stage: ApmPlanStage): Promise<ReadonlyMap<string, string>> {
+async function readManifestExpectationsAsync(
+  stage: ApmPlanStage,
+): Promise<ReadonlyMap<string, string>> {
   const manifests = stage.files.filter(
     ({ relativePath, role }) => role === 'mutable' && relativePath.endsWith('package.json'),
   );
   const entries = await Promise.all(
-    manifests.map(async ({ relativePath, stagedPath }) => [relativePath, await readFile(stagedPath, 'utf8')] as const),
+    manifests.map(
+      async ({ relativePath, stagedPath }) =>
+        [relativePath, await readFile(stagedPath, 'utf8')] as const,
+    ),
   );
   return new Map(entries);
 }

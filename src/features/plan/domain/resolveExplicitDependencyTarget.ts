@@ -26,7 +26,8 @@ export function resolveExplicitDependencyTarget(
   if (targetVersion === undefined) {
     return { blockers: [unavailableTargetBlocker(dependency, selection.kind)] };
   }
-  if (valid(targetVersion) === null) return { blockers: [invalidVersionBlocker(dependency, targetVersion)] };
+  if (valid(targetVersion) === null)
+    return { blockers: [invalidVersionBlocker(dependency, targetVersion)] };
   const { installed, lockedVersion } = dependency;
   const currentVersion = lockedVersion ?? installed.version;
   const policyBlockers = versionPolicyBlockers(

@@ -85,9 +85,17 @@ async function createProjectFixtureAsync(): Promise<string> {
     )}\n`,
     'utf8',
   );
-  await writeFile(path.join(root, 'package-lock.json'), '{"lockfileVersion":3,"packages":{}}\n', 'utf8');
+  await writeFile(
+    path.join(root, 'package-lock.json'),
+    '{"lockfileVersion":3,"packages":{}}\n',
+    'utf8',
+  );
   await writeFile(path.join(root, '.npmrc'), 'ignore-scripts=true\n', 'utf8');
-  await writeFile(path.join(root, 'src', 'danger.ts'), 'throw new Error("must not run");\n', 'utf8');
+  await writeFile(
+    path.join(root, 'src', 'danger.ts'),
+    'throw new Error("must not run");\n',
+    'utf8',
+  );
   return root;
 }
 

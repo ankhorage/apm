@@ -1,10 +1,10 @@
-import type { ApmReleaseEffect } from './update-protocol.js';
 import type {
   ApmPackageManagerName,
   ApmStatusDiagnostic,
   ApmStatusFinding,
   ApmStatusResult,
 } from './status.js';
+import type { ApmReleaseEffect } from './update-protocol.js';
 
 export type ApmPlanDependencyUpdateMode = 'safe' | 'selected' | 'none';
 
