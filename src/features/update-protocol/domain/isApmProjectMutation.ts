@@ -1,6 +1,7 @@
 import { isRecord } from '@ankhorage/utility/object';
 
 import type { ApmProjectMutation } from '../../../types/update-extension.js';
+import { isProtocolProjectPath } from '../utils/isProtocolProjectPath.js';
 import { isApmJsonValue } from './isApmJsonValue.js';
 import { isApmProjectScope } from './isApmProjectScope.js';
 
@@ -19,6 +20,7 @@ export function isApmProjectMutation(value: unknown): value is ApmProjectMutatio
 function isWriteFileMutation(value: Readonly<Record<string, unknown>>): boolean {
   return (
     typeof value.path === 'string' &&
+    isProtocolProjectPath(value.path) &&
     (value.encoding === 'utf8' || value.encoding === 'base64') &&
     typeof value.content === 'string' &&
     optionalString(value.expectedBeforeDigest) &&
@@ -28,13 +30,18 @@ function isWriteFileMutation(value: Readonly<Record<string, unknown>>): boolean 
 
 /*** Validate a whole-file delete mutation. */
 function isDeleteFileMutation(value: Readonly<Record<string, unknown>>): boolean {
-  return typeof value.path === 'string' && optionalString(value.expectedBeforeDigest);
+  return (
+    typeof value.path === 'string' &&
+    isProtocolProjectPath(value.path) &&
+    optionalString(value.expectedBeforeDigest)
+  );
 }
 
 /*** Validate a structured JSON-pointer write mutation. */
 function isSetJsonPointerMutation(value: Readonly<Record<string, unknown>>): boolean {
   return (
     typeof value.path === 'string' &&
+    isProtocolProjectPath(value.path) &&
     typeof value.pointer === 'string' &&
     isApmJsonValue(value.value) &&
     optionalString(value.expectedBeforeDigest) &&
@@ -46,6 +53,7 @@ function isSetJsonPointerMutation(value: Readonly<Record<string, unknown>>): boo
 function isRemoveJsonPointerMutation(value: Readonly<Record<string, unknown>>): boolean {
   return (
     typeof value.path === 'string' &&
+    isProtocolProjectPath(value.path) &&
     typeof value.pointer === 'string' &&
     optionalString(value.expectedBeforeDigest) &&
     optionalString(value.afterDigest)
