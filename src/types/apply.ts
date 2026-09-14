@@ -226,7 +226,7 @@ export interface ApmApplyResult {
   readonly schemaVersion: 1;
   readonly operation: 'apply';
   readonly operationId: string;
-  readonly planId: string;
+  readonly planId?: string;
   readonly rootPath: string;
   readonly status: ApmApplyResultStatus;
   readonly complete: boolean;
