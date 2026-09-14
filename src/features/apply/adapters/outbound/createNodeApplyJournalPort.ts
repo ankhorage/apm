@@ -1,10 +1,6 @@
 import { readFile } from 'node:fs/promises';
 
-import {
-  isMissingPathError,
-  pathExists,
-  writeJsonFileAtomic,
-} from '@ankhorage/utility/node/fs';
+import { isMissingPathError, pathExists, writeJsonFileAtomic } from '@ankhorage/utility/node/fs';
 
 import type { ApmApplyJournalPort } from '../../../../types/apply.js';
 import { parseApplyJournal } from '../../domain/parseApplyJournal.js';

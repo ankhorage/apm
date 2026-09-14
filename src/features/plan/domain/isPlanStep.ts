@@ -1,10 +1,10 @@
 import { isRecord } from '@ankhorage/utility/object';
 
-import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import type { ApmPlanStep } from '../../../types/plan.js';
+import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import { isApmMigrationDescriptor } from '../../update-protocol/domain/isApmMigrationDescriptor.js';
-import { isApmProjectMutation } from '../../update-protocol/domain/isApmProjectMutation.js';
 import { isApmProjectionDescriptor } from '../../update-protocol/domain/isApmProjectionDescriptor.js';
+import { isApmProjectMutation } from '../../update-protocol/domain/isApmProjectMutation.js';
 import { isApmReleaseEffect } from '../../update-protocol/domain/isApmReleaseEffect.js';
 
 /*** Validate one executable serialized plan step before apply or recovery can trust it. */

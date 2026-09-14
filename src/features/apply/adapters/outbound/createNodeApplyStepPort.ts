@@ -11,8 +11,8 @@ import { executeNodeInstallStepAsync } from './executeNodeInstallStepAsync.js';
 import { executeNodeValidationStepAsync } from './executeNodeValidationStepAsync.js';
 import { observeNodeFileStepAsync } from './observeNodeFileStepAsync.js';
 import { observeNodeInstallStepAsync } from './observeNodeInstallStepAsync.js';
-import { rollbackNodeFileStepAsync } from './rollbackNodeFileStepAsync.js';
 import { restoreApplyStepSnapshotAsync } from './restoreApplyStepSnapshotAsync.js';
+import { rollbackNodeFileStepAsync } from './rollbackNodeFileStepAsync.js';
 
 /*** Create the Node step adapter for reviewed local effects plus an optional trusted owner-code boundary. */
 export function createNodeApplyStepPort(options: NodeApplyStepOptions): ApmApplyStepPort {
@@ -88,7 +88,11 @@ async function rollbackAsync(
     const owner = await options.owner.rollbackAsync({ journal, step });
     if (owner.state !== 'completed' || reviewedStepFilePaths(step).length === 0) return owner;
     const restored = await restoreApplyStepSnapshotAsync(journal, step);
-    return { state: 'completed', evidence: [...owner.evidence, ...restored], diagnostics: owner.diagnostics };
+    return {
+      state: 'completed',
+      evidence: [...owner.evidence, ...restored],
+      diagnostics: owner.diagnostics,
+    };
   }
   return {
     state: 'unknown',
@@ -134,7 +138,8 @@ function deferredExecution(stepId: string): ApmApplyStepExecutionResult {
     diagnostics: [],
     failure: {
       code: 'apply.deferred-step-executed',
-      reason: 'Shipment/restart follow-up steps are accounted for but never executed incidentally by apply.',
+      reason:
+        'Shipment/restart follow-up steps are accounted for but never executed incidentally by apply.',
       evidence: [stepId],
     },
   };

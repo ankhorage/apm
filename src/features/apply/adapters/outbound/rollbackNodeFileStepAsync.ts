@@ -19,7 +19,8 @@ export async function rollbackNodeFileStepAsync(
         code: 'apply.rollback-unknown',
         reason: 'APM could not prove restoration of the reviewed local file snapshot.',
         evidence: [step.id],
-        nextAction: 'Inspect the durable operation snapshot and recover the reviewed files explicitly.',
+        nextAction:
+          'Inspect the durable operation snapshot and recover the reviewed files explicitly.',
       },
     };
   }

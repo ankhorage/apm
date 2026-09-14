@@ -39,9 +39,16 @@ async function verifyStepAsync(
         ),
       ];
     case 'install':
-      return [observationCheck(input.step, await observeNodeInstallStepAsync(input.journal, input.step))];
+      return [
+        observationCheck(input.step, await observeNodeInstallStepAsync(input.journal, input.step)),
+      ];
     case 'validation':
-      return [validationCheck(input.step, await executeNodeValidationStepAsync(input.journal, input.step))];
+      return [
+        validationCheck(
+          input.step,
+          await executeNodeValidationStepAsync(input.journal, input.step),
+        ),
+      ];
     case 'migration':
     case 'projection':
       return options.owner === undefined
@@ -81,7 +88,11 @@ function validationCheck(
     id: `verify:${step.id}`,
     kind: 'validation',
     status:
-      execution.state === 'completed' ? 'passed' : execution.state === 'unknown' ? 'unknown' : 'failed',
+      execution.state === 'completed'
+        ? 'passed'
+        : execution.state === 'unknown'
+          ? 'unknown'
+          : 'failed',
     evidence: execution.evidence,
     ...(execution.failure === undefined ? {} : { reason: execution.failure.reason }),
     ...(execution.failure?.nextAction === undefined

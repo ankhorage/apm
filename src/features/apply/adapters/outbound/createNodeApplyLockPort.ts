@@ -1,5 +1,5 @@
-import { hostname } from 'node:os';
 import { readFile } from 'node:fs/promises';
+import { hostname } from 'node:os';
 
 import {
   isMissingPathError,
@@ -98,7 +98,10 @@ async function classifyExistingLockAsync(rootPath: string): Promise<ApmApplyLock
   const existing = await readLockAsync(rootPath);
   if (existing === undefined) {
     const placeholder = createLockIdentity('unknown', 'unknown');
-    return conflictResult(placeholder, 'Operation lock exists but its identity could not be read safely.');
+    return conflictResult(
+      placeholder,
+      'Operation lock exists but its identity could not be read safely.',
+    );
   }
   return isStaleSameHostLock(existing)
     ? {

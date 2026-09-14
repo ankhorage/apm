@@ -1,5 +1,5 @@
-import type { ApmVerifyProjectOptions } from '../../../types/verify-project.js';
 import type { ApmVerifyInput, ApmVerifyResult } from '../../../types/verify.js';
+import type { ApmVerifyProjectOptions } from '../../../types/verify-project.js';
 import { createNodeApplyJournalPort } from '../../apply/adapters/outbound/createNodeApplyJournalPort.js';
 import { createSha256PlanDigestPort } from '../../plan/adapters/outbound/createSha256PlanDigestPort.js';
 import { statusProjectAsync } from '../../status/composition/statusProjectAsync.js';

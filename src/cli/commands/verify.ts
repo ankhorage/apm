@@ -37,7 +37,8 @@ function parseVerifyArguments(argv: readonly string[]): ParsedVerifyArguments {
     (argument, index) =>
       argument !== '--json' && index !== operationIndex && index !== operationIndex + 1,
   );
-  if (positionals.length > 1 || positionals.some((argument) => argument.startsWith('-'))) usageError();
+  if (positionals.length > 1 || positionals.some((argument) => argument.startsWith('-')))
+    usageError();
   return { operationId, rootPath: positionals[0] ?? '.', json };
 }
 

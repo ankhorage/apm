@@ -1,7 +1,4 @@
-import {
-  removeFileWithinRoot,
-  writeFileWithinRoot,
-} from '@ankhorage/utility/node/fs';
+import { removeFileWithinRoot, writeFileWithinRoot } from '@ankhorage/utility/node/fs';
 import { resolvePathWithinRoot } from '@ankhorage/utility/node/path';
 
 import type { ApmApplyJournal, ApmApplyStepExecutionResult } from '../../../../types/apply.js';
@@ -18,7 +15,12 @@ export async function executeNodeFileStepAsync(
 ): Promise<ApmApplyStepExecutionResult> {
   const changes = reviewedFileChanges(journal.plan.files, step);
   if (changes === undefined) return invalidFileStep(step.id);
-  const observation = await observeNodeFileStepAsync(journal.rootPath, journal.plan.files, step, digest);
+  const observation = await observeNodeFileStepAsync(
+    journal.rootPath,
+    journal.plan.files,
+    step,
+    digest,
+  );
   if (observation.state === 'satisfied') {
     return { state: 'completed', evidence: observation.evidence, diagnostics: [] };
   }

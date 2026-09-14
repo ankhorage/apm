@@ -49,13 +49,21 @@ async function classifyChangeAsync(
 }
 
 /*** Test the current file state against the reviewed postcondition. */
-function matchesAfter(change: ApmPlanFileChange, exists: boolean, digest: string | undefined): boolean {
+function matchesAfter(
+  change: ApmPlanFileChange,
+  exists: boolean,
+  digest: string | undefined,
+): boolean {
   if (change.kind === 'delete') return !exists;
   return exists && change.afterDigest !== undefined && digest === change.afterDigest;
 }
 
 /*** Test the current file state against the reviewed precondition. */
-function matchesBefore(change: ApmPlanFileChange, exists: boolean, digest: string | undefined): boolean {
+function matchesBefore(
+  change: ApmPlanFileChange,
+  exists: boolean,
+  digest: string | undefined,
+): boolean {
   if (change.kind === 'create') return !exists;
   return exists && change.beforeDigest !== undefined && digest === change.beforeDigest;
 }

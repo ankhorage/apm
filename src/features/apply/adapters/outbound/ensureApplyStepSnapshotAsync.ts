@@ -3,11 +3,11 @@ import { readFile } from 'node:fs/promises';
 import { isMissingPathError, pathExists, writeJsonFileAtomic } from '@ankhorage/utility/node/fs';
 import { resolvePathWithinRoot } from '@ankhorage/utility/node/path';
 
+import type { ApmApplyJournal } from '../../../../types/apply.js';
 import type {
   ApmApplyFileSnapshot,
   ApmApplyStepSnapshot,
 } from '../../../../types/apply-storage.js';
-import type { ApmApplyJournal } from '../../../../types/apply.js';
 import type { ApmPlanStep } from '../../../../types/plan.js';
 import { reviewedStepFilePaths } from '../../domain/reviewedStepFilePaths.js';
 import { applySnapshotPath } from '../../utils/applySnapshotPath.js';

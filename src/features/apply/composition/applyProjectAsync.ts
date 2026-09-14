@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 
 import metadata from '../../../../package.json' with { type: 'json' };
-import type { ApmApplyProjectOptions } from '../../../types/apply-project.js';
 import type { ApmApplyInput, ApmApplyPorts, ApmApplyResult } from '../../../types/apply.js';
+import type { ApmApplyProjectOptions } from '../../../types/apply-project.js';
 import { createSha256PlanDigestPort } from '../../plan/adapters/outbound/createSha256PlanDigestPort.js';
 import { validateSavedPlanAsync } from '../../plan/domain/validateSavedPlanAsync.js';
 import { statusProjectAsync } from '../../status/composition/statusProjectAsync.js';

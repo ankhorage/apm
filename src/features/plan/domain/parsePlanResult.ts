@@ -61,8 +61,8 @@ function isPlanPolicy(value: unknown): value is ApmPlanPolicy {
 /*** Validate one explicit user/owner package selection without interpreting semver again. */
 function isPackageSelection(value: unknown): boolean {
   if (!isRecord(value) || !isRecord(value.selector) || !isRecord(value.target)) return false;
-  const selector = value.selector;
-  const target = value.target;
+  const { selector } = value;
+  const { target } = value;
   const selectorValid =
     typeof selector.name === 'string' &&
     optionalString(selector.packageId) &&
@@ -264,7 +264,10 @@ function isArtifactSource(value: unknown): boolean {
 }
 
 /*** Validate arrays against one type-predicate without unsafe casting. */
-function isArrayOf<T>(value: unknown, predicate: (entry: unknown) => entry is T): value is readonly T[] {
+function isArrayOf<T>(
+  value: unknown,
+  predicate: (entry: unknown) => entry is T,
+): value is readonly T[] {
   return Array.isArray(value) && value.every(predicate);
 }
 

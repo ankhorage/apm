@@ -39,11 +39,9 @@ export async function executeNodeInstallStepAsync(
     };
   }
   const command = buildPackageManagerInstallCommand(step.execution);
-  const result = await runPackageManagerCommandAsync(
-    command,
-    step.execution.installRootPath,
-    { lifecycleScripts: step.execution.lifecycleScripts },
-  );
+  const result = await runPackageManagerCommandAsync(command, step.execution.installRootPath, {
+    lifecycleScripts: step.execution.lifecycleScripts,
+  });
   return result.exitCode === 0
     ? {
         state: 'completed',
@@ -86,7 +84,8 @@ function commandFailure(
       code: 'apply.install-failed',
       reason: `Package-manager ${phase} command failed for the reviewed install step.`,
       evidence: [`manager:${manager}`, `phase:${phase}`, `exit:${exitCode}`],
-      nextAction: 'Resolve the local package-manager failure and resume the same durable operation.',
+      nextAction:
+        'Resolve the local package-manager failure and resume the same durable operation.',
     },
   };
 }

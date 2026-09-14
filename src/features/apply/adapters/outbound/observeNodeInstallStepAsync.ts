@@ -48,7 +48,12 @@ function installRootConflict(
     ? undefined
     : {
         state: 'conflict',
-        evidence: [root.id, root.rootPath, root.manager.name ?? 'unknown', root.linker ?? 'unknown'],
+        evidence: [
+          root.id,
+          root.rootPath,
+          root.manager.name ?? 'unknown',
+          root.linker ?? 'unknown',
+        ],
         reason: 'Current install-root identity differs from the reviewed frozen install step.',
       };
 }
@@ -72,9 +77,7 @@ function packageObservation(
   const lockedById = new Map(
     root.lockedPackages.map((pkg) => [packageInstanceId(installRootId, pkg.id), pkg]),
   );
-  const classifications = expected.map((pkg) =>
-    classifyPackage(root, pkg, lockedById.get(pkg.id)),
-  );
+  const classifications = expected.map((pkg) => classifyPackage(root, pkg, lockedById.get(pkg.id)));
   if (classifications.every((state) => state === 'satisfied')) {
     return { state: 'satisfied', evidence: expected.map(({ id }) => id) };
   }
@@ -113,7 +116,10 @@ function classifyPackage(
 }
 
 /*** Require exact package name/version/source identity from the reviewed lock graph. */
-function lockedMatches(expected: ApmPlanResolvedPackage, locked: ApmLockedPackageEvidence): boolean {
+function lockedMatches(
+  expected: ApmPlanResolvedPackage,
+  locked: ApmLockedPackageEvidence,
+): boolean {
   return (
     expected.name === locked.name &&
     expected.version === locked.version &&

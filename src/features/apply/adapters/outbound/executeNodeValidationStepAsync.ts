@@ -1,9 +1,9 @@
-import { runProcessWithTimeout } from '@ankhorage/utility/node/process';
 import { resolvePathWithinRoot } from '@ankhorage/utility/node/path';
+import { runProcessWithTimeout } from '@ankhorage/utility/node/process';
 
 import type { ApmApplyJournal, ApmApplyStepExecutionResult } from '../../../../types/apply.js';
-import type { ApmPlanValidationCheck } from '../../../../types/plan-execution.js';
 import type { ApmPlanStep } from '../../../../types/plan.js';
+import type { ApmPlanValidationCheck } from '../../../../types/plan-execution.js';
 import { observeNodeInstallStepAsync } from './observeNodeInstallStepAsync.js';
 
 const DEFAULT_VALIDATION_TIMEOUT_MS = 120_000;
@@ -24,7 +24,9 @@ export async function executeNodeValidationStepAsync(
       }
     : {
         state: 'failed',
-        evidence: results.map(({ id, passed }) => `validation:${id}:${passed ? 'passed' : 'failed'}`),
+        evidence: results.map(
+          ({ id, passed }) => `validation:${id}:${passed ? 'passed' : 'failed'}`,
+        ),
         diagnostics: [],
         failure: {
           code: 'apply.validation-failed',
