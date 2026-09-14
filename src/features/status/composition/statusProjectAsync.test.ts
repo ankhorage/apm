@@ -12,18 +12,26 @@ test('inspects an ordinary JavaScript project without config or lifecycle execut
   const markerPath = path.join(rootPath, 'SHOULD_NOT_EXIST');
   const manifestPath = path.join(rootPath, 'package.json');
   const lockPath = path.join(rootPath, 'package-lock.json');
-  const manifest = `${JSON.stringify({
-    name: 'readonly-fixture',
-    packageManager: 'npm@11.6.0',
-    scripts: {
-      preinstall: `node -e "require('node:fs').writeFileSync('${markerPath}', 'executed')"`,
+  const manifest = `${JSON.stringify(
+    {
+      name: 'readonly-fixture',
+      packageManager: 'npm@11.6.0',
+      scripts: {
+        preinstall: `node -e "require('node:fs').writeFileSync('${markerPath}', 'executed')"`,
+      },
     },
-  }, null, 2)}\n`;
-  const lockfile = `${JSON.stringify({
-    name: 'readonly-fixture',
-    lockfileVersion: 3,
-    packages: { '': { name: 'readonly-fixture' } },
-  }, null, 2)}\n`;
+    null,
+    2,
+  )}\n`;
+  const lockfile = `${JSON.stringify(
+    {
+      name: 'readonly-fixture',
+      lockfileVersion: 3,
+      packages: { '': { name: 'readonly-fixture' } },
+    },
+    null,
+    2,
+  )}\n`;
 
   try {
     await writeFile(manifestPath, manifest);
