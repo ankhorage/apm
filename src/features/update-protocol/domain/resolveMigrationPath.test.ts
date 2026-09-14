@@ -56,7 +56,10 @@ test('treats an explicitly current source state as a legitimate no-op release', 
     descriptor,
     sourceVersion: '3.0.0',
     sourceStateRevision: 'manifest-v3',
-    completedMigrationIds: ['manifest-v2', 'manifest-v3'],
+    completedMigrations: [
+      { id: migrationV2.id, checksum: migrationV2.checksum },
+      { id: migrationV3.id, checksum: migrationV3.checksum },
+    ],
     targetVersion: '3.0.0',
   });
 
@@ -82,7 +85,7 @@ test('uses explicit historical migration evidence instead of replaying old migra
     descriptor,
     sourceVersion: '2.4.0',
     sourceStateRevision: 'manifest-v2',
-    completedMigrationIds: ['manifest-v2'],
+    completedMigrations: [{ id: migrationV2.id, checksum: migrationV2.checksum }],
     targetVersion: '3.0.0',
   });
 
@@ -100,6 +103,21 @@ test('blocks a dependent migration when historical prerequisite evidence is abse
 
   expect(result.supported).toBe(false);
   expect(result.blockers.map((blocker) => blocker.code)).toContain('protocol.migration-path-missing');
+});
+
+test('blocks completed history whose checksum no longer matches the immutable migration', () => {
+  const result = resolveMigrationPath({
+    descriptor,
+    sourceVersion: '2.4.0',
+    sourceStateRevision: 'manifest-v2',
+    completedMigrations: [{ id: migrationV2.id, checksum: 'sha256-wrong' }],
+    targetVersion: '3.0.0',
+  });
+
+  expect(result.supported).toBe(false);
+  expect(result.blockers.map((blocker) => blocker.code)).toContain(
+    'protocol.migration-history-checksum-mismatch',
+  );
 });
 
 test('keeps unsupported historical source state explicit', () => {
