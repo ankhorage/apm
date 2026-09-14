@@ -136,12 +136,55 @@ function migrationProtocolPort(): ApmPlanProtocolPort {
           owner: '@owner/package',
           reason: `Apply reviewed skipped-version migration ${migration.id}.`,
           evidence: [migration.id, migration.checksum],
+          execution: migrationExecution(migration),
         })),
         effects: [],
         findings: [],
         blockers: [],
         diagnostics: [],
       });
+    },
+  };
+}
+
+/*** Freeze exact owner artifact and migration-plan identity into one executable plan step. */
+function migrationExecution(
+  descriptor: ApmUpdateDescriptor['migrations'][number],
+): Extract<
+  ApmPlanProtocolPort extends never ? never : NonNullable<never>,
+  never
+> | {
+  readonly kind: 'migration';
+  readonly descriptor: ApmUpdateDescriptor['migrations'][number];
+  readonly artifact: {
+    readonly role: 'source' | 'target' | 'intermediate';
+    readonly packageName: string;
+    readonly version: string;
+    readonly integrity: string;
+    readonly descriptorDigest: string;
+  };
+  readonly plan: {
+    readonly migrationId: string;
+    readonly mutations: readonly [];
+    readonly evidence: readonly string[];
+    readonly inputFingerprint: string;
+  };
+} {
+  return {
+    kind: 'migration',
+    descriptor,
+    artifact: {
+      role: descriptor.implementation.artifact,
+      packageName: '@owner/package',
+      version: descriptor.implementation.version ?? descriptor.to.packageVersion,
+      integrity: `sha512:${descriptor.to.packageVersion}`,
+      descriptorDigest: 'sha256:owner-update-descriptor',
+    },
+    plan: {
+      migrationId: descriptor.id,
+      mutations: [],
+      evidence: [descriptor.checksum],
+      inputFingerprint: `migration-input:${descriptor.id}`,
     },
   };
 }
