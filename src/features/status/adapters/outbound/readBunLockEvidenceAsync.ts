@@ -32,45 +32,29 @@ export async function readBunLockEvidenceAsync(
     );
   }
 
-  const errors: ParseError[] = [];
-  const parsed = parseJsonc(
-    await readFile(path.join(input.root.rootPath, 'bun.lock'), 'utf8'),
-    errors,
-    { allowTrailingComma: true },
-  ) as unknown;
-  if (errors.length > 0 || !isSupportedBunLock(parsed)) {
+  const parsed = await parseBunTextLockAsync(input.root.rootPath);
+  if (parsed.lock === undefined) {
     return unsupportedBun(
       input.root.id,
       textCandidate.path,
       'APM status supports valid Bun text lock version 2 only.',
-      parsed,
-      errors.length,
+      parsed.raw,
+      parsed.parseErrorCount,
     );
   }
-
-  const lockedPackages = Object.entries(parsed.packages).flatMap(([key, value]) => {
-    const pkg = readBunPackage(key, value, parsed.packages);
-    return pkg === undefined ? [] : [pkg];
-  });
-  return {
-    lockfile: {
-      state: 'supported',
-      path: textCandidate.path,
-      format: 'bun-text-lock',
-      version: '2',
-      evidence: [textCandidate.path, `configVersion ${String(parsed.configVersion ?? 'unknown')}`],
-    },
-    lockedPackages,
-    directResolutions: readBunDirectResolutions(input, lockedPackages),
-    complete: true,
-    diagnostics: [],
-  };
+  return toBunLockEvidence(input, textCandidate.path, parsed.lock);
 }
 
 interface BunLock {
   readonly lockfileVersion: 2;
   readonly configVersion?: unknown;
   readonly packages: Record<string, unknown>;
+}
+
+interface ParsedBunTextLock {
+  readonly lock?: BunLock;
+  readonly raw: unknown;
+  readonly parseErrorCount: number;
 }
 
 interface BunIdentity {
@@ -80,9 +64,54 @@ interface BunIdentity {
   readonly source: ApmLockedPackageEvidence['source'];
 }
 
+/*** Parse Bun text-lock JSONC into a supported v2 shape without executing package code. */
+async function parseBunTextLockAsync(rootPath: string): Promise<ParsedBunTextLock> {
+  const errors: ParseError[] = [];
+  const raw = parseJsonc(
+    await readFile(path.join(rootPath, 'bun.lock'), 'utf8'),
+    errors,
+    { allowTrailingComma: true },
+  ) as unknown;
+  return {
+    ...(errors.length === 0 && isSupportedBunLock(raw) ? { lock: raw } : {}),
+    raw,
+    parseErrorCount: errors.length,
+  };
+}
+
+/*** Convert a validated Bun lock into immutable APM graph evidence. */
+function toBunLockEvidence(
+  input: ApmManagerInspectionInput,
+  lockPath: string,
+  lock: BunLock,
+): ApmManagerLockEvidence {
+  const lockedPackages = Object.entries(lock.packages).flatMap(([key, value]) => {
+    const pkg = readBunPackage(key, value, lock.packages);
+    return pkg === undefined ? [] : [pkg];
+  });
+  return {
+    lockfile: {
+      state: 'supported',
+      path: lockPath,
+      format: 'bun-text-lock',
+      version: '2',
+      evidence: [lockPath, `configVersion ${serializeConfigVersion(lock.configVersion)}`],
+    },
+    lockedPackages,
+    directResolutions: readBunDirectResolutions(input, lockedPackages),
+    complete: true,
+    diagnostics: [],
+  };
+}
+
 /*** Narrow parsed JSONC to the text-lock v2 shape APM understands. */
 function isSupportedBunLock(value: unknown): value is BunLock {
   return isRecord(value) && value.lockfileVersion === 2 && isRecord(value.packages);
+}
+
+/*** Serialize the Bun config version without falling back to Object stringification. */
+function serializeConfigVersion(value: unknown): string {
+  return typeof value === 'string' || typeof value === 'number' ? String(value) : 'unknown';
 }
 
 /*** Convert one Bun package tuple into a stable lock instance with dependency edges. */
