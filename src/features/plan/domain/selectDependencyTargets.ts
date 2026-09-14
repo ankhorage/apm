@@ -26,9 +26,10 @@ export function selectDependencyTargets(
     policy.dependencyUpdates === 'safe'
       ? safeTargets(status).filter((target) => !selectedKeys.has(targetKey(target)))
       : [];
+  const consolidated = consolidateTargets([...explicit.targets, ...safe].sort(compareTargets));
   return {
-    targets: [...explicit.targets, ...safe].sort(compareTargets),
-    blockers: explicit.blockers,
+    targets: consolidated.targets,
+    blockers: [...explicit.blockers, ...consolidated.blockers],
   };
 }
 
@@ -126,6 +127,55 @@ function safeTarget(
       reason: `Newest registry version satisfying ${declaration.range}.`,
     },
   ];
+}
+
+/*** Collapse duplicate instance targets and reject conflicting versions/ranges deterministically. */
+function consolidateTargets(
+  targets: readonly ApmPlanDependencyTarget[],
+): ApmPlanTargetSelectionResult {
+  return targets.reduce<ApmPlanTargetSelectionResult>(
+    (result, target) => appendConsolidatedTarget(result, target),
+    { targets: [], blockers: [] },
+  );
+}
+
+/*** Append one package-instance target unless an equivalent or conflicting target already exists. */
+function appendConsolidatedTarget(
+  result: ApmPlanTargetSelectionResult,
+  target: ApmPlanDependencyTarget,
+): ApmPlanTargetSelectionResult {
+  const existing = result.targets.find((candidate) => targetKey(candidate) === targetKey(target));
+  if (existing === undefined) return { ...result, targets: [...result.targets, target] };
+  if (sameResolvedTarget(existing, target)) return result;
+  return {
+    targets: result.targets,
+    blockers: [...result.blockers, targetConflictBlocker(existing, target)],
+  };
+}
+
+/*** Compare the resolved version/range outcome rather than selection wording. */
+function sameResolvedTarget(
+  left: ApmPlanDependencyTarget,
+  right: ApmPlanDependencyTarget,
+): boolean {
+  return left.targetVersion === right.targetVersion && left.targetRange === right.targetRange;
+}
+
+/*** Report two selections resolving the same package instance to incompatible targets. */
+function targetConflictBlocker(
+  existing: ApmPlanDependencyTarget,
+  target: ApmPlanDependencyTarget,
+): ApmPlanBlocker {
+  return {
+    code: 'plan.selection-conflict',
+    scope: { kind: 'package', id: target.packageId },
+    evidence: [
+      `${existing.targetRange ?? '<lock-only>'} -> ${existing.targetVersion}`,
+      `${target.targetRange ?? '<lock-only>'} -> ${target.targetVersion}`,
+    ],
+    reason: 'Multiple selections resolve the same package instance to different targets.',
+    nextAction: 'Choose one target for the package instance and re-plan.',
+  };
 }
 
 /*** Locate the locked source kind for a status dependency instance. */
