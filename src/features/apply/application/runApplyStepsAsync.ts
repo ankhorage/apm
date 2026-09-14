@@ -1,6 +1,4 @@
 import type {
-  ApmApplyBlocker,
-  ApmApplyFailure,
   ApmApplyJournal,
   ApmApplyPorts,
   ApmApplyStepExecutionResult,
@@ -10,7 +8,10 @@ import type { ApmApplyRunOutcome } from '../../../types/apply-runtime.js';
 import type { ApmPlanStep } from '../../../types/plan.js';
 import type { ApmStatusDiagnostic } from '../../../types/status.js';
 import { applyStepRecoveryPolicy } from '../domain/applyStepRecoveryPolicy.js';
-import { transitionApplyJournal } from '../domain/transitionApplyJournal.js';
+import { createApplyBlocker } from '../domain/createApplyBlocker.js';
+import { createApplyFailure } from '../domain/createApplyFailure.js';
+import { finishApplyOperationAsync } from './finishApplyOperationAsync.js';
+import { persistApplyJournalAsync } from './persistApplyJournalAsync.js';
 
 /*** Execute or resume reviewed plan steps using durable observe-before-repeat recovery semantics. */
 export async function runApplyStepsAsync(
@@ -20,30 +21,35 @@ export async function runApplyStepsAsync(
   return runNextStepAsync(journal, ports, []);
 }
 
-/*** Process the next uncommitted step or finalize the operation when all local work is accounted for. */
+/*** Process the next uncommitted step or finalize after all reviewed work is accounted for. */
 async function runNextStepAsync(
   journal: ApmApplyJournal,
   ports: ApmApplyPorts,
   diagnostics: readonly ApmStatusDiagnostic[],
 ): Promise<ApmApplyRunOutcome> {
   const step = journal.plan.steps.find((candidate) => !isCommitted(journal, candidate.id));
-  if (step === undefined) return completeOperationAsync(journal, ports, diagnostics);
+  if (step === undefined) {
+    return finishApplyOperationAsync({ kind: 'completed', journal, diagnostics }, ports);
+  }
   if (await cancellationRequestedAsync(journal.operationId, ports)) {
-    return cancelOperationAsync(journal, step, ports, diagnostics);
+    return finishApplyOperationAsync({ kind: 'cancelled', journal, step, diagnostics }, ports);
   }
   if (!prerequisitesCommitted(journal, step)) {
-    return recoveryRequiredAsync(
-      journal,
-      step,
-      prerequisiteBlocker(step),
+    return finishApplyOperationAsync(
+      {
+        kind: 'recovery-required',
+        journal,
+        step,
+        blocker: createApplyBlocker({ kind: 'prerequisite-incomplete', step }),
+        diagnostics,
+      },
       ports,
-      diagnostics,
     );
   }
   return processStepAsync(journal, step, ports, diagnostics);
 }
 
-/*** Observe one step before deciding whether to skip, recover, defer or execute it. */
+/*** Observe a step before deciding whether to commit, recover, defer, or execute it. */
 async function processStepAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
@@ -61,48 +67,89 @@ async function processStepAsync(
     return runNextStepAsync(committed, ports, diagnostics);
   }
   if (observation.state === 'conflict') {
-    return recoveryRequiredAsync(
-      journal,
-      step,
-      preconditionBlocker(step, observation),
+    return finishApplyOperationAsync(
+      {
+        kind: 'recovery-required',
+        journal,
+        step,
+        blocker: createApplyBlocker({ kind: 'precondition-changed', step, observation }),
+        diagnostics,
+      },
       ports,
-      diagnostics,
     );
   }
   const record = journal.steps.find(({ stepId }) => stepId === step.id);
   if (record === undefined) {
-    return recoveryRequiredAsync(journal, step, missingJournalStepBlocker(step), ports, diagnostics);
+    return finishApplyOperationAsync(
+      {
+        kind: 'recovery-required',
+        journal,
+        step,
+        blocker: createApplyBlocker({ kind: 'journal-step-missing', step }),
+        diagnostics,
+      },
+      ports,
+    );
   }
   if (effectMayHaveStarted(record.state) && !policy.restartable) {
-    return recoveryRequiredAsync(
-      journal,
-      step,
-      uncertainEffectBlocker(step, observation),
+    return finishApplyOperationAsync(
+      {
+        kind: 'recovery-required',
+        journal,
+        step,
+        blocker: createApplyBlocker({ kind: 'uncertain-effect', step, observation }),
+        diagnostics,
+      },
       ports,
-      diagnostics,
     );
   }
   return executeStepAsync(journal, step, ports, diagnostics);
 }
 
-/*** Persist intent/start markers, invoke the side-effect port, then verify the reviewed postcondition. */
+/*** Persist intent/start markers, invoke the effect port, and verify the reviewed postcondition. */
 async function executeStepAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
   ports: ApmApplyPorts,
   diagnostics: readonly ApmStatusDiagnostic[],
 ): Promise<ApmApplyRunOutcome> {
-  const intended = await persistStepAsync(journal, step, 'intended', ports, [], false, true);
-  const started = await persistStepAsync(intended, step, 'effect-started', ports, [], true, true);
-  const execution = await safeExecuteAsync(started, step, ports);
+  const intended = await persistApplyJournalAsync(
+    {
+      kind: 'step',
+      journal,
+      step,
+      state: 'intended',
+      evidence: [],
+      clearFailure: true,
+      journalStatus: 'running',
+    },
+    ports,
+  );
+  const started = await persistApplyJournalAsync(
+    {
+      kind: 'step',
+      journal: intended,
+      step,
+      state: 'effect-started',
+      evidence: [],
+      incrementAttempts: true,
+      clearFailure: true,
+      journalStatus: 'running',
+    },
+    ports,
+  );
+  const execution = await safeStepEffectAsync('execute', started, step, ports);
   const nextDiagnostics = [...diagnostics, ...execution.diagnostics];
   if (execution.state === 'unknown') {
-    return recoveryRequiredAsync(
-      started,
-      step,
-      unknownExecutionBlocker(step, execution),
+    return finishApplyOperationAsync(
+      {
+        kind: 'recovery-required',
+        journal: started,
+        step,
+        blocker: createApplyBlocker({ kind: 'unknown-execution', step, execution }),
+        diagnostics: nextDiagnostics,
+      },
       ports,
-      nextDiagnostics,
     );
   }
   if (execution.state === 'failed') {
@@ -111,7 +158,7 @@ async function executeStepAsync(
   return verifyExecutedStepAsync(started, step, execution, ports, nextDiagnostics);
 }
 
-/*** Observe the exact expected output after a reported successful effect before committing it. */
+/*** Verify actual output after a reported successful effect before committing the step. */
 async function verifyExecutedStepAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
@@ -121,12 +168,15 @@ async function verifyExecutedStepAsync(
 ): Promise<ApmApplyRunOutcome> {
   const observation = await ports.step.observeAsync({ journal, step });
   if (observation.state !== 'satisfied') {
-    return recoveryRequiredAsync(
-      journal,
-      step,
-      outputMismatchBlocker(step, execution, observation),
+    return finishApplyOperationAsync(
+      {
+        kind: 'recovery-required',
+        journal,
+        step,
+        blocker: createApplyBlocker({ kind: 'output-mismatch', step, execution, observation }),
+        diagnostics,
+      },
       ports,
-      diagnostics,
     );
   }
   const committed = await commitObservedStepAsync(
@@ -138,7 +188,7 @@ async function verifyExecutedStepAsync(
   return runNextStepAsync(committed, ports, diagnostics);
 }
 
-/*** Handle a known failed effect, rolling back only when the reviewed recovery policy permits it. */
+/*** Roll back only explicitly reversible local effects after a known execution failure. */
 async function knownFailureAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
@@ -146,213 +196,105 @@ async function knownFailureAsync(
   ports: ApmApplyPorts,
   diagnostics: readonly ApmStatusDiagnostic[],
 ): Promise<ApmApplyRunOutcome> {
-  const policy = applyStepRecoveryPolicy(step);
-  if (!policy.reversible) {
-    return failedOperationAsync(journal, step, executionFailure(step, execution), ports, diagnostics);
+  const failure = createApplyFailure({ kind: 'known-execution', step, execution });
+  if (!applyStepRecoveryPolicy(step).reversible) {
+    return finishApplyOperationAsync({ kind: 'failed', journal, step, failure, diagnostics }, ports);
   }
-  const rollback = await safeRollbackAsync(journal, step, ports);
+  const rollback = await safeStepEffectAsync('rollback', journal, step, ports);
   const nextDiagnostics = [...diagnostics, ...rollback.diagnostics];
   if (rollback.state === 'completed') {
-    return failedOperationAsync(
-      journal,
-      step,
-      executionFailure(step, execution),
+    return finishApplyOperationAsync(
+      { kind: 'failed', journal, step, failure, diagnostics: nextDiagnostics },
       ports,
-      nextDiagnostics,
     );
   }
-  return recoveryRequiredAsync(
-    journal,
-    step,
-    rollbackFailureBlocker(step, rollback),
+  return finishApplyOperationAsync(
+    {
+      kind: 'recovery-required',
+      journal,
+      step,
+      blocker: createApplyBlocker({ kind: 'rollback-failed', step, execution: rollback }),
+      diagnostics: nextDiagnostics,
+    },
     ports,
-    nextDiagnostics,
   );
 }
 
-/*** Persist effect-observed and committed separately so crash recovery can distinguish them. */
+/*** Invoke execute/rollback while preserving ambiguity when an adapter throws unexpectedly. */
+async function safeStepEffectAsync(
+  action: 'execute' | 'rollback',
+  journal: ApmApplyJournal,
+  step: ApmPlanStep,
+  ports: ApmApplyPorts,
+): Promise<ApmApplyStepExecutionResult> {
+  try {
+    return action === 'execute'
+      ? await ports.step.executeAsync({ journal, step })
+      : await ports.step.rollbackAsync({ journal, step });
+  } catch (error) {
+    return {
+      state: 'unknown',
+      evidence: [error instanceof Error ? error.message : `unknown ${action} failure`],
+      diagnostics: [],
+      failure: createApplyFailure({ kind: 'execution-exception', error }),
+    };
+  }
+}
+
+/*** Persist observed and committed separately so a crash between them remains recoverable. */
 async function commitObservedStepAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
   observation: ApmApplyStepObservation,
   ports: ApmApplyPorts,
 ): Promise<ApmApplyJournal> {
-  const observed = await persistStepAsync(
-    journal,
-    step,
-    'effect-observed',
+  const observed = await persistApplyJournalAsync(
+    {
+      kind: 'step',
+      journal,
+      step,
+      state: 'effect-observed',
+      evidence: observation.evidence,
+      clearFailure: true,
+      journalStatus: 'running',
+    },
     ports,
-    observation.evidence,
-    false,
-    true,
   );
-  return persistStepAsync(observed, step, 'committed', ports, observation.evidence, false, true);
+  return persistApplyJournalAsync(
+    {
+      kind: 'step',
+      journal: observed,
+      step,
+      state: 'committed',
+      evidence: observation.evidence,
+      clearFailure: true,
+      journalStatus: 'running',
+    },
+    ports,
+  );
 }
 
-/*** Mark a non-incidental follow-up as accounted for without pretending APM executed it. */
+/*** Account for shipment/restart follow-up without pretending APM executed the external action. */
 async function commitDeferredStepAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
   ports: ApmApplyPorts,
 ): Promise<ApmApplyJournal> {
-  return persistStepAsync(
-    journal,
-    step,
-    'committed',
+  return persistApplyJournalAsync(
+    {
+      kind: 'step',
+      journal,
+      step,
+      state: 'committed',
+      evidence: [...step.evidence, `deferred:${step.execution.kind}`],
+      clearFailure: true,
+      journalStatus: 'running',
+    },
     ports,
-    [...step.evidence, `deferred:${step.execution.kind}`],
-    false,
-    true,
   );
 }
 
-/*** Persist one immutable journal transition and publish progress after durable storage succeeds. */
-async function persistStepAsync(
-  journal: ApmApplyJournal,
-  step: ApmPlanStep,
-  state: ApmApplyJournal['steps'][number]['state'],
-  ports: ApmApplyPorts,
-  evidence: readonly string[],
-  incrementAttempts: boolean,
-  clearFailure: boolean,
-): Promise<ApmApplyJournal> {
-  const next = transitionApplyJournal({
-    journal,
-    stepId: step.id,
-    state,
-    now: ports.clock.nowIso(),
-    evidence,
-    incrementAttempts,
-    clearFailure,
-    clearOperationFailure: clearFailure,
-    journalStatus: 'running',
-  });
-  await ports.journal.writeAsync(next);
-  await publishProgressAsync(next, step.id, state, ports);
-  return next;
-}
-
-/*** Convert unexpected adapter throws to an unknown effect instead of assuming no side effect happened. */
-async function safeExecuteAsync(
-  journal: ApmApplyJournal,
-  step: ApmPlanStep,
-  ports: ApmApplyPorts,
-): Promise<ApmApplyStepExecutionResult> {
-  try {
-    return await ports.step.executeAsync({ journal, step });
-  } catch (error) {
-    return {
-      state: 'unknown',
-      evidence: [error instanceof Error ? error.message : 'unknown step execution failure'],
-      diagnostics: [],
-      failure: executionExceptionFailure(error),
-    };
-  }
-}
-
-/*** Convert unexpected rollback throws to unknown recovery state instead of claiming rollback success. */
-async function safeRollbackAsync(
-  journal: ApmApplyJournal,
-  step: ApmPlanStep,
-  ports: ApmApplyPorts,
-): Promise<ApmApplyStepExecutionResult> {
-  try {
-    return await ports.step.rollbackAsync({ journal, step });
-  } catch (error) {
-    return {
-      state: 'unknown',
-      evidence: [error instanceof Error ? error.message : 'unknown rollback failure'],
-      diagnostics: [],
-      failure: executionExceptionFailure(error),
-    };
-  }
-}
-
-/*** Finalize a successful operation only after every reviewed/deferred step is committed. */
-async function completeOperationAsync(
-  journal: ApmApplyJournal,
-  ports: ApmApplyPorts,
-  diagnostics: readonly ApmStatusDiagnostic[],
-): Promise<ApmApplyRunOutcome> {
-  const completed = { ...journal, status: 'completed' as const, updatedAt: ports.clock.nowIso() };
-  await ports.journal.writeAsync(completed);
-  await publishProgressAsync(completed, undefined, 'completed', ports);
-  return { journal: completed, status: 'completed', blockers: [], diagnostics };
-}
-
-/*** Persist deterministic cancellation before the next side effect begins. */
-async function cancelOperationAsync(
-  journal: ApmApplyJournal,
-  step: ApmPlanStep,
-  ports: ApmApplyPorts,
-  diagnostics: readonly ApmStatusDiagnostic[],
-): Promise<ApmApplyRunOutcome> {
-  const failure = cancellationFailure(step);
-  const cancelled = transitionApplyJournal({
-    journal,
-    stepId: step.id,
-    state: 'cancelled',
-    now: ports.clock.nowIso(),
-    failure,
-    journalStatus: 'cancelled',
-    operationFailure: failure,
-  });
-  await ports.journal.writeAsync(cancelled);
-  await publishProgressAsync(cancelled, step.id, 'cancelled', ports);
-  return {
-    journal: cancelled,
-    status: 'cancelled',
-    blockers: [cancellationBlocker(step)],
-    diagnostics,
-  };
-}
-
-/*** Persist a known failed step without claiming unknown side effects or unsafe rollback. */
-async function failedOperationAsync(
-  journal: ApmApplyJournal,
-  step: ApmPlanStep,
-  failure: ApmApplyFailure,
-  ports: ApmApplyPorts,
-  diagnostics: readonly ApmStatusDiagnostic[],
-): Promise<ApmApplyRunOutcome> {
-  const failed = transitionApplyJournal({
-    journal,
-    stepId: step.id,
-    state: 'failed',
-    now: ports.clock.nowIso(),
-    failure,
-    journalStatus: 'failed',
-    operationFailure: failure,
-  });
-  await ports.journal.writeAsync(failed);
-  await publishProgressAsync(failed, step.id, 'failed', ports);
-  return { journal: failed, status: 'failed', blockers: [stepFailureBlocker(step, failure)], diagnostics };
-}
-
-/*** Persist an ambiguous effect as recovery-required rather than retrying or rolling back optimistically. */
-async function recoveryRequiredAsync(
-  journal: ApmApplyJournal,
-  step: ApmPlanStep,
-  blocker: ApmApplyBlocker,
-  ports: ApmApplyPorts,
-  diagnostics: readonly ApmStatusDiagnostic[],
-): Promise<ApmApplyRunOutcome> {
-  const failure = blockerFailure(blocker);
-  const recovery = transitionApplyJournal({
-    journal,
-    stepId: step.id,
-    state: 'recovery-required',
-    now: ports.clock.nowIso(),
-    failure,
-    journalStatus: 'recovery-required',
-    operationFailure: failure,
-  });
-  await ports.journal.writeAsync(recovery);
-  await publishProgressAsync(recovery, step.id, 'recovery-required', ports);
-  return { journal: recovery, status: 'recovery-required', blockers: [blocker], diagnostics };
-}
-
-/*** Check cancellation only at safe step boundaries; adapters may implement their own bounded process aborts. */
+/*** Check cancellation only at safe step boundaries. */
 async function cancellationRequestedAsync(
   operationId: string,
   ports: ApmApplyPorts,
@@ -362,191 +304,25 @@ async function cancellationRequestedAsync(
     : ports.cancellation.isCancellationRequestedAsync(operationId);
 }
 
-/*** Publish optional progress without making UI/transport delivery part of apply correctness. */
-async function publishProgressAsync(
-  journal: ApmApplyJournal,
-  stepId: string | undefined,
-  state: ApmApplyJournal['status'] | ApmApplyJournal['steps'][number]['state'],
-  ports: ApmApplyPorts,
-): Promise<void> {
-  if (ports.progress === undefined) return;
-  await ports.progress.publishAsync({
-    operationId: journal.operationId,
-    ...(stepId === undefined ? {} : { stepId }),
-    state,
-    message: stepId === undefined ? `Apply ${state}.` : `${stepId}: ${state}`,
-  });
-}
-
-/*** Test whether the durable journal already committed one reviewed step. */
+/*** Test whether one reviewed step is durably committed. */
 function isCommitted(journal: ApmApplyJournal, stepId: string): boolean {
   return journal.steps.some((step) => step.stepId === stepId && step.state === 'committed');
 }
 
-/*** Require every explicit prerequisite to be durably committed before the dependent step. */
+/*** Require all reviewed prerequisites to be durably committed before a dependent step. */
 function prerequisitesCommitted(journal: ApmApplyJournal, step: ApmPlanStep): boolean {
   return step.prerequisites.every((stepId) => isCommitted(journal, stepId));
 }
 
-/*** Identify journal states where an effect may already have escaped before a crash or retry. */
+/*** Identify journal states where a side effect may already have escaped before interruption. */
 function effectMayHaveStarted(state: ApmApplyJournal['steps'][number]['state']): boolean {
-  return ['effect-started', 'effect-observed', 'failed', 'recovery-required'].includes(state);
-}
-
-/*** Build a stable failure payload for unexpected adapter exceptions. */
-function executionExceptionFailure(error: unknown): ApmApplyFailure {
-  return {
-    code: 'apply.execution-exception',
-    reason: 'Execution adapter failed without proving whether the reviewed effect completed.',
-    evidence: [error instanceof Error ? error.message : 'unknown adapter failure'],
-    nextAction: 'Resume the operation so APM can inspect the reviewed postcondition before retrying.',
-  };
-}
-
-/*** Prefer adapter failure evidence while retaining a deterministic fallback for known failed effects. */
-function executionFailure(
-  step: ApmPlanStep,
-  execution: ApmApplyStepExecutionResult,
-): ApmApplyFailure {
-  return execution.failure ?? {
-    code: 'apply.step-failed',
-    reason: `Reviewed step ${step.id} reported a known execution failure.`,
-    evidence: execution.evidence,
-    nextAction: 'Inspect the recorded evidence, correct the cause, then resume when the step is restartable.',
-  };
-}
-
-/*** Convert one blocker to the durable failure shape stored in the journal. */
-function blockerFailure(blocker: ApmApplyBlocker): ApmApplyFailure {
-  return {
-    code: blocker.code,
-    reason: blocker.reason,
-    evidence: blocker.evidence,
-    ...(blocker.nextAction === undefined ? {} : { nextAction: blocker.nextAction }),
-  };
-}
-
-/*** Build a deterministic cancellation failure for journal persistence. */
-function cancellationFailure(step: ApmPlanStep): ApmApplyFailure {
-  return {
-    code: 'apply.cancelled',
-    reason: `Apply was cancelled before reviewed step ${step.id} began.`,
-    evidence: [step.id],
-    nextAction: 'Resume the same operation to continue from durable journal state.',
-  };
-}
-
-/*** Explain a cancelled step to machine-readable callers. */
-function cancellationBlocker(step: ApmPlanStep): ApmApplyBlocker {
-  return {
-    code: 'apply.cancelled',
-    scope: { kind: 'step', id: step.id },
-    evidence: [step.id],
-    reason: 'Apply was cancelled at a safe step boundary.',
-    nextAction: 'Resume the same operation to continue.',
-  };
-}
-
-/*** Explain a corrupt/out-of-order journal that lacks committed prerequisites. */
-function prerequisiteBlocker(step: ApmPlanStep): ApmApplyBlocker {
-  return {
-    code: 'apply.prerequisite-incomplete',
-    scope: { kind: 'step', id: step.id },
-    evidence: step.prerequisites,
-    reason: 'A reviewed step prerequisite is not durably committed.',
-    nextAction: 'Resume from the earliest incomplete prerequisite or inspect the operation journal.',
-  };
-}
-
-/*** Explain project drift detected before a reviewed step writes its owned scope. */
-function preconditionBlocker(
-  step: ApmPlanStep,
-  observation: ApmApplyStepObservation,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.precondition-changed',
-    scope: { kind: 'step', id: step.id },
-    evidence: observation.evidence,
-    reason: observation.reason ?? 'Reviewed step preconditions no longer match the current project state.',
-    nextAction: 'Preserve the external edits and create a new plan or reconcile them before resuming.',
-  };
-}
-
-/*** Explain a plan/journal mismatch where one reviewed step has no durable record. */
-function missingJournalStepBlocker(step: ApmPlanStep): ApmApplyBlocker {
-  return {
-    code: 'apply.journal-invalid',
-    scope: { kind: 'step', id: step.id },
-    evidence: [step.id],
-    reason: 'Durable operation journal does not contain the reviewed plan step.',
-    nextAction: 'Do not mutate the project; inspect or restore the operation journal.',
-  };
-}
-
-/*** Explain why an uncertain non-restartable effect must stop for explicit recovery. */
-function uncertainEffectBlocker(
-  step: ApmPlanStep,
-  observation: ApmApplyStepObservation,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.recovery-required',
-    scope: { kind: 'step', id: step.id },
-    evidence: observation.evidence,
-    reason: `Reviewed step ${step.id} may have started and is not safely restartable.`,
-    nextAction: 'Inspect the step postcondition and follow package-owned recovery guidance before resuming.',
-  };
-}
-
-/*** Explain an adapter result whose completion cannot be proven after execution. */
-function unknownExecutionBlocker(
-  step: ApmPlanStep,
-  execution: ApmApplyStepExecutionResult,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.recovery-required',
-    scope: { kind: 'step', id: step.id },
-    evidence: execution.evidence,
-    reason: execution.failure?.reason ?? 'Execution result is ambiguous and cannot be committed safely.',
-    nextAction: execution.failure?.nextAction ?? 'Resume to inspect the reviewed postcondition before retrying.',
-  };
-}
-
-/*** Explain a successful adapter return whose actual project state does not match the reviewed output. */
-function outputMismatchBlocker(
-  step: ApmPlanStep,
-  execution: ApmApplyStepExecutionResult,
-  observation: ApmApplyStepObservation,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.output-mismatch',
-    scope: { kind: 'step', id: step.id },
-    evidence: [...execution.evidence, ...observation.evidence],
-    reason: observation.reason ?? 'Actual step output does not match the reviewed plan postcondition.',
-    nextAction: 'Do not continue; inspect the changed scope and create or resume recovery from this operation.',
-  };
-}
-
-/*** Explain an automatic rollback that did not prove restoration of the reversible local step. */
-function rollbackFailureBlocker(
-  step: ApmPlanStep,
-  rollback: ApmApplyStepExecutionResult,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.recovery-required',
-    scope: { kind: 'step', id: step.id },
-    evidence: rollback.evidence,
-    reason: 'Automatic rollback could not prove restoration of the reviewed local pre-state.',
-    nextAction: 'Use the operation snapshots and recorded evidence for explicit recovery.',
-  };
-}
-
-/*** Explain one known failed effect after any permitted local rollback completed. */
-function stepFailureBlocker(step: ApmPlanStep, failure: ApmApplyFailure): ApmApplyBlocker {
-  return {
-    code: 'apply.step-failed',
-    scope: { kind: 'step', id: step.id },
-    evidence: failure.evidence,
-    reason: failure.reason,
-    ...(failure.nextAction === undefined ? {} : { nextAction: failure.nextAction }),
-  };
+  switch (state) {
+    case 'effect-started':
+    case 'effect-observed':
+    case 'failed':
+    case 'recovery-required':
+      return true;
+    default:
+      return false;
+  }
 }
