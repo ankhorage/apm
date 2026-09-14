@@ -1,3 +1,5 @@
+import { ensureTrailingSlash } from '@ankhorage/utility/url';
+
 import type { ApmRegistryConfig } from '../types/status-registry.js';
 
 /*** Build one npm-compatible package metadata request using shared scoped-registry and credential rules. */
@@ -32,9 +34,4 @@ function buildAuthHeaders(url: URL, config: ApmRegistryConfig): Headers {
   if (token !== undefined && token !== '') headers.set('authorization', `Bearer ${token}`);
   else if (basic !== undefined && basic !== '') headers.set('authorization', `Basic ${basic}`);
   return headers;
-}
-
-/*** Normalize registry base URLs before package URL resolution. */
-function ensureTrailingSlash(value: string): string {
-  return value.endsWith('/') ? value : `${value}/`;
 }

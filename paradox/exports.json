@@ -801,11 +801,16 @@
     "modulePath": "src/types/apply-project.ts",
     "sourceLocation": {
       "filePath": "src/types/apply-project.ts",
-      "line": 3,
+      "line": 4,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmApplyCancellationPort", "ApmApplyProgressPort", "ApmApplyStepPort"],
+    "relatedSymbols": [
+      "ApmApplyCancellationPort",
+      "ApmApplyProgressPort",
+      "ApmApplyStepPort",
+      "ApmProjectStatusPort"
+    ],
     "signatures": [],
     "members": [
       {
@@ -826,6 +831,13 @@
         "name": "progress",
         "kind": "property",
         "type": "ApmApplyProgressPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmProjectStatusPort",
         "required": false,
         "description": null
       }
@@ -1526,6 +1538,78 @@
         "description": null
       }
     ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionArtifactIdentityRequest",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/extension-artifact.ts",
+    "sourceLocation": {
+      "filePath": "src/types/extension-artifact.ts",
+      "line": 4,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationArtifactRole"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "descriptorDigest",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageName",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "role",
+        "kind": "property",
+        "type": "ApmMigrationArtifactRole",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionArtifactIdentityResolution",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/extension-artifact.ts",
+    "sourceLocation": {
+      "filePath": "src/types/extension-artifact.ts",
+      "line": 12,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
     "structuredRows": []
   },
   {
@@ -3325,7 +3409,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 121,
+      "line": 122,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3386,7 +3470,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 84,
+      "line": 85,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3440,7 +3524,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 56,
+      "line": 57,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3458,7 +3542,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 78,
+      "line": 79,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3498,7 +3582,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 92,
+      "line": 93,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3601,7 +3685,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 11,
+      "line": 12,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3619,7 +3703,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 197,
+      "line": 198,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3645,7 +3729,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 179,
+      "line": 180,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3685,7 +3769,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 112,
+      "line": 113,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3746,7 +3830,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 185,
+      "line": 186,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3786,7 +3870,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 201,
+      "line": 202,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3826,7 +3910,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 35,
+      "line": 36,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3859,7 +3943,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 13,
+      "line": 14,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3906,7 +3990,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 48,
+      "line": 49,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3960,7 +4044,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 40,
+      "line": 41,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4014,7 +4098,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 253,
+      "line": 255,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4054,7 +4138,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 191,
+      "line": 192,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4094,17 +4178,24 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 249,
+      "line": 250,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmPlanProtocolPort"],
+    "relatedSymbols": ["ApmPlanProtocolPort", "ApmProjectStatusPort"],
     "signatures": [],
     "members": [
       {
         "name": "protocol",
         "kind": "property",
         "type": "ApmPlanProtocolPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmProjectStatusPort",
         "required": false,
         "description": null
       }
@@ -4120,7 +4211,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 245,
+      "line": 246,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4146,7 +4237,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 225,
+      "line": 226,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4206,7 +4297,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 233,
+      "line": 234,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4297,7 +4388,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 153,
+      "line": 154,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4344,7 +4435,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 175,
+      "line": 176,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4370,7 +4461,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 141,
+      "line": 142,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4452,7 +4543,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 160,
+      "line": 161,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4563,7 +4654,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 130,
+      "line": 131,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4638,7 +4729,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 259,
+      "line": 261,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4789,7 +4880,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 207,
+      "line": 208,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4882,7 +4973,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 20,
+      "line": 21,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4900,7 +4991,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 107,
+      "line": 108,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5370,6 +5461,32 @@
     "structuredRows": []
   },
   {
+    "name": "ApmProjectStatusPort",
+    "description": "Reusable project-status boundary shared by planning, apply validation, and verification composition.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status-project.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status-project.ts",
+      "line": 4,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectStatusAsync",
+        "kind": "property",
+        "type": "(input: ApmStatusInput) => Promise<ApmStatusResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmRegistryAvailabilityOptions",
     "description": null,
     "isReadme": false,
@@ -5378,7 +5495,7 @@
     "modulePath": "src/types/registry.ts",
     "sourceLocation": {
       "filePath": "src/types/registry.ts",
-      "line": 6,
+      "line": 12,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5446,6 +5563,46 @@
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmRegistryRequestOptions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/registry.ts",
+    "sourceLocation": {
+      "filePath": "src/types/registry.ts",
+      "line": 6,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmRegistryFetch"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "env",
+        "kind": "property",
+        "type": "Readonly<Record<string, string | undefined>>",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "fetchFn",
+        "kind": "property",
+        "type": "ApmRegistryFetch",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "home",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
     "structuredRows": []
   },
   {
@@ -6177,6 +6334,32 @@
         "kind": "property",
         "type": "(rootPath: string) => Promise<ProjectInspection>",
         "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusProjectOptions",
+    "description": "Optional owner-specific status evidence composed around the default Node status adapters.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status-project.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status-project.ts",
+      "line": 9,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusExtensionEvidencePort"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "extensions",
+        "kind": "property",
+        "type": "ApmStatusExtensionEvidencePort",
+        "required": false,
         "description": null
       }
     ],
@@ -7044,17 +7227,24 @@
     "modulePath": "src/types/verify-project.ts",
     "sourceLocation": {
       "filePath": "src/types/verify-project.ts",
-      "line": 3,
+      "line": 4,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmVerifyStepPort"],
+    "relatedSymbols": ["ApmProjectStatusPort", "ApmVerifyStepPort"],
     "signatures": [],
     "members": [
       {
         "name": "ownerStep",
         "kind": "property",
         "type": "ApmVerifyStepPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmProjectStatusPort",
         "required": false,
         "description": null
       }
@@ -7544,6 +7734,48 @@
     "structuredRows": []
   },
   {
+    "name": "resolveNpmExtensionArtifactIdentityAsync",
+    "description": "Resolve one exact npm-compatible package artifact to immutable protocol identity using registry dist integrity.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+      "line": 14,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionArtifactIdentityRequest",
+      "ApmExtensionArtifactIdentityResolution",
+      "ApmRegistryRequestOptions"
+    ],
+    "signatures": [
+      {
+        "label": "(input: ApmExtensionArtifactIdentityRequest, options?: ApmRegistryRequestOptions) => Promise<ApmExtensionArtifactIdentityResolution>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmExtensionArtifactIdentityRequest",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "options",
+            "type": "ApmRegistryRequestOptions",
+            "required": false,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmExtensionArtifactIdentityResolution>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "statusAsync",
     "description": "Build evidence-based, serializable APM status without mutating the inspected project.\n\nThe use case separates Project Detector evidence, package-manager inventory, registry\navailability, and optional package-owned projection/migration evidence behind outbound ports.\nMissing or partial evidence makes currency `unknown`; it never becomes a green current result.\nHosts can call this boundary without a terminal and can test it with deterministic fake ports.",
     "isReadme": true,
@@ -7583,26 +7815,32 @@
   },
   {
     "name": "statusProjectAsync",
-    "description": "Compose APM status with published Project Detector, local package-manager, and registry edges.",
+    "description": "Compose APM status with published Project Detector, local package-manager, registry, and optional owner-extension evidence.",
     "isReadme": false,
     "examples": [],
     "kind": "function",
     "modulePath": "src/features/status/composition/statusProjectAsync.ts",
     "sourceLocation": {
       "filePath": "src/features/status/composition/statusProjectAsync.ts",
-      "line": 10,
+      "line": 11,
       "column": 1
     },
     "exportPaths": ["src/nodeApm.ts"],
-    "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusProjectOptions", "ApmStatusResult"],
     "signatures": [
       {
-        "label": "(input: ApmStatusInput) => Promise<ApmStatusResult>",
+        "label": "(input: ApmStatusInput, options?: ApmStatusProjectOptions) => Promise<ApmStatusResult>",
         "parameters": [
           {
             "name": "input",
             "type": "ApmStatusInput",
             "required": true,
+            "description": null
+          },
+          {
+            "name": "options",
+            "type": "ApmStatusProjectOptions",
+            "required": false,
             "description": null
           }
         ],

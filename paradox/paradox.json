@@ -137,6 +137,8 @@
         "ApmDependencyInventory",
         "ApmDependencyKind",
         "ApmExtensionArtifactIdentity",
+        "ApmExtensionArtifactIdentityRequest",
+        "ApmExtensionArtifactIdentityResolution",
         "ApmExtensionEvidence",
         "ApmExtensionExecutionContext",
         "ApmExtensionInvocationResult",
@@ -219,8 +221,10 @@
         "ApmProjectionState",
         "ApmProjectMutation",
         "ApmProjectScope",
+        "ApmProjectStatusPort",
         "ApmRegistryAvailabilityOptions",
         "ApmRegistryFetch",
+        "ApmRegistryRequestOptions",
         "ApmReleaseEffect",
         "ApmReleaseRequirementEffect",
         "ApmReleaseRequirementEffectKind",
@@ -240,6 +244,7 @@
         "ApmStatusLanguage",
         "ApmStatusPorts",
         "ApmStatusProjectInspectionPort",
+        "ApmStatusProjectOptions",
         "ApmStatusProjectSummary",
         "ApmStatusResult",
         "ApmSupportedSourceHistory",
@@ -628,9 +633,9 @@
         "src/features/apply/application/applyAsync.ts",
         "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
         "src/features/plan/domain/validateSavedPlanAsync.ts",
-        "src/features/status/composition/statusProjectAsync.ts",
         "src/types/apply-project.ts",
-        "src/types/apply.ts"
+        "src/types/apply.ts",
+        "src/utils/inspectProjectStatusAsync.ts"
       ],
       "exports": ["applyProjectAsync"]
     },
@@ -934,8 +939,8 @@
         "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
         "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
         "src/features/plan/application/planAsync.ts",
-        "src/features/status/composition/statusProjectAsync.ts",
-        "src/types/plan.ts"
+        "src/types/plan.ts",
+        "src/utils/inspectProjectStatusAsync.ts"
       ],
       "exports": ["planProjectAsync"]
     },
@@ -1083,10 +1088,10 @@
       "isEntrypoint": false,
       "dependencies": [
         "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
         "src/types/registry.ts",
         "src/types/status-registry.ts",
-        "src/types/status.ts"
+        "src/types/status.ts",
+        "src/utils/readRegistryConfigAsync.ts"
       ],
       "exports": ["createNpmRegistryAvailabilityPort"]
     },
@@ -1205,7 +1210,8 @@
       "dependencies": [
         "src/types/registry.ts",
         "src/types/status-registry.ts",
-        "src/types/status.ts"
+        "src/types/status.ts",
+        "src/utils/createRegistryPackageRequest.ts"
       ],
       "exports": ["queryRegistryPackageAsync"]
     },
@@ -1234,12 +1240,6 @@
         "src/types/status.ts"
       ],
       "exports": ["readPnpmLockEvidenceAsync"]
-    },
-    {
-      "path": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-      "isEntrypoint": false,
-      "dependencies": ["src/types/status-registry.ts"],
-      "exports": ["readRegistryConfigAsync"]
     },
     {
       "path": "src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts",
@@ -1273,6 +1273,18 @@
       "exports": ["statusAsync"]
     },
     {
+      "path": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/composition/applyProjectAsync.ts",
+        "src/features/plan/composition/planProjectAsync.ts",
+        "src/features/verify/composition/verifyProjectAsync.ts",
+        "src/types/status-project.ts",
+        "src/types/status.ts"
+      ],
+      "exports": []
+    },
+    {
       "path": "src/features/status/composition/statusProjectAsync.test.ts",
       "isEntrypoint": false,
       "dependencies": ["src/features/status/composition/statusProjectAsync.ts"],
@@ -1286,6 +1298,7 @@
         "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
         "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.ts",
         "src/features/status/application/statusAsync.ts",
+        "src/types/status-project.ts",
         "src/types/status.ts"
       ],
       "exports": ["statusProjectAsync"]
@@ -1352,6 +1365,27 @@
       "isEntrypoint": false,
       "dependencies": ["src/types/status.ts"],
       "exports": ["readInstalledPackageVersionAsync"]
+    },
+    {
+      "path": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "src/types/extension-artifact.ts",
+        "src/types/registry.ts"
+      ],
+      "exports": []
+    },
+    {
+      "path": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/types/extension-artifact.ts",
+        "src/types/registry.ts",
+        "src/utils/createRegistryPackageRequest.ts",
+        "src/utils/readRegistryConfigAsync.ts"
+      ],
+      "exports": ["resolveNpmExtensionArtifactIdentityAsync"]
     },
     {
       "path": "src/features/update-protocol/application/executeMigrationExtensionAsync.ts",
@@ -1725,11 +1759,11 @@
       "dependencies": [
         "src/features/apply/adapters/outbound/createNodeApplyJournalPort.ts",
         "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
-        "src/features/status/composition/statusProjectAsync.ts",
         "src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts",
         "src/features/verify/application/verifyAsync.ts",
         "src/types/verify-project.ts",
-        "src/types/verify.ts"
+        "src/types/verify.ts",
+        "src/utils/inspectProjectStatusAsync.ts"
       ],
       "exports": ["verifyProjectAsync"]
     },
@@ -1776,6 +1810,8 @@
         "ApmDependencyInventory",
         "ApmDependencyKind",
         "ApmExtensionArtifactIdentity",
+        "ApmExtensionArtifactIdentityRequest",
+        "ApmExtensionArtifactIdentityResolution",
         "ApmExtensionEvidence",
         "ApmExtensionExecutionContext",
         "ApmExtensionInvocationResult",
@@ -1858,8 +1894,10 @@
         "ApmProjectionState",
         "ApmProjectMutation",
         "ApmProjectScope",
+        "ApmProjectStatusPort",
         "ApmRegistryAvailabilityOptions",
         "ApmRegistryFetch",
+        "ApmRegistryRequestOptions",
         "ApmReleaseEffect",
         "ApmReleaseRequirementEffect",
         "ApmReleaseRequirementEffectKind",
@@ -1879,6 +1917,7 @@
         "ApmStatusLanguage",
         "ApmStatusPorts",
         "ApmStatusProjectInspectionPort",
+        "ApmStatusProjectOptions",
         "ApmStatusProjectSummary",
         "ApmStatusResult",
         "ApmSupportedSourceHistory",
@@ -1912,6 +1951,7 @@
         "planAsync",
         "planProjectAsync",
         "resolveMigrationPath",
+        "resolveNpmExtensionArtifactIdentityAsync",
         "statusAsync",
         "statusProjectAsync",
         "validatePackageUpdateMetadata",
@@ -1926,7 +1966,7 @@
     {
       "path": "src/types/apply-project.ts",
       "isEntrypoint": false,
-      "dependencies": ["src/types/apply.ts"],
+      "dependencies": ["src/types/apply.ts", "src/types/status-project.ts"],
       "exports": ["ApmApplyProjectOptions"]
     },
     {
@@ -1982,6 +2022,12 @@
       "exports": ["ApmCliCommand", "ApmCliContext"]
     },
     {
+      "path": "src/types/extension-artifact.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/update-extension.ts", "src/types/update-protocol.ts"],
+      "exports": ["ApmExtensionArtifactIdentityRequest", "ApmExtensionArtifactIdentityResolution"]
+    },
+    {
       "path": "src/types/package-manager-command.ts",
       "isEntrypoint": false,
       "dependencies": [],
@@ -2017,6 +2063,7 @@
       "isEntrypoint": false,
       "dependencies": [
         "src/types/plan-execution.ts",
+        "src/types/status-project.ts",
         "src/types/status.ts",
         "src/types/update-protocol.ts"
       ],
@@ -2094,6 +2141,8 @@
         "ApmDependencyInventory",
         "ApmDependencyKind",
         "ApmExtensionArtifactIdentity",
+        "ApmExtensionArtifactIdentityRequest",
+        "ApmExtensionArtifactIdentityResolution",
         "ApmExtensionEvidence",
         "ApmExtensionExecutionContext",
         "ApmExtensionInvocationResult",
@@ -2176,8 +2225,10 @@
         "ApmProjectionState",
         "ApmProjectMutation",
         "ApmProjectScope",
+        "ApmProjectStatusPort",
         "ApmRegistryAvailabilityOptions",
         "ApmRegistryFetch",
+        "ApmRegistryRequestOptions",
         "ApmReleaseEffect",
         "ApmReleaseRequirementEffect",
         "ApmReleaseRequirementEffectKind",
@@ -2197,6 +2248,7 @@
         "ApmStatusLanguage",
         "ApmStatusPorts",
         "ApmStatusProjectInspectionPort",
+        "ApmStatusProjectOptions",
         "ApmStatusProjectSummary",
         "ApmStatusResult",
         "ApmSupportedSourceHistory",
@@ -2227,7 +2279,7 @@
       "path": "src/types/registry.ts",
       "isEntrypoint": false,
       "dependencies": [],
-      "exports": ["ApmRegistryAvailabilityOptions", "ApmRegistryFetch"]
+      "exports": ["ApmRegistryAvailabilityOptions", "ApmRegistryFetch", "ApmRegistryRequestOptions"]
     },
     {
       "path": "src/types/status-inventory.ts",
@@ -2377,7 +2429,7 @@
     {
       "path": "src/types/verify-project.ts",
       "isEntrypoint": false,
-      "dependencies": ["src/types/verify.ts"],
+      "dependencies": ["src/types/status-project.ts", "src/types/verify.ts"],
       "exports": ["ApmVerifyProjectOptions"]
     },
     {
@@ -2402,10 +2454,32 @@
       ]
     },
     {
+      "path": "src/utils/createRegistryPackageRequest.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/status-registry.ts"],
+      "exports": ["createRegistryPackageRequest"]
+    },
+    {
+      "path": "src/utils/inspectProjectStatusAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/status/composition/statusProjectAsync.ts",
+        "src/types/status-project.ts",
+        "src/types/status.ts"
+      ],
+      "exports": ["inspectProjectStatusAsync"]
+    },
+    {
       "path": "src/utils/packageInstanceId.ts",
       "isEntrypoint": false,
       "dependencies": [],
       "exports": ["packageInstanceId"]
+    },
+    {
+      "path": "src/utils/readRegistryConfigAsync.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/types/status-registry.ts"],
+      "exports": ["readRegistryConfigAsync"]
     },
     {
       "path": "src/utils/runPackageManagerCommandAsync.ts",
@@ -3217,11 +3291,16 @@
       "modulePath": "src/types/apply-project.ts",
       "sourceLocation": {
         "filePath": "src/types/apply-project.ts",
-        "line": 3,
+        "line": 4,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-      "relatedSymbols": ["ApmApplyCancellationPort", "ApmApplyProgressPort", "ApmApplyStepPort"],
+      "relatedSymbols": [
+        "ApmApplyCancellationPort",
+        "ApmApplyProgressPort",
+        "ApmApplyStepPort",
+        "ApmProjectStatusPort"
+      ],
       "signatures": [],
       "members": [
         {
@@ -3242,6 +3321,13 @@
           "name": "progress",
           "kind": "property",
           "type": "ApmApplyProgressPort",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmProjectStatusPort",
           "required": false,
           "description": null
         }
@@ -3942,6 +4028,78 @@
           "description": null
         }
       ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmExtensionArtifactIdentityRequest",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/extension-artifact.ts",
+      "sourceLocation": {
+        "filePath": "src/types/extension-artifact.ts",
+        "line": 4,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmMigrationArtifactRole"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "descriptorDigest",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "packageName",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "role",
+          "kind": "property",
+          "type": "ApmMigrationArtifactRole",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "rootPath",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        },
+        {
+          "name": "version",
+          "kind": "property",
+          "type": "string",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmExtensionArtifactIdentityResolution",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "unknown",
+      "modulePath": "src/types/extension-artifact.ts",
+      "sourceLocation": {
+        "filePath": "src/types/extension-artifact.ts",
+        "line": 12,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": [],
+      "signatures": [],
+      "members": [],
       "structuredRows": []
     },
     {
@@ -5741,7 +5899,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 121,
+        "line": 122,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5802,7 +5960,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 84,
+        "line": 85,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5856,7 +6014,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 56,
+        "line": 57,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5874,7 +6032,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 78,
+        "line": 79,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5914,7 +6072,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 92,
+        "line": 93,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6017,7 +6175,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 11,
+        "line": 12,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6035,7 +6193,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 197,
+        "line": 198,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6061,7 +6219,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 179,
+        "line": 180,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6101,7 +6259,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 112,
+        "line": 113,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6162,7 +6320,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 185,
+        "line": 186,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6202,7 +6360,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 201,
+        "line": 202,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6242,7 +6400,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 35,
+        "line": 36,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6275,7 +6433,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 13,
+        "line": 14,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6322,7 +6480,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 48,
+        "line": 49,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6376,7 +6534,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 40,
+        "line": 41,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6430,7 +6588,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 253,
+        "line": 255,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6470,7 +6628,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 191,
+        "line": 192,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6510,17 +6668,24 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 249,
+        "line": 250,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-      "relatedSymbols": ["ApmPlanProtocolPort"],
+      "relatedSymbols": ["ApmPlanProtocolPort", "ApmProjectStatusPort"],
       "signatures": [],
       "members": [
         {
           "name": "protocol",
           "kind": "property",
           "type": "ApmPlanProtocolPort",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmProjectStatusPort",
           "required": false,
           "description": null
         }
@@ -6536,7 +6701,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 245,
+        "line": 246,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6562,7 +6727,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 225,
+        "line": 226,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6622,7 +6787,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 233,
+        "line": 234,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6713,7 +6878,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 153,
+        "line": 154,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6760,7 +6925,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 175,
+        "line": 176,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6786,7 +6951,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 141,
+        "line": 142,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6868,7 +7033,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 160,
+        "line": 161,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6979,7 +7144,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 130,
+        "line": 131,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7054,7 +7219,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 259,
+        "line": 261,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7205,7 +7370,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 207,
+        "line": 208,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7298,7 +7463,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 20,
+        "line": 21,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7316,7 +7481,7 @@
       "modulePath": "src/types/plan.ts",
       "sourceLocation": {
         "filePath": "src/types/plan.ts",
-        "line": 107,
+        "line": 108,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7786,6 +7951,32 @@
       "structuredRows": []
     },
     {
+      "name": "ApmProjectStatusPort",
+      "description": "Reusable project-status boundary shared by planning, apply validation, and verification composition.",
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status-project.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status-project.ts",
+        "line": 4,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "inspectStatusAsync",
+          "kind": "property",
+          "type": "(input: ApmStatusInput) => Promise<ApmStatusResult>",
+          "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
       "name": "ApmRegistryAvailabilityOptions",
       "description": null,
       "isReadme": false,
@@ -7794,7 +7985,7 @@
       "modulePath": "src/types/registry.ts",
       "sourceLocation": {
         "filePath": "src/types/registry.ts",
-        "line": 6,
+        "line": 12,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7862,6 +8053,46 @@
       "relatedSymbols": [],
       "signatures": [],
       "members": [],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmRegistryRequestOptions",
+      "description": null,
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/registry.ts",
+      "sourceLocation": {
+        "filePath": "src/types/registry.ts",
+        "line": 6,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmRegistryFetch"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "env",
+          "kind": "property",
+          "type": "Readonly<Record<string, string | undefined>>",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "fetchFn",
+          "kind": "property",
+          "type": "ApmRegistryFetch",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "home",
+          "kind": "property",
+          "type": "string",
+          "required": false,
+          "description": null
+        }
+      ],
       "structuredRows": []
     },
     {
@@ -8593,6 +8824,32 @@
           "kind": "property",
           "type": "(rootPath: string) => Promise<ProjectInspection>",
           "required": true,
+          "description": null
+        }
+      ],
+      "structuredRows": []
+    },
+    {
+      "name": "ApmStatusProjectOptions",
+      "description": "Optional owner-specific status evidence composed around the default Node status adapters.",
+      "isReadme": false,
+      "examples": [],
+      "kind": "type",
+      "modulePath": "src/types/status-project.ts",
+      "sourceLocation": {
+        "filePath": "src/types/status-project.ts",
+        "line": 9,
+        "column": 1
+      },
+      "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+      "relatedSymbols": ["ApmStatusExtensionEvidencePort"],
+      "signatures": [],
+      "members": [
+        {
+          "name": "extensions",
+          "kind": "property",
+          "type": "ApmStatusExtensionEvidencePort",
+          "required": false,
           "description": null
         }
       ],
@@ -9460,17 +9717,24 @@
       "modulePath": "src/types/verify-project.ts",
       "sourceLocation": {
         "filePath": "src/types/verify-project.ts",
-        "line": 3,
+        "line": 4,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-      "relatedSymbols": ["ApmVerifyStepPort"],
+      "relatedSymbols": ["ApmProjectStatusPort", "ApmVerifyStepPort"],
       "signatures": [],
       "members": [
         {
           "name": "ownerStep",
           "kind": "property",
           "type": "ApmVerifyStepPort",
+          "required": false,
+          "description": null
+        },
+        {
+          "name": "status",
+          "kind": "property",
+          "type": "ApmProjectStatusPort",
           "required": false,
           "description": null
         }
@@ -9960,6 +10224,48 @@
       "structuredRows": []
     },
     {
+      "name": "resolveNpmExtensionArtifactIdentityAsync",
+      "description": "Resolve one exact npm-compatible package artifact to immutable protocol identity using registry dist integrity.",
+      "isReadme": false,
+      "examples": [],
+      "kind": "function",
+      "modulePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "line": 14,
+        "column": 1
+      },
+      "exportPaths": ["src/nodeApm.ts"],
+      "relatedSymbols": [
+        "ApmExtensionArtifactIdentityRequest",
+        "ApmExtensionArtifactIdentityResolution",
+        "ApmRegistryRequestOptions"
+      ],
+      "signatures": [
+        {
+          "label": "(input: ApmExtensionArtifactIdentityRequest, options?: ApmRegistryRequestOptions) => Promise<ApmExtensionArtifactIdentityResolution>",
+          "parameters": [
+            {
+              "name": "input",
+              "type": "ApmExtensionArtifactIdentityRequest",
+              "required": true,
+              "description": null
+            },
+            {
+              "name": "options",
+              "type": "ApmRegistryRequestOptions",
+              "required": false,
+              "description": null
+            }
+          ],
+          "returnType": "Promise<ApmExtensionArtifactIdentityResolution>",
+          "returnDescription": null
+        }
+      ],
+      "members": [],
+      "structuredRows": []
+    },
+    {
       "name": "statusAsync",
       "description": "Build evidence-based, serializable APM status without mutating the inspected project.\n\nThe use case separates Project Detector evidence, package-manager inventory, registry\navailability, and optional package-owned projection/migration evidence behind outbound ports.\nMissing or partial evidence makes currency `unknown`; it never becomes a green current result.\nHosts can call this boundary without a terminal and can test it with deterministic fake ports.",
       "isReadme": true,
@@ -9999,26 +10305,32 @@
     },
     {
       "name": "statusProjectAsync",
-      "description": "Compose APM status with published Project Detector, local package-manager, and registry edges.",
+      "description": "Compose APM status with published Project Detector, local package-manager, registry, and optional owner-extension evidence.",
       "isReadme": false,
       "examples": [],
       "kind": "function",
       "modulePath": "src/features/status/composition/statusProjectAsync.ts",
       "sourceLocation": {
         "filePath": "src/features/status/composition/statusProjectAsync.ts",
-        "line": 10,
+        "line": 11,
         "column": 1
       },
       "exportPaths": ["src/nodeApm.ts"],
-      "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
+      "relatedSymbols": ["ApmStatusInput", "ApmStatusProjectOptions", "ApmStatusResult"],
       "signatures": [
         {
-          "label": "(input: ApmStatusInput) => Promise<ApmStatusResult>",
+          "label": "(input: ApmStatusInput, options?: ApmStatusProjectOptions) => Promise<ApmStatusResult>",
           "parameters": [
             {
               "name": "input",
               "type": "ApmStatusInput",
               "required": true,
+              "description": null
+            },
+            {
+              "name": "options",
+              "type": "ApmStatusProjectOptions",
+              "required": false,
               "description": null
             }
           ],
@@ -11583,7 +11895,7 @@
       "description": "Freeze the current public APM/Node executor identity used by saved-plan validation and recovery.",
       "sourceLocation": {
         "filePath": "src/features/apply/composition/applyProjectAsync.ts",
-        "line": 46,
+        "line": 47,
         "column": 1
       }
     },
@@ -14823,7 +15135,7 @@
       "description": "Query one package with bounded cache semantics and no credential leakage into evidence.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 16,
+        "line": 17,
         "column": 1
       }
     },
@@ -14832,7 +15144,7 @@
       "description": "Fetch fresh npm-compatible package metadata and cache only parsed semantic evidence.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 47,
+        "line": 48,
         "column": 1
       }
     },
@@ -14841,7 +15153,7 @@
       "description": "Parse registry metadata into semantic versions only, ignoring executable package fields.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 91,
+        "line": 92,
         "column": 1
       }
     },
@@ -14850,7 +15162,7 @@
       "description": "Compute latest and constraint-compatible candidates without treating URLs/tags as semver ranges.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 105,
+        "line": 106,
         "column": 1
       }
     },
@@ -14859,25 +15171,7 @@
       "description": "Normalize npm protocol aliases while leaving unsupported declarations unmatched.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 131,
-        "column": 1
-      }
-    },
-    {
-      "name": "registryForPackage",
-      "description": "Select a scoped registry before the project default registry.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 136,
-        "column": 1
-      }
-    },
-    {
-      "name": "buildAuthHeaders",
-      "description": "Build Authorization headers from npmrc auth entries while keeping values inside the HTTP edge.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 145,
+        "line": 132,
         "column": 1
       }
     },
@@ -14886,16 +15180,7 @@
       "description": "Return explicit unknown package availability without registry credentials or raw headers.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 160,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureTrailingSlash",
-      "description": "Normalize registry base URLs before package URL resolution.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 168,
+        "line": 137,
         "column": 1
       }
     },
@@ -14904,7 +15189,7 @@
       "description": "Redact embedded URL credentials in network error text without a backtracking expression.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
-        "line": 173,
+        "line": 145,
         "column": 1
       }
     },
@@ -15233,42 +15518,6 @@
       }
     },
     {
-      "name": "readRegistryConfigAsync",
-      "description": "Read npm-compatible user/project registry configuration without returning credential values.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "line": 9,
-        "column": 1
-      }
-    },
-    {
-      "name": "readNpmrcAsync",
-      "description": "Parse npmrc key/value lines and expand environment placeholders only at the adapter edge.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "line": 33,
-        "column": 1
-      }
-    },
-    {
-      "name": "parseNpmrcLine",
-      "description": "Parse one npmrc assignment while keeping expansion local to the secret-bearing edge.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "line": 53,
-        "column": 1
-      }
-    },
-    {
-      "name": "ensureTrailingSlash",
-      "description": "Normalize registry base URLs before package URL resolution.",
-      "sourceLocation": {
-        "filePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "line": 66,
-        "column": 1
-      }
-    },
-    {
       "name": "readYarnLockEvidenceAsync",
       "description": "Read Yarn Berry v8 lock evidence without loading PnP runtime code.",
       "sourceLocation": {
@@ -15350,11 +15599,20 @@
       }
     },
     {
+      "name": "statusFixture",
+      "description": "Build complete owner-aware status whose extension evidence participates in the saved-plan fingerprint.",
+      "sourceLocation": {
+        "filePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "line": 54,
+        "column": 1
+      }
+    },
+    {
       "name": "statusProjectAsync",
-      "description": "Compose APM status with published Project Detector, local package-manager, and registry edges.",
+      "description": "Compose APM status with published Project Detector, local package-manager, registry, and optional owner-extension evidence.",
       "sourceLocation": {
         "filePath": "src/features/status/composition/statusProjectAsync.ts",
-        "line": 10,
+        "line": 11,
         "column": 1
       }
     },
@@ -15616,6 +15874,78 @@
       "sourceLocation": {
         "filePath": "src/features/status/utils/readInstalledPackageVersionAsync.ts",
         "line": 10,
+        "column": 1
+      }
+    },
+    {
+      "name": "artifactRequest",
+      "description": null,
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "line": 66,
+        "column": 1
+      }
+    },
+    {
+      "name": "writeRegistryConfigAsync",
+      "description": null,
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "line": 76,
+        "column": 1
+      }
+    },
+    {
+      "name": "createRecordingFetch",
+      "description": null,
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "line": 87,
+        "column": 1
+      }
+    },
+    {
+      "name": "requestUrl",
+      "description": null,
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "line": 104,
+        "column": 1
+      }
+    },
+    {
+      "name": "resolveNpmExtensionArtifactIdentityAsync",
+      "description": "Resolve one exact npm-compatible package artifact to immutable protocol identity using registry dist integrity.",
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "line": 14,
+        "column": 1
+      }
+    },
+    {
+      "name": "exactVersionMetadata",
+      "description": "Find exact version metadata without dynamic object indexing.",
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "line": 61,
+        "column": 1
+      }
+    },
+    {
+      "name": "readDistIntegrity",
+      "description": "Read immutable npm dist integrity from one exact version metadata record.",
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "line": 73,
+        "column": 1
+      }
+    },
+    {
+      "name": "unavailable",
+      "description": "Return bounded non-secret evidence when exact registry artifact identity cannot be proven.",
+      "sourceLocation": {
+        "filePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "line": 81,
         "column": 1
       }
     },
@@ -17132,11 +17462,83 @@
       }
     },
     {
+      "name": "createRegistryPackageRequest",
+      "description": "Build one npm-compatible package metadata request using shared scoped-registry and credential rules.",
+      "sourceLocation": {
+        "filePath": "src/utils/createRegistryPackageRequest.ts",
+        "line": 6,
+        "column": 1
+      }
+    },
+    {
+      "name": "registryForPackage",
+      "description": "Select a scoped registry before the project default registry.",
+      "sourceLocation": {
+        "filePath": "src/utils/createRegistryPackageRequest.ts",
+        "line": 16,
+        "column": 1
+      }
+    },
+    {
+      "name": "buildAuthHeaders",
+      "description": "Build Authorization headers from npmrc auth entries while keeping values inside the HTTP edge.",
+      "sourceLocation": {
+        "filePath": "src/utils/createRegistryPackageRequest.ts",
+        "line": 25,
+        "column": 1
+      }
+    },
+    {
+      "name": "inspectProjectStatusAsync",
+      "description": "Inspect project status through a caller-supplied owner-aware port or the canonical generic Node composition.",
+      "sourceLocation": {
+        "filePath": "src/utils/inspectProjectStatusAsync.ts",
+        "line": 6,
+        "column": 1
+      }
+    },
+    {
       "name": "packageInstanceId",
       "description": "Build the globally stable APM identity for one manager-native package instance.",
       "sourceLocation": {
         "filePath": "src/utils/packageInstanceId.ts",
         "line": 2,
+        "column": 1
+      }
+    },
+    {
+      "name": "readRegistryConfigAsync",
+      "description": "Read npm-compatible user/project registry configuration without returning credential values.",
+      "sourceLocation": {
+        "filePath": "src/utils/readRegistryConfigAsync.ts",
+        "line": 9,
+        "column": 1
+      }
+    },
+    {
+      "name": "readNpmrcAsync",
+      "description": "Parse npmrc key/value lines and expand environment placeholders only at the adapter edge.",
+      "sourceLocation": {
+        "filePath": "src/utils/readRegistryConfigAsync.ts",
+        "line": 33,
+        "column": 1
+      }
+    },
+    {
+      "name": "parseNpmrcLine",
+      "description": "Parse one npmrc assignment while keeping expansion local to the secret-bearing edge.",
+      "sourceLocation": {
+        "filePath": "src/utils/readRegistryConfigAsync.ts",
+        "line": 53,
+        "column": 1
+      }
+    },
+    {
+      "name": "ensureTrailingSlash",
+      "description": "Normalize registry base URLs before package URL resolution.",
+      "sourceLocation": {
+        "filePath": "src/utils/readRegistryConfigAsync.ts",
+        "line": 66,
         "column": 1
       }
     },
@@ -17268,6 +17670,14 @@
     },
     {
       "kind": "export",
+      "name": "resolveNpmExtensionArtifactIdentityAsync",
+      "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+      "symbolName": "resolveNpmExtensionArtifactIdentityAsync",
+      "description": "Resolve one exact npm-compatible package artifact to immutable protocol identity using registry dist integrity.",
+      "isReadme": false
+    },
+    {
+      "kind": "export",
       "name": "statusAsync",
       "sourcePath": "src/features/status/application/statusAsync.ts",
       "symbolName": "statusAsync",
@@ -17279,7 +17689,7 @@
       "name": "statusProjectAsync",
       "sourcePath": "src/features/status/composition/statusProjectAsync.ts",
       "symbolName": "statusProjectAsync",
-      "description": "Compose APM status with published Project Detector, local package-manager, and registry edges.",
+      "description": "Compose APM status with published Project Detector, local package-manager, registry, and optional owner-extension evidence.",
       "isReadme": false
     },
     {
@@ -17448,6 +17858,11 @@
       },
       {
         "fromPath": "src/nodeApm.ts",
+        "toPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "sourcePath": "src/nodeApm.ts"
+      },
+      {
+        "fromPath": "src/nodeApm.ts",
         "toPath": "src/features/verify/composition/verifyProjectAsync.ts",
         "sourcePath": "src/nodeApm.ts"
       },
@@ -17542,6 +17957,11 @@
         "sourcePath": "src/types/apply-project.ts"
       },
       {
+        "fromPath": "src/types/apply-project.ts",
+        "toPath": "src/types/status-project.ts",
+        "sourcePath": "src/types/apply-project.ts"
+      },
+      {
         "fromPath": "src/types/apply-runtime.ts",
         "toPath": "src/types/apply.ts",
         "sourcePath": "src/types/apply-runtime.ts"
@@ -17560,6 +17980,16 @@
         "fromPath": "src/types/apply.ts",
         "toPath": "src/types/status.ts",
         "sourcePath": "src/types/apply.ts"
+      },
+      {
+        "fromPath": "src/types/extension-artifact.ts",
+        "toPath": "src/types/update-extension.ts",
+        "sourcePath": "src/types/extension-artifact.ts"
+      },
+      {
+        "fromPath": "src/types/extension-artifact.ts",
+        "toPath": "src/types/update-protocol.ts",
+        "sourcePath": "src/types/extension-artifact.ts"
       },
       {
         "fromPath": "src/types/plan-execution.ts",
@@ -17588,6 +18018,11 @@
       },
       {
         "fromPath": "src/types/plan.ts",
+        "toPath": "src/types/status-project.ts",
+        "sourcePath": "src/types/plan.ts"
+      },
+      {
+        "fromPath": "src/types/plan.ts",
         "toPath": "src/types/update-protocol.ts",
         "sourcePath": "src/types/plan.ts"
       },
@@ -17599,6 +18034,11 @@
       {
         "fromPath": "src/types/public.ts",
         "toPath": "src/types/apply-project.ts",
+        "sourcePath": "src/types/public.ts"
+      },
+      {
+        "fromPath": "src/types/public.ts",
+        "toPath": "src/types/extension-artifact.ts",
         "sourcePath": "src/types/public.ts"
       },
       {
@@ -17619,6 +18059,11 @@
       {
         "fromPath": "src/types/public.ts",
         "toPath": "src/types/status.ts",
+        "sourcePath": "src/types/public.ts"
+      },
+      {
+        "fromPath": "src/types/public.ts",
+        "toPath": "src/types/status-project.ts",
         "sourcePath": "src/types/public.ts"
       },
       {
@@ -17673,6 +18118,11 @@
       },
       {
         "fromPath": "src/types/verify-project.ts",
+        "toPath": "src/types/status-project.ts",
+        "sourcePath": "src/types/verify-project.ts"
+      },
+      {
+        "fromPath": "src/types/verify-project.ts",
         "toPath": "src/types/verify.ts",
         "sourcePath": "src/types/verify-project.ts"
       },
@@ -17695,6 +18145,31 @@
         "fromPath": "src/types/verify.ts",
         "toPath": "src/types/update-protocol.ts",
         "sourcePath": "src/types/verify.ts"
+      },
+      {
+        "fromPath": "src/utils/createRegistryPackageRequest.ts",
+        "toPath": "src/types/status-registry.ts",
+        "sourcePath": "src/utils/createRegistryPackageRequest.ts"
+      },
+      {
+        "fromPath": "src/utils/inspectProjectStatusAsync.ts",
+        "toPath": "src/features/status/composition/statusProjectAsync.ts",
+        "sourcePath": "src/utils/inspectProjectStatusAsync.ts"
+      },
+      {
+        "fromPath": "src/utils/inspectProjectStatusAsync.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/utils/inspectProjectStatusAsync.ts"
+      },
+      {
+        "fromPath": "src/utils/inspectProjectStatusAsync.ts",
+        "toPath": "src/types/status-project.ts",
+        "sourcePath": "src/utils/inspectProjectStatusAsync.ts"
+      },
+      {
+        "fromPath": "src/utils/readRegistryConfigAsync.ts",
+        "toPath": "src/types/status-registry.ts",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
       },
       {
         "fromPath": "src/utils/runPackageManagerCommandAsync.ts",
@@ -18048,17 +18523,17 @@
       },
       {
         "fromPath": "src/features/apply/composition/applyProjectAsync.ts",
+        "toPath": "src/utils/inspectProjectStatusAsync.ts",
+        "sourcePath": "src/features/apply/composition/applyProjectAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/composition/applyProjectAsync.ts",
         "toPath": "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
         "sourcePath": "src/features/apply/composition/applyProjectAsync.ts"
       },
       {
         "fromPath": "src/features/apply/composition/applyProjectAsync.ts",
         "toPath": "src/features/plan/domain/validateSavedPlanAsync.ts",
-        "sourcePath": "src/features/apply/composition/applyProjectAsync.ts"
-      },
-      {
-        "fromPath": "src/features/apply/composition/applyProjectAsync.ts",
-        "toPath": "src/features/status/composition/statusProjectAsync.ts",
         "sourcePath": "src/features/apply/composition/applyProjectAsync.ts"
       },
       {
@@ -18378,7 +18853,7 @@
       },
       {
         "fromPath": "src/features/plan/composition/planProjectAsync.ts",
-        "toPath": "src/features/status/composition/statusProjectAsync.ts",
+        "toPath": "src/utils/inspectProjectStatusAsync.ts",
         "sourcePath": "src/features/plan/composition/planProjectAsync.ts"
       },
       {
@@ -18617,6 +19092,31 @@
         "sourcePath": "src/features/status/application/statusAsync.ts"
       },
       {
+        "fromPath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toPath": "src/types/status-project.ts",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toPath": "src/features/apply/composition/applyProjectAsync.ts",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toPath": "src/features/plan/composition/planProjectAsync.ts",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toPath": "src/features/verify/composition/verifyProjectAsync.ts",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
         "fromPath": "src/features/status/composition/statusProjectAsync.test.ts",
         "toPath": "src/features/status/composition/statusProjectAsync.ts",
         "sourcePath": "src/features/status/composition/statusProjectAsync.test.ts"
@@ -18629,6 +19129,11 @@
       {
         "fromPath": "src/features/status/composition/statusProjectAsync.ts",
         "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      },
+      {
+        "fromPath": "src/features/status/composition/statusProjectAsync.ts",
+        "toPath": "src/types/status-project.ts",
         "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
       },
       {
@@ -19273,17 +19778,17 @@
       },
       {
         "fromPath": "src/features/verify/composition/verifyProjectAsync.ts",
+        "toPath": "src/utils/inspectProjectStatusAsync.ts",
+        "sourcePath": "src/features/verify/composition/verifyProjectAsync.ts"
+      },
+      {
+        "fromPath": "src/features/verify/composition/verifyProjectAsync.ts",
         "toPath": "src/features/apply/adapters/outbound/createNodeApplyJournalPort.ts",
         "sourcePath": "src/features/verify/composition/verifyProjectAsync.ts"
       },
       {
         "fromPath": "src/features/verify/composition/verifyProjectAsync.ts",
         "toPath": "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
-        "sourcePath": "src/features/verify/composition/verifyProjectAsync.ts"
-      },
-      {
-        "fromPath": "src/features/verify/composition/verifyProjectAsync.ts",
-        "toPath": "src/features/status/composition/statusProjectAsync.ts",
         "sourcePath": "src/features/verify/composition/verifyProjectAsync.ts"
       },
       {
@@ -19828,12 +20333,12 @@
       },
       {
         "fromPath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
-        "toPath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
+        "toPath": "src/utils/readRegistryConfigAsync.ts",
         "sourcePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts"
       },
       {
         "fromPath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
-        "toPath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
+        "toPath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
         "sourcePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts"
       },
       {
@@ -20037,6 +20542,11 @@
         "sourcePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
       },
       {
+        "fromPath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts",
+        "toPath": "src/utils/createRegistryPackageRequest.ts",
+        "sourcePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
+      },
+      {
         "fromPath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
         "toPath": "src/types/status.ts",
         "sourcePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts"
@@ -20072,11 +20582,6 @@
         "sourcePath": "src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts"
       },
       {
-        "fromPath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "toPath": "src/types/status-registry.ts",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
         "fromPath": "src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts",
         "toPath": "src/types/status-inventory.ts",
         "sourcePath": "src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts"
@@ -20085,6 +20590,41 @@
         "fromPath": "src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts",
         "toPath": "src/features/status/adapters/outbound/parseYarnLockEvidence.ts",
         "sourcePath": "src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toPath": "src/types/extension-artifact.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toPath": "src/types/registry.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "toPath": "src/types/extension-artifact.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "toPath": "src/types/registry.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "toPath": "src/utils/createRegistryPackageRequest.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromPath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts",
+        "toPath": "src/utils/readRegistryConfigAsync.ts",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
       },
       {
         "fromPath": "src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts",
@@ -20250,6 +20790,72 @@
         "toSymbol": "runAsync",
         "callExpression": "runAsync",
         "sourcePath": "src/cli/runAsync.ts"
+      },
+      {
+        "fromSymbol": "createRegistryPackageRequest",
+        "toSymbol": "ensureTrailingSlash",
+        "callExpression": "ensureTrailingSlash",
+        "sourcePath": "src/utils/createRegistryPackageRequest.ts"
+      },
+      {
+        "fromSymbol": "createRegistryPackageRequest",
+        "toSymbol": "registryForPackage",
+        "callExpression": "registryForPackage",
+        "sourcePath": "src/utils/createRegistryPackageRequest.ts"
+      },
+      {
+        "fromSymbol": "createRegistryPackageRequest",
+        "toSymbol": "buildAuthHeaders",
+        "callExpression": "buildAuthHeaders",
+        "sourcePath": "src/utils/createRegistryPackageRequest.ts"
+      },
+      {
+        "fromSymbol": "inspectProjectStatusAsync",
+        "toSymbol": "statusProjectAsync",
+        "callExpression": "statusProjectAsync",
+        "sourcePath": "src/utils/inspectProjectStatusAsync.ts"
+      },
+      {
+        "fromSymbol": "inspectProjectStatusAsync",
+        "toSymbol": "inspectStatusAsync",
+        "callExpression": "status.inspectStatusAsync",
+        "sourcePath": "src/utils/inspectProjectStatusAsync.ts"
+      },
+      {
+        "fromSymbol": "readRegistryConfigAsync",
+        "toSymbol": "readNpmrcAsync",
+        "callExpression": "readNpmrcAsync",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
+      },
+      {
+        "fromSymbol": "readRegistryConfigAsync",
+        "toSymbol": "ensureTrailingSlash",
+        "callExpression": "ensureTrailingSlash",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
+      },
+      {
+        "fromSymbol": "src/utils/readRegistryConfigAsync.ts",
+        "toSymbol": "ensureTrailingSlash",
+        "callExpression": "ensureTrailingSlash",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
+      },
+      {
+        "fromSymbol": "readNpmrcAsync",
+        "toSymbol": "readFile",
+        "callExpression": "readFile",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
+      },
+      {
+        "fromSymbol": "src/utils/readRegistryConfigAsync.ts",
+        "toSymbol": "parseNpmrcLine",
+        "callExpression": "parseNpmrcLine",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
+      },
+      {
+        "fromSymbol": "readNpmrcAsync",
+        "toSymbol": "isMissingPathError",
+        "callExpression": "isMissingPathError",
+        "sourcePath": "src/utils/readRegistryConfigAsync.ts"
       },
       {
         "fromSymbol": "src/utils/runPackageManagerCommandAsync.ts",
@@ -21519,8 +22125,8 @@
       },
       {
         "fromSymbol": "inspectStatusAsync",
-        "toSymbol": "statusProjectAsync",
-        "callExpression": "statusProjectAsync",
+        "toSymbol": "inspectProjectStatusAsync",
+        "callExpression": "inspectProjectStatusAsync",
         "sourcePath": "src/features/apply/composition/applyProjectAsync.ts"
       },
       {
@@ -22323,8 +22929,8 @@
       },
       {
         "fromSymbol": "planProjectAsync",
-        "toSymbol": "statusProjectAsync",
-        "callExpression": "statusProjectAsync",
+        "toSymbol": "inspectProjectStatusAsync",
+        "callExpression": "inspectProjectStatusAsync",
         "sourcePath": "src/features/plan/composition/planProjectAsync.ts"
       },
       {
@@ -23418,6 +24024,60 @@
         "toSymbol": "inspectExtensionEvidenceAsync",
         "callExpression": "port.inspectExtensionEvidenceAsync",
         "sourcePath": "src/features/status/application/statusAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "mkdtemp",
+        "callExpression": "mkdtemp",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "tmpdir",
+        "callExpression": "tmpdir",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "inspectStatusAsync",
+        "toSymbol": "statusFixture",
+        "callExpression": "statusFixture",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "planProjectAsync",
+        "callExpression": "planProjectAsync",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "applyProjectAsync",
+        "callExpression": "applyProjectAsync",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "verifyProjectAsync",
+        "callExpression": "verifyProjectAsync",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts",
+        "toSymbol": "rm",
+        "callExpression": "rm",
+        "sourcePath": "src/features/status/composition/ownerAwareProjectLifecycle.test.ts"
       },
       {
         "fromSymbol": "src/features/status/composition/statusProjectAsync.test.ts",
@@ -25371,8 +26031,8 @@
       },
       {
         "fromSymbol": "inspectStatusAsync",
-        "toSymbol": "statusProjectAsync",
-        "callExpression": "statusProjectAsync",
+        "toSymbol": "inspectProjectStatusAsync",
+        "callExpression": "inspectProjectStatusAsync",
         "sourcePath": "src/features/verify/composition/verifyProjectAsync.ts"
       },
       {
@@ -27645,8 +28305,8 @@
       },
       {
         "fromSymbol": "queryRegistryPackageAsync",
-        "toSymbol": "registryForPackage",
-        "callExpression": "registryForPackage",
+        "toSymbol": "createRegistryPackageRequest",
+        "callExpression": "createRegistryPackageRequest",
         "sourcePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
       },
       {
@@ -27675,20 +28335,14 @@
       },
       {
         "fromSymbol": "fetchRegistryPackageAsync",
-        "toSymbol": "ensureTrailingSlash",
-        "callExpression": "ensureTrailingSlash",
+        "toSymbol": "createRegistryPackageRequest",
+        "callExpression": "createRegistryPackageRequest",
         "sourcePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
       },
       {
         "fromSymbol": "fetchRegistryPackageAsync",
         "toSymbol": "fetchFn",
         "callExpression": "input.fetchFn",
-        "sourcePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
-      },
-      {
-        "fromSymbol": "fetchRegistryPackageAsync",
-        "toSymbol": "buildAuthHeaders",
-        "callExpression": "buildAuthHeaders",
         "sourcePath": "src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
       },
       {
@@ -28118,42 +28772,6 @@
         "sourcePath": "src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts"
       },
       {
-        "fromSymbol": "readRegistryConfigAsync",
-        "toSymbol": "readNpmrcAsync",
-        "callExpression": "readNpmrcAsync",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
-        "fromSymbol": "readRegistryConfigAsync",
-        "toSymbol": "ensureTrailingSlash",
-        "callExpression": "ensureTrailingSlash",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
-        "fromSymbol": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "toSymbol": "ensureTrailingSlash",
-        "callExpression": "ensureTrailingSlash",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
-        "fromSymbol": "readNpmrcAsync",
-        "toSymbol": "readFile",
-        "callExpression": "readFile",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
-        "fromSymbol": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts",
-        "toSymbol": "parseNpmrcLine",
-        "callExpression": "parseNpmrcLine",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
-        "fromSymbol": "readNpmrcAsync",
-        "toSymbol": "isMissingPathError",
-        "callExpression": "isMissingPathError",
-        "sourcePath": "src/features/status/adapters/outbound/readRegistryConfigAsync.ts"
-      },
-      {
         "fromSymbol": "readYarnLockEvidenceAsync",
         "toSymbol": "incompleteYarnLock",
         "callExpression": "incompleteYarnLock",
@@ -28182,6 +28800,126 @@
         "toSymbol": "parseYarnLockEvidence",
         "callExpression": "parseYarnLockEvidence",
         "sourcePath": "src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "mkdtemp",
+        "callExpression": "mkdtemp",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "tmpdir",
+        "callExpression": "tmpdir",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "writeRegistryConfigAsync",
+        "callExpression": "writeRegistryConfigAsync",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "callExpression": "resolveNpmExtensionArtifactIdentityAsync",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "artifactRequest",
+        "callExpression": "artifactRequest",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "createRecordingFetch",
+        "callExpression": "createRecordingFetch",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "rm",
+        "callExpression": "rm",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "writeRegistryConfigAsync",
+        "toSymbol": "writeFile",
+        "callExpression": "writeFile",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts",
+        "toSymbol": "requestUrl",
+        "callExpression": "requestUrl",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "readRegistryConfigAsync",
+        "callExpression": "readRegistryConfigAsync",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "homedir",
+        "callExpression": "homedir",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "createRegistryPackageRequest",
+        "callExpression": "createRegistryPackageRequest",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "fetchFn",
+        "callExpression": "fetchFn",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "unavailable",
+        "callExpression": "unavailable",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "exactVersionMetadata",
+        "callExpression": "exactVersionMetadata",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toSymbol": "readDistIntegrity",
+        "callExpression": "readDistIntegrity",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "exactVersionMetadata",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "readDistIntegrity",
+        "toSymbol": "isRecord",
+        "callExpression": "isRecord",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
       },
       {
         "fromSymbol": "verifyAsync",
@@ -28392,6 +29130,16 @@
       },
       {
         "fromSymbol": "ApmRegistryAvailabilityOptions",
+        "toType": "Readonly",
+        "sourcePath": "src/types/registry.ts"
+      },
+      {
+        "fromSymbol": "ApmRegistryRequestOptions",
+        "toType": "ApmRegistryFetch",
+        "sourcePath": "src/types/registry.ts"
+      },
+      {
+        "fromSymbol": "ApmRegistryRequestOptions",
         "toType": "Readonly",
         "sourcePath": "src/types/registry.ts"
       },
@@ -28851,6 +29599,16 @@
         "sourcePath": "src/types/apply-project.ts"
       },
       {
+        "fromSymbol": "ApmApplyProjectOptions",
+        "toType": "ApmProjectStatusPort",
+        "sourcePath": "src/types/apply-project.ts"
+      },
+      {
+        "fromSymbol": "ApmExtensionArtifactIdentityRequest",
+        "toType": "ApmMigrationArtifactRole",
+        "sourcePath": "src/types/extension-artifact.ts"
+      },
+      {
         "fromSymbol": "ApmPlanPackageSelection",
         "toType": "ApmPlanPackageSelector",
         "sourcePath": "src/types/plan.ts"
@@ -29066,6 +29824,11 @@
         "sourcePath": "src/types/plan.ts"
       },
       {
+        "fromSymbol": "ApmPlanProjectOptions",
+        "toType": "ApmProjectStatusPort",
+        "sourcePath": "src/types/plan.ts"
+      },
+      {
         "fromSymbol": "ApmPlanPorts",
         "toType": "ApmPlanDigestPort",
         "sourcePath": "src/types/plan.ts"
@@ -29139,6 +29902,21 @@
         "fromSymbol": "ApmPlanResult",
         "toType": "ApmStatusFinding",
         "sourcePath": "src/types/plan.ts"
+      },
+      {
+        "fromSymbol": "ApmProjectStatusPort",
+        "toType": "ApmStatusInput",
+        "sourcePath": "src/types/status-project.ts"
+      },
+      {
+        "fromSymbol": "ApmProjectStatusPort",
+        "toType": "ApmStatusResult",
+        "sourcePath": "src/types/status-project.ts"
+      },
+      {
+        "fromSymbol": "ApmStatusProjectOptions",
+        "toType": "ApmStatusExtensionEvidencePort",
+        "sourcePath": "src/types/status-project.ts"
       },
       {
         "fromSymbol": "ApmExtensionArtifactIdentity",
@@ -29602,6 +30380,11 @@
       },
       {
         "fromSymbol": "ApmVerifyProjectOptions",
+        "toType": "ApmProjectStatusPort",
+        "sourcePath": "src/types/verify-project.ts"
+      },
+      {
+        "fromSymbol": "ApmVerifyProjectOptions",
         "toType": "ApmVerifyStepPort",
         "sourcePath": "src/types/verify-project.ts"
       },
@@ -29672,8 +30455,28 @@
       },
       {
         "fromSymbol": "statusProjectAsync",
+        "toType": "ApmStatusProjectOptions",
+        "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      },
+      {
+        "fromSymbol": "statusProjectAsync",
         "toType": "ApmStatusResult",
         "sourcePath": "src/features/status/composition/statusProjectAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toType": "ApmExtensionArtifactIdentityRequest",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toType": "ApmExtensionArtifactIdentityResolution",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
+      },
+      {
+        "fromSymbol": "resolveNpmExtensionArtifactIdentityAsync",
+        "toType": "ApmRegistryRequestOptions",
+        "sourcePath": "src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"
       },
       {
         "fromSymbol": "verifyProjectAsync",
