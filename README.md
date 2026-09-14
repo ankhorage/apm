@@ -3,7 +3,7 @@
 
 # @ankhorage/apm
 
-![license: MIT](././paradox/badges/license.svg) ![npm: v0.1.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
+![license: MIT](././paradox/badges/license.svg) ![npm: v0.2.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
 
 Headless project update analysis, planning, execution, recovery, and verification.
 
@@ -17,6 +17,8 @@ Headless project update analysis, planning, execution, recovery, and verificatio
 - [Export graph](././paradox/diagrams/export-graph.mmd)
 - [apm sequence](././paradox/diagrams/sequences/apm.mmd)
 - [inspectDependencyInventoryAsync sequence](././paradox/diagrams/sequences/inspect-dependency-inventory-async.mmd)
+- [validatePackageUpdateMetadata sequence](././paradox/diagrams/sequences/validate-package-update-metadata.mmd)
+- [validateUpdateExtensionCapabilities sequence](././paradox/diagrams/sequences/validate-update-extension-capabilities.mmd)
 
 ## Public API
 

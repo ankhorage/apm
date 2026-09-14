@@ -79,6 +79,34 @@ Source: `src/types/status.ts:162:1`
 | role           | property | `"application" \| "host"`                                   | yes      |             |
 | source         | property | `"registry" \| "workspace" \| "file" \| "git" \| "unknown"` | no       |             |
 
+## ApmCompatibilityConstraint
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:41:1`
+
+### Members
+
+| Name   | Kind     | Type                                           | Required | Description |
+| ------ | -------- | ---------------------------------------------- | -------- | ----------- |
+| kind   | property | `"host" \| "package" \| "node" \| "framework"` | yes      |             |
+| name   | property | `string`                                       | yes      |             |
+| range  | property | `string`                                       | yes      |             |
+| reason | property | `string`                                       | no       |             |
+
+## ApmCompletedMigrationEvidence
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:79:1`
+
+### Members
+
+| Name     | Kind     | Type     | Required | Description |
+| -------- | -------- | -------- | -------- | ----------- |
+| checksum | property | `string` | yes      |             |
+| id       | property | `string` | yes      |             |
+
 ## ApmDependencyDeclaration
 
 Kind: `type`
@@ -115,6 +143,22 @@ Kind: `unknown`
 Module: `src/types/status.ts`
 Source: `src/types/status.ts:9:1`
 
+## ApmExtensionArtifactIdentity
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:11:1`
+
+### Members
+
+| Name             | Kind     | Type                       | Required | Description |
+| ---------------- | -------- | -------------------------- | -------- | ----------- |
+| descriptorDigest | property | `string`                   | yes      |             |
+| integrity        | property | `string`                   | yes      |             |
+| packageName      | property | `string`                   | yes      |             |
+| role             | property | `ApmMigrationArtifactRole` | yes      |             |
+| version          | property | `string`                   | yes      |             |
+
 ## ApmExtensionEvidence
 
 Kind: `type`
@@ -129,6 +173,27 @@ Source: `src/types/status.ts:206:1`
 | diagnostics  | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
 | observations | property | `readonly ApmExtensionObservation[]` | yes      |             |
 | state        | property | `"available" \| "unavailable"`       | yes      |             |
+
+## ApmExtensionExecutionContext
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:19:1`
+
+### Members
+
+| Name          | Kind     | Type                           | Required | Description |
+| ------------- | -------- | ------------------------------ | -------- | ----------- |
+| artifact      | property | `ApmExtensionArtifactIdentity` | yes      |             |
+| owner         | property | `string`                       | yes      |             |
+| sourceVersion | property | `string`                       | yes      |             |
+| targetVersion | property | `string`                       | yes      |             |
+
+## ApmExtensionInvocationResult
+
+Kind: `unknown`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:131:1`
 
 ## ApmExtensionObservation
 
@@ -147,6 +212,45 @@ Source: `src/types/status.ts:196:1`
 | packageId  | property | `string`             | no       |             |
 | projection | property | `ApmProjectionState` | yes      |             |
 | reason     | property | `string`             | no       |             |
+
+## ApmExtensionProjectReadPort
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:34:1`
+
+### Members
+
+| Name           | Kind     | Type                                                                     | Required | Description |
+| -------------- | -------- | ------------------------------------------------------------------------ | -------- | ----------- |
+| listFilesAsync | property | `(scope: ApmProjectScope) => Promise<readonly ApmProjectFileSnapshot[]>` | yes      |             |
+| readFileAsync  | property | `(path: string) => Promise<ApmProjectFileSnapshot>`                      | yes      |             |
+
+## ApmExtensionProjectWritePort
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:77:1`
+
+### Members
+
+| Name                       | Kind     | Type                                    | Required | Description |
+| -------------------------- | -------- | --------------------------------------- | -------- | ----------- |
+| applyReviewedMutationAsync | property | `(mutationId: string) => Promise<void>` | yes      |             |
+
+## ApmExtensionVerificationResult
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:81:1`
+
+### Members
+
+| Name     | Kind     | Type                | Required | Description |
+| -------- | -------- | ------------------- | -------- | ----------- |
+| evidence | property | `readonly string[]` | yes      |             |
+| reason   | property | `string`            | no       |             |
+| valid    | property | `boolean`           | yes      |             |
 
 ## ApmInstallationState
 
@@ -192,6 +296,12 @@ Source: `src/types/status.ts:136:1`
 | manager           | property | `ApmPackageManagerEvidence`              | yes      |             |
 | packagePaths      | property | `readonly string[]`                      | yes      |             |
 | rootPath          | property | `string`                                 | yes      |             |
+
+## ApmJsonValue
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:5:1`
 
 ## ApmLockedDependencyEdge
 
@@ -242,11 +352,291 @@ Source: `src/types/status.ts:128:1`
 | state    | property | `"supported" \| "unsupported" \| "missing" \| "conflict"` | yes      |             |
 | version  | property | `string`                                                  | no       |             |
 
+## ApmMigrationArtifactRole
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:58:1`
+
+## ApmMigrationDescriptor
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:101:1`
+
+### Members
+
+| Name           | Kind     | Type                                             | Required | Description |
+| -------------- | -------- | ------------------------------------------------ | -------- | ----------- |
+| affectedScopes | property | `readonly ApmProjectScope[]`                     | yes      |             |
+| checksum       | property | `string`                                         | yes      |             |
+| from           | property | `ApmMigrationSource`                             | yes      |             |
+| id             | property | `string`                                         | yes      |             |
+| implementation | property | `ApmMigrationImplementation`                     | yes      |             |
+| phase          | property | `"pre-install" \| "post-install"`                | yes      |             |
+| prerequisites  | property | `readonly ApmMigrationPrerequisite[]`            | yes      |             |
+| recovery       | property | `ApmMigrationRecoveryDescriptor`                 | yes      |             |
+| sideEffects    | property | `readonly ApmMigrationSideEffect[]`              | yes      |             |
+| to             | property | `ApmMigrationTarget`                             | yes      |             |
+| verification   | property | `readonly ApmMigrationVerificationRequirement[]` | yes      |             |
+
+## ApmMigrationExecutionInput
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:106:1`
+
+### Members
+
+| Name       | Kind     | Type                                                         | Required | Description |
+| ---------- | -------- | ------------------------------------------------------------ | -------- | ----------- |
+| context    | property | `ApmExtensionExecutionContext`                               | yes      |             |
+| descriptor | property | `ApmMigrationDescriptor`                                     | yes      |             |
+| plan       | property | `ApmMigrationPlanResult`                                     | yes      |             |
+| project    | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes      |             |
+
+## ApmMigrationExecutionInvocation
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:148:1`
+
+### Members
+
+| Name      | Kind     | Type                                                         | Required | Description |
+| --------- | -------- | ------------------------------------------------------------ | -------- | ----------- |
+| context   | property | `ApmExtensionExecutionContext`                               | yes      |             |
+| extension | property | `unknown`                                                    | yes      |             |
+| migration | property | `ApmMigrationDescriptor`                                     | yes      |             |
+| plan      | property | `ApmMigrationPlanResult`                                     | yes      |             |
+| project   | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes      |             |
+
+## ApmMigrationExecutionResult
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:94:1`
+
+### Members
+
+| Name               | Kind     | Type                | Required | Description |
+| ------------------ | -------- | ------------------- | -------- | ----------- |
+| appliedMutationIds | property | `readonly string[]` | yes      |             |
+| evidence           | property | `readonly string[]` | yes      |             |
+| migrationId        | property | `string`            | yes      |             |
+
+## ApmMigrationHandler
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:120:1`
+
+### Members
+
+| Name         | Kind     | Type                                                                                | Required | Description |
+| ------------ | -------- | ----------------------------------------------------------------------------------- | -------- | ----------- |
+| executeAsync | property | `(input: ApmMigrationExecutionInput) => Promise<ApmMigrationExecutionResult>`       | yes      |             |
+| id           | property | `string`                                                                            | yes      |             |
+| planAsync    | property | `(input: ApmMigrationPlanInput) => Promise<ApmMigrationPlanResult>`                 | yes      |             |
+| verifyAsync  | property | `(input: ApmMigrationVerificationInput) => Promise<ApmExtensionVerificationResult>` | yes      |             |
+
+## ApmMigrationImplementation
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:60:1`
+
+### Members
+
+| Name     | Kind     | Type                       | Required | Description |
+| -------- | -------- | -------------------------- | -------- | ----------- |
+| artifact | property | `ApmMigrationArtifactRole` | yes      |             |
+| version  | property | `string`                   | no       |             |
+
+## ApmMigrationPathInput
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:84:1`
+
+### Members
+
+| Name                | Kind     | Type                                       | Required | Description |
+| ------------------- | -------- | ------------------------------------------ | -------- | ----------- |
+| completedMigrations | property | `readonly ApmCompletedMigrationEvidence[]` | no       |             |
+| descriptor          | property | `ApmUpdateDescriptor`                      | yes      |             |
+| sourceStateRevision | property | `string`                                   | no       |             |
+| sourceVersion       | property | `string`                                   | yes      |             |
+| targetVersion       | property | `string`                                   | yes      |             |
+
+## ApmMigrationPathResult
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:92:1`
+
+### Members
+
+| Name                | Kind     | Type                                  | Required | Description |
+| ------------------- | -------- | ------------------------------------- | -------- | ----------- |
+| blockers            | property | `readonly ApmUpdateProtocolBlocker[]` | yes      |             |
+| migrations          | property | `readonly ApmMigrationDescriptor[]`   | yes      |             |
+| noMigrationRequired | property | `boolean`                             | yes      |             |
+| supported           | property | `boolean`                             | yes      |             |
+
+## ApmMigrationPlanInput
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:100:1`
+
+### Members
+
+| Name       | Kind     | Type                           | Required | Description |
+| ---------- | -------- | ------------------------------ | -------- | ----------- |
+| context    | property | `ApmExtensionExecutionContext` | yes      |             |
+| descriptor | property | `ApmMigrationDescriptor`       | yes      |             |
+| project    | property | `ApmExtensionProjectReadPort`  | yes      |             |
+
+## ApmMigrationPlanInvocation
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:141:1`
+
+### Members
+
+| Name      | Kind     | Type                           | Required | Description |
+| --------- | -------- | ------------------------------ | -------- | ----------- |
+| context   | property | `ApmExtensionExecutionContext` | yes      |             |
+| extension | property | `unknown`                      | yes      |             |
+| migration | property | `ApmMigrationDescriptor`       | yes      |             |
+| project   | property | `ApmExtensionProjectReadPort`  | yes      |             |
+
+## ApmMigrationPlanResult
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:87:1`
+
+### Members
+
+| Name             | Kind     | Type                            | Required | Description |
+| ---------------- | -------- | ------------------------------- | -------- | ----------- |
+| evidence         | property | `readonly string[]`             | yes      |             |
+| inputFingerprint | property | `string`                        | yes      |             |
+| migrationId      | property | `string`                        | yes      |             |
+| mutations        | property | `readonly ApmProjectMutation[]` | yes      |             |
+
+## ApmMigrationPrerequisite
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:65:1`
+
+### Members
+
+| Name        | Kind     | Type     | Required | Description |
+| ----------- | -------- | -------- | -------- | ----------- |
+| migrationId | property | `string` | yes      |             |
+| owner       | property | `string` | yes      |             |
+
+## ApmMigrationRecoveryDescriptor
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:94:1`
+
+### Members
+
+| Name               | Kind     | Type      | Required | Description |
+| ------------------ | -------- | --------- | -------- | ----------- |
+| idempotent         | property | `boolean` | yes      |             |
+| restartable        | property | `boolean` | yes      |             |
+| reverseMigrationId | property | `string`  | no       |             |
+| reversible         | property | `boolean` | yes      |             |
+
+## ApmMigrationSideEffect
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:85:1`
+
+## ApmMigrationSource
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:48:1`
+
+### Members
+
+| Name          | Kind     | Type     | Required | Description |
+| ------------- | -------- | -------- | -------- | ----------- |
+| packageRange  | property | `string` | yes      |             |
+| stateRevision | property | `string` | no       |             |
+
 ## ApmMigrationState
 
 Kind: `unknown`
 Module: `src/types/status.ts`
 Source: `src/types/status.ts:16:1`
+
+## ApmMigrationTarget
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:53:1`
+
+### Members
+
+| Name           | Kind     | Type     | Required | Description |
+| -------------- | -------- | -------- | -------- | ----------- |
+| packageVersion | property | `string` | yes      |             |
+| stateRevision  | property | `string` | no       |             |
+
+## ApmMigrationVerificationInput
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:113:1`
+
+### Members
+
+| Name       | Kind     | Type                           | Required | Description |
+| ---------- | -------- | ------------------------------ | -------- | ----------- |
+| context    | property | `ApmExtensionExecutionContext` | yes      |             |
+| descriptor | property | `ApmMigrationDescriptor`       | yes      |             |
+| plan       | property | `ApmMigrationPlanResult`       | yes      |             |
+| project    | property | `ApmExtensionProjectReadPort`  | yes      |             |
+
+## ApmMigrationVerificationRequirement
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:88:1`
+
+### Members
+
+| Name        | Kind     | Type                      | Required | Description |
+| ----------- | -------- | ------------------------- | -------- | ----------- |
+| description | property | `string`                  | yes      |             |
+| key         | property | `string`                  | no       |             |
+| kind        | property | `"manual" \| "extension"` | yes      |             |
+
+## ApmOtaEligibilityEffect
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:132:1`
+
+### Members
+
+| Name        | Kind     | Type                                        | Required | Description |
+| ----------- | -------- | ------------------------------------------- | -------- | ----------- |
+| eligibility | property | `"unknown" \| "eligible" \| "not-eligible"` | yes      |             |
+| evidence    | property | `readonly string[]`                         | yes      |             |
+| kind        | property | `"ota-eligibility"`                         | yes      |             |
+| reason      | property | `string`                                    | yes      |             |
 
 ## ApmPackageAvailabilityEvidence
 
@@ -288,11 +678,159 @@ Kind: `unknown`
 Module: `src/types/status.ts`
 Source: `src/types/status.ts:7:1`
 
+## ApmPackageUpdateMetadata
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:13:1`
+
+### Members
+
+| Name            | Kind     | Type     | Required | Description |
+| --------------- | -------- | -------- | -------- | ----------- |
+| descriptor      | property | `string` | yes      |             |
+| protocolVersion | property | `1`      | yes      |             |
+
+## ApmPackageUpdateMetadataValidationResult
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:57:1`
+
+### Members
+
+| Name     | Kind     | Type                                  | Required | Description |
+| -------- | -------- | ------------------------------------- | -------- | ----------- |
+| blockers | property | `readonly ApmUpdateProtocolBlocker[]` | yes      |             |
+| metadata | property | `ApmPackageUpdateMetadata`            | no       |             |
+| valid    | property | `boolean`                             | yes      |             |
+
+## ApmProjectFileSnapshot
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:26:1`
+
+### Members
+
+| Name     | Kind     | Type                 | Required | Description |
+| -------- | -------- | -------------------- | -------- | ----------- |
+| content  | property | `string`             | no       |             |
+| digest   | property | `string`             | no       |             |
+| encoding | property | `"utf8" \| "base64"` | no       |             |
+| exists   | property | `boolean`            | yes      |             |
+| path     | property | `string`             | yes      |             |
+
+## ApmProjectionDescriptor
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:115:1`
+
+### Members
+
+| Name              | Kind     | Type                         | Required | Description |
+| ----------------- | -------- | ---------------------------- | -------- | ----------- |
+| claims            | property | `readonly ApmProjectScope[]` | yes      |             |
+| id                | property | `string`                     | yes      |             |
+| reason            | property | `string`                     | no       |             |
+| requiresExtension | property | `boolean`                    | yes      |             |
+
+## ApmProjectionHandler
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:184:1`
+
+### Members
+
+| Name             | Kind     | Type                                                                                | Required | Description |
+| ---------------- | -------- | ----------------------------------------------------------------------------------- | -------- | ----------- |
+| id               | property | `string`                                                                            | yes      |             |
+| inspectAsync     | property | `(input: ApmProjectionInput) => Promise<ApmProjectionInspectionResult>`             | yes      |             |
+| materializeAsync | property | `(input: ApmProjectionMaterializeInput) => Promise<void>`                           | yes      |             |
+| planAsync        | property | `(input: ApmProjectionInput) => Promise<ApmProjectionPlanResult>`                   | yes      |             |
+| verifyAsync      | property | `(input: ApmProjectionMaterializeInput) => Promise<ApmExtensionVerificationResult>` | yes      |             |
+
+## ApmProjectionInput
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:173:1`
+
+### Members
+
+| Name       | Kind     | Type                           | Required | Description |
+| ---------- | -------- | ------------------------------ | -------- | ----------- |
+| context    | property | `ApmExtensionExecutionContext` | yes      |             |
+| descriptor | property | `ApmProjectionDescriptor`      | yes      |             |
+| project    | property | `ApmExtensionProjectReadPort`  | yes      |             |
+
+## ApmProjectionInspectionResult
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:156:1`
+
+### Members
+
+| Name                 | Kind     | Type                                | Required | Description |
+| -------------------- | -------- | ----------------------------------- | -------- | ----------- |
+| evidence             | property | `readonly string[]`                 | yes      |             |
+| generatorFingerprint | property | `string`                            | yes      |             |
+| inputFingerprint     | property | `string`                            | yes      |             |
+| projectionId         | property | `string`                            | yes      |             |
+| reason               | property | `string`                            | no       |             |
+| state                | property | `"unknown" \| "current" \| "stale"` | yes      |             |
+
+## ApmProjectionMaterializeInput
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:179:1`
+
+### Members
+
+| Name       | Kind     | Type                                                         | Required | Description |
+| ---------- | -------- | ------------------------------------------------------------ | -------- | ----------- |
+| context    | property | `ApmExtensionExecutionContext`                               | yes      |             |
+| descriptor | property | `ApmProjectionDescriptor`                                    | yes      |             |
+| plan       | property | `ApmProjectionPlanResult`                                    | yes      |             |
+| project    | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes      |             |
+
+## ApmProjectionPlanResult
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:165:1`
+
+### Members
+
+| Name                 | Kind     | Type                            | Required | Description |
+| -------------------- | -------- | ------------------------------- | -------- | ----------- |
+| evidence             | property | `readonly string[]`             | yes      |             |
+| generatorFingerprint | property | `string`                        | yes      |             |
+| inputFingerprint     | property | `string`                        | yes      |             |
+| mutations            | property | `readonly ApmProjectMutation[]` | yes      |             |
+| projectionId         | property | `string`                        | yes      |             |
+
 ## ApmProjectionState
 
 Kind: `unknown`
 Module: `src/types/status.ts`
 Source: `src/types/status.ts:14:1`
+
+## ApmProjectMutation
+
+Kind: `unknown`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:39:1`
+
+## ApmProjectScope
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:70:1`
 
 ## ApmRegistryAvailabilityOptions
 
@@ -316,6 +854,33 @@ Source: `src/types/registry.ts:6:1`
 Kind: `unknown`
 Module: `src/types/registry.ts`
 Source: `src/types/registry.ts:1:1`
+
+## ApmReleaseEffect
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:139:1`
+
+## ApmReleaseRequirementEffect
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:125:1`
+
+### Members
+
+| Name        | Kind     | Type                                        | Required | Description |
+| ----------- | -------- | ------------------------------------------- | -------- | ----------- |
+| evidence    | property | `readonly string[]`                         | yes      |             |
+| kind        | property | `ApmReleaseRequirementEffectKind`           | yes      |             |
+| reason      | property | `string`                                    | yes      |             |
+| requirement | property | `"unknown" \| "required" \| "not-required"` | yes      |             |
+
+## ApmReleaseRequirementEffectKind
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:122:1`
 
 ## ApmStatusAvailabilityMode
 
@@ -566,6 +1131,159 @@ Source: `src/types/status.ts:245:1`
 | rootPath      | property | `string`                                | yes      |             |
 | schemaVersion | property | `2`                                     | yes      |             |
 
+## ApmSupportedSourceHistory
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:23:1`
+
+### Members
+
+| Name          | Kind     | Type                            | Required | Description |
+| ------------- | -------- | ------------------------------- | -------- | ----------- |
+| mode          | property | `"automatic" \| "no-migration"` | yes      |             |
+| sourceRange   | property | `string`                        | yes      |             |
+| stateRevision | property | `string`                        | no       |             |
+
+## ApmUnsupportedSourceHistory
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:29:1`
+
+### Members
+
+| Name        | Kind     | Type     | Required | Description |
+| ----------- | -------- | -------- | -------- | ----------- |
+| nextAction  | property | `string` | no       |             |
+| reason      | property | `string` | yes      |             |
+| sourceRange | property | `string` | yes      |             |
+
+## ApmUpdateDescriptor
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:141:1`
+
+### Members
+
+| Name            | Kind     | Type                                    | Required | Description |
+| --------------- | -------- | --------------------------------------- | -------- | ----------- |
+| compatibility   | property | `readonly ApmCompatibilityConstraint[]` | yes      |             |
+| effects         | property | `readonly ApmReleaseEffect[]`           | yes      |             |
+| extension       | property | `{ readonly export: string; }`          | no       |             |
+| history         | property | `ApmUpdateHistoryDescriptor`            | yes      |             |
+| migrations      | property | `readonly ApmMigrationDescriptor[]`     | yes      |             |
+| owner           | property | `ApmUpdateOwnerIdentity`                | yes      |             |
+| projections     | property | `readonly ApmProjectionDescriptor[]`    | yes      |             |
+| protocolVersion | property | `1`                                     | yes      |             |
+| schemaVersion   | property | `1`                                     | yes      |             |
+
+## ApmUpdateDescriptorSchemaVersion
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:3:1`
+
+## ApmUpdateDescriptorValidationInput
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:63:1`
+
+### Members
+
+| Name                | Kind     | Type                                                   | Required | Description |
+| ------------------- | -------- | ------------------------------------------------------ | -------- | ----------- |
+| descriptor          | property | `unknown`                                              | yes      |             |
+| expectedOwner       | property | `{ readonly name: string; readonly version: string; }` | no       |             |
+| previousDescriptors | property | `readonly ApmUpdateDescriptor[]`                       | no       |             |
+| relatedDescriptors  | property | `readonly ApmUpdateDescriptor[]`                       | no       |             |
+
+## ApmUpdateDescriptorValidationResult
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:73:1`
+
+### Members
+
+| Name       | Kind     | Type                                  | Required | Description |
+| ---------- | -------- | ------------------------------------- | -------- | ----------- |
+| blockers   | property | `readonly ApmUpdateProtocolBlocker[]` | yes      |             |
+| descriptor | property | `ApmUpdateDescriptor`                 | no       |             |
+| valid      | property | `boolean`                             | yes      |             |
+
+## ApmUpdateExtension
+
+Kind: `type`
+Module: `src/types/update-extension.ts`
+Source: `src/types/update-extension.ts:194:1`
+
+### Members
+
+| Name             | Kind     | Type                              | Required | Description |
+| ---------------- | -------- | --------------------------------- | -------- | ----------- |
+| descriptorDigest | property | `string`                          | yes      |             |
+| migrations       | property | `readonly ApmMigrationHandler[]`  | yes      |             |
+| projections      | property | `readonly ApmProjectionHandler[]` | yes      |             |
+| protocolVersion  | property | `1`                               | yes      |             |
+
+## ApmUpdateHistoryDescriptor
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:35:1`
+
+### Members
+
+| Name        | Kind     | Type                                     | Required | Description |
+| ----------- | -------- | ---------------------------------------- | -------- | ----------- |
+| downgrade   | property | `"unsupported" \| "manual"`              | yes      |             |
+| supported   | property | `readonly ApmSupportedSourceHistory[]`   | yes      |             |
+| unsupported | property | `readonly ApmUnsupportedSourceHistory[]` | yes      |             |
+
+## ApmUpdateOwnerIdentity
+
+Kind: `type`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:18:1`
+
+### Members
+
+| Name    | Kind     | Type     | Required | Description |
+| ------- | -------- | -------- | -------- | ----------- |
+| name    | property | `string` | yes      |             |
+| version | property | `string` | yes      |             |
+
+## ApmUpdateProtocolBlocker
+
+Kind: `type`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:39:1`
+
+### Members
+
+| Name       | Kind     | Type                                                                                                                                                  | Required | Description |
+| ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| code       | property | `ApmUpdateProtocolBlockerCode`                                                                                                                        | yes      |             |
+| evidence   | property | `readonly string[]`                                                                                                                                   | yes      |             |
+| nextAction | property | `string`                                                                                                                                              | no       |             |
+| reason     | property | `string`                                                                                                                                              | yes      |             |
+| scope      | property | `{ readonly kind: "package-metadata" \| "descriptor" \| "history" \| "migration" \| "projection" \| "extension" \| "effect"; readonly id?: string; }` | yes      |             |
+
+## ApmUpdateProtocolBlockerCode
+
+Kind: `unknown`
+Module: `src/types/update-validation.ts`
+Source: `src/types/update-validation.ts:7:1`
+
+## ApmUpdateProtocolVersion
+
+Kind: `unknown`
+Module: `src/types/update-protocol.ts`
+Source: `src/types/update-protocol.ts:1:1`
+
 ## createCliProvider
 
 Kind: `function`
@@ -608,6 +1326,20 @@ Inspect package declarations, lock instances, and installed state without runnin
   - input: `{ readonly inspection: ProjectInspection; }`
   - returns: `Promise<ApmDependencyInventory>`
 
+## resolveMigrationPath
+
+Kind: `function`
+Module: `src/features/update-protocol/domain/resolveMigrationPath.ts`
+Source: `src/features/update-protocol/domain/resolveMigrationPath.ts:16:1`
+
+Resolve one complete deterministic owner migration path for an exact source and target.
+
+### Signatures
+
+- `(input: ApmMigrationPathInput) => ApmMigrationPathResult`
+  - input: `ApmMigrationPathInput`
+  - returns: `ApmMigrationPathResult`
+
 ## statusAsync
 
 Kind: `function`
@@ -641,3 +1373,62 @@ Compose APM status with published Project Detector, local package-manager, and r
 - `(input: ApmStatusInput) => Promise<ApmStatusResult>`
   - input: `ApmStatusInput`
   - returns: `Promise<ApmStatusResult>`
+
+## validatePackageUpdateMetadata
+
+Kind: `function`
+Module: `src/features/update-protocol/domain/validatePackageUpdateMetadata.ts`
+Source: `src/features/update-protocol/domain/validatePackageUpdateMetadata.ts:8:1`
+
+Validate package.json `ankhorage.apm` discovery metadata before descriptor loading.
+
+### Signatures
+
+- `(value: unknown) => ApmPackageUpdateMetadataValidationResult`
+  - value: `unknown`
+  - returns: `ApmPackageUpdateMetadataValidationResult`
+
+## validateUpdateDescriptor
+
+Kind: `function`
+Module: `src/features/update-protocol/domain/validateUpdateDescriptor.ts`
+Source: `src/features/update-protocol/domain/validateUpdateDescriptor.ts:19:1`
+
+Validate unknown static package metadata and all canonical update-protocol invariants.
+
+### Signatures
+
+- `(input: ApmUpdateDescriptorValidationInput) => ApmUpdateDescriptorValidationResult`
+  - input: `ApmUpdateDescriptorValidationInput`
+  - returns: `ApmUpdateDescriptorValidationResult`
+
+## validateUpdateExtensionBinding
+
+Kind: `function`
+Module: `src/features/update-protocol/domain/validateUpdateExtensionBinding.ts`
+Source: `src/features/update-protocol/domain/validateUpdateExtensionBinding.ts:9:1`
+
+Validate loaded owner code against the exact immutable artifact identity selected by APM.
+
+### Signatures
+
+- `(artifact: ApmExtensionArtifactIdentity, extension: unknown) => readonly ApmUpdateProtocolBlocker[]`
+  - artifact: `ApmExtensionArtifactIdentity`
+  - extension: `unknown`
+  - returns: `readonly ApmUpdateProtocolBlocker[]`
+
+## validateUpdateExtensionCapabilities
+
+Kind: `function`
+Module: `src/features/update-protocol/domain/validateUpdateExtensionCapabilities.ts`
+Source: `src/features/update-protocol/domain/validateUpdateExtensionCapabilities.ts:13:1`
+
+Validate only the handlers required from the selected source/target/intermediate artifact.
+
+### Signatures
+
+- `(descriptor: ApmUpdateDescriptor, artifact: ApmExtensionArtifactIdentity, extension: ApmUpdateExtension) => readonly ApmUpdateProtocolBlocker[]`
+  - artifact: `ApmExtensionArtifactIdentity`
+  - descriptor: `ApmUpdateDescriptor`
+  - extension: `ApmUpdateExtension`
+  - returns: `readonly ApmUpdateProtocolBlocker[]`

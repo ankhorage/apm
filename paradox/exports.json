@@ -119,6 +119,86 @@
     "structuredRows": []
   },
   {
+    "name": "ApmCompatibilityConstraint",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 41,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"host\" | \"package\" | \"node\" | \"framework\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "range",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmCompletedMigrationEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 79,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "checksum",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmDependencyDeclaration",
     "description": null,
     "isReadme": false,
@@ -231,6 +311,60 @@
     "structuredRows": []
   },
   {
+    "name": "ApmExtensionArtifactIdentity",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 11,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationArtifactRole"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "descriptorDigest",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "integrity",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageName",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "role",
+        "kind": "property",
+        "type": "ApmMigrationArtifactRole",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmExtensionEvidence",
     "description": null,
     "isReadme": false,
@@ -275,6 +409,71 @@
         "description": null
       }
     ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionExecutionContext",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 19,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmExtensionArtifactIdentity"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "artifact",
+        "kind": "property",
+        "type": "ApmExtensionArtifactIdentity",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "owner",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "sourceVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targetVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionInvocationResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 131,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
     "structuredRows": []
   },
   {
@@ -340,6 +539,105 @@
         "kind": "property",
         "type": "string",
         "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionProjectReadPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 34,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectFileSnapshot", "ApmProjectScope"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "listFilesAsync",
+        "kind": "property",
+        "type": "(scope: ApmProjectScope) => Promise<readonly ApmProjectFileSnapshot[]>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "readFileAsync",
+        "kind": "property",
+        "type": "(path: string) => Promise<ApmProjectFileSnapshot>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionProjectWritePort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 77,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "applyReviewedMutationAsync",
+        "kind": "property",
+        "type": "(mutationId: string) => Promise<void>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionVerificationResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 81,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "valid",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
         "description": null
       }
     ],
@@ -528,6 +826,24 @@
     "structuredRows": []
   },
   {
+    "name": "ApmJsonValue",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 5,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "ApmLockedDependencyEdge",
     "description": null,
     "isReadme": false,
@@ -697,6 +1013,743 @@
     "structuredRows": []
   },
   {
+    "name": "ApmMigrationArtifactRole",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 58,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationDescriptor",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 101,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmMigrationImplementation",
+      "ApmMigrationPrerequisite",
+      "ApmMigrationRecoveryDescriptor",
+      "ApmMigrationSideEffect",
+      "ApmMigrationSource",
+      "ApmMigrationTarget",
+      "ApmMigrationVerificationRequirement",
+      "ApmProjectScope"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "affectedScopes",
+        "kind": "property",
+        "type": "readonly ApmProjectScope[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "checksum",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "from",
+        "kind": "property",
+        "type": "ApmMigrationSource",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "implementation",
+        "kind": "property",
+        "type": "ApmMigrationImplementation",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "phase",
+        "kind": "property",
+        "type": "\"pre-install\" | \"post-install\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "prerequisites",
+        "kind": "property",
+        "type": "readonly ApmMigrationPrerequisite[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "recovery",
+        "kind": "property",
+        "type": "ApmMigrationRecoveryDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "sideEffects",
+        "kind": "property",
+        "type": "readonly ApmMigrationSideEffect[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "to",
+        "kind": "property",
+        "type": "ApmMigrationTarget",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "verification",
+        "kind": "property",
+        "type": "readonly ApmMigrationVerificationRequirement[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationExecutionInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 106,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmExtensionProjectWritePort",
+      "ApmMigrationDescriptor",
+      "ApmMigrationPlanResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmMigrationDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "plan",
+        "kind": "property",
+        "type": "ApmMigrationPlanResult",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort & ApmExtensionProjectWritePort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationExecutionInvocation",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 148,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmExtensionProjectWritePort",
+      "ApmMigrationDescriptor",
+      "ApmMigrationPlanResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "extension",
+        "kind": "property",
+        "type": "unknown",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migration",
+        "kind": "property",
+        "type": "ApmMigrationDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "plan",
+        "kind": "property",
+        "type": "ApmMigrationPlanResult",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort & ApmExtensionProjectWritePort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationExecutionResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 94,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "appliedMutationIds",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migrationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationHandler",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 120,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionVerificationResult",
+      "ApmMigrationExecutionInput",
+      "ApmMigrationExecutionResult",
+      "ApmMigrationPlanInput",
+      "ApmMigrationPlanResult",
+      "ApmMigrationVerificationInput"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "executeAsync",
+        "kind": "property",
+        "type": "(input: ApmMigrationExecutionInput) => Promise<ApmMigrationExecutionResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "planAsync",
+        "kind": "property",
+        "type": "(input: ApmMigrationPlanInput) => Promise<ApmMigrationPlanResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "verifyAsync",
+        "kind": "property",
+        "type": "(input: ApmMigrationVerificationInput) => Promise<ApmExtensionVerificationResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationImplementation",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 60,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationArtifactRole"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "artifact",
+        "kind": "property",
+        "type": "ApmMigrationArtifactRole",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationPathInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 84,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmCompletedMigrationEvidence", "ApmUpdateDescriptor"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "completedMigrations",
+        "kind": "property",
+        "type": "readonly ApmCompletedMigrationEvidence[]",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmUpdateDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "sourceStateRevision",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "sourceVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targetVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationPathResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 92,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationDescriptor", "ApmUpdateProtocolBlocker"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmUpdateProtocolBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migrations",
+        "kind": "property",
+        "type": "readonly ApmMigrationDescriptor[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "noMigrationRequired",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "supported",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationPlanInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 100,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmMigrationDescriptor"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmMigrationDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationPlanInvocation",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 141,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmMigrationDescriptor"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "extension",
+        "kind": "property",
+        "type": "unknown",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migration",
+        "kind": "property",
+        "type": "ApmMigrationDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationPlanResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 87,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectMutation"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "inputFingerprint",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migrationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "mutations",
+        "kind": "property",
+        "type": "readonly ApmProjectMutation[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationPrerequisite",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 65,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "migrationId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "owner",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationRecoveryDescriptor",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 94,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "idempotent",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "restartable",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reverseMigrationId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reversible",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationSideEffect",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 85,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationSource",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 48,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "packageRange",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "stateRevision",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmMigrationState",
     "description": null,
     "isReadme": false,
@@ -712,6 +1765,178 @@
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationTarget",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 53,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "packageVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "stateRevision",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationVerificationInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 113,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmMigrationDescriptor",
+      "ApmMigrationPlanResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmMigrationDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "plan",
+        "kind": "property",
+        "type": "ApmMigrationPlanResult",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationVerificationRequirement",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 88,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "description",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "key",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"manual\" | \"extension\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmOtaEligibilityEffect",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 132,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "eligibility",
+        "kind": "property",
+        "type": "\"unknown\" | \"eligible\" | \"not-eligible\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"ota-eligibility\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
     "structuredRows": []
   },
   {
@@ -855,6 +2080,452 @@
     "structuredRows": []
   },
   {
+    "name": "ApmPackageUpdateMetadata",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 13,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "protocolVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPackageUpdateMetadataValidationResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 57,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageUpdateMetadata", "ApmUpdateProtocolBlocker"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmUpdateProtocolBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "metadata",
+        "kind": "property",
+        "type": "ApmPackageUpdateMetadata",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "valid",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectFileSnapshot",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 26,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "content",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "digest",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "encoding",
+        "kind": "property",
+        "type": "\"utf8\" | \"base64\"",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "exists",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "path",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionDescriptor",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 115,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectScope"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "claims",
+        "kind": "property",
+        "type": "readonly ApmProjectScope[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "requiresExtension",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionHandler",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 184,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionVerificationResult",
+      "ApmProjectionInput",
+      "ApmProjectionInspectionResult",
+      "ApmProjectionMaterializeInput",
+      "ApmProjectionPlanResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "inspectAsync",
+        "kind": "property",
+        "type": "(input: ApmProjectionInput) => Promise<ApmProjectionInspectionResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "materializeAsync",
+        "kind": "property",
+        "type": "(input: ApmProjectionMaterializeInput) => Promise<void>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "planAsync",
+        "kind": "property",
+        "type": "(input: ApmProjectionInput) => Promise<ApmProjectionPlanResult>",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "verifyAsync",
+        "kind": "property",
+        "type": "(input: ApmProjectionMaterializeInput) => Promise<ApmExtensionVerificationResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 173,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmProjectionDescriptor"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmProjectionDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionInspectionResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 156,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "generatorFingerprint",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "inputFingerprint",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "projectionId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"unknown\" | \"current\" | \"stale\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionMaterializeInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 179,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionExecutionContext",
+      "ApmExtensionProjectReadPort",
+      "ApmExtensionProjectWritePort",
+      "ApmProjectionDescriptor",
+      "ApmProjectionPlanResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "context",
+        "kind": "property",
+        "type": "ApmExtensionExecutionContext",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmProjectionDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "plan",
+        "kind": "property",
+        "type": "ApmProjectionPlanResult",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmExtensionProjectReadPort & ApmExtensionProjectWritePort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionPlanResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 165,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectMutation"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "generatorFingerprint",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "inputFingerprint",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "mutations",
+        "kind": "property",
+        "type": "readonly ApmProjectMutation[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "projectionId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmProjectionState",
     "description": null,
     "isReadme": false,
@@ -864,6 +2535,42 @@
     "sourceLocation": {
       "filePath": "src/types/status.ts",
       "line": 14,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectMutation",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 39,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectScope",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 70,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -943,6 +2650,89 @@
     "sourceLocation": {
       "filePath": "src/types/registry.ts",
       "line": 1,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmReleaseEffect",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 139,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmReleaseRequirementEffect",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 125,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmReleaseRequirementEffectKind"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "ApmReleaseRequirementEffectKind",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "requirement",
+        "kind": "property",
+        "type": "\"unknown\" | \"required\" | \"not-required\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmReleaseRequirementEffectKind",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 122,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -1776,6 +3566,490 @@
     "structuredRows": []
   },
   {
+    "name": "ApmSupportedSourceHistory",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 23,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "mode",
+        "kind": "property",
+        "type": "\"automatic\" | \"no-migration\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "sourceRange",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "stateRevision",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUnsupportedSourceHistory",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 29,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "sourceRange",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateDescriptor",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 141,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmCompatibilityConstraint",
+      "ApmMigrationDescriptor",
+      "ApmProjectionDescriptor",
+      "ApmReleaseEffect",
+      "ApmUpdateHistoryDescriptor",
+      "ApmUpdateOwnerIdentity"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "compatibility",
+        "kind": "property",
+        "type": "readonly ApmCompatibilityConstraint[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "effects",
+        "kind": "property",
+        "type": "readonly ApmReleaseEffect[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "extension",
+        "kind": "property",
+        "type": "{ readonly export: string; }",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "history",
+        "kind": "property",
+        "type": "ApmUpdateHistoryDescriptor",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migrations",
+        "kind": "property",
+        "type": "readonly ApmMigrationDescriptor[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "owner",
+        "kind": "property",
+        "type": "ApmUpdateOwnerIdentity",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "projections",
+        "kind": "property",
+        "type": "readonly ApmProjectionDescriptor[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "protocolVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateDescriptorSchemaVersion",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 3,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateDescriptorValidationInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 63,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateDescriptor"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "unknown",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "expectedOwner",
+        "kind": "property",
+        "type": "{ readonly name: string; readonly version: string; }",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "previousDescriptors",
+        "kind": "property",
+        "type": "readonly ApmUpdateDescriptor[]",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "relatedDescriptors",
+        "kind": "property",
+        "type": "readonly ApmUpdateDescriptor[]",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateDescriptorValidationResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 73,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateDescriptor", "ApmUpdateProtocolBlocker"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmUpdateProtocolBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "descriptor",
+        "kind": "property",
+        "type": "ApmUpdateDescriptor",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "valid",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateExtension",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-extension.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-extension.ts",
+      "line": 194,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationHandler", "ApmProjectionHandler"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "descriptorDigest",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migrations",
+        "kind": "property",
+        "type": "readonly ApmMigrationHandler[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "projections",
+        "kind": "property",
+        "type": "readonly ApmProjectionHandler[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "protocolVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateHistoryDescriptor",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 35,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmSupportedSourceHistory", "ApmUnsupportedSourceHistory"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "downgrade",
+        "kind": "property",
+        "type": "\"unsupported\" | \"manual\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "supported",
+        "kind": "property",
+        "type": "readonly ApmSupportedSourceHistory[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "unsupported",
+        "kind": "property",
+        "type": "readonly ApmUnsupportedSourceHistory[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateOwnerIdentity",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 18,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateProtocolBlocker",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 39,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateProtocolBlockerCode"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "code",
+        "kind": "property",
+        "type": "ApmUpdateProtocolBlockerCode",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "scope",
+        "kind": "property",
+        "type": "{ readonly kind: \"package-metadata\" | \"descriptor\" | \"history\" | \"migration\" | \"projection\" | \"extension\" | \"effect\"; readonly id?: string; }",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateProtocolBlockerCode",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-validation.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-validation.ts",
+      "line": 7,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmUpdateProtocolVersion",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/update-protocol.ts",
+    "sourceLocation": {
+      "filePath": "src/types/update-protocol.ts",
+      "line": 1,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "createCliProvider",
     "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
     "isReadme": false,
@@ -1872,6 +4146,38 @@
     "structuredRows": []
   },
   {
+    "name": "resolveMigrationPath",
+    "description": "Resolve one complete deterministic owner migration path for an exact source and target.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/update-protocol/domain/resolveMigrationPath.ts",
+    "sourceLocation": {
+      "filePath": "src/features/update-protocol/domain/resolveMigrationPath.ts",
+      "line": 16,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationPathInput", "ApmMigrationPathResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmMigrationPathInput) => ApmMigrationPathResult",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmMigrationPathInput",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "ApmMigrationPathResult",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "statusAsync",
     "description": "Build evidence-based, serializable APM status without mutating the inspected project.\n\nThe use case separates Project Detector evidence, package-manager inventory, registry\navailability, and optional package-owned projection/migration evidence behind outbound ports.\nMissing or partial evidence makes currency `unknown`; it never becomes a green current result.\nHosts can call this boundary without a terminal and can test it with deterministic fake ports.",
     "isReadme": true,
@@ -1935,6 +4241,157 @@
           }
         ],
         "returnType": "Promise<ApmStatusResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "validatePackageUpdateMetadata",
+    "description": "Validate package.json `ankhorage.apm` discovery metadata before descriptor loading.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/update-protocol/domain/validatePackageUpdateMetadata.ts",
+    "sourceLocation": {
+      "filePath": "src/features/update-protocol/domain/validatePackageUpdateMetadata.ts",
+      "line": 8,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageUpdateMetadataValidationResult"],
+    "signatures": [
+      {
+        "label": "(value: unknown) => ApmPackageUpdateMetadataValidationResult",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "unknown",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "ApmPackageUpdateMetadataValidationResult",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "validateUpdateDescriptor",
+    "description": "Validate unknown static package metadata and all canonical update-protocol invariants.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/update-protocol/domain/validateUpdateDescriptor.ts",
+    "sourceLocation": {
+      "filePath": "src/features/update-protocol/domain/validateUpdateDescriptor.ts",
+      "line": 19,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateDescriptorValidationInput", "ApmUpdateDescriptorValidationResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmUpdateDescriptorValidationInput) => ApmUpdateDescriptorValidationResult",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmUpdateDescriptorValidationInput",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "ApmUpdateDescriptorValidationResult",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "validateUpdateExtensionBinding",
+    "description": "Validate loaded owner code against the exact immutable artifact identity selected by APM.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.ts",
+    "sourceLocation": {
+      "filePath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.ts",
+      "line": 9,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmExtensionArtifactIdentity", "ApmUpdateProtocolBlocker"],
+    "signatures": [
+      {
+        "label": "(artifact: ApmExtensionArtifactIdentity, extension: unknown) => readonly ApmUpdateProtocolBlocker[]",
+        "parameters": [
+          {
+            "name": "artifact",
+            "type": "ApmExtensionArtifactIdentity",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "extension",
+            "type": "unknown",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "readonly ApmUpdateProtocolBlocker[]",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "validateUpdateExtensionCapabilities",
+    "description": "Validate only the handlers required from the selected source/target/intermediate artifact.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/update-protocol/domain/validateUpdateExtensionCapabilities.ts",
+    "sourceLocation": {
+      "filePath": "src/features/update-protocol/domain/validateUpdateExtensionCapabilities.ts",
+      "line": 13,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmExtensionArtifactIdentity",
+      "ApmUpdateDescriptor",
+      "ApmUpdateExtension",
+      "ApmUpdateProtocolBlocker"
+    ],
+    "signatures": [
+      {
+        "label": "(descriptor: ApmUpdateDescriptor, artifact: ApmExtensionArtifactIdentity, extension: ApmUpdateExtension) => readonly ApmUpdateProtocolBlocker[]",
+        "parameters": [
+          {
+            "name": "artifact",
+            "type": "ApmExtensionArtifactIdentity",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "descriptor",
+            "type": "ApmUpdateDescriptor",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "extension",
+            "type": "ApmUpdateExtension",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "readonly ApmUpdateProtocolBlocker[]",
         "returnDescription": null
       }
     ],
