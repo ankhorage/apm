@@ -60,6 +60,7 @@ async function resolveNativePlanAsync(
     const blockers = [...targetBlockers, ...fileChanges.blockers, ...graph.blockers];
     return {
       installRootId: request.installRootId,
+      installRootPath: request.installRootPath,
       complete: blockers.length === 0,
       manager: request.manager,
       ...managerVersion(versionResult, request),
@@ -125,6 +126,7 @@ function failedResolution(
 ): ApmPlanResolutionResult {
   return {
     installRootId: request.installRootId,
+    installRootPath: request.installRootPath,
     complete: false,
     manager: request.manager,
     ...(request.managerVersion === undefined ? {} : { managerVersion: request.managerVersion }),
