@@ -175,6 +175,7 @@ async function resolveOneAsync(
   } catch (error) {
     return {
       installRootId: request.installRootId,
+      installRootPath: request.installRootPath,
       complete: false,
       manager: request.manager,
       ...(request.managerVersion === undefined ? {} : { managerVersion: request.managerVersion }),
