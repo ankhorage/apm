@@ -35,6 +35,7 @@ export interface ApmVerifyStatusPort {
 
 export interface ApmVerifyStepPort {
   readonly verifyAsync: (input: {
+    readonly journal: ApmApplyJournal;
     readonly plan: ApmPlanResult;
     readonly step: ApmPlanStep;
     readonly status: ApmStatusResult;
