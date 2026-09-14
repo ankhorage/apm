@@ -13,12 +13,16 @@ export function parseUpdateDescriptor(value: unknown): ApmUpdateDescriptor | und
   const identity = parseDescriptorIdentity(value);
   const capabilities = parseDescriptorCapabilities(value);
   if (identity === undefined || capabilities === undefined) return undefined;
-  return {
+  const descriptor = {
     protocolVersion: 1,
     schemaVersion: 1,
-    ...identity,
+    owner: identity.owner,
+    history: identity.history,
     ...capabilities,
-  };
+  } as const;
+  return identity.extension === undefined
+    ? descriptor
+    : { ...descriptor, extension: identity.extension };
 }
 
 interface DescriptorIdentity {
