@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 
 import { expect, test } from 'bun:test';
 
+import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import type {
   ApmPlanDigestPort,
   ApmPlanPorts,
@@ -180,6 +181,7 @@ function protocolPortFixture(): ApmPlanProtocolPort {
             owner: '@owner/package',
             reason: 'Transform supported schema state.',
             evidence: ['m1'],
+            execution: migrationExecutionFixture(),
           },
           {
             id: 'projection:@owner/package:generated',
@@ -188,6 +190,7 @@ function protocolPortFixture(): ApmPlanProtocolPort {
             owner: '@owner/package',
             reason: 'Materialize target generator projection.',
             evidence: ['generated'],
+            execution: projectionExecutionFixture(),
           },
         ],
         effects: [
@@ -202,6 +205,79 @@ function protocolPortFixture(): ApmPlanProtocolPort {
         blockers: [],
         diagnostics: [],
       }),
+  };
+}
+
+/*** Build reviewed executable migration evidence for the protocol composition fixture. */
+function migrationExecutionFixture(): Extract<
+  ApmPlanStepExecution,
+  { readonly kind: 'migration' }
+> {
+  return {
+    kind: 'migration',
+    descriptor: {
+      id: 'm1',
+      checksum: 'sha256:m1',
+      from: { packageRange: '^1.0.0' },
+      to: { packageVersion: '1.2.0' },
+      phase: 'post-install',
+      implementation: { artifact: 'target' },
+      prerequisites: [],
+      affectedScopes: [{ kind: 'file', path: 'schema.json' }],
+      sideEffects: ['project-files'],
+      verification: [{ kind: 'manual', description: 'Verify migrated schema state.' }],
+      recovery: { idempotent: true, restartable: true, reversible: false },
+    },
+    artifact: {
+      role: 'target',
+      packageName: '@owner/package',
+      version: '1.2.0',
+      integrity: 'sha512-owner-v1.2.0',
+      descriptorDigest: 'sha256:owner-update-descriptor',
+    },
+    plan: {
+      migrationId: 'm1',
+      mutations: [],
+      evidence: ['sha256:m1'],
+      inputFingerprint: 'migration-input:m1',
+    },
+  };
+}
+
+/*** Build reviewed executable projection evidence for the protocol composition fixture. */
+function projectionExecutionFixture(): Extract<
+  ApmPlanStepExecution,
+  { readonly kind: 'projection' }
+> {
+  const claim = { kind: 'file' as const, path: 'generated.json' };
+  return {
+    kind: 'projection',
+    descriptor: { id: 'generated', claims: [claim], requiresExtension: true },
+    artifact: {
+      role: 'target',
+      packageName: '@owner/package',
+      version: '1.2.0',
+      integrity: 'sha512-owner-v1.2.0',
+      descriptorDigest: 'sha256:owner-update-descriptor',
+    },
+    plan: {
+      projectionId: 'generated',
+      mutations: [
+        {
+          id: 'projection:generated:write',
+          claim,
+          kind: 'write-file',
+          path: 'generated.json',
+          encoding: 'utf8',
+          content: '{"version":2}',
+          expectedBeforeDigest: 'generated-before',
+          afterDigest: 'generated-after',
+        },
+      ],
+      inputFingerprint: 'projection-input',
+      generatorFingerprint: 'generator:v2',
+      evidence: ['generated'],
+    },
   };
 }
 
