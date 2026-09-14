@@ -18,6 +18,8 @@ export async function executeNodeInstallStepAsync(
     return commandFailure(step.id, step.execution.manager, 'version', version.exitCode);
   }
   const actualVersion = version.stdout.trim();
+  const observedVersion =
+    actualVersion === '' ? (step.execution.managerVersion ?? 'unknown') : actualVersion;
   if (
     step.execution.managerVersion !== undefined &&
     actualVersion !== step.execution.managerVersion
@@ -27,13 +29,13 @@ export async function executeNodeInstallStepAsync(
       evidence: [
         `manager:${step.execution.manager}`,
         `planned:${step.execution.managerVersion}`,
-        `actual:${actualVersion || 'unknown'}`,
+        `actual:${actualVersion === '' ? 'unknown' : actualVersion}`,
       ],
       diagnostics: [],
       failure: {
         code: 'apply.manager-version-mismatch',
         reason: 'Installed package-manager version differs from the version frozen into the plan.',
-        evidence: [step.execution.managerVersion, actualVersion || 'unknown'],
+        evidence: [step.execution.managerVersion, actualVersion === '' ? 'unknown' : actualVersion],
         nextAction: 'Use the reviewed package-manager version or create a new plan.',
       },
     };
@@ -47,7 +49,7 @@ export async function executeNodeInstallStepAsync(
         state: 'completed',
         evidence: [
           `manager:${step.execution.manager}`,
-          `version:${actualVersion || step.execution.managerVersion || 'unknown'}`,
+          `version:${observedVersion}`,
           `packages:${step.execution.packageIds.length}`,
         ],
         diagnostics: [],
