@@ -3,7 +3,10 @@ import { readFile } from 'node:fs/promises';
 import { isMissingPathError, pathExists, writeJsonFileAtomic } from '@ankhorage/utility/node/fs';
 import { resolvePathWithinRoot } from '@ankhorage/utility/node/path';
 
-import type { ApmApplyStepSnapshot } from '../../../../types/apply-storage.js';
+import type {
+  ApmApplyFileSnapshot,
+  ApmApplyStepSnapshot,
+} from '../../../../types/apply-storage.js';
 import type { ApmApplyJournal } from '../../../../types/apply.js';
 import type { ApmPlanStep } from '../../../../types/plan.js';
 import { parseApplyStepSnapshot } from '../../domain/parseApplyStepSnapshot.js';
@@ -19,13 +22,13 @@ export async function ensureApplyStepSnapshotAsync(
   const existing = await readSnapshotAsync(snapshotPath, step.id);
   if (existing !== undefined) return existing;
   const files = await Promise.all(
-    reviewedStepFilePaths(step).map(async (relativePath) => {
+    reviewedStepFilePaths(step).map(async (relativePath): Promise<ApmApplyFileSnapshot> => {
       const filePath = resolvePathWithinRoot(journal.rootPath, relativePath);
       try {
         const content = await readFile(filePath);
-        return { path: relativePath, exists: true, contentBase64: content.toString('base64') } as const;
+        return { path: relativePath, exists: true, contentBase64: content.toString('base64') };
       } catch (error) {
-        if (isMissingPathError(error)) return { path: relativePath, exists: false } as const;
+        if (isMissingPathError(error)) return { path: relativePath, exists: false };
         throw error;
       }
     }),
@@ -47,7 +50,8 @@ async function readSnapshotAsync(
 ): Promise<ApmApplyStepSnapshot | undefined> {
   try {
     const content = await readFile(snapshotPath, 'utf8');
-    const parsed = parseApplyStepSnapshot(JSON.parse(content) as unknown);
+    const parsedValue: unknown = JSON.parse(content);
+    const parsed = parseApplyStepSnapshot(parsedValue);
     return parsed?.stepId === stepId ? parsed : undefined;
   } catch (error) {
     if (isMissingPathError(error) || error instanceof SyntaxError) return undefined;
