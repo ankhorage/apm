@@ -330,6 +330,21 @@ Source: `src/types/apply.ts:201:1`
 | ------------ | -------- | ------------------------------------------------- | -------- | ----------- |
 | publishAsync | property | `(event: ApmApplyProgressEvent) => Promise<void>` | yes      |             |
 
+## ApmApplyProjectOptions
+
+Kind: `type`
+Module: `src/types/apply-project.ts`
+Source: `src/types/apply-project.ts:4:1`
+
+### Members
+
+| Name         | Kind     | Type                       | Required | Description |
+| ------------ | -------- | -------------------------- | -------- | ----------- |
+| cancellation | property | `ApmApplyCancellationPort` | no       |             |
+| ownerStep    | property | `ApmApplyStepPort`         | no       |             |
+| progress     | property | `ApmApplyProgressPort`     | no       |             |
+| status       | property | `ApmProjectStatusPort`     | no       |             |
+
 ## ApmApplyResult
 
 Kind: `type`
@@ -545,6 +560,28 @@ Source: `src/types/update-extension.ts:11:1`
 | packageName      | property | `string`                   | yes      |             |
 | role             | property | `ApmMigrationArtifactRole` | yes      |             |
 | version          | property | `string`                   | yes      |             |
+
+## ApmExtensionArtifactIdentityRequest
+
+Kind: `type`
+Module: `src/types/extension-artifact.ts`
+Source: `src/types/extension-artifact.ts:4:1`
+
+### Members
+
+| Name             | Kind     | Type                       | Required | Description |
+| ---------------- | -------- | -------------------------- | -------- | ----------- |
+| descriptorDigest | property | `string`                   | yes      |             |
+| packageName      | property | `string`                   | yes      |             |
+| role             | property | `ApmMigrationArtifactRole` | yes      |             |
+| rootPath         | property | `string`                   | yes      |             |
+| version          | property | `string`                   | yes      |             |
+
+## ApmExtensionArtifactIdentityResolution
+
+Kind: `unknown`
+Module: `src/types/extension-artifact.ts`
+Source: `src/types/extension-artifact.ts:12:1`
 
 ## ApmExtensionEvidence
 
@@ -1096,7 +1133,7 @@ Source: `src/types/update-validation.ts:57:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:121:1`
+Source: `src/types/plan.ts:122:1`
 
 ### Members
 
@@ -1113,7 +1150,7 @@ Source: `src/types/plan.ts:121:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:84:1`
+Source: `src/types/plan.ts:85:1`
 
 ### Members
 
@@ -1129,13 +1166,13 @@ Source: `src/types/plan.ts:84:1`
 
 Kind: `unknown`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:56:1`
+Source: `src/types/plan.ts:57:1`
 
 ## ApmPlanBlockerScope
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:78:1`
+Source: `src/types/plan.ts:79:1`
 
 ### Members
 
@@ -1149,7 +1186,7 @@ Source: `src/types/plan.ts:78:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:92:1`
+Source: `src/types/plan.ts:93:1`
 
 ### Members
 
@@ -1172,13 +1209,13 @@ Source: `src/types/plan.ts:92:1`
 
 Kind: `unknown`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:11:1`
+Source: `src/types/plan.ts:12:1`
 
 ## ApmPlanDigestPort
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:196:1`
+Source: `src/types/plan.ts:198:1`
 
 ### Members
 
@@ -1190,7 +1227,7 @@ Source: `src/types/plan.ts:196:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:178:1`
+Source: `src/types/plan.ts:180:1`
 
 ### Members
 
@@ -1204,7 +1241,7 @@ Source: `src/types/plan.ts:178:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:112:1`
+Source: `src/types/plan.ts:113:1`
 
 ### Members
 
@@ -1221,7 +1258,7 @@ Source: `src/types/plan.ts:112:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:184:1`
+Source: `src/types/plan.ts:186:1`
 
 ### Members
 
@@ -1235,7 +1272,7 @@ Source: `src/types/plan.ts:184:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:200:1`
+Source: `src/types/plan.ts:202:1`
 
 ### Members
 
@@ -1249,7 +1286,7 @@ Source: `src/types/plan.ts:200:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:35:1`
+Source: `src/types/plan.ts:36:1`
 
 ### Members
 
@@ -1262,7 +1299,7 @@ Source: `src/types/plan.ts:35:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:13:1`
+Source: `src/types/plan.ts:14:1`
 
 ### Members
 
@@ -1277,7 +1314,7 @@ Source: `src/types/plan.ts:13:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:48:1`
+Source: `src/types/plan.ts:49:1`
 
 ### Members
 
@@ -1293,7 +1330,7 @@ Source: `src/types/plan.ts:48:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:40:1`
+Source: `src/types/plan.ts:41:1`
 
 ### Members
 
@@ -1309,7 +1346,7 @@ Source: `src/types/plan.ts:40:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:252:1`
+Source: `src/types/plan.ts:255:1`
 
 ### Members
 
@@ -1323,7 +1360,7 @@ Source: `src/types/plan.ts:252:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:190:1`
+Source: `src/types/plan.ts:192:1`
 
 ### Members
 
@@ -1337,19 +1374,20 @@ Source: `src/types/plan.ts:190:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:248:1`
+Source: `src/types/plan.ts:250:1`
 
 ### Members
 
-| Name     | Kind     | Type                  | Required | Description |
-| -------- | -------- | --------------------- | -------- | ----------- |
-| protocol | property | `ApmPlanProtocolPort` | no       |             |
+| Name     | Kind     | Type                   | Required | Description |
+| -------- | -------- | ---------------------- | -------- | ----------- |
+| protocol | property | `ApmPlanProtocolPort`  | no       |             |
+| status   | property | `ApmProjectStatusPort` | no       |             |
 
 ## ApmPlanProtocolPort
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:244:1`
+Source: `src/types/plan.ts:246:1`
 
 ### Members
 
@@ -1361,7 +1399,7 @@ Source: `src/types/plan.ts:244:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:224:1`
+Source: `src/types/plan.ts:226:1`
 
 ### Members
 
@@ -1377,7 +1415,7 @@ Source: `src/types/plan.ts:224:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:232:1`
+Source: `src/types/plan.ts:234:1`
 
 ### Members
 
@@ -1397,7 +1435,7 @@ Source: `src/types/plan.ts:232:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:153:1`
+Source: `src/types/plan.ts:154:1`
 
 ### Members
 
@@ -1412,7 +1450,7 @@ Source: `src/types/plan.ts:153:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:174:1`
+Source: `src/types/plan.ts:176:1`
 
 ### Members
 
@@ -1424,7 +1462,7 @@ Source: `src/types/plan.ts:174:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:141:1`
+Source: `src/types/plan.ts:142:1`
 
 ### Members
 
@@ -1444,29 +1482,30 @@ Source: `src/types/plan.ts:141:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:160:1`
+Source: `src/types/plan.ts:161:1`
 
 ### Members
 
-| Name           | Kind     | Type                                 | Required | Description |
-| -------------- | -------- | ------------------------------------ | -------- | ----------- |
-| artifacts      | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
-| blockers       | property | `readonly ApmPlanBlocker[]`          | yes      |             |
-| complete       | property | `boolean`                            | yes      |             |
-| diagnostics    | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| effects        | property | `ApmPlanResolutionEffects`           | yes      |             |
-| files          | property | `readonly ApmPlanFileChange[]`       | yes      |             |
-| installRootId  | property | `string`                             | yes      |             |
-| linker         | property | `string`                             | no       |             |
-| manager        | property | `ApmPackageManagerName`              | yes      |             |
-| managerVersion | property | `string`                             | no       |             |
-| packages       | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
+| Name            | Kind     | Type                                 | Required | Description |
+| --------------- | -------- | ------------------------------------ | -------- | ----------- |
+| artifacts       | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
+| blockers        | property | `readonly ApmPlanBlocker[]`          | yes      |             |
+| complete        | property | `boolean`                            | yes      |             |
+| diagnostics     | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
+| effects         | property | `ApmPlanResolutionEffects`           | yes      |             |
+| files           | property | `readonly ApmPlanFileChange[]`       | yes      |             |
+| installRootId   | property | `string`                             | yes      |             |
+| installRootPath | property | `string`                             | yes      |             |
+| linker          | property | `string`                             | no       |             |
+| manager         | property | `ApmPackageManagerName`              | yes      |             |
+| managerVersion  | property | `string`                             | no       |             |
+| packages        | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
 
 ## ApmPlanResolvedPackage
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:130:1`
+Source: `src/types/plan.ts:131:1`
 
 ### Members
 
@@ -1485,7 +1524,7 @@ Source: `src/types/plan.ts:130:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:258:1`
+Source: `src/types/plan.ts:261:1`
 
 ### Members
 
@@ -1513,7 +1552,7 @@ Source: `src/types/plan.ts:258:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:206:1`
+Source: `src/types/plan.ts:208:1`
 
 ### Members
 
@@ -1538,13 +1577,13 @@ Source: `src/types/plan-execution.ts:27:1`
 
 Kind: `unknown`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:20:1`
+Source: `src/types/plan.ts:21:1`
 
 ## ApmPlanTargetSelectionResult
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:107:1`
+Source: `src/types/plan.ts:108:1`
 
 ### Members
 
@@ -1686,11 +1725,25 @@ Kind: `unknown`
 Module: `src/types/update-protocol.ts`
 Source: `src/types/update-protocol.ts:70:1`
 
+## ApmProjectStatusPort
+
+Kind: `type`
+Module: `src/types/status-project.ts`
+Source: `src/types/status-project.ts:4:1`
+
+Reusable project-status boundary shared by planning, apply validation, and verification composition.
+
+### Members
+
+| Name               | Kind     | Type                                                  | Required | Description |
+| ------------------ | -------- | ----------------------------------------------------- | -------- | ----------- |
+| inspectStatusAsync | property | `(input: ApmStatusInput) => Promise<ApmStatusResult>` | yes      |             |
+
 ## ApmRegistryAvailabilityOptions
 
 Kind: `type`
 Module: `src/types/registry.ts`
-Source: `src/types/registry.ts:6:1`
+Source: `src/types/registry.ts:12:1`
 
 ### Members
 
@@ -1708,6 +1761,20 @@ Source: `src/types/registry.ts:6:1`
 Kind: `unknown`
 Module: `src/types/registry.ts`
 Source: `src/types/registry.ts:1:1`
+
+## ApmRegistryRequestOptions
+
+Kind: `type`
+Module: `src/types/registry.ts`
+Source: `src/types/registry.ts:6:1`
+
+### Members
+
+| Name    | Kind     | Type                                            | Required | Description |
+| ------- | -------- | ----------------------------------------------- | -------- | ----------- |
+| env     | property | `Readonly<Record<string, string \| undefined>>` | no       |             |
+| fetchFn | property | `ApmRegistryFetch`                              | no       |             |
+| home    | property | `string`                                        | no       |             |
 
 ## ApmReleaseEffect
 
@@ -1944,6 +2011,20 @@ Source: `src/types/status.ts:82:1`
 | Name                | Kind     | Type                                               | Required | Description |
 | ------------------- | -------- | -------------------------------------------------- | -------- | ----------- |
 | inspectProjectAsync | property | `(rootPath: string) => Promise<ProjectInspection>` | yes      |             |
+
+## ApmStatusProjectOptions
+
+Kind: `type`
+Module: `src/types/status-project.ts`
+Source: `src/types/status-project.ts:9:1`
+
+Optional owner-specific status evidence composed around the default Node status adapters.
+
+### Members
+
+| Name       | Kind     | Type                             | Required | Description |
+| ---------- | -------- | -------------------------------- | -------- | ----------- |
+| extensions | property | `ApmStatusExtensionEvidencePort` | no       |             |
 
 ## ApmStatusProjectSummary
 
@@ -2196,7 +2277,7 @@ Source: `src/types/verify.ts:25:1`
 
 Kind: `type`
 Module: `src/types/verify.ts`
-Source: `src/types/verify.ts:44:1`
+Source: `src/types/verify.ts:45:1`
 
 ### Members
 
@@ -2206,11 +2287,24 @@ Source: `src/types/verify.ts:44:1`
 | status  | property | `ApmVerifyStatusPort`  | yes      |             |
 | step    | property | `ApmVerifyStepPort`    | yes      |             |
 
+## ApmVerifyProjectOptions
+
+Kind: `type`
+Module: `src/types/verify-project.ts`
+Source: `src/types/verify-project.ts:4:1`
+
+### Members
+
+| Name      | Kind     | Type                   | Required | Description |
+| --------- | -------- | ---------------------- | -------- | ----------- |
+| ownerStep | property | `ApmVerifyStepPort`    | no       |             |
+| status    | property | `ApmProjectStatusPort` | no       |             |
+
 ## ApmVerifyResult
 
 Kind: `type`
 Module: `src/types/verify.ts`
-Source: `src/types/verify.ts:50:1`
+Source: `src/types/verify.ts:51:1`
 
 ### Members
 
@@ -2247,9 +2341,39 @@ Source: `src/types/verify.ts:36:1`
 
 ### Members
 
-| Name        | Kind     | Type                                                                                                                                                   | Required | Description |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
-| verifyAsync | property | `(input: { readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes      |             |
+| Name        | Kind     | Type                                                                                                                                                                                      | Required | Description |
+| ----------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| verifyAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes      |             |
+
+## applyAsync
+
+Kind: `function`
+Module: `src/features/apply/application/applyAsync.ts`
+Source: `src/features/apply/application/applyAsync.ts:21:1`
+
+Start or resume one reviewed plan under an exclusive durable project operation lock.
+
+### Signatures
+
+- `(input: ApmApplyInput, ports: ApmApplyPorts) => Promise<ApmApplyResult>`
+  - input: `ApmApplyInput`
+  - ports: `ApmApplyPorts`
+  - returns: `Promise<ApmApplyResult>`
+
+## applyProjectAsync
+
+Kind: `function`
+Module: `src/features/apply/composition/applyProjectAsync.ts`
+Source: `src/features/apply/composition/applyProjectAsync.ts:17:1`
+
+Compose durable Node execution/recovery adapters behind the shared headless apply use case.
+
+### Signatures
+
+- `(input: ApmApplyInput, options?: ApmApplyProjectOptions) => Promise<ApmApplyResult>`
+  - input: `ApmApplyInput`
+  - options: `ApmApplyProjectOptions` (optional)
+  - returns: `Promise<ApmApplyResult>`
 
 ## createCliProvider
 
@@ -2269,7 +2393,7 @@ Create the thin Ankh command provider over the same standalone APM command adapt
 
 Kind: `function`
 Module: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts`
-Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:24:1`
+Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:25:1`
 
 Create the Node native package-manager resolution adapter used by headless project planning.
 
@@ -2363,6 +2487,21 @@ Resolve one complete deterministic owner migration path for an exact source and 
   - input: `ApmMigrationPathInput`
   - returns: `ApmMigrationPathResult`
 
+## resolveNpmExtensionArtifactIdentityAsync
+
+Kind: `function`
+Module: `src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts`
+Source: `src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts:14:1`
+
+Resolve one exact npm-compatible package artifact to immutable protocol identity using registry dist integrity.
+
+### Signatures
+
+- `(input: ApmExtensionArtifactIdentityRequest, options?: ApmRegistryRequestOptions) => Promise<ApmExtensionArtifactIdentityResolution>`
+  - input: `ApmExtensionArtifactIdentityRequest`
+  - options: `ApmRegistryRequestOptions` (optional)
+  - returns: `Promise<ApmExtensionArtifactIdentityResolution>`
+
 ## statusAsync
 
 Kind: `function`
@@ -2387,14 +2526,15 @@ Hosts can call this boundary without a terminal and can test it with determinist
 
 Kind: `function`
 Module: `src/features/status/composition/statusProjectAsync.ts`
-Source: `src/features/status/composition/statusProjectAsync.ts:10:1`
+Source: `src/features/status/composition/statusProjectAsync.ts:11:1`
 
-Compose APM status with published Project Detector, local package-manager, and registry edges.
+Compose APM status with published Project Detector, local package-manager, registry, and optional owner-extension evidence.
 
 ### Signatures
 
-- `(input: ApmStatusInput) => Promise<ApmStatusResult>`
+- `(input: ApmStatusInput, options?: ApmStatusProjectOptions) => Promise<ApmStatusResult>`
   - input: `ApmStatusInput`
+  - options: `ApmStatusProjectOptions` (optional)
   - returns: `Promise<ApmStatusResult>`
 
 ## validatePackageUpdateMetadata
@@ -2472,3 +2612,33 @@ Validate only the handlers required from the selected source/target/intermediate
   - descriptor: `ApmUpdateDescriptor`
   - extension: `ApmUpdateExtension`
   - returns: `readonly ApmUpdateProtocolBlocker[]`
+
+## verifyAsync
+
+Kind: `function`
+Module: `src/features/verify/application/verifyAsync.ts`
+Source: `src/features/verify/application/verifyAsync.ts:12:1`
+
+Verify one durable applied operation against fresh project and reviewed step postconditions.
+
+### Signatures
+
+- `(input: ApmVerifyInput, ports: ApmVerifyPorts) => Promise<ApmVerifyResult>`
+  - input: `ApmVerifyInput`
+  - ports: `ApmVerifyPorts`
+  - returns: `Promise<ApmVerifyResult>`
+
+## verifyProjectAsync
+
+Kind: `function`
+Module: `src/features/verify/composition/verifyProjectAsync.ts`
+Source: `src/features/verify/composition/verifyProjectAsync.ts:12:1`
+
+Compose durable Node journal/status/postcondition adapters behind the shared headless verify use case.
+
+### Signatures
+
+- `(input: ApmVerifyInput, options?: ApmVerifyProjectOptions) => Promise<ApmVerifyResult>`
+  - input: `ApmVerifyInput`
+  - options: `ApmVerifyProjectOptions` (optional)
+  - returns: `Promise<ApmVerifyResult>`

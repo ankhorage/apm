@@ -19,5 +19,6 @@ export { planProjectAsync } from './features/plan/composition/planProjectAsync.j
 export { createNpmRegistryAvailabilityPort } from './features/status/adapters/outbound/createNpmRegistryAvailabilityPort.js';
 export { inspectDependencyInventoryAsync } from './features/status/adapters/outbound/inspectDependencyInventoryAsync.js';
 export { statusProjectAsync } from './features/status/composition/statusProjectAsync.js';
+export { resolveNpmExtensionArtifactIdentityAsync } from './features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.js';
 export { verifyProjectAsync } from './features/verify/composition/verifyProjectAsync.js';
 export type * from './types/public.js';

@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { isMissingPathError } from '@ankhorage/utility/node/fs';
 
-import type { ApmRegistryConfig } from '../../../../types/status-registry.js';
+import type { ApmRegistryConfig } from '../types/status-registry.js';
 
 /*** Read npm-compatible user/project registry configuration without returning credential values. */
 export async function readRegistryConfigAsync(input: {

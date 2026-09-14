@@ -11,12 +11,13 @@ import type {
   ApmRegistryConfig,
   ApmRegistryMetadata,
 } from '../../../../types/status-registry.js';
+import { createRegistryPackageRequest } from '../../../../utils/createRegistryPackageRequest.js';
 
 /*** Query one package with bounded cache semantics and no credential leakage into evidence. */
 export async function queryRegistryPackageAsync(
   input: QueryRegistryPackageInput,
 ): Promise<ApmPackageAvailabilityEvidence> {
-  const registry = registryForPackage(input.request.name, input.config);
+  const { registry } = createRegistryPackageRequest(input.request.name, input.config);
   const cacheKey = `${registry}\u0000${input.request.name}`;
   const cached = input.cache.get(cacheKey);
   const currentTime = input.now();
@@ -51,9 +52,9 @@ async function fetchRegistryPackageAsync(
   currentTime: number,
 ): Promise<ApmPackageAvailabilityEvidence> {
   try {
-    const url = new URL(encodeURIComponent(input.request.name), ensureTrailingSlash(registry));
+    const { url, headers } = createRegistryPackageRequest(input.request.name, input.config);
     const response = await input.fetchFn(url, {
-      headers: buildAuthHeaders(url, input.config),
+      headers,
       signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok) {
@@ -132,41 +133,12 @@ function normalizeRange(range: string): string {
   return range.startsWith('npm:') ? range.slice('npm:'.length) : range;
 }
 
-/*** Select a scoped registry before the project default registry. */
-function registryForPackage(name: string, config: ApmRegistryConfig): string {
-  const slash = name.indexOf('/');
-  const scope = name.startsWith('@') && slash > 0 ? name.slice(0, slash) : undefined;
-  return (
-    (scope === undefined ? undefined : config.scopedRegistries.get(scope)) ?? config.defaultRegistry
-  );
-}
-
-/*** Build Authorization headers from npmrc auth entries while keeping values inside the HTTP edge. */
-function buildAuthHeaders(url: URL, config: ApmRegistryConfig): Headers {
-  const headers = new Headers({ accept: 'application/vnd.npm.install-v1+json, application/json' });
-  const basePath = url.pathname.slice(0, url.pathname.lastIndexOf('/') + 1);
-  const authPrefix = `//${url.host}${basePath}`;
-  const hostPrefix = `//${url.host}/`;
-  const token =
-    config.values.get(`${authPrefix}:_authToken`) ?? config.values.get(`${hostPrefix}:_authToken`);
-  const basic =
-    config.values.get(`${authPrefix}:_auth`) ?? config.values.get(`${hostPrefix}:_auth`);
-  if (token !== undefined && token !== '') headers.set('authorization', `Bearer ${token}`);
-  else if (basic !== undefined && basic !== '') headers.set('authorization', `Basic ${basic}`);
-  return headers;
-}
-
 /*** Return explicit unknown package availability without registry credentials or raw headers. */
 function unknownAvailability(
   request: ApmAvailabilityRequest,
   reason: string,
 ): ApmPackageAvailabilityEvidence {
   return { packageId: request.packageId, name: request.name, state: 'unknown', reason };
-}
-
-/*** Normalize registry base URLs before package URL resolution. */
-function ensureTrailingSlash(value: string): string {
-  return value.endsWith('/') ? value : `${value}/`;
 }
 
 /*** Redact embedded URL credentials in network error text without a backtracking expression. */

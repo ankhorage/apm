@@ -6,6 +6,7 @@ import type {
   ApmStatusFinding,
   ApmStatusResult,
 } from './status.js';
+import type { ApmProjectStatusPort } from './status-project.js';
 import type { ApmReleaseEffect } from './update-protocol.js';
 
 export type ApmPlanDependencyUpdateMode = 'safe' | 'selected' | 'none';
@@ -248,6 +249,7 @@ export interface ApmPlanProtocolPort {
 
 export interface ApmPlanProjectOptions {
   readonly protocol?: ApmPlanProtocolPort;
+  readonly status?: ApmProjectStatusPort;
 }
 
 export interface ApmPlanPorts {

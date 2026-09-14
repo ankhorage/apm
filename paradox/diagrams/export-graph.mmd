@@ -10,21 +10,45 @@ graph LR
   module_src_cli_createCliProvider_test_ts["src/cli/createCliProvider.test.ts"]
   module_src_cli_createCliProvider_ts["src/cli/createCliProvider.ts"]
   module_src_cli_provider_ts["src/cli/provider.ts"]
-  module_src_cli_renderUnavailableOperation_ts["src/cli/renderUnavailableOperation.ts"]
   module_src_cli_runAsync_test_ts["src/cli/runAsync.test.ts"]
   module_src_cli_runAsync_ts["src/cli/runAsync.ts"]
+  module_src_features_apply_adapters_outbound_buildPackageManagerInstallCommand_ts["src/features/apply/adapters/outbound/buildPackageManagerInstallCommand.ts"]
+  module_src_features_apply_adapters_outbound_createNodeApplyJournalPort_ts["src/features/apply/adapters/outbound/createNodeApplyJournalPort.ts"]
+  module_src_features_apply_adapters_outbound_createNodeApplyLockPort_ts["src/features/apply/adapters/outbound/createNodeApplyLockPort.ts"]
+  module_src_features_apply_adapters_outbound_createNodeApplyStepPort_ts["src/features/apply/adapters/outbound/createNodeApplyStepPort.ts"]
+  module_src_features_apply_adapters_outbound_ensureApplyStepSnapshotAsync_ts["src/features/apply/adapters/outbound/ensureApplyStepSnapshotAsync.ts"]
+  module_src_features_apply_adapters_outbound_executeNodeFileStepAsync_ts["src/features/apply/adapters/outbound/executeNodeFileStepAsync.ts"]
+  module_src_features_apply_adapters_outbound_executeNodeInstallStepAsync_ts["src/features/apply/adapters/outbound/executeNodeInstallStepAsync.ts"]
+  module_src_features_apply_adapters_outbound_executeNodeValidationStepAsync_ts["src/features/apply/adapters/outbound/executeNodeValidationStepAsync.ts"]
+  module_src_features_apply_adapters_outbound_inspectApplyDependencyInventoryAsync_ts["src/features/apply/adapters/outbound/inspectApplyDependencyInventoryAsync.ts"]
+  module_src_features_apply_adapters_outbound_observeNodeFileStepAsync_ts["src/features/apply/adapters/outbound/observeNodeFileStepAsync.ts"]
+  module_src_features_apply_adapters_outbound_observeNodeInstallStepAsync_ts["src/features/apply/adapters/outbound/observeNodeInstallStepAsync.ts"]
+  module_src_features_apply_adapters_outbound_readApplyStepSnapshotAsync_ts["src/features/apply/adapters/outbound/readApplyStepSnapshotAsync.ts"]
+  module_src_features_apply_adapters_outbound_readPlanFileStateAsync_ts["src/features/apply/adapters/outbound/readPlanFileStateAsync.ts"]
+  module_src_features_apply_adapters_outbound_restoreApplyStepSnapshotAsync_ts["src/features/apply/adapters/outbound/restoreApplyStepSnapshotAsync.ts"]
+  module_src_features_apply_adapters_outbound_rollbackNodeFileStepAsync_ts["src/features/apply/adapters/outbound/rollbackNodeFileStepAsync.ts"]
   module_src_features_apply_application_applyAsync_test_ts["src/features/apply/application/applyAsync.test.ts"]
   module_src_features_apply_application_applyAsync_ts["src/features/apply/application/applyAsync.ts"]
+  module_src_features_apply_application_applyInstallFailure_test_ts["src/features/apply/application/applyInstallFailure.test.ts"]
+  module_src_features_apply_application_applyOwnerFailureRecovery_test_ts["src/features/apply/application/applyOwnerFailureRecovery.test.ts"]
+  module_src_features_apply_application_applyValidationFailure_test_ts["src/features/apply/application/applyValidationFailure.test.ts"]
   module_src_features_apply_application_finishApplyOperationAsync_ts["src/features/apply/application/finishApplyOperationAsync.ts"]
   module_src_features_apply_application_persistApplyJournalAsync_ts["src/features/apply/application/persistApplyJournalAsync.ts"]
   module_src_features_apply_application_runApplyStepsAsync_ts["src/features/apply/application/runApplyStepsAsync.ts"]
+  module_src_features_apply_composition_applyProjectAsync_ts["src/features/apply/composition/applyProjectAsync.ts"]
   module_src_features_apply_domain_applyPermissionBlockers_ts["src/features/apply/domain/applyPermissionBlockers.ts"]
   module_src_features_apply_domain_applyStepRecoveryPolicy_ts["src/features/apply/domain/applyStepRecoveryPolicy.ts"]
   module_src_features_apply_domain_createApplyBlocker_ts["src/features/apply/domain/createApplyBlocker.ts"]
   module_src_features_apply_domain_createApplyFailure_ts["src/features/apply/domain/createApplyFailure.ts"]
   module_src_features_apply_domain_createApplyJournal_ts["src/features/apply/domain/createApplyJournal.ts"]
   module_src_features_apply_domain_decideApplyStepObservation_ts["src/features/apply/domain/decideApplyStepObservation.ts"]
+  module_src_features_apply_domain_parseApplyJournal_ts["src/features/apply/domain/parseApplyJournal.ts"]
+  module_src_features_apply_domain_parseApplyStepSnapshot_ts["src/features/apply/domain/parseApplyStepSnapshot.ts"]
+  module_src_features_apply_domain_reviewedFileChanges_ts["src/features/apply/domain/reviewedFileChanges.ts"]
+  module_src_features_apply_domain_reviewedStepFilePaths_ts["src/features/apply/domain/reviewedStepFilePaths.ts"]
   module_src_features_apply_domain_transitionApplyJournal_ts["src/features/apply/domain/transitionApplyJournal.ts"]
+  module_src_features_apply_utils_applySnapshotPath_ts["src/features/apply/utils/applySnapshotPath.ts"]
+  module_src_features_apply_utils_applyStatePaths_ts["src/features/apply/utils/applyStatePaths.ts"]
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts["src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts"]
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_test_ts["src/features/plan/adapters/outbound/buildPackageManagerPlanCommands.test.ts"]
   module_src_features_plan_adapters_outbound_buildPackageManagerPlanCommands_ts["src/features/plan/adapters/outbound/buildPackageManagerPlanCommands.ts"]
@@ -32,13 +56,14 @@ graph LR
   module_src_features_plan_adapters_outbound_createNativePlanResolutionPort_ts["src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"]
   module_src_features_plan_adapters_outbound_createSha256PlanDigestPort_ts["src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts"]
   module_src_features_plan_adapters_outbound_inspectStagedPlanInventoryAsync_ts["src/features/plan/adapters/outbound/inspectStagedPlanInventoryAsync.ts"]
-  module_src_features_plan_adapters_outbound_runPlanCommandAsync_ts["src/features/plan/adapters/outbound/runPlanCommandAsync.ts"]
   module_src_features_plan_adapters_outbound_stagePlanInstallRootAsync_test_ts["src/features/plan/adapters/outbound/stagePlanInstallRootAsync.test.ts"]
   module_src_features_plan_adapters_outbound_stagePlanInstallRootAsync_ts["src/features/plan/adapters/outbound/stagePlanInstallRootAsync.ts"]
   module_src_features_plan_adapters_outbound_toPlanCommandFailureBlocker_test_ts["src/features/plan/adapters/outbound/toPlanCommandFailureBlocker.test.ts"]
   module_src_features_plan_adapters_outbound_toPlanCommandFailureBlocker_ts["src/features/plan/adapters/outbound/toPlanCommandFailureBlocker.ts"]
   module_src_features_plan_adapters_outbound_toPlanResolutionGraph_ts["src/features/plan/adapters/outbound/toPlanResolutionGraph.ts"]
   module_src_features_plan_adapters_outbound_validateStagedPlanTargets_ts["src/features/plan/adapters/outbound/validateStagedPlanTargets.ts"]
+  module_src_features_plan_application_fixtures_planExecutionFixtures_ts["src/features/plan/application/fixtures/planExecutionFixtures.ts"]
+  module_src_features_plan_application_fixtures_planStatusFixtures_ts["src/features/plan/application/fixtures/planStatusFixtures.ts"]
   module_src_features_plan_application_planAsync_test_ts["src/features/plan/application/planAsync.test.ts"]
   module_src_features_plan_application_planAsync_ts["src/features/plan/application/planAsync.ts"]
   module_src_features_plan_application_planFixedPoint_test_ts["src/features/plan/application/planFixedPoint.test.ts"]
@@ -54,10 +79,12 @@ graph LR
   module_src_features_plan_domain_buildPlanResolutionRequests_ts["src/features/plan/domain/buildPlanResolutionRequests.ts"]
   module_src_features_plan_domain_buildPlanSteps_ts["src/features/plan/domain/buildPlanSteps.ts"]
   module_src_features_plan_domain_createPlanInputFingerprintAsync_ts["src/features/plan/domain/createPlanInputFingerprintAsync.ts"]
+  module_src_features_plan_domain_isPlanStep_ts["src/features/plan/domain/isPlanStep.ts"]
   module_src_features_plan_domain_mergePlanSelections_test_ts["src/features/plan/domain/mergePlanSelections.test.ts"]
   module_src_features_plan_domain_mergePlanSelections_ts["src/features/plan/domain/mergePlanSelections.ts"]
   module_src_features_plan_domain_normalizePlanPolicy_ts["src/features/plan/domain/normalizePlanPolicy.ts"]
   module_src_features_plan_domain_orderPlanSteps_ts["src/features/plan/domain/orderPlanSteps.ts"]
+  module_src_features_plan_domain_parsePlanResult_ts["src/features/plan/domain/parsePlanResult.ts"]
   module_src_features_plan_domain_resolveExplicitDependencyTarget_ts["src/features/plan/domain/resolveExplicitDependencyTarget.ts"]
   module_src_features_plan_domain_selectDependencyTargets_test_ts["src/features/plan/domain/selectDependencyTargets.test.ts"]
   module_src_features_plan_domain_selectDependencyTargets_ts["src/features/plan/domain/selectDependencyTargets.ts"]
@@ -79,11 +106,11 @@ graph LR
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts["src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts"]
   module_src_features_status_adapters_outbound_readPackageManifestAsync_ts["src/features/status/adapters/outbound/readPackageManifestAsync.ts"]
   module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts["src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts"]
-  module_src_features_status_adapters_outbound_readRegistryConfigAsync_ts["src/features/status/adapters/outbound/readRegistryConfigAsync.ts"]
   module_src_features_status_adapters_outbound_readYarnLockEvidenceAsync_ts["src/features/status/adapters/outbound/readYarnLockEvidenceAsync.ts"]
   module_src_features_status_application_buildAvailabilityRequests_ts["src/features/status/application/buildAvailabilityRequests.ts"]
   module_src_features_status_application_statusAsync_test_ts["src/features/status/application/statusAsync.test.ts"]
   module_src_features_status_application_statusAsync_ts["src/features/status/application/statusAsync.ts"]
+  module_src_features_status_composition_ownerAwareProjectLifecycle_test_ts["src/features/status/composition/ownerAwareProjectLifecycle.test.ts"]
   module_src_features_status_composition_statusProjectAsync_test_ts["src/features/status/composition/statusProjectAsync.test.ts"]
   module_src_features_status_composition_statusProjectAsync_ts["src/features/status/composition/statusProjectAsync.ts"]
   module_src_features_status_constants_support_ts["src/features/status/constants/support.ts"]
@@ -95,6 +122,8 @@ graph LR
   module_src_features_status_domain_evaluateStatus_ts["src/features/status/domain/evaluateStatus.ts"]
   module_src_features_status_utils_declarationResolutionKey_ts["src/features/status/utils/declarationResolutionKey.ts"]
   module_src_features_status_utils_readInstalledPackageVersionAsync_ts["src/features/status/utils/readInstalledPackageVersionAsync.ts"]
+  module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_test_ts["src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"]
+  module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_ts["src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.ts"]
   module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts["src/features/update-protocol/application/executeMigrationExtensionAsync.ts"]
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts["src/features/update-protocol/application/planMigrationExtensionAsync.ts"]
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts["src/features/update-protocol/application/updateExtensionExecution.test.ts"]
@@ -134,23 +163,36 @@ graph LR
   module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts["src/features/update-protocol/utils/isProtocolPackageSubpath.ts"]
   module_src_features_update_protocol_utils_isProtocolProjectPath_ts["src/features/update-protocol/utils/isProtocolProjectPath.ts"]
   module_src_features_update_protocol_utils_migrationIdentity_ts["src/features/update-protocol/utils/migrationIdentity.ts"]
+  module_src_features_verify_adapters_outbound_createNodeVerifyStepPort_ts["src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts"]
   module_src_features_verify_application_verifyAsync_ts["src/features/verify/application/verifyAsync.ts"]
+  module_src_features_verify_composition_verifyProjectAsync_ts["src/features/verify/composition/verifyProjectAsync.ts"]
   module_src_nodeApm_ts["src/nodeApm.ts"]
+  module_src_types_apply_project_ts["src/types/apply-project.ts"]
   module_src_types_apply_runtime_ts["src/types/apply-runtime.ts"]
+  module_src_types_apply_storage_ts["src/types/apply-storage.ts"]
   module_src_types_apply_ts["src/types/apply.ts"]
   module_src_types_cli_ts["src/types/cli.ts"]
+  module_src_types_extension_artifact_ts["src/types/extension-artifact.ts"]
+  module_src_types_package_manager_command_ts["src/types/package-manager-command.ts"]
   module_src_types_plan_execution_ts["src/types/plan-execution.ts"]
   module_src_types_plan_staging_ts["src/types/plan-staging.ts"]
   module_src_types_plan_ts["src/types/plan.ts"]
   module_src_types_public_ts["src/types/public.ts"]
   module_src_types_registry_ts["src/types/registry.ts"]
   module_src_types_status_inventory_ts["src/types/status-inventory.ts"]
+  module_src_types_status_project_ts["src/types/status-project.ts"]
   module_src_types_status_registry_ts["src/types/status-registry.ts"]
   module_src_types_status_ts["src/types/status.ts"]
   module_src_types_update_extension_ts["src/types/update-extension.ts"]
   module_src_types_update_protocol_ts["src/types/update-protocol.ts"]
   module_src_types_update_validation_ts["src/types/update-validation.ts"]
+  module_src_types_verify_project_ts["src/types/verify-project.ts"]
   module_src_types_verify_ts["src/types/verify.ts"]
+  module_src_utils_createRegistryPackageRequest_ts["src/utils/createRegistryPackageRequest.ts"]
+  module_src_utils_inspectProjectStatusAsync_ts["src/utils/inspectProjectStatusAsync.ts"]
+  module_src_utils_packageInstanceId_ts["src/utils/packageInstanceId.ts"]
+  module_src_utils_readRegistryConfigAsync_ts["src/utils/readRegistryConfigAsync.ts"]
+  module_src_utils_runPackageManagerCommandAsync_ts["src/utils/runPackageManagerCommandAsync.ts"]
   export_APM_PLAN_SUPPORT["APM_PLAN_SUPPORT"]
   module_src_features_plan_constants_support_ts --> export_APM_PLAN_SUPPORT
   export_APM_STATUS_SUPPORT["APM_STATUS_SUPPORT"]
@@ -218,6 +260,12 @@ graph LR
   export_ApmApplyProgressPort["ApmApplyProgressPort"]
   module_src_types_apply_ts --> export_ApmApplyProgressPort
   export_ApmApplyProgressPort -.-> export_ApmApplyProgressEvent
+  export_ApmApplyProjectOptions["ApmApplyProjectOptions"]
+  module_src_types_apply_project_ts --> export_ApmApplyProjectOptions
+  export_ApmApplyProjectOptions -.-> export_ApmApplyCancellationPort
+  export_ApmApplyProjectOptions -.-> export_ApmApplyProgressPort
+  export_ApmApplyProjectOptions -.-> export_ApmApplyStepPort
+  export_ApmApplyProjectOptions -.-> export_ApmProjectStatusPort
   export_ApmApplyResult["ApmApplyResult"]
   module_src_types_apply_ts --> export_ApmApplyResult
   export_ApmApplyResult -.-> export_ApmApplyBlocker
@@ -269,6 +317,11 @@ graph LR
   export_ApmExtensionArtifactIdentity["ApmExtensionArtifactIdentity"]
   module_src_types_update_extension_ts --> export_ApmExtensionArtifactIdentity
   export_ApmExtensionArtifactIdentity -.-> export_ApmMigrationArtifactRole
+  export_ApmExtensionArtifactIdentityRequest["ApmExtensionArtifactIdentityRequest"]
+  module_src_types_extension_artifact_ts --> export_ApmExtensionArtifactIdentityRequest
+  export_ApmExtensionArtifactIdentityRequest -.-> export_ApmMigrationArtifactRole
+  export_ApmExtensionArtifactIdentityResolution["ApmExtensionArtifactIdentityResolution"]
+  module_src_types_extension_artifact_ts --> export_ApmExtensionArtifactIdentityResolution
   export_ApmExtensionEvidence["ApmExtensionEvidence"]
   module_src_types_status_ts --> export_ApmExtensionEvidence
   export_ApmExtensionEvidence -.-> export_ApmExtensionObservation
@@ -460,6 +513,7 @@ graph LR
   export_ApmPlanProjectOptions["ApmPlanProjectOptions"]
   module_src_types_plan_ts --> export_ApmPlanProjectOptions
   export_ApmPlanProjectOptions -.-> export_ApmPlanProtocolPort
+  export_ApmPlanProjectOptions -.-> export_ApmProjectStatusPort
   export_ApmPlanProtocolPort["ApmPlanProtocolPort"]
   module_src_types_plan_ts --> export_ApmPlanProtocolPort
   export_ApmPlanProtocolPort -.-> export_ApmPlanProtocolRequest
@@ -564,11 +618,18 @@ graph LR
   module_src_types_update_extension_ts --> export_ApmProjectMutation
   export_ApmProjectScope["ApmProjectScope"]
   module_src_types_update_protocol_ts --> export_ApmProjectScope
+  export_ApmProjectStatusPort["ApmProjectStatusPort"]
+  module_src_types_status_project_ts --> export_ApmProjectStatusPort
+  export_ApmProjectStatusPort -.-> export_ApmStatusInput
+  export_ApmProjectStatusPort -.-> export_ApmStatusResult
   export_ApmRegistryAvailabilityOptions["ApmRegistryAvailabilityOptions"]
   module_src_types_registry_ts --> export_ApmRegistryAvailabilityOptions
   export_ApmRegistryAvailabilityOptions -.-> export_ApmRegistryFetch
   export_ApmRegistryFetch["ApmRegistryFetch"]
   module_src_types_registry_ts --> export_ApmRegistryFetch
+  export_ApmRegistryRequestOptions["ApmRegistryRequestOptions"]
+  module_src_types_registry_ts --> export_ApmRegistryRequestOptions
+  export_ApmRegistryRequestOptions -.-> export_ApmRegistryFetch
   export_ApmReleaseEffect["ApmReleaseEffect"]
   module_src_types_update_protocol_ts --> export_ApmReleaseEffect
   export_ApmReleaseRequirementEffect["ApmReleaseRequirementEffect"]
@@ -629,6 +690,9 @@ graph LR
   export_ApmStatusPorts -.-> export_ApmStatusProjectInspectionPort
   export_ApmStatusProjectInspectionPort["ApmStatusProjectInspectionPort"]
   module_src_types_status_ts --> export_ApmStatusProjectInspectionPort
+  export_ApmStatusProjectOptions["ApmStatusProjectOptions"]
+  module_src_types_status_project_ts --> export_ApmStatusProjectOptions
+  export_ApmStatusProjectOptions -.-> export_ApmStatusExtensionEvidencePort
   export_ApmStatusProjectSummary["ApmStatusProjectSummary"]
   module_src_types_status_ts --> export_ApmStatusProjectSummary
   export_ApmStatusProjectSummary -.-> export_ApmStatusLanguage
@@ -698,6 +762,10 @@ graph LR
   export_ApmVerifyPorts -.-> export_ApmVerifyJournalPort
   export_ApmVerifyPorts -.-> export_ApmVerifyStatusPort
   export_ApmVerifyPorts -.-> export_ApmVerifyStepPort
+  export_ApmVerifyProjectOptions["ApmVerifyProjectOptions"]
+  module_src_types_verify_project_ts --> export_ApmVerifyProjectOptions
+  export_ApmVerifyProjectOptions -.-> export_ApmProjectStatusPort
+  export_ApmVerifyProjectOptions -.-> export_ApmVerifyStepPort
   export_ApmVerifyResult["ApmVerifyResult"]
   module_src_types_verify_ts --> export_ApmVerifyResult
   export_ApmVerifyResult -.-> export_ApmReleaseEffect
@@ -709,10 +777,21 @@ graph LR
   export_ApmVerifyStatusPort -.-> export_ApmStatusResult
   export_ApmVerifyStepPort["ApmVerifyStepPort"]
   module_src_types_verify_ts --> export_ApmVerifyStepPort
+  export_ApmVerifyStepPort -.-> export_ApmApplyJournal
   export_ApmVerifyStepPort -.-> export_ApmPlanResult
   export_ApmVerifyStepPort -.-> export_ApmPlanStep
   export_ApmVerifyStepPort -.-> export_ApmStatusResult
   export_ApmVerifyStepPort -.-> export_ApmVerifyCheckResult
+  export_applyAsync["applyAsync"]
+  module_src_features_apply_application_applyAsync_ts --> export_applyAsync
+  export_applyAsync -.-> export_ApmApplyInput
+  export_applyAsync -.-> export_ApmApplyPorts
+  export_applyAsync -.-> export_ApmApplyResult
+  export_applyProjectAsync["applyProjectAsync"]
+  module_src_features_apply_composition_applyProjectAsync_ts --> export_applyProjectAsync
+  export_applyProjectAsync -.-> export_ApmApplyInput
+  export_applyProjectAsync -.-> export_ApmApplyProjectOptions
+  export_applyProjectAsync -.-> export_ApmApplyResult
   export_createCliProvider["createCliProvider"]
   module_src_cli_createCliProvider_ts --> export_createCliProvider
   export_createNativePlanResolutionPort["createNativePlanResolutionPort"]
@@ -742,6 +821,11 @@ graph LR
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --> export_resolveMigrationPath
   export_resolveMigrationPath -.-> export_ApmMigrationPathInput
   export_resolveMigrationPath -.-> export_ApmMigrationPathResult
+  export_resolveNpmExtensionArtifactIdentityAsync["resolveNpmExtensionArtifactIdentityAsync"]
+  module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_ts --> export_resolveNpmExtensionArtifactIdentityAsync
+  export_resolveNpmExtensionArtifactIdentityAsync -.-> export_ApmExtensionArtifactIdentityRequest
+  export_resolveNpmExtensionArtifactIdentityAsync -.-> export_ApmExtensionArtifactIdentityResolution
+  export_resolveNpmExtensionArtifactIdentityAsync -.-> export_ApmRegistryRequestOptions
   export_statusAsync["statusAsync"]
   module_src_features_status_application_statusAsync_ts --> export_statusAsync
   export_statusAsync -.-> export_ApmStatusInput
@@ -750,6 +834,7 @@ graph LR
   export_statusProjectAsync["statusProjectAsync"]
   module_src_features_status_composition_statusProjectAsync_ts --> export_statusProjectAsync
   export_statusProjectAsync -.-> export_ApmStatusInput
+  export_statusProjectAsync -.-> export_ApmStatusProjectOptions
   export_statusProjectAsync -.-> export_ApmStatusResult
   export_validatePackageUpdateMetadata["validatePackageUpdateMetadata"]
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --> export_validatePackageUpdateMetadata
@@ -775,3 +860,13 @@ graph LR
   export_validateUpdateExtensionCapabilities -.-> export_ApmUpdateDescriptor
   export_validateUpdateExtensionCapabilities -.-> export_ApmUpdateExtension
   export_validateUpdateExtensionCapabilities -.-> export_ApmUpdateProtocolBlocker
+  export_verifyAsync["verifyAsync"]
+  module_src_features_verify_application_verifyAsync_ts --> export_verifyAsync
+  export_verifyAsync -.-> export_ApmVerifyInput
+  export_verifyAsync -.-> export_ApmVerifyPorts
+  export_verifyAsync -.-> export_ApmVerifyResult
+  export_verifyProjectAsync["verifyProjectAsync"]
+  module_src_features_verify_composition_verifyProjectAsync_ts --> export_verifyProjectAsync
+  export_verifyProjectAsync -.-> export_ApmVerifyInput
+  export_verifyProjectAsync -.-> export_ApmVerifyProjectOptions
+  export_verifyProjectAsync -.-> export_ApmVerifyResult

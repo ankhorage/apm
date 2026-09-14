@@ -3,9 +3,9 @@ import { randomUUID } from 'node:crypto';
 import metadata from '../../../../package.json' with { type: 'json' };
 import type { ApmApplyInput, ApmApplyPorts, ApmApplyResult } from '../../../types/apply.js';
 import type { ApmApplyProjectOptions } from '../../../types/apply-project.js';
+import { inspectProjectStatusAsync } from '../../../utils/inspectProjectStatusAsync.js';
 import { createSha256PlanDigestPort } from '../../plan/adapters/outbound/createSha256PlanDigestPort.js';
 import { validateSavedPlanAsync } from '../../plan/domain/validateSavedPlanAsync.js';
-import { statusProjectAsync } from '../../status/composition/statusProjectAsync.js';
 import { createNodeApplyJournalPort } from '../adapters/outbound/createNodeApplyJournalPort.js';
 import { createNodeApplyLockPort } from '../adapters/outbound/createNodeApplyLockPort.js';
 import { createNodeApplyStepPort } from '../adapters/outbound/createNodeApplyStepPort.js';
@@ -25,7 +25,8 @@ export async function applyProjectAsync(
     lock: createNodeApplyLockPort(),
     journal: createNodeApplyJournalPort(),
     status: {
-      inspectStatusAsync: (rootPath) => statusProjectAsync({ rootPath, availability: 'refresh' }),
+      inspectStatusAsync: (rootPath) =>
+        inspectProjectStatusAsync({ rootPath, availability: 'refresh' }, options.status),
     },
     planValidation: {
       validateAsync: ({ plan, status, executor: current }) =>

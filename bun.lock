@@ -6,7 +6,7 @@
       "name": "@ankhorage/apm",
       "dependencies": {
         "@ankhorage/project-detector": "^0.1.0",
-        "@ankhorage/utility": "^1.0.0",
+        "@ankhorage/utility": "^1.1.0",
         "jsonc-parser": "^3.3.1",
         "semver": "^7.8.5",
         "yaml": "^2.9.1",
@@ -45,7 +45,7 @@
 
     "@ankhorage/supabase-auth": ["@ankhorage/supabase-auth@1.2.12", "", { "dependencies": { "@ankhorage/contracts": "^12.0.1", "@noble/hashes": "2.3.0" } }, "sha512-izn1le/gfDd1tdOYZgVA64ojf2SJLg1QfcMC5zmMadC/AYURa3Dc7Xb3htUNAafNHexGKb4Za9u0HsuojRDyHQ=="],
 
-    "@ankhorage/utility": ["@ankhorage/utility@1.0.0", "", {}, "sha512-90zP7AbU4Hiou5nX5q+bwaX1Y9BSRzXE5Fse+hTnxpkHp2/xrrkAlAl4AgpprLdgy5jxzTKbfBO2BITsea2b0g=="],
+    "@ankhorage/utility": ["@ankhorage/utility@1.1.0", "", {}, "sha512-/SHZSk/5/wMAwU5elLBkCqc+O+fxOlfQLrCZvaXrADlfzinXSHgCfOgMeErd4zabJE1knqO7I+79PAjGwmi+yQ=="],
 
     "@babel/code-frame": ["@babel/code-frame@7.29.7", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.29.7", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw=="],
 
