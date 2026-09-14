@@ -54,17 +54,19 @@ async function discoverLockfilesAsync(
   manifest: ApmParsedPackageManifest,
 ): Promise<readonly ApmLockfileCandidate[]> {
   const results = await Promise.all(
-    STATUS_LOCKFILES.map(async (candidate) => {
+    STATUS_LOCKFILES.map(async (candidate): Promise<readonly ApmLockfileCandidate[]> => {
       const absolutePath = path.join(manifest.packageRoot, candidate.fileName);
-      if (!(await pathExists(absolutePath))) return undefined;
-      return {
-        manager: candidate.manager,
-        fileName: candidate.fileName,
-        path: portableRelative(projectRoot, absolutePath),
-      } satisfies ApmLockfileCandidate;
+      if (!(await pathExists(absolutePath))) return [];
+      return [
+        {
+          manager: candidate.manager,
+          fileName: candidate.fileName,
+          path: portableRelative(projectRoot, absolutePath),
+        },
+      ];
     }),
   );
-  return results.filter((result): result is ApmLockfileCandidate => result !== undefined);
+  return results.flat();
 }
 
 /*** Select explicit manager metadata before lockfile and detector heuristics. */
