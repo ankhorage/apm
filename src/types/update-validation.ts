@@ -20,6 +20,7 @@ export type ApmUpdateProtocolBlockerCode =
   | 'protocol.duplicate-migration-id'
   | 'protocol.duplicate-projection-id'
   | 'protocol.migration-checksum-changed'
+  | 'protocol.migration-history-checksum-mismatch'
   | 'protocol.migration-prerequisite-missing'
   | 'protocol.migration-prerequisite-cycle'
   | 'protocol.migration-path-missing'
@@ -65,11 +66,16 @@ export interface ApmUpdateDescriptorValidationResult {
   readonly blockers: readonly ApmUpdateProtocolBlocker[];
 }
 
+export interface ApmCompletedMigrationEvidence {
+  readonly id: string;
+  readonly checksum: string;
+}
+
 export interface ApmMigrationPathInput {
   readonly descriptor: ApmUpdateDescriptor;
   readonly sourceVersion: string;
   readonly sourceStateRevision?: string;
-  readonly completedMigrationIds?: readonly string[];
+  readonly completedMigrations?: readonly ApmCompletedMigrationEvidence[];
   readonly targetVersion: string;
 }
 
