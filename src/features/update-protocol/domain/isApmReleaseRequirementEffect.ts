@@ -6,9 +6,8 @@ import type { ApmReleaseRequirementEffect } from '../../../types/update-protocol
 export function isApmReleaseRequirementEffect(
   value: unknown,
 ): value is ApmReleaseRequirementEffect {
-  if (!isRecord(value) || typeof value.kind !== 'string') return false;
-  const kind = value.kind;
-  const requirement = value.requirement;
+  if (!isRecord(value)) return false;
+  const { kind, requirement, evidence, reason } = value;
   return (
     (kind === 'web-rebuild' ||
       kind === 'web-redeploy' ||
@@ -16,8 +15,8 @@ export function isApmReleaseRequirementEffect(
       kind === 'backend-prerequisite' ||
       kind === 'manual-review') &&
     (requirement === 'required' || requirement === 'not-required' || requirement === 'unknown') &&
-    Array.isArray(value.evidence) &&
-    value.evidence.every((entry) => typeof entry === 'string') &&
-    typeof value.reason === 'string'
+    Array.isArray(evidence) &&
+    evidence.every((entry) => typeof entry === 'string') &&
+    typeof reason === 'string'
   );
 }
