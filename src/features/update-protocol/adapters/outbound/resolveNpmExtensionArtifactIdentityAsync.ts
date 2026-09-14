@@ -50,12 +50,18 @@ export async function resolveNpmExtensionArtifactIdentityAsync(
       evidence: [input.packageName, input.version, integrity],
     };
   } catch {
-    return unavailable(input, 'Registry request failed before exact artifact identity was resolved.');
+    return unavailable(
+      input,
+      'Registry request failed before exact artifact identity was resolved.',
+    );
   }
 }
 
 /*** Find exact version metadata without dynamic object indexing. */
-function exactVersionMetadata(value: unknown, version: string): Readonly<Record<string, unknown>> | undefined {
+function exactVersionMetadata(
+  value: unknown,
+  version: string,
+): Readonly<Record<string, unknown>> | undefined {
   if (!isRecord(value) || !isRecord(value.versions)) return undefined;
   const match = Object.entries(value.versions).find(([candidate]) => candidate === version);
   if (match === undefined) return undefined;
@@ -65,7 +71,7 @@ function exactVersionMetadata(value: unknown, version: string): Readonly<Record<
 
 /*** Read immutable npm dist integrity from one exact version metadata record. */
 function readDistIntegrity(metadata: Readonly<Record<string, unknown>>): string | undefined {
-  const dist = metadata.dist;
+  const { dist } = metadata;
   return isRecord(dist) && typeof dist.integrity === 'string' && dist.integrity !== ''
     ? dist.integrity
     : undefined;

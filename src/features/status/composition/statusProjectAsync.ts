@@ -1,8 +1,8 @@
 import { inspectProjectAsync } from '@ankhorage/project-detector/node';
 
 import metadata from '../../../../package.json' with { type: 'json' };
-import type { ApmStatusProjectOptions } from '../../../types/status-project.js';
 import type { ApmStatusInput, ApmStatusResult } from '../../../types/status.js';
+import type { ApmStatusProjectOptions } from '../../../types/status-project.js';
 import { createNpmRegistryAvailabilityPort } from '../adapters/outbound/createNpmRegistryAvailabilityPort.js';
 import { inspectDependencyInventoryAsync } from '../adapters/outbound/inspectDependencyInventoryAsync.js';
 import { statusAsync } from '../application/statusAsync.js';

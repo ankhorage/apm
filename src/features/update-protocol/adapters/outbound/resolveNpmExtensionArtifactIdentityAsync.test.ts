@@ -80,8 +80,7 @@ test('rejects exact versions without immutable dist integrity', async () => {
       },
       {
         home: rootPath,
-        fetchFn: () =>
-          Promise.resolve(Response.json({ versions: { '2.0.0': { dist: {} } } })),
+        fetchFn: () => Promise.resolve(Response.json({ versions: { '2.0.0': { dist: {} } } })),
       },
     );
 

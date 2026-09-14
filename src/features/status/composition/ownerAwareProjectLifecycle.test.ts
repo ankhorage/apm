@@ -4,8 +4,8 @@ import path from 'node:path';
 
 import { expect, test } from 'bun:test';
 
-import type { ApmProjectStatusPort } from '../../../types/status-project.js';
 import type { ApmStatusInput, ApmStatusResult } from '../../../types/status.js';
+import type { ApmProjectStatusPort } from '../../../types/status-project.js';
 import { applyProjectAsync } from '../../apply/composition/applyProjectAsync.js';
 import { planProjectAsync } from '../../plan/composition/planProjectAsync.js';
 import { verifyProjectAsync } from '../../verify/composition/verifyProjectAsync.js';
