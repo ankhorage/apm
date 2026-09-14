@@ -36,13 +36,17 @@ async function resolveNativePlanAsync(
       stage.rootPath,
     );
     if (versionResult.exitCode !== 0) {
-      return failedResolution(request, [commandFailureBlocker(request, versionCommand(request), versionResult)]);
+      return failedResolution(request, [
+        commandFailureBlocker(request, versionCommand(request), versionResult),
+      ]);
     }
     const commands = buildPackageManagerPlanCommands(request);
     const commandResults = await runCommandsAsync(commands, stage.rootPath);
     const failed = firstFailedCommand(commands, commandResults);
     if (failed !== undefined) {
-      return failedResolution(request, [commandFailureBlocker(request, failed.command, failed.result)]);
+      return failedResolution(request, [
+        commandFailureBlocker(request, failed.command, failed.result),
+      ]);
     }
     const root = await inspectStagedPlanInventoryAsync(request, stage);
     if (root === undefined) return failedResolution(request, [stagedInventoryBlocker(request)]);
@@ -53,7 +57,7 @@ async function resolveNativePlanAsync(
       manifestExpectations,
     );
     const graph = toPlanResolutionGraph(root, request.installRootId);
-    const blockers = [...targetBlockers, ...fileChanges.blockers];
+    const blockers = [...targetBlockers, ...fileChanges.blockers, ...graph.blockers];
     return {
       installRootId: request.installRootId,
       complete: blockers.length === 0,
