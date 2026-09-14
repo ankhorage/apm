@@ -41,8 +41,7 @@ async function resolveNativePlanAsync(
       ]);
     }
     const commands = buildPackageManagerPlanCommands(request);
-    const commandResults = await runCommandsAsync(commands, stage.rootPath);
-    const failed = firstFailedCommand(commands, commandResults);
+    const failed = await runCommandsAsync(commands, stage.rootPath);
     if (failed !== undefined) {
       return failedResolution(request, [
         commandFailureBlocker(request, failed.command, failed.result),
@@ -76,33 +75,21 @@ async function resolveNativePlanAsync(
   }
 }
 
-/*** Execute native resolver commands sequentially so each consumes the preceding staged lock state. */
-async function runCommandsAsync(
-  commands: readonly ApmPackageManagerPlanCommand[],
-  cwd: string,
-): Promise<readonly ApmPlanCommandResult[]> {
-  const [command, ...remaining] = commands;
-  if (command === undefined) return [];
-  const result = await runPlanCommandAsync(command, cwd);
-  if (result.exitCode !== 0) return [result];
-  return [result, ...(await runCommandsAsync(remaining, cwd))];
-}
-
 interface FailedCommand {
   readonly command: ApmPackageManagerPlanCommand;
   readonly result: ApmPlanCommandResult;
 }
 
-/*** Pair the first nonzero result with the command that produced it. */
-function firstFailedCommand(
+/*** Execute native resolver commands sequentially and return the first command failure with identity intact. */
+async function runCommandsAsync(
   commands: readonly ApmPackageManagerPlanCommand[],
-  results: readonly ApmPlanCommandResult[],
-): FailedCommand | undefined {
-  const index = results.findIndex(({ exitCode }) => exitCode !== 0);
-  if (index < 0) return undefined;
-  const command = commands[index];
-  const result = results[index];
-  return command === undefined || result === undefined ? undefined : { command, result };
+  cwd: string,
+): Promise<FailedCommand | undefined> {
+  const [command, ...remaining] = commands;
+  if (command === undefined) return undefined;
+  const result = await runPlanCommandAsync(command, cwd);
+  if (result.exitCode !== 0) return { command, result };
+  return runCommandsAsync(remaining, cwd);
 }
 
 /*** Build the manager-version command as stable non-secret blocker evidence. */
