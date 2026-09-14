@@ -52,7 +52,7 @@ function validateMigrationSemantics(
 function implementationVersionBlockers(
   migration: ApmUpdateDescriptor['migrations'][number],
 ): readonly ApmUpdateProtocolBlocker[] {
-  const implementation = migration.implementation;
+  const { implementation } = migration;
   if (implementation.artifact === 'intermediate' && implementation.version === undefined) {
     return [
       createProtocolBlocker({
