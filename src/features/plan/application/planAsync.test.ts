@@ -12,6 +12,7 @@ import type {
 import type { ApmStatusResult } from '../../../types/status.js';
 import { validateSavedPlanAsync } from '../domain/validateSavedPlanAsync.js';
 import { planExecutionFixtures } from './fixtures/planExecutionFixtures.js';
+import { createNpmInstallRootFixture } from './fixtures/planStatusFixtures.js';
 import { planAsync } from './planAsync.js';
 
 const DIGEST: ApmPlanDigestPort = {
@@ -244,7 +245,9 @@ function statusFixture(checkedAt = '2026-09-14T10:00:00.000Z'): ApmStatusResult 
     complete: true,
     currency: 'outdated',
     project: projectSummaryFixture(),
-    installRoots: [installRootFixture(dependency)],
+    installRoots: [
+      createNpmInstallRootFixture(dependency, { lockFormat: 'package-lock', lockEvidence: [] }),
+    ],
     dependencies: [dependency],
     hosts: [],
     extensions: { state: 'unavailable', complete: true, observations: [], diagnostics: [] },
@@ -265,7 +268,12 @@ function changedStatusFixture(): ApmStatusResult {
   return {
     ...status,
     dependencies: [changedDependency],
-    installRoots: [installRootFixture(changedDependency)],
+    installRoots: [
+      createNpmInstallRootFixture(changedDependency, {
+        lockFormat: 'package-lock',
+        lockEvidence: [],
+      }),
+    ],
   };
 }
 
@@ -312,44 +320,5 @@ function dependencyFixture(checkedAt: string): ApmStatusResult['dependencies'][n
     },
     dependencyPaths: [['example-package@1.0.0']],
     findings: [],
-  };
-}
-
-/*** Build one npm install-root snapshot matching the direct dependency fixture. */
-function installRootFixture(
-  dependency: ApmStatusResult['dependencies'][number],
-): ApmStatusResult['installRoots'][number] {
-  const { declaration } = dependency;
-  return {
-    id: 'root',
-    rootPath: '/project',
-    packagePaths: ['/project'],
-    manager: {
-      state: 'selected',
-      name: 'npm',
-      version: '11.0.0',
-      source: 'package-manager-field',
-    },
-    lockfile: {
-      state: 'supported',
-      path: '/project/package-lock.json',
-      format: 'package-lock',
-      version: '3',
-      evidence: [],
-    },
-    declarations: declaration === undefined ? [] : [declaration],
-    lockedPackages: [
-      {
-        id: dependency.packageId,
-        name: dependency.name,
-        ...(dependency.lockedVersion === undefined ? {} : { version: dependency.lockedVersion }),
-        source: 'registry',
-        optional: false,
-        dependencies: [],
-      },
-    ],
-    installedPackages: [dependency.installed],
-    complete: true,
-    diagnostics: [],
   };
 }
