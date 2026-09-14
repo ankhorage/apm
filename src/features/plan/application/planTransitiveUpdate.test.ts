@@ -204,7 +204,7 @@ function installRootFixture(
       {
         id: parent.packageId,
         name: parent.name,
-        version: parent.lockedVersion,
+        ...(parent.lockedVersion === undefined ? {} : { version: parent.lockedVersion }),
         source: 'registry',
         optional: false,
         dependencies: [
@@ -218,7 +218,7 @@ function installRootFixture(
       {
         id: transitive.packageId,
         name: transitive.name,
-        version: transitive.lockedVersion,
+        ...(transitive.lockedVersion === undefined ? {} : { version: transitive.lockedVersion }),
         source: 'registry',
         optional: false,
         dependencies: [],
