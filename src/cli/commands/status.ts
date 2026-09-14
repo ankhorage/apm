@@ -3,21 +3,23 @@ import path from 'node:path';
 import { statusProjectAsync } from '../../features/status/composition/statusProjectAsync.js';
 import type { ApmCliCommand } from '../../types/cli.js';
 
-/*** Map the status command to the shared status use case and CLI-specific rendering. */
+/*** Map status flags to the shared use case and keep terminal rendering outside domain evidence. */
 export const status = {
   path: ['status'],
   capability: 'apm.status',
-  summary: 'Inspect current project evidence without mutating the project.',
+  summary: 'Inspect dependency, installation, projection, migration and availability evidence.',
   executeAsync: async (argv, context) => {
     const json = argv.includes('--json');
-    const positionals = argv.filter((argument) => argument !== '--json');
+    const offline = argv.includes('--offline');
+    const positionals = argv.filter((argument) => argument !== '--json' && argument !== '--offline');
     const invalidFlag = positionals.find((argument) => argument.startsWith('-'));
     if (positionals.length > 1 || invalidFlag !== undefined) {
-      throw new Error('Usage: apm status [directory] [--json]');
+      throw new Error('Usage: apm status [directory] [--json] [--offline]');
     }
 
     const result = await statusProjectAsync({
       rootPath: path.resolve(context.cwd, positionals[0] ?? '.'),
+      availability: offline ? 'offline' : 'refresh',
     });
 
     if (json) {
@@ -25,11 +27,12 @@ export const status = {
     } else {
       context.writeStdout(
         [
-          `APM status: ${result.complete ? 'complete' : 'incomplete'}`,
+          `APM status: ${result.currency}`,
+          `Evidence: ${result.complete ? 'complete' : 'incomplete'}`,
           `Root: ${result.rootPath}`,
-          `Package managers: ${result.project.packageManagers.join(', ') || 'unknown'}`,
-          `Packages: ${result.project.packageCount}`,
-          `Workspaces: ${result.project.workspaceCount}`,
+          `Install roots: ${result.installRoots.length}`,
+          `Dependency instances: ${result.dependencies.length}`,
+          `Findings: ${result.findings.length}`,
         ].join('\n') + '\n',
       );
     }

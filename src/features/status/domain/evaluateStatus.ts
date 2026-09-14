@@ -20,7 +20,9 @@ import type {
 
 /*** Combine independent evidence sources into one conservative status result. */
 export function evaluateStatus(input: EvaluateStatusInput): ApmStatusResult {
-  const dependencies = input.inventory.roots.flatMap(buildRootDependencies);
+  const dependencies = input.inventory.roots.flatMap((root) =>
+    buildRootDependencies(root, input.availability),
+  );
   const hosts = input.hostPackages.map((host) => buildHostStatus(host, input.availability));
   const extensionFindings = buildExtensionFindings(input.extensions);
   const findings = [
@@ -76,7 +78,10 @@ interface EvaluateStatusInput {
 }
 
 /*** Build package-level status while preserving every lockfile instance identity. */
-function buildRootDependencies(root: ApmInstallRootInventory): readonly ApmStatusDependency[] {
+function buildRootDependencies(
+  root: ApmInstallRootInventory,
+  availability: ApmAvailabilityEvidence,
+): readonly ApmStatusDependency[] {
   const installedByPackage = new Map(
     root.installedPackages.map((installed) => [installed.packageId, installed]),
   );
@@ -91,13 +96,12 @@ function buildRootDependencies(root: ApmInstallRootInventory): readonly ApmStatu
     const packageId = globalPackageId(root.id, pkg.id);
     const declaration = declarationsByPackage.get(pkg.id);
     const installed = installedByPackage.get(pkg.id) ?? unknownInstallation(pkg.id);
-    const availability = findAvailability(packageId, pkg.name);
     return buildDependencyStatus({
       root,
       pkg,
       packageId,
       installed,
-      availability,
+      availability: findAvailability(packageId, pkg.name, availability),
       paths: pathsByPackage.get(pkg.id) ?? [],
       ...(declaration === undefined ? {} : { declaration }),
     });
@@ -108,7 +112,7 @@ function buildRootDependencies(root: ApmInstallRootInventory): readonly ApmStatu
       (declaration) =>
         declaration.resolvedPackageId === undefined || !resolvedIds.has(declaration.resolvedPackageId),
     )
-    .map((declaration) => buildUnresolvedDeclaration(root, declaration));
+    .map((declaration) => buildUnresolvedDeclaration(root, declaration, availability));
   return [...locked, ...unresolved];
 }
 
@@ -245,9 +249,10 @@ function buildAvailabilityFindings(input: BuildDependencyStatusInput): readonly 
 function buildUnresolvedDeclaration(
   root: ApmInstallRootInventory,
   declaration: ApmDependencyDeclaration,
+  availabilityEvidence: ApmAvailabilityEvidence,
 ): ApmStatusDependency {
   const packageId = `decl:${root.id}:${declaration.ownerPath}:${declaration.name}`;
-  const availability = findAvailability(packageId, declaration.name);
+  const availability = findAvailability(packageId, declaration.name, availabilityEvidence);
   const findings: ApmStatusFinding[] = [
     {
       code: 'lock-stale',
@@ -297,7 +302,7 @@ function buildDependencyPaths(
   for (const item of queue) {
     const existing = paths.get(item.id) ?? [];
     if (existing.length >= 8 || item.path.length > 64) continue;
-    if (existing.some((path) => path.join('\u0000') === item.path.join('\u0000'))) continue;
+    if (existing.some((candidate) => candidate.join('\u0000') === item.path.join('\u0000'))) continue;
     paths.set(item.id, [...existing, item.path]);
     const pkg = packagesById.get(item.id);
     if (pkg === undefined) continue;
@@ -376,9 +381,9 @@ function buildHostStatus(
 function findAvailability(
   packageId: string,
   name: string,
-  availability?: ApmAvailabilityEvidence,
+  availability: ApmAvailabilityEvidence,
 ): ApmPackageAvailabilityEvidence {
-  const found = availability?.packages.find((item) => item.packageId === packageId);
+  const found = availability.packages.find((item) => item.packageId === packageId);
   return (
     found ?? {
       packageId,
