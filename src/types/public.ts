@@ -1,3 +1,4 @@
+export type { ApmRegistryAvailabilityOptions, ApmRegistryFetch } from './registry.js';
 export type {
   ApmAvailabilityEvidence,
   ApmAvailabilityRequest,
