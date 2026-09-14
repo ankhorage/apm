@@ -10,12 +10,33 @@ export function validateUpdateExtensionBinding(
   artifact: ApmExtensionArtifactIdentity,
   extension: unknown,
 ): readonly ApmUpdateProtocolBlocker[] {
+  const artifactBlockers = artifactIdentityBlockers(artifact);
+  if (artifactBlockers.length > 0) return artifactBlockers;
   const protocolBlockers = extensionProtocolBlockers(extension);
   if (protocolBlockers.length > 0) return protocolBlockers;
   if (!isApmUpdateExtension(extension)) return [invalidExtensionShape()];
   return extension.descriptorDigest === artifact.descriptorDigest
     ? []
     : [bindingMismatch('descriptor digest', extension.descriptorDigest, artifact.descriptorDigest)];
+}
+
+/*** Require registry/package-manager integrity and descriptor digest before executable code loads. */
+function artifactIdentityBlockers(
+  artifact: ApmExtensionArtifactIdentity,
+): readonly ApmUpdateProtocolBlocker[] {
+  if (artifact.integrity.trim() === '') {
+    return [
+      createProtocolBlocker({
+        code: 'protocol.artifact-integrity-required',
+        kind: 'extension',
+        evidence: [`${artifact.packageName}@${artifact.version}`],
+        reason: 'Executable owner code requires immutable package artifact integrity evidence.',
+      }),
+    ];
+  }
+  return artifact.descriptorDigest.trim() === ''
+    ? [bindingMismatch('descriptor digest', artifact.descriptorDigest, 'non-empty digest')]
+    : [];
 }
 
 /*** Reject missing or incompatible runtime protocol values before executable shape validation. */
