@@ -1,3 +1,4 @@
+import type { ApmPlanStepExecution } from './plan-execution.js';
 import type {
   ApmPackageManagerName,
   ApmStatusAvailabilityMode,
@@ -217,6 +218,7 @@ export interface ApmPlanStep {
   readonly owner?: string;
   readonly reason: string;
   readonly evidence: readonly string[];
+  readonly execution: ApmPlanStepExecution;
 }
 
 export interface ApmPlanProtocolRequest {
@@ -254,7 +256,7 @@ export interface ApmPlanPorts {
 }
 
 export interface ApmPlanResult {
-  readonly schemaVersion: 1;
+  readonly schemaVersion: 2;
   readonly operation: 'plan';
   readonly id: string;
   readonly rootPath: string;
