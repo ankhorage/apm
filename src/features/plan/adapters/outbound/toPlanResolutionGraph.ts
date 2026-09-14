@@ -22,7 +22,7 @@ export function toPlanResolutionGraph(
       resolvedPackageId === undefined ? [] : [resolvedPackageId],
     ),
   );
-  const knownPackages = root.lockedPackages.filter(({ source }) => isPlanArtifactSource(source));
+  const knownPackages = root.lockedPackages.filter(isPlanArtifactPackage);
   const packages = knownPackages.map((pkg) => ({
     id: globalPackageId(installRootId, pkg.id),
     name: pkg.name,
@@ -49,11 +49,13 @@ export function toPlanResolutionGraph(
   };
 }
 
-/*** Narrow status source evidence to sources that can become immutable plan artifact identities. */
-function isPlanArtifactSource(
-  source: ApmLockedPackageEvidence['source'],
-): source is ApmPlanArtifactIdentity['source'] {
-  return source !== 'unknown';
+type PlanArtifactPackage = ApmLockedPackageEvidence & {
+  readonly source: ApmPlanArtifactIdentity['source'];
+};
+
+/*** Narrow complete package evidence to instances with a reproducible plan artifact source. */
+function isPlanArtifactPackage(pkg: ApmLockedPackageEvidence): pkg is PlanArtifactPackage {
+  return pkg.source !== 'unknown';
 }
 
 /*** Reject package instances whose source cannot be frozen into an executable saved plan. */
@@ -66,7 +68,8 @@ function unknownArtifactSourceBlocker(
     scope: { kind: 'package', id: globalPackageId(installRootId, pkg.id) },
     evidence: [pkg.name, pkg.id],
     reason: 'Native lock evidence did not identify a reproducible package artifact source.',
-    nextAction: 'Use a supported registry, workspace, file, or git package source before saving this plan.',
+    nextAction:
+      'Use a supported registry, workspace, file, or git package source before saving this plan.',
   };
 }
 
