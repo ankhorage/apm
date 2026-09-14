@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant participant_createProtocolBlocker as createProtocolBlocker
+  participant participant_invalidMetadata as invalidMetadata
+  participant participant_isProtocolPackageSubpath as isProtocolPackageSubpath
+  participant participant_isRecord as isRecord
+  participant participant_primitiveEvidence as primitiveEvidence
+  participant participant_validatePackageUpdateMetadata as validatePackageUpdateMetadata
+  participant_validatePackageUpdateMetadata->>participant_isRecord: isRecord()
+  participant_isRecord-->>participant_validatePackageUpdateMetadata: return
+  participant_validatePackageUpdateMetadata->>participant_invalidMetadata: invalidMetadata()
+  participant_invalidMetadata->>participant_createProtocolBlocker: createProtocolBlocker()
+  participant_createProtocolBlocker-->>participant_invalidMetadata: return
+  participant_invalidMetadata-->>participant_validatePackageUpdateMetadata: return
+  participant_validatePackageUpdateMetadata->>participant_createProtocolBlocker: createProtocolBlocker()
+  participant_createProtocolBlocker-->>participant_validatePackageUpdateMetadata: return
+  participant_validatePackageUpdateMetadata->>participant_primitiveEvidence: primitiveEvidence()
+  participant_primitiveEvidence-->>participant_validatePackageUpdateMetadata: return
+  participant_validatePackageUpdateMetadata->>participant_isProtocolPackageSubpath: isProtocolPackageSubpath()
+  participant_isProtocolPackageSubpath-->>participant_validatePackageUpdateMetadata: return

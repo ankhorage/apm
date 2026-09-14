@@ -6,7 +6,8 @@ import { isProtocolProjectPath } from '../utils/isProtocolProjectPath.js';
 /*** Validate one static project ownership scope from untrusted descriptor data. */
 export function isApmProjectScope(value: unknown): value is ApmProjectScope {
   if (!isRecord(value) || typeof value.kind !== 'string') return false;
-  if (value.kind === 'file') return typeof value.path === 'string' && isProtocolProjectPath(value.path);
+  if (value.kind === 'file')
+    return typeof value.path === 'string' && isProtocolProjectPath(value.path);
   if (value.kind === 'json-pointer') {
     return (
       typeof value.path === 'string' &&

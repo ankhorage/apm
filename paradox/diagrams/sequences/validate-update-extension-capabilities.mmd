@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant participant_requiredMigrationIds as requiredMigrationIds
+  participant participant_requiredProjectionIds as requiredProjectionIds
+  participant participant_validateUpdateExtensionCapabilities as validateUpdateExtensionCapabilities
+  participant_validateUpdateExtensionCapabilities->>participant_requiredMigrationIds: requiredMigrationIds()
+  participant_requiredMigrationIds-->>participant_validateUpdateExtensionCapabilities: return
+  participant_validateUpdateExtensionCapabilities->>participant_requiredProjectionIds: requiredProjectionIds()
+  participant_requiredProjectionIds-->>participant_validateUpdateExtensionCapabilities: return
