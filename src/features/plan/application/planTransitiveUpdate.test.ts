@@ -59,6 +59,7 @@ function transitiveResolutionPort(calls: string[]): ApmPlanResolutionPort {
         calls.push(`${target.name}:${target.direct ? 'direct' : 'transitive'}`);
       return Promise.resolve({
         installRootId: request.installRootId,
+        installRootPath: request.installRootPath,
         complete: true,
         manager: request.manager,
         files: [
