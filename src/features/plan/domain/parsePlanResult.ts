@@ -21,14 +21,27 @@ export function parsePlanResult(value: unknown): ApmPlanResult | undefined {
 
 /*** Validate the complete serializable plan envelope and all executor-relevant nested evidence. */
 function isPlanResult(value: unknown): value is ApmPlanResult {
-  if (!isRecord(value) || value.schemaVersion !== 2 || value.operation !== 'plan') return false;
+  if (!isRecord(value)) return false;
+  return hasPlanEnvelope(value) && hasPlanCollections(value);
+}
+
+/*** Validate scalar identity, policy, executor, and fingerprint fields of a saved plan. */
+function hasPlanEnvelope(value: Readonly<Record<string, unknown>>): boolean {
   return (
+    value.schemaVersion === 2 &&
+    value.operation === 'plan' &&
     typeof value.id === 'string' &&
     typeof value.rootPath === 'string' &&
     typeof value.complete === 'boolean' &&
     isPlanPolicy(value.policy) &&
     isExecutor(value.executor) &&
-    isInputFingerprint(value.inputFingerprint) &&
+    isInputFingerprint(value.inputFingerprint)
+  );
+}
+
+/*** Validate all collection-valued evidence embedded in a saved plan. */
+function hasPlanCollections(value: Readonly<Record<string, unknown>>): boolean {
+  return (
     isArrayOf(value.targets, isDependencyTarget) &&
     isArrayOf(value.files, isFileChange) &&
     isArrayOf(value.packages, isResolvedPackage) &&
