@@ -3,12 +3,14 @@ import { createHash } from 'node:crypto';
 import { expect, test } from 'bun:test';
 
 import type {
+  ApmPlanBlocker,
   ApmPlanDigestPort,
   ApmPlanProtocolPort,
   ApmPlanResolutionPort,
 } from '../../../types/plan.js';
 import type { ApmStatusResult } from '../../../types/status.js';
 import type { ApmUpdateDescriptor } from '../../../types/update-protocol.js';
+import type { ApmUpdateProtocolBlocker } from '../../../types/update-validation.js';
 import { resolveMigrationPath } from '../../update-protocol/domain/resolveMigrationPath.js';
 import { planAsync } from './planAsync.js';
 
@@ -115,7 +117,7 @@ function migrationProtocolPort(): ApmPlanProtocolPort {
           steps: [],
           effects: [],
           findings: [],
-          blockers: path.blockers,
+          blockers: path.blockers.map(toPlanBlocker),
           diagnostics: [],
         });
       }
@@ -141,6 +143,26 @@ function migrationProtocolPort(): ApmPlanProtocolPort {
         diagnostics: [],
       });
     },
+  };
+}
+
+/*** Bridge protocol validation evidence into the CLI/Studio-neutral plan blocker schema. */
+function toPlanBlocker(blocker: ApmUpdateProtocolBlocker): ApmPlanBlocker {
+  const kind =
+    blocker.scope.kind === 'migration'
+      ? 'migration'
+      : blocker.scope.kind === 'projection'
+        ? 'projection'
+        : 'project';
+  return {
+    code: blocker.code,
+    scope: {
+      kind,
+      ...(blocker.scope.id === undefined ? {} : { id: blocker.scope.id }),
+    },
+    evidence: blocker.evidence,
+    reason: blocker.reason,
+    ...(blocker.nextAction === undefined ? {} : { nextAction: blocker.nextAction }),
   };
 }
 
