@@ -1,6 +1,7 @@
 import { expect, test } from 'bun:test';
 
-import type { ApmPackageManagerName, ApmPlanResolutionRequest } from '../../../../types/plan.js';
+import type { ApmPlanResolutionRequest } from '../../../../types/plan.js';
+import type { ApmPackageManagerName } from '../../../../types/status.js';
 import { buildPackageManagerPlanCommands } from './buildPackageManagerPlanCommands.js';
 
 test('all direct native resolvers use lock-only planning with lifecycle execution disabled', () => {
