@@ -4,6 +4,7 @@ export {
   statusAsync,
   validateUpdateDescriptor,
   validateUpdateExtensionBinding,
+  validateUpdateExtensionCapabilities,
 } from './apm.js';
 export { createNpmRegistryAvailabilityPort } from './features/status/adapters/outbound/createNpmRegistryAvailabilityPort.js';
 export { inspectDependencyInventoryAsync } from './features/status/adapters/outbound/inspectDependencyInventoryAsync.js';
