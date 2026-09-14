@@ -1,5 +1,6 @@
 import type {
   ApmPackageManagerName,
+  ApmStatusAvailabilityMode,
   ApmStatusDiagnostic,
   ApmStatusFinding,
   ApmStatusResult,
@@ -183,6 +184,12 @@ export interface ApmPlanInput {
   readonly executor: ApmPlanExecutorIdentity;
 }
 
+export interface ApmPlanProjectInput {
+  readonly rootPath: string;
+  readonly availability?: ApmStatusAvailabilityMode;
+  readonly policy?: ApmPlanPolicyInput;
+}
+
 export interface ApmPlanDigestPort {
   readonly digestAsync: (value: string) => Promise<string>;
 }
@@ -231,6 +238,10 @@ export interface ApmPlanProtocolResult {
 
 export interface ApmPlanProtocolPort {
   readonly planProtocolAsync: (input: ApmPlanProtocolRequest) => Promise<ApmPlanProtocolResult>;
+}
+
+export interface ApmPlanProjectOptions {
+  readonly protocol?: ApmPlanProtocolPort;
 }
 
 export interface ApmPlanPorts {
