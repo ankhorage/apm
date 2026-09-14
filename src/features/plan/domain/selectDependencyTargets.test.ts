@@ -146,9 +146,7 @@ function projectFixture(): ApmStatusResult['project'] {
 }
 
 /*** Build one npm install-root fixture preserving direct and transitive package identities. */
-function installRootFixture(
-  dependencies: readonly ApmStatusDependency[],
-): ApmInstallRootInventory {
+function installRootFixture(dependencies: readonly ApmStatusDependency[]): ApmInstallRootInventory {
   return {
     id: 'root',
     rootPath: '/project',
@@ -248,11 +246,13 @@ function transitiveDependencyFixture(): ApmStatusDependency {
       compatibleVersion: '1.1.0',
     },
     dependencyPaths: [['example-package@1.0.0', packageId]],
-    findings: [{
-      code: 'transitive-update',
-      scope: { kind: 'package', id: packageId },
-      evidence: ['1.0.0', '1.1.0'],
-      reason: 'Transitive update available.',
-    }],
+    findings: [
+      {
+        code: 'transitive-update',
+        scope: { kind: 'package', id: packageId },
+        evidence: ['1.0.0', '1.1.0'],
+        reason: 'Transitive update available.',
+      },
+    ],
   };
 }
