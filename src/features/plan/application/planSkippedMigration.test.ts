@@ -2,7 +2,6 @@ import { createHash } from 'node:crypto';
 
 import { expect, test } from 'bun:test';
 
-import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import type {
   ApmPlanBlocker,
   ApmPlanDigestPort,
@@ -13,6 +12,7 @@ import type { ApmStatusResult } from '../../../types/status.js';
 import type { ApmUpdateDescriptor } from '../../../types/update-protocol.js';
 import type { ApmUpdateProtocolBlocker } from '../../../types/update-validation.js';
 import { resolveMigrationPath } from '../../update-protocol/domain/resolveMigrationPath.js';
+import { planExecutionFixtures } from './fixtures/planExecutionFixtures.js';
 import { planAsync } from './planAsync.js';
 
 const DIGEST: ApmPlanDigestPort = {
@@ -137,36 +137,13 @@ function migrationProtocolPort(): ApmPlanProtocolPort {
           owner: '@owner/package',
           reason: `Apply reviewed skipped-version migration ${migration.id}.`,
           evidence: [migration.id, migration.checksum],
-          execution: migrationExecution(migration),
+          execution: planExecutionFixtures.migration(migration),
         })),
         effects: [],
         findings: [],
         blockers: [],
         diagnostics: [],
       });
-    },
-  };
-}
-
-/*** Freeze exact owner artifact and migration-plan identity into one executable plan step. */
-function migrationExecution(
-  descriptor: ApmUpdateDescriptor['migrations'][number],
-): Extract<ApmPlanStepExecution, { readonly kind: 'migration' }> {
-  return {
-    kind: 'migration',
-    descriptor,
-    artifact: {
-      role: descriptor.implementation.artifact,
-      packageName: '@owner/package',
-      version: descriptor.implementation.version ?? descriptor.to.packageVersion,
-      integrity: `sha512:${descriptor.to.packageVersion}`,
-      descriptorDigest: 'sha256:owner-update-descriptor',
-    },
-    plan: {
-      migrationId: descriptor.id,
-      mutations: [],
-      evidence: [descriptor.checksum],
-      inputFingerprint: `migration-input:${descriptor.id}`,
     },
   };
 }
