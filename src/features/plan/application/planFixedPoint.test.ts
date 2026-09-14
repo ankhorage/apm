@@ -5,7 +5,6 @@ import { expect, test } from 'bun:test';
 import type {
   ApmPlanDigestPort,
   ApmPlanPackageSelection,
-  ApmPlanPorts,
   ApmPlanProtocolPort,
   ApmPlanResolutionPort,
   ApmPlanResolutionRequest,
@@ -30,10 +29,7 @@ test('owner-required coupled framework dependency converges through native re-re
   });
 
   expect(plan.complete).toBe(true);
-  expect(resolutionCalls).toEqual([
-    ['@framework/ui'],
-    ['@framework/core', '@framework/ui'],
-  ]);
+  expect(resolutionCalls).toEqual([['@framework/ui'], ['@framework/core', '@framework/ui']]);
   expect(plan.targets.map(({ name }) => name)).toEqual(['@framework/core', '@framework/ui']);
   expect(plan.blockers).toEqual([]);
 });
@@ -80,9 +76,11 @@ function recordingResolutionPort(calls: string[][]): ApmPlanResolutionPort {
 function coupledProtocolPort(): ApmPlanProtocolPort {
   return {
     planProtocolAsync: ({ targets }) =>
-      Promise.resolve(protocolResult(targets.some(({ name }) => name === '@framework/core')
-        ? []
-        : [CORE_SELECTION])),
+      Promise.resolve(
+        protocolResult(
+          targets.some(({ name }) => name === '@framework/core') ? [] : [CORE_SELECTION],
+        ),
+      ),
   };
 }
 
@@ -135,7 +133,10 @@ function resolutionResult(request: ApmPlanResolutionRequest) {
         path: 'package-lock.json',
         kind: 'update' as const,
         beforeDigest: 'before',
-        afterDigest: request.targets.map(({ name }) => name).sort().join('+'),
+        afterDigest: request.targets
+          .map(({ name }) => name)
+          .sort()
+          .join('+'),
       },
     ],
     packages,
@@ -231,7 +232,12 @@ function installRootFixture(
     id: 'root',
     rootPath: '/project',
     packagePaths: ['/project'],
-    manager: { state: 'selected', name: 'npm', version: '11.0.0', source: 'package-manager-field' },
+    manager: {
+      state: 'selected',
+      name: 'npm',
+      version: '11.0.0',
+      source: 'package-manager-field',
+    },
     lockfile: {
       state: 'supported',
       path: '/project/package-lock.json',
@@ -239,7 +245,9 @@ function installRootFixture(
       version: '3',
       evidence: ['package-lock.json'],
     },
-    declarations: dependencies.flatMap(({ declaration }) => declaration === undefined ? [] : [declaration]),
+    declarations: dependencies.flatMap(({ declaration }) =>
+      declaration === undefined ? [] : [declaration],
+    ),
     lockedPackages: dependencies.map(({ packageId, name, lockedVersion }) => ({
       id: packageId,
       name,
