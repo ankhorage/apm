@@ -93,7 +93,7 @@ export interface ApmApplyStepObservation {
 }
 
 export interface ApmApplyStepExecutionResult {
-  readonly complete: boolean;
+  readonly state: 'completed' | 'failed' | 'unknown';
   readonly evidence: readonly string[];
   readonly diagnostics: readonly ApmStatusDiagnostic[];
   readonly failure?: ApmApplyFailure;
