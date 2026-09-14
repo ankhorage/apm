@@ -1,13 +1,17 @@
 import { inspectProjectAsync } from '@ankhorage/project-detector/node';
 
 import metadata from '../../../../package.json' with { type: 'json' };
+import type { ApmStatusProjectOptions } from '../../../types/status-project.js';
 import type { ApmStatusInput, ApmStatusResult } from '../../../types/status.js';
 import { createNpmRegistryAvailabilityPort } from '../adapters/outbound/createNpmRegistryAvailabilityPort.js';
 import { inspectDependencyInventoryAsync } from '../adapters/outbound/inspectDependencyInventoryAsync.js';
 import { statusAsync } from '../application/statusAsync.js';
 
-/*** Compose APM status with published Project Detector, local package-manager, and registry edges. */
-export async function statusProjectAsync(input: ApmStatusInput): Promise<ApmStatusResult> {
+/*** Compose APM status with published Project Detector, local package-manager, registry, and optional owner-extension evidence. */
+export async function statusProjectAsync(
+  input: ApmStatusInput,
+  options: ApmStatusProjectOptions = {},
+): Promise<ApmStatusResult> {
   return statusAsync(
     {
       ...input,
@@ -19,6 +23,7 @@ export async function statusProjectAsync(input: ApmStatusInput): Promise<ApmStat
       projectInspection: { inspectProjectAsync },
       dependencyInventory: { inspectDependencyInventoryAsync },
       availability: registryAvailabilityPort,
+      ...(options.extensions === undefined ? {} : { extensions: options.extensions }),
     },
   );
 }
