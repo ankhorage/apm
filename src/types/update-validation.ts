@@ -1,7 +1,14 @@
-import type { ApmMigrationDescriptor, ApmUpdateDescriptor } from './update-protocol.js';
+import type {
+  ApmMigrationDescriptor,
+  ApmPackageUpdateMetadata,
+  ApmUpdateDescriptor,
+} from './update-protocol.js';
 
 export type ApmUpdateProtocolBlockerCode =
+  | 'protocol.invalid-package-metadata'
+  | 'protocol.invalid-descriptor-path'
   | 'protocol.invalid-descriptor'
+  | 'protocol.invalid-extension-export'
   | 'protocol.unsupported-version'
   | 'protocol.unsupported-schema'
   | 'protocol.owner-mismatch'
@@ -28,12 +35,18 @@ export type ApmUpdateProtocolBlockerCode =
 export interface ApmUpdateProtocolBlocker {
   readonly code: ApmUpdateProtocolBlockerCode;
   readonly scope: {
-    readonly kind: 'descriptor' | 'history' | 'migration' | 'projection' | 'extension' | 'effect';
+    readonly kind: 'package-metadata' | 'descriptor' | 'history' | 'migration' | 'projection' | 'extension' | 'effect';
     readonly id?: string;
   };
   readonly evidence: readonly string[];
   readonly reason: string;
   readonly nextAction?: string;
+}
+
+export interface ApmPackageUpdateMetadataValidationResult {
+  readonly valid: boolean;
+  readonly metadata?: ApmPackageUpdateMetadata;
+  readonly blockers: readonly ApmUpdateProtocolBlocker[];
 }
 
 export interface ApmUpdateDescriptorValidationInput {
