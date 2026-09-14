@@ -19,14 +19,11 @@ test('resolves exact dist integrity through project npmrc without leaking creden
 
   try {
     await writeRegistryConfigAsync(rootPath);
-    const result = await resolveNpmExtensionArtifactIdentityAsync(
-      artifactRequest(rootPath),
-      {
-        env: { REGISTRY_TOKEN: 'secret-token' },
-        home: rootPath,
-        fetchFn: createRecordingFetch(requests),
-      },
-    );
+    const result = await resolveNpmExtensionArtifactIdentityAsync(artifactRequest(rootPath), {
+      env: { REGISTRY_TOKEN: 'secret-token' },
+      home: rootPath,
+      fetchFn: createRecordingFetch(requests),
+    });
 
     expect(result).toEqual({
       state: 'resolved',
