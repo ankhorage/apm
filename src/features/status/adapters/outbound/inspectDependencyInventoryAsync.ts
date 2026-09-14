@@ -4,14 +4,14 @@ import type {
   ApmDiscoveredInstallRoot,
   ApmManagerInspectionResult,
   ApmParsedPackageManifest,
-} from '../../../types/status-inventory.js';
+} from '../../../../types/status-inventory.js';
 import type {
   ApmDependencyDeclaration,
   ApmDependencyInventory,
   ApmInstallRootInventory,
   ApmStatusDiagnostic,
-} from '../../../types/status.js';
-import { declarationResolutionKey } from '../utils/declarationResolutionKey.js';
+} from '../../../../types/status.js';
+import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 import { discoverInstallRootsAsync } from './discoverInstallRootsAsync.js';
 import { inspectBunRootAsync } from './inspectBunRootAsync.js';
 import { inspectNpmRootAsync } from './inspectNpmRootAsync.js';
@@ -23,53 +23,47 @@ import { readPackageManifestAsync } from './readPackageManifestAsync.js';
 export async function inspectDependencyInventoryAsync(input: {
   readonly inspection: ProjectInspection;
 }): Promise<ApmDependencyInventory> {
-  const manifestReads = await Promise.all(
-    input.inspection.packages.map(async (pkg) => {
-      try {
-        return { manifest: await readPackageManifestAsync(input.inspection.rootPath, pkg.manifestPath) };
-      } catch (error) {
-        return {
-          diagnostic: {
-            code: 'status.manifest.unreadable',
-            severity: 'error',
-            scope: { kind: 'project', path: pkg.manifestPath },
-            evidence: [pkg.manifestPath],
-            reason: error instanceof Error ? error.message : 'Package manifest could not be read.',
-            nextAction: 'Repair the package manifest before relying on dependency status.',
-          } satisfies ApmStatusDiagnostic,
-        };
-      }
-    }),
-  );
-  const manifests = manifestReads.flatMap((read) => ('manifest' in read ? [read.manifest] : []));
-  const manifestDiagnostics = manifestReads.flatMap((read) =>
-    'diagnostic' in read ? [read.diagnostic] : [],
-  );
-  if (manifests.length === 0) {
-    const diagnostic: ApmStatusDiagnostic = {
-      code: 'status.inventory.javascript-package-root-missing',
-      severity: 'warning',
-      scope: { kind: 'project' },
-      evidence: input.inspection.manifests,
-      reason: 'No JavaScript package manifest is available for APM dependency inventory.',
-      nextAction: 'Treat detected non-JavaScript ecosystems as inspection-only until an adapter exists.',
-    };
-    return {
-      roots: [],
-      complete: false,
-      diagnostics: [...manifestDiagnostics, diagnostic],
-    };
+  const manifestEvidence = await readManifestsAsync(input.inspection);
+  if (manifestEvidence.manifests.length === 0) {
+    return noJavaScriptInventory(input.inspection, manifestEvidence.diagnostics);
   }
-  const discoveredRoots = await discoverInstallRootsAsync(input.inspection, manifests);
+  const discoveredRoots = await discoverInstallRootsAsync(
+    input.inspection,
+    manifestEvidence.manifests,
+  );
   const roots = await Promise.all(discoveredRoots.map(inspectInstallRootAsync));
-  const rootDiagnostics = roots.flatMap((root) => root.diagnostics);
   return {
     roots,
     complete:
-      manifestDiagnostics.length === 0 &&
+      manifestEvidence.diagnostics.length === 0 &&
       roots.length > 0 &&
       roots.every((root) => root.complete),
-    diagnostics: [...manifestDiagnostics, ...rootDiagnostics],
+    diagnostics: [
+      ...manifestEvidence.diagnostics,
+      ...roots.flatMap((root) => root.diagnostics),
+    ],
+  };
+}
+
+interface ManifestEvidence {
+  readonly manifests: readonly ApmParsedPackageManifest[];
+  readonly diagnostics: readonly ApmStatusDiagnostic[];
+}
+
+/*** Read package manifests independently so one malformed package does not hide other evidence. */
+async function readManifestsAsync(inspection: ProjectInspection): Promise<ManifestEvidence> {
+  const results = await Promise.all(
+    inspection.packages.map(async (pkg) => {
+      try {
+        return { manifest: await readPackageManifestAsync(inspection.rootPath, pkg.manifestPath) };
+      } catch (error) {
+        return { diagnostic: unreadableManifestDiagnostic(pkg.manifestPath, error) };
+      }
+    }),
+  );
+  return {
+    manifests: results.flatMap((result) => ('manifest' in result ? [result.manifest] : [])),
+    diagnostics: results.flatMap((result) => ('diagnostic' in result ? [result.diagnostic] : [])),
   };
 }
 
@@ -77,7 +71,6 @@ export async function inspectDependencyInventoryAsync(input: {
 async function inspectInstallRootAsync(root: ApmDiscoveredInstallRoot): Promise<ApmInstallRootInventory> {
   const managerResult = await inspectSelectedManagerAsync(root);
   const declarations = buildDeclarations(root.manifests, managerResult.directResolutions);
-  const selectionComplete = root.manager.state === 'selected';
   const conflict = root.manager.state === 'conflict';
   return {
     id: root.id,
@@ -94,7 +87,7 @@ async function inspectInstallRootAsync(root: ApmDiscoveredInstallRoot): Promise<
     declarations,
     lockedPackages: managerResult.lockedPackages,
     installedPackages: managerResult.installedPackages,
-    complete: selectionComplete && managerResult.complete,
+    complete: root.manager.state === 'selected' && managerResult.complete,
     diagnostics: [...root.diagnostics, ...managerResult.diagnostics],
   };
 }
@@ -169,5 +162,39 @@ function unavailableManagerResult(root: ApmDiscoveredInstallRoot): ApmManagerIns
     directResolutions: new Map(),
     complete: false,
     diagnostics: [],
+  };
+}
+
+/*** Explain a package manifest that could not be parsed as dependency evidence. */
+function unreadableManifestDiagnostic(manifestPath: string, error: unknown): ApmStatusDiagnostic {
+  return {
+    code: 'status.manifest.unreadable',
+    severity: 'error',
+    scope: { kind: 'project', path: manifestPath },
+    evidence: [manifestPath],
+    reason: error instanceof Error ? error.message : 'Package manifest could not be read.',
+    nextAction: 'Repair the package manifest before relying on dependency status.',
+  };
+}
+
+/*** Report non-JavaScript projects honestly as inspection-only at the APM dependency boundary. */
+function noJavaScriptInventory(
+  inspection: ProjectInspection,
+  diagnostics: readonly ApmStatusDiagnostic[],
+): ApmDependencyInventory {
+  return {
+    roots: [],
+    complete: false,
+    diagnostics: [
+      ...diagnostics,
+      {
+        code: 'status.inventory.javascript-package-root-missing',
+        severity: 'warning',
+        scope: { kind: 'project' },
+        evidence: inspection.manifests,
+        reason: 'No JavaScript package manifest is available for APM dependency inventory.',
+        nextAction: 'Treat detected non-JavaScript ecosystems as inspection-only until an adapter exists.',
+      },
+    ],
   };
 }
