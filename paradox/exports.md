@@ -1,10 +1,47 @@
 # Public API
 
+## APM_PLAN_SUPPORT
+
+Kind: `value`
+Module: `src/features/plan/constants/support.ts`
+Source: `src/features/plan/constants/support.ts:34:14`
+
+Publish the deterministic planning guarantees and native resolver matrix implemented by APM.
+
+`plan` is read-only with respect to the inspected project. Package-manager resolution runs in a
+disposable staging directory and uses the selected project's native npm, pnpm, Yarn, or Bun
+resolver. Lifecycle scripts are disabled. Only reviewed manifest and lockfile changes are returned
+as serializable plan evidence; staging/cache/network effects remain outside the project tree.
+
+The default dependency policy is conservative: only direct registry packages with a newer version
+satisfying their existing declared range are selected automatically. Latest majors, prereleases,
+downgrades and exact versions require explicit selections and APM never invents a new caret range.
+Explicit transitive selections remain lock-only; they are not promoted into root dependencies.
+
+Native solver output is re-inspected through the same package-manager evidence adapters used by
+`status`. Duplicate package instances, peer contexts and workspace links keep their native identity.
+Unknown artifact sources, peer conflicts, unsupported lock/linker modes and unresolved targets are
+blockers rather than partial executable plans.
+
+Package-owned migration/projection planners can request additional dependency selections. APM
+resolves those through a bounded fixed-point loop (four iterations by default). Conflicting owner
+requirements or non-convergence block the plan, and intermediate diffs are never exposed as an
+executable result. Required host/extension upgrades are explicit restart-and-re-plan boundaries.
+
+Saved plans contain exact targets, reviewed file content/digests, resolved graph/artifact identities,
+ordered step prerequisites, executor identity and a semantic input fingerprint. Registry freshness
+timestamps are recorded separately from fingerprint validity: refreshing identical registry evidence
+does not invalidate an otherwise identical plan. Apply must revalidate the project fingerprint and
+executor instead of re-resolving `latest`.
+
+Shipment effects remain separate from source updates. In particular, dependency graph changes are
+never assumed OTA-safe; without package/platform evidence APM records OTA eligibility as `unknown`.
+
 ## APM_STATUS_SUPPORT
 
 Kind: `value`
 Module: `src/features/status/constants/support.ts`
-Source: `src/features/status/constants/support.ts:45:14`
+Source: `src/features/status/constants/support.ts:47:14`
 
 Publish the exact read-only status matrix proven by the evidence adapters.
 
@@ -44,9 +81,11 @@ Registry availability uses npm-compatible registries selected from project/user 
 environment overrides. Credentials are used only at the HTTP edge and are never returned in
 reports. Offline cache misses and registry/auth/network failures make availability unknown.
 
-`status` is read-only. It reads manifests, lockfiles, installation metadata and registry data;
-it does not install packages, execute lifecycle hooks, run migrations or write project files.
-`plan`, `apply`, and `verify` remain separate roadmap operations.
+`status` and `plan` are read-only project operations. Status reads manifests, lockfiles,
+installation metadata and registry data. Plan performs package-manager-native resolution only in
+disposable staging and returns reviewed diffs without writing the inspected project. Neither
+operation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate
+roadmap operations.
 
 ## ApmAvailabilityEvidence
 
@@ -705,6 +744,460 @@ Source: `src/types/update-validation.ts:57:1`
 | metadata | property | `ApmPackageUpdateMetadata`            | no       |             |
 | valid    | property | `boolean`                             | yes      |             |
 
+## ApmPlanArtifactIdentity
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:120:1`
+
+### Members
+
+| Name        | Kind     | Type                                           | Required | Description |
+| ----------- | -------- | ---------------------------------------------- | -------- | ----------- |
+| id          | property | `string`                                       | yes      |             |
+| integrity   | property | `string`                                       | no       |             |
+| packageName | property | `string`                                       | yes      |             |
+| resolved    | property | `string`                                       | no       |             |
+| source      | property | `"registry" \| "workspace" \| "file" \| "git"` | yes      |             |
+| version     | property | `string`                                       | no       |             |
+
+## ApmPlanBlocker
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:83:1`
+
+### Members
+
+| Name       | Kind     | Type                                         | Required | Description |
+| ---------- | -------- | -------------------------------------------- | -------- | ----------- |
+| code       | property | `ApmPlanBlockerCode \| `protocol.${string}`` | yes      |             |
+| evidence   | property | `readonly string[]`                          | yes      |             |
+| nextAction | property | `string`                                     | no       |             |
+| reason     | property | `string`                                     | yes      |             |
+| scope      | property | `ApmPlanBlockerScope`                        | yes      |             |
+
+## ApmPlanBlockerCode
+
+Kind: `unknown`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:55:1`
+
+## ApmPlanBlockerScope
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:77:1`
+
+### Members
+
+| Name | Kind     | Type                                                                                | Required | Description |
+| ---- | -------- | ----------------------------------------------------------------------------------- | -------- | ----------- |
+| id   | property | `string`                                                                            | no       |             |
+| kind | property | `"host" \| "project" \| "install-root" \| "package" \| "projection" \| "migration"` | yes      |             |
+| path | property | `string`                                                                            | no       |             |
+
+## ApmPlanDependencyTarget
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:91:1`
+
+### Members
+
+| Name           | Kind     | Type                                                                       | Required | Description |
+| -------------- | -------- | -------------------------------------------------------------------------- | -------- | ----------- |
+| currentRange   | property | `string`                                                                   | no       |             |
+| currentVersion | property | `string`                                                                   | no       |             |
+| direct         | property | `boolean`                                                                  | yes      |             |
+| installRootId  | property | `string`                                                                   | yes      |             |
+| kind           | property | `"dependency" \| "development" \| "optional" \| "peer" \| "peer-optional"` | no       |             |
+| name           | property | `string`                                                                   | yes      |             |
+| ownerPath      | property | `string`                                                                   | no       |             |
+| packageId      | property | `string`                                                                   | yes      |             |
+| reason         | property | `string`                                                                   | yes      |             |
+| source         | property | `"compatible" \| "latest" \| "exact"`                                      | yes      |             |
+| targetRange    | property | `string`                                                                   | no       |             |
+| targetVersion  | property | `string`                                                                   | yes      |             |
+
+## ApmPlanDependencyUpdateMode
+
+Kind: `unknown`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:10:1`
+
+## ApmPlanDigestPort
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:195:1`
+
+### Members
+
+| Name        | Kind     | Type                                 | Required | Description |
+| ----------- | -------- | ------------------------------------ | -------- | ----------- |
+| digestAsync | property | `(value: string) => Promise<string>` | yes      |             |
+
+## ApmPlanExecutorIdentity
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:177:1`
+
+### Members
+
+| Name           | Kind     | Type                             | Required | Description |
+| -------------- | -------- | -------------------------------- | -------- | ----------- |
+| apmVersion     | property | `string`                         | yes      |             |
+| runtime        | property | `"node" \| "browser" \| "other"` | yes      |             |
+| runtimeVersion | property | `string`                         | no       |             |
+
+## ApmPlanFileChange
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:111:1`
+
+### Members
+
+| Name          | Kind     | Type                               | Required | Description |
+| ------------- | -------- | ---------------------------------- | -------- | ----------- |
+| afterContent  | property | `string`                           | no       |             |
+| afterDigest   | property | `string`                           | no       |             |
+| beforeContent | property | `string`                           | no       |             |
+| beforeDigest  | property | `string`                           | no       |             |
+| kind          | property | `"create" \| "update" \| "delete"` | yes      |             |
+| path          | property | `string`                           | yes      |             |
+
+## ApmPlanInput
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:183:1`
+
+### Members
+
+| Name     | Kind     | Type                      | Required | Description |
+| -------- | -------- | ------------------------- | -------- | ----------- |
+| executor | property | `ApmPlanExecutorIdentity` | yes      |             |
+| policy   | property | `ApmPlanPolicyInput`      | no       |             |
+| status   | property | `ApmStatusResult`         | yes      |             |
+
+## ApmPlanInputFingerprint
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:199:1`
+
+### Members
+
+| Name                  | Kind     | Type                | Required | Description |
+| --------------------- | -------- | ------------------- | -------- | ----------- |
+| availabilityCheckedAt | property | `readonly string[]` | yes      |             |
+| statusSchemaVersion   | property | `number`            | yes      |             |
+| value                 | property | `string`            | yes      |             |
+
+## ApmPlanPackageSelection
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:34:1`
+
+### Members
+
+| Name     | Kind     | Type                     | Required | Description |
+| -------- | -------- | ------------------------ | -------- | ----------- |
+| selector | property | `ApmPlanPackageSelector` | yes      |             |
+| target   | property | `ApmPlanTargetSelection` | yes      |             |
+
+## ApmPlanPackageSelector
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:12:1`
+
+### Members
+
+| Name          | Kind     | Type     | Required | Description |
+| ------------- | -------- | -------- | -------- | ----------- |
+| installRootId | property | `string` | no       |             |
+| name          | property | `string` | yes      |             |
+| ownerPath     | property | `string` | no       |             |
+| packageId     | property | `string` | no       |             |
+
+## ApmPlanPolicy
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:47:1`
+
+### Members
+
+| Name                   | Kind     | Type                                 | Required | Description |
+| ---------------------- | -------- | ------------------------------------ | -------- | ----------- |
+| dependencyUpdates      | property | `ApmPlanDependencyUpdateMode`        | yes      |             |
+| maxGeneratorIterations | property | `number`                             | yes      |             |
+| repairInstallations    | property | `boolean`                            | yes      |             |
+| repairProjections      | property | `boolean`                            | yes      |             |
+| selections             | property | `readonly ApmPlanPackageSelection[]` | yes      |             |
+
+## ApmPlanPolicyInput
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:39:1`
+
+### Members
+
+| Name                   | Kind     | Type                                 | Required | Description |
+| ---------------------- | -------- | ------------------------------------ | -------- | ----------- |
+| dependencyUpdates      | property | `ApmPlanDependencyUpdateMode`        | no       |             |
+| maxGeneratorIterations | property | `number`                             | no       |             |
+| repairInstallations    | property | `boolean`                            | no       |             |
+| repairProjections      | property | `boolean`                            | no       |             |
+| selections             | property | `readonly ApmPlanPackageSelection[]` | no       |             |
+
+## ApmPlanPorts
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:250:1`
+
+### Members
+
+| Name       | Kind     | Type                    | Required | Description |
+| ---------- | -------- | ----------------------- | -------- | ----------- |
+| digest     | property | `ApmPlanDigestPort`     | yes      |             |
+| protocol   | property | `ApmPlanProtocolPort`   | no       |             |
+| resolution | property | `ApmPlanResolutionPort` | yes      |             |
+
+## ApmPlanProjectInput
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:189:1`
+
+### Members
+
+| Name         | Kind     | Type                        | Required | Description |
+| ------------ | -------- | --------------------------- | -------- | ----------- |
+| availability | property | `ApmStatusAvailabilityMode` | no       |             |
+| policy       | property | `ApmPlanPolicyInput`        | no       |             |
+| rootPath     | property | `string`                    | yes      |             |
+
+## ApmPlanProjectOptions
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:246:1`
+
+### Members
+
+| Name     | Kind     | Type                  | Required | Description |
+| -------- | -------- | --------------------- | -------- | ----------- |
+| protocol | property | `ApmPlanProtocolPort` | no       |             |
+
+## ApmPlanProtocolPort
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:242:1`
+
+### Members
+
+| Name              | Kind     | Type                                                                | Required | Description |
+| ----------------- | -------- | ------------------------------------------------------------------- | -------- | ----------- |
+| planProtocolAsync | property | `(input: ApmPlanProtocolRequest) => Promise<ApmPlanProtocolResult>` | yes      |             |
+
+## ApmPlanProtocolRequest
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:222:1`
+
+### Members
+
+| Name             | Kind     | Type                                 | Required | Description |
+| ---------------- | -------- | ------------------------------------ | -------- | ----------- |
+| inputFingerprint | property | `ApmPlanInputFingerprint`            | yes      |             |
+| policy           | property | `ApmPlanPolicy`                      | yes      |             |
+| resolutions      | property | `readonly ApmPlanResolutionResult[]` | yes      |             |
+| status           | property | `ApmStatusResult`                    | yes      |             |
+| targets          | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+
+## ApmPlanProtocolResult
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:230:1`
+
+### Members
+
+| Name               | Kind     | Type                                 | Required | Description |
+| ------------------ | -------- | ------------------------------------ | -------- | ----------- |
+| artifacts          | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
+| blockers           | property | `readonly ApmPlanBlocker[]`          | yes      |             |
+| complete           | property | `boolean`                            | yes      |             |
+| diagnostics        | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
+| effects            | property | `readonly ApmReleaseEffect[]`        | yes      |             |
+| files              | property | `readonly ApmPlanFileChange[]`       | yes      |             |
+| findings           | property | `readonly ApmStatusFinding[]`        | yes      |             |
+| requiredSelections | property | `readonly ApmPlanPackageSelection[]` | yes      |             |
+| steps              | property | `readonly ApmPlanStep[]`             | yes      |             |
+
+## ApmPlanResolutionEffects
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:152:1`
+
+### Members
+
+| Name             | Kind     | Type                              | Required | Description |
+| ---------------- | -------- | --------------------------------- | -------- | ----------- |
+| cache            | property | `"manager-default" \| "isolated"` | yes      |             |
+| lifecycleScripts | property | `false`                           | yes      |             |
+| network          | property | `"offline" \| "allowed"`          | yes      |             |
+| projectWrites    | property | `false`                           | yes      |             |
+
+## ApmPlanResolutionPort
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:173:1`
+
+### Members
+
+| Name         | Kind     | Type                                                                    | Required | Description |
+| ------------ | -------- | ----------------------------------------------------------------------- | -------- | ----------- |
+| resolveAsync | property | `(input: ApmPlanResolutionRequest) => Promise<ApmPlanResolutionResult>` | yes      |             |
+
+## ApmPlanResolutionRequest
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:140:1`
+
+### Members
+
+| Name            | Kind     | Type                                 | Required | Description |
+| --------------- | -------- | ------------------------------------ | -------- | ----------- |
+| installRootId   | property | `string`                             | yes      |             |
+| installRootPath | property | `string`                             | yes      |             |
+| linker          | property | `string`                             | no       |             |
+| lockfilePath    | property | `string`                             | no       |             |
+| manager         | property | `ApmPackageManagerName`              | yes      |             |
+| managerVersion  | property | `string`                             | no       |             |
+| packagePaths    | property | `readonly string[]`                  | yes      |             |
+| rootPath        | property | `string`                             | yes      |             |
+| targets         | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+
+## ApmPlanResolutionResult
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:159:1`
+
+### Members
+
+| Name           | Kind     | Type                                 | Required | Description |
+| -------------- | -------- | ------------------------------------ | -------- | ----------- |
+| artifacts      | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
+| blockers       | property | `readonly ApmPlanBlocker[]`          | yes      |             |
+| complete       | property | `boolean`                            | yes      |             |
+| diagnostics    | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
+| effects        | property | `ApmPlanResolutionEffects`           | yes      |             |
+| files          | property | `readonly ApmPlanFileChange[]`       | yes      |             |
+| installRootId  | property | `string`                             | yes      |             |
+| linker         | property | `string`                             | no       |             |
+| manager        | property | `ApmPackageManagerName`              | yes      |             |
+| managerVersion | property | `string`                             | no       |             |
+| packages       | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
+
+## ApmPlanResolvedPackage
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:129:1`
+
+### Members
+
+| Name         | Kind     | Type                                           | Required | Description |
+| ------------ | -------- | ---------------------------------------------- | -------- | ----------- |
+| dependencies | property | `readonly string[]`                            | yes      |             |
+| direct       | property | `boolean`                                      | yes      |             |
+| id           | property | `string`                                       | yes      |             |
+| integrity    | property | `string`                                       | no       |             |
+| name         | property | `string`                                       | yes      |             |
+| peerContext  | property | `string`                                       | no       |             |
+| source       | property | `"registry" \| "workspace" \| "file" \| "git"` | yes      |             |
+| version      | property | `string`                                       | no       |             |
+
+## ApmPlanResult
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:256:1`
+
+### Members
+
+| Name             | Kind     | Type                                 | Required | Description |
+| ---------------- | -------- | ------------------------------------ | -------- | ----------- |
+| artifacts        | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
+| blockers         | property | `readonly ApmPlanBlocker[]`          | yes      |             |
+| complete         | property | `boolean`                            | yes      |             |
+| diagnostics      | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
+| effects          | property | `readonly ApmReleaseEffect[]`        | yes      |             |
+| executor         | property | `ApmPlanExecutorIdentity`            | yes      |             |
+| files            | property | `readonly ApmPlanFileChange[]`       | yes      |             |
+| findings         | property | `readonly ApmStatusFinding[]`        | yes      |             |
+| id               | property | `string`                             | yes      |             |
+| inputFingerprint | property | `ApmPlanInputFingerprint`            | yes      |             |
+| operation        | property | `"plan"`                             | yes      |             |
+| packages         | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
+| policy           | property | `ApmPlanPolicy`                      | yes      |             |
+| rootPath         | property | `string`                             | yes      |             |
+| schemaVersion    | property | `1`                                  | yes      |             |
+| steps            | property | `readonly ApmPlanStep[]`             | yes      |             |
+| targets          | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+
+## ApmPlanStep
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:205:1`
+
+### Members
+
+| Name          | Kind     | Type                                                                                                              | Required | Description |
+| ------------- | -------- | ----------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| evidence      | property | `readonly string[]`                                                                                               | yes      |             |
+| id            | property | `string`                                                                                                          | yes      |             |
+| installRootId | property | `string`                                                                                                          | no       |             |
+| kind          | property | `"projection" \| "migration" \| "dependency-files" \| "install" \| "validation" \| "host-restart" \| "follow-up"` | yes      |             |
+| owner         | property | `string`                                                                                                          | no       |             |
+| prerequisites | property | `readonly string[]`                                                                                               | yes      |             |
+| reason        | property | `string`                                                                                                          | yes      |             |
+
+## ApmPlanTargetSelection
+
+Kind: `unknown`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:19:1`
+
+## ApmPlanTargetSelectionResult
+
+Kind: `type`
+Module: `src/types/plan.ts`
+Source: `src/types/plan.ts:106:1`
+
+### Members
+
+| Name     | Kind     | Type                                 | Required | Description |
+| -------- | -------- | ------------------------------------ | -------- | ----------- |
+| blockers | property | `readonly ApmPlanBlocker[]`          | yes      |             |
+| targets  | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+
 ## ApmProjectFileSnapshot
 
 Kind: `type`
@@ -1298,6 +1791,19 @@ Create the thin Ankh command provider over the same standalone APM command adapt
   - version: `string`
   - returns: `AnkhRuntimeCommandProvider`
 
+## createNativePlanResolutionPort
+
+Kind: `function`
+Module: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts`
+Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:24:1`
+
+Create the Node native package-manager resolution adapter used by headless project planning.
+
+### Signatures
+
+- `() => ApmPlanResolutionPort`
+  - returns: `ApmPlanResolutionPort`
+
 ## createNpmRegistryAvailabilityPort
 
 Kind: `function`
@@ -1312,6 +1818,19 @@ Create a bounded npm-compatible registry adapter with redacted config and proces
   - options: `ApmRegistryAvailabilityOptions` (optional)
   - returns: `ApmStatusAvailabilityPort`
 
+## createSha256PlanDigestPort
+
+Kind: `function`
+Module: `src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts`
+Source: `src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts:6:1`
+
+Create the Node SHA-256 digest adapter used for semantic input fingerprints and plan IDs.
+
+### Signatures
+
+- `() => ApmPlanDigestPort`
+  - returns: `ApmPlanDigestPort`
+
 ## inspectDependencyInventoryAsync
 
 Kind: `function`
@@ -1325,6 +1844,36 @@ Inspect package declarations, lock instances, and installed state without runnin
 - `(input: { readonly inspection: ProjectInspection; }) => Promise<ApmDependencyInventory>`
   - input: `{ readonly inspection: ProjectInspection; }`
   - returns: `Promise<ApmDependencyInventory>`
+
+## planAsync
+
+Kind: `function`
+Module: `src/features/plan/application/planAsync.ts`
+Source: `src/features/plan/application/planAsync.ts:23:1`
+
+Build one serializable reproducible update plan without mutating the inspected project.
+
+### Signatures
+
+- `(input: ApmPlanInput, ports: ApmPlanPorts) => Promise<ApmPlanResult>`
+  - input: `ApmPlanInput`
+  - ports: `ApmPlanPorts`
+  - returns: `Promise<ApmPlanResult>`
+
+## planProjectAsync
+
+Kind: `function`
+Module: `src/features/plan/composition/planProjectAsync.ts`
+Source: `src/features/plan/composition/planProjectAsync.ts:16:1`
+
+Compose project status and native Node planning adapters behind the shared headless plan use case.
+
+### Signatures
+
+- `(input: ApmPlanProjectInput, options?: ApmPlanProjectOptions) => Promise<ApmPlanResult>`
+  - input: `ApmPlanProjectInput`
+  - options: `ApmPlanProjectOptions` (optional)
+  - returns: `Promise<ApmPlanResult>`
 
 ## resolveMigrationPath
 
@@ -1387,6 +1936,23 @@ Validate package.json `ankhorage.apm` discovery metadata before descriptor loadi
 - `(value: unknown) => ApmPackageUpdateMetadataValidationResult`
   - value: `unknown`
   - returns: `ApmPackageUpdateMetadataValidationResult`
+
+## validateSavedPlanAsync
+
+Kind: `function`
+Module: `src/features/plan/domain/validateSavedPlanAsync.ts`
+Source: `src/features/plan/domain/validateSavedPlanAsync.ts:11:1`
+
+Revalidate a saved plan against current project evidence and executor identity before mutation.
+
+### Signatures
+
+- `(plan: ApmPlanResult, status: ApmStatusResult, executor: ApmPlanExecutorIdentity, digest: ApmPlanDigestPort) => Promise<readonly ApmPlanBlocker[]>`
+  - digest: `ApmPlanDigestPort`
+  - executor: `ApmPlanExecutorIdentity`
+  - plan: `ApmPlanResult`
+  - status: `ApmStatusResult`
+  - returns: `Promise<readonly ApmPlanBlocker[]>`
 
 ## validateUpdateDescriptor
 

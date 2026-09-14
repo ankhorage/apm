@@ -1,14 +1,32 @@
 [
   {
+    "name": "APM_PLAN_SUPPORT",
+    "description": "Publish the deterministic planning guarantees and native resolver matrix implemented by APM.\n\n`plan` is read-only with respect to the inspected project. Package-manager resolution runs in a\ndisposable staging directory and uses the selected project's native npm, pnpm, Yarn, or Bun\nresolver. Lifecycle scripts are disabled. Only reviewed manifest and lockfile changes are returned\nas serializable plan evidence; staging/cache/network effects remain outside the project tree.\n\nThe default dependency policy is conservative: only direct registry packages with a newer version\nsatisfying their existing declared range are selected automatically. Latest majors, prereleases,\ndowngrades and exact versions require explicit selections and APM never invents a new caret range.\nExplicit transitive selections remain lock-only; they are not promoted into root dependencies.\n\nNative solver output is re-inspected through the same package-manager evidence adapters used by\n`status`. Duplicate package instances, peer contexts and workspace links keep their native identity.\nUnknown artifact sources, peer conflicts, unsupported lock/linker modes and unresolved targets are\nblockers rather than partial executable plans.\n\nPackage-owned migration/projection planners can request additional dependency selections. APM\nresolves those through a bounded fixed-point loop (four iterations by default). Conflicting owner\nrequirements or non-convergence block the plan, and intermediate diffs are never exposed as an\nexecutable result. Required host/extension upgrades are explicit restart-and-re-plan boundaries.\n\nSaved plans contain exact targets, reviewed file content/digests, resolved graph/artifact identities,\nordered step prerequisites, executor identity and a semantic input fingerprint. Registry freshness\ntimestamps are recorded separately from fingerprint validity: refreshing identical registry evidence\ndoes not invalidate an otherwise identical plan. Apply must revalidate the project fingerprint and\nexecutor instead of re-resolving `latest`.\n\nShipment effects remain separate from source updates. In particular, dependency graph changes are\nnever assumed OTA-safe; without package/platform evidence APM records OTA eligibility as `unknown`.",
+    "isReadme": true,
+    "examples": [],
+    "kind": "value",
+    "modulePath": "src/features/plan/constants/support.ts",
+    "sourceLocation": {
+      "filePath": "src/features/plan/constants/support.ts",
+      "line": 34,
+      "column": 14
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "APM_STATUS_SUPPORT",
-    "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nOrdinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,\nworkspace and package-manager evidence from Project Detector plus package-manager-native files.\nDetected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns\ntheir dependency semantics; they never become a false complete/current result.\n\nInstall-root selection is evidence based. An explicit `packageManager` declaration wins over\nlockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If\nmultiple manager lockfiles exist without an explicit selection, the root is conflicting and\nincomplete. Nested packages that carry their own manager/lock evidence become independent\ninstall roots rather than being folded into the parent workspace.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\nDuplicate versions remain separate physical package instances and dependency edges retain the\ninstance identity they actually resolve to.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain\ndistinct package instances rather than being collapsed by package name.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Offline cache misses and registry/auth/network failures make availability unknown.\n\n`status` is read-only. It reads manifests, lockfiles, installation metadata and registry data;\nit does not install packages, execute lifecycle hooks, run migrations or write project files.\n`plan`, `apply`, and `verify` remain separate roadmap operations.",
+    "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nOrdinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,\nworkspace and package-manager evidence from Project Detector plus package-manager-native files.\nDetected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns\ntheir dependency semantics; they never become a false complete/current result.\n\nInstall-root selection is evidence based. An explicit `packageManager` declaration wins over\nlockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If\nmultiple manager lockfiles exist without an explicit selection, the root is conflicting and\nincomplete. Nested packages that carry their own manager/lock evidence become independent\ninstall roots rather than being folded into the parent workspace.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\nDuplicate versions remain separate physical package instances and dependency edges retain the\ninstance identity they actually resolve to.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain\ndistinct package instances rather than being collapsed by package name.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Offline cache misses and registry/auth/network failures make availability unknown.\n\n`status` and `plan` are read-only project operations. Status reads manifests, lockfiles,\ninstallation metadata and registry data. Plan performs package-manager-native resolution only in\ndisposable staging and returns reviewed diffs without writing the inspected project. Neither\noperation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate\nroadmap operations.",
     "isReadme": true,
     "examples": [],
     "kind": "value",
     "modulePath": "src/features/status/constants/support.ts",
     "sourceLocation": {
       "filePath": "src/features/status/constants/support.ts",
-      "line": 45,
+      "line": 47,
       "column": 14
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2153,6 +2171,1582 @@
     "structuredRows": []
   },
   {
+    "name": "ApmPlanArtifactIdentity",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 120,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "integrity",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packageName",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "resolved",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"registry\" | \"workspace\" | \"file\" | \"git\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanBlocker",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 83,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanBlockerCode", "ApmPlanBlockerScope"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "code",
+        "kind": "property",
+        "type": "ApmPlanBlockerCode | `protocol.${string}`",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "scope",
+        "kind": "property",
+        "type": "ApmPlanBlockerScope",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanBlockerCode",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 55,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanBlockerScope",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 77,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"host\" | \"project\" | \"install-root\" | \"package\" | \"projection\" | \"migration\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "path",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanDependencyTarget",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 91,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "currentRange",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "currentVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "direct",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installRootId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"dependency\" | \"development\" | \"optional\" | \"peer\" | \"peer-optional\"",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "ownerPath",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"compatible\" | \"latest\" | \"exact\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targetRange",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "targetVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanDependencyUpdateMode",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 10,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanDigestPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 195,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "digestAsync",
+        "kind": "property",
+        "type": "(value: string) => Promise<string>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanExecutorIdentity",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 177,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "apmVersion",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "runtime",
+        "kind": "property",
+        "type": "\"node\" | \"browser\" | \"other\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "runtimeVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanFileChange",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 111,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "afterContent",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "afterDigest",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "beforeContent",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "beforeDigest",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"create\" | \"update\" | \"delete\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "path",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 183,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanExecutorIdentity", "ApmPlanPolicyInput", "ApmStatusResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "executor",
+        "kind": "property",
+        "type": "ApmPlanExecutorIdentity",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "policy",
+        "kind": "property",
+        "type": "ApmPlanPolicyInput",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmStatusResult",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanInputFingerprint",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 199,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "availabilityCheckedAt",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "statusSchemaVersion",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "value",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanPackageSelection",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 34,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanPackageSelector", "ApmPlanTargetSelection"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "selector",
+        "kind": "property",
+        "type": "ApmPlanPackageSelector",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "target",
+        "kind": "property",
+        "type": "ApmPlanTargetSelection",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanPackageSelector",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 12,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "installRootId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "ownerPath",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanPolicy",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 47,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDependencyUpdateMode", "ApmPlanPackageSelection"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "dependencyUpdates",
+        "kind": "property",
+        "type": "ApmPlanDependencyUpdateMode",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "maxGeneratorIterations",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "repairInstallations",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "repairProjections",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "selections",
+        "kind": "property",
+        "type": "readonly ApmPlanPackageSelection[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanPolicyInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 39,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDependencyUpdateMode", "ApmPlanPackageSelection"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "dependencyUpdates",
+        "kind": "property",
+        "type": "ApmPlanDependencyUpdateMode",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "maxGeneratorIterations",
+        "kind": "property",
+        "type": "number",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "repairInstallations",
+        "kind": "property",
+        "type": "boolean",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "repairProjections",
+        "kind": "property",
+        "type": "boolean",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "selections",
+        "kind": "property",
+        "type": "readonly ApmPlanPackageSelection[]",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanPorts",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 250,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDigestPort", "ApmPlanProtocolPort", "ApmPlanResolutionPort"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "digest",
+        "kind": "property",
+        "type": "ApmPlanDigestPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "protocol",
+        "kind": "property",
+        "type": "ApmPlanProtocolPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "resolution",
+        "kind": "property",
+        "type": "ApmPlanResolutionPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanProjectInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 189,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanPolicyInput", "ApmStatusAvailabilityMode"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "availability",
+        "kind": "property",
+        "type": "ApmStatusAvailabilityMode",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "policy",
+        "kind": "property",
+        "type": "ApmPlanPolicyInput",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanProjectOptions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 246,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanProtocolPort"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "protocol",
+        "kind": "property",
+        "type": "ApmPlanProtocolPort",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanProtocolPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 242,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanProtocolRequest", "ApmPlanProtocolResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "planProtocolAsync",
+        "kind": "property",
+        "type": "(input: ApmPlanProtocolRequest) => Promise<ApmPlanProtocolResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanProtocolRequest",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 222,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmPlanDependencyTarget",
+      "ApmPlanInputFingerprint",
+      "ApmPlanPolicy",
+      "ApmPlanResolutionResult",
+      "ApmStatusResult"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inputFingerprint",
+        "kind": "property",
+        "type": "ApmPlanInputFingerprint",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "policy",
+        "kind": "property",
+        "type": "ApmPlanPolicy",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "resolutions",
+        "kind": "property",
+        "type": "readonly ApmPlanResolutionResult[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "status",
+        "kind": "property",
+        "type": "ApmStatusResult",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targets",
+        "kind": "property",
+        "type": "readonly ApmPlanDependencyTarget[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanProtocolResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 230,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmPlanArtifactIdentity",
+      "ApmPlanBlocker",
+      "ApmPlanFileChange",
+      "ApmPlanPackageSelection",
+      "ApmPlanStep",
+      "ApmReleaseEffect",
+      "ApmStatusDiagnostic",
+      "ApmStatusFinding"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "artifacts",
+        "kind": "property",
+        "type": "readonly ApmPlanArtifactIdentity[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmPlanBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "effects",
+        "kind": "property",
+        "type": "readonly ApmReleaseEffect[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "files",
+        "kind": "property",
+        "type": "readonly ApmPlanFileChange[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "findings",
+        "kind": "property",
+        "type": "readonly ApmStatusFinding[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "requiredSelections",
+        "kind": "property",
+        "type": "readonly ApmPlanPackageSelection[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "steps",
+        "kind": "property",
+        "type": "readonly ApmPlanStep[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanResolutionEffects",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 152,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "cache",
+        "kind": "property",
+        "type": "\"manager-default\" | \"isolated\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "lifecycleScripts",
+        "kind": "property",
+        "type": "false",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "network",
+        "kind": "property",
+        "type": "\"offline\" | \"allowed\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "projectWrites",
+        "kind": "property",
+        "type": "false",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanResolutionPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 173,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanResolutionRequest", "ApmPlanResolutionResult"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "resolveAsync",
+        "kind": "property",
+        "type": "(input: ApmPlanResolutionRequest) => Promise<ApmPlanResolutionResult>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanResolutionRequest",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 140,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageManagerName", "ApmPlanDependencyTarget"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "installRootId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installRootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "linker",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "lockfilePath",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "manager",
+        "kind": "property",
+        "type": "ApmPackageManagerName",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "managerVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packagePaths",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targets",
+        "kind": "property",
+        "type": "readonly ApmPlanDependencyTarget[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanResolutionResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 159,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmPackageManagerName",
+      "ApmPlanArtifactIdentity",
+      "ApmPlanBlocker",
+      "ApmPlanFileChange",
+      "ApmPlanResolutionEffects",
+      "ApmPlanResolvedPackage",
+      "ApmStatusDiagnostic"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "artifacts",
+        "kind": "property",
+        "type": "readonly ApmPlanArtifactIdentity[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmPlanBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "effects",
+        "kind": "property",
+        "type": "ApmPlanResolutionEffects",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "files",
+        "kind": "property",
+        "type": "readonly ApmPlanFileChange[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installRootId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "linker",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "manager",
+        "kind": "property",
+        "type": "ApmPackageManagerName",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "managerVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packages",
+        "kind": "property",
+        "type": "readonly ApmPlanResolvedPackage[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanResolvedPackage",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 129,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "dependencies",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "direct",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "integrity",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "peerContext",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"registry\" | \"workspace\" | \"file\" | \"git\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 256,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmPlanArtifactIdentity",
+      "ApmPlanBlocker",
+      "ApmPlanDependencyTarget",
+      "ApmPlanExecutorIdentity",
+      "ApmPlanFileChange",
+      "ApmPlanInputFingerprint",
+      "ApmPlanPolicy",
+      "ApmPlanResolvedPackage",
+      "ApmPlanStep",
+      "ApmReleaseEffect",
+      "ApmStatusDiagnostic",
+      "ApmStatusFinding"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "artifacts",
+        "kind": "property",
+        "type": "readonly ApmPlanArtifactIdentity[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmPlanBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "effects",
+        "kind": "property",
+        "type": "readonly ApmReleaseEffect[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "executor",
+        "kind": "property",
+        "type": "ApmPlanExecutorIdentity",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "files",
+        "kind": "property",
+        "type": "readonly ApmPlanFileChange[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "findings",
+        "kind": "property",
+        "type": "readonly ApmStatusFinding[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "inputFingerprint",
+        "kind": "property",
+        "type": "ApmPlanInputFingerprint",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operation",
+        "kind": "property",
+        "type": "\"plan\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packages",
+        "kind": "property",
+        "type": "readonly ApmPlanResolvedPackage[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "policy",
+        "kind": "property",
+        "type": "ApmPlanPolicy",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "steps",
+        "kind": "property",
+        "type": "readonly ApmPlanStep[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targets",
+        "kind": "property",
+        "type": "readonly ApmPlanDependencyTarget[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanStep",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 205,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installRootId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"projection\" | \"migration\" | \"dependency-files\" | \"install\" | \"validation\" | \"host-restart\" | \"follow-up\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "owner",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "prerequisites",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanTargetSelection",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 19,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPlanTargetSelectionResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/plan.ts",
+    "sourceLocation": {
+      "filePath": "src/types/plan.ts",
+      "line": 106,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanBlocker", "ApmPlanDependencyTarget"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "blockers",
+        "kind": "property",
+        "type": "readonly ApmPlanBlocker[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "targets",
+        "kind": "property",
+        "type": "readonly ApmPlanDependencyTarget[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmProjectFileSnapshot",
     "description": null,
     "isReadme": false,
@@ -4082,6 +5676,31 @@
     "structuredRows": []
   },
   {
+    "name": "createNativePlanResolutionPort",
+    "description": "Create the Node native package-manager resolution adapter used by headless project planning.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
+    "sourceLocation": {
+      "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
+      "line": 24,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanResolutionPort"],
+    "signatures": [
+      {
+        "label": "() => ApmPlanResolutionPort",
+        "parameters": [],
+        "returnType": "ApmPlanResolutionPort",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "createNpmRegistryAvailabilityPort",
     "description": "Create a bounded npm-compatible registry adapter with redacted config and process-local TTL cache.",
     "isReadme": false,
@@ -4114,6 +5733,31 @@
     "structuredRows": []
   },
   {
+    "name": "createSha256PlanDigestPort",
+    "description": "Create the Node SHA-256 digest adapter used for semantic input fingerprints and plan IDs.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
+    "sourceLocation": {
+      "filePath": "src/features/plan/adapters/outbound/createSha256PlanDigestPort.ts",
+      "line": 6,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDigestPort"],
+    "signatures": [
+      {
+        "label": "() => ApmPlanDigestPort",
+        "parameters": [],
+        "returnType": "ApmPlanDigestPort",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "inspectDependencyInventoryAsync",
     "description": "Inspect package declarations, lock instances, and installed state without running package code.",
     "isReadme": false,
@@ -4139,6 +5783,82 @@
           }
         ],
         "returnType": "Promise<ApmDependencyInventory>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "planAsync",
+    "description": "Build one serializable reproducible update plan without mutating the inspected project.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/plan/application/planAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/plan/application/planAsync.ts",
+      "line": 23,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanInput", "ApmPlanPorts", "ApmPlanResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmPlanInput, ports: ApmPlanPorts) => Promise<ApmPlanResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmPlanInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "ports",
+            "type": "ApmPlanPorts",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmPlanResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "planProjectAsync",
+    "description": "Compose project status and native Node planning adapters behind the shared headless plan use case.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/plan/composition/planProjectAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/plan/composition/planProjectAsync.ts",
+      "line": 16,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanProjectInput", "ApmPlanProjectOptions", "ApmPlanResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmPlanProjectInput, options?: ApmPlanProjectOptions) => Promise<ApmPlanResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmPlanProjectInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "options",
+            "type": "ApmPlanProjectOptions",
+            "required": false,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmPlanResult>",
         "returnDescription": null
       }
     ],
@@ -4273,6 +5993,62 @@
           }
         ],
         "returnType": "ApmPackageUpdateMetadataValidationResult",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "validateSavedPlanAsync",
+    "description": "Revalidate a saved plan against current project evidence and executor identity before mutation.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/plan/domain/validateSavedPlanAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/plan/domain/validateSavedPlanAsync.ts",
+      "line": 11,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmPlanBlocker",
+      "ApmPlanDigestPort",
+      "ApmPlanExecutorIdentity",
+      "ApmPlanResult",
+      "ApmStatusResult"
+    ],
+    "signatures": [
+      {
+        "label": "(plan: ApmPlanResult, status: ApmStatusResult, executor: ApmPlanExecutorIdentity, digest: ApmPlanDigestPort) => Promise<readonly ApmPlanBlocker[]>",
+        "parameters": [
+          {
+            "name": "digest",
+            "type": "ApmPlanDigestPort",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "executor",
+            "type": "ApmPlanExecutorIdentity",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "plan",
+            "type": "ApmPlanResult",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "status",
+            "type": "ApmStatusResult",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<readonly ApmPlanBlocker[]>",
         "returnDescription": null
       }
     ],
