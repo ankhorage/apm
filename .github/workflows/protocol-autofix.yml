@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Build public self-imports
+        run: bun run build
+
       - name: Canonically format and autofix
         run: |
           bun run format
