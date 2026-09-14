@@ -178,6 +178,7 @@ export interface ApmAvailabilityRequest {
   readonly packageId: string;
   readonly name: string;
   readonly role: 'application' | 'host';
+  readonly source?: ApmLockedPackageEvidence['source'];
   readonly currentVersion?: string;
   readonly declaredRange?: string;
 }
@@ -185,7 +186,7 @@ export interface ApmAvailabilityRequest {
 export interface ApmPackageAvailabilityEvidence {
   readonly packageId: string;
   readonly name: string;
-  readonly state: 'known' | 'unknown';
+  readonly state: 'known' | 'unknown' | 'not-applicable';
   readonly registry?: string;
   readonly checkedAt?: string;
   readonly latestVersion?: string;
