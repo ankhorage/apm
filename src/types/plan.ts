@@ -159,6 +159,7 @@ export interface ApmPlanResolutionEffects {
 
 export interface ApmPlanResolutionResult {
   readonly installRootId: string;
+  readonly installRootPath: string;
   readonly complete: boolean;
   readonly manager: ApmPackageManagerName;
   readonly managerVersion?: string;
