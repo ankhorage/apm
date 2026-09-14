@@ -64,7 +64,7 @@ jobs:
           bun run lint
           bun run knip:check
           bun run test
-          bun run changeset
+          bun run changeset:status
           bun run format:check
           git diff --check
 
