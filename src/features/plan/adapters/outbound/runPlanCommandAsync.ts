@@ -52,9 +52,9 @@ function commandExitCode(error: unknown): number {
   return typeof error.code === 'number' ? error.code : 1;
 }
 
-/*** Read bounded child output from an external process error without leaking arbitrary fields. */
+/*** Read bounded child output from an external process error without dynamic object indexing. */
 function commandOutput(error: unknown, field: 'stdout' | 'stderr'): string {
   if (!isRecord(error)) return '';
-  const value = error[field];
+  const value = field === 'stdout' ? error.stdout : error.stderr;
   return typeof value === 'string' ? value.slice(0, MAX_BUFFER_BYTES) : '';
 }
