@@ -9,6 +9,7 @@ import type {
   ApmPlanResult,
 } from '../../../types/plan.js';
 import type { ApmReleaseEffect } from '../../../types/update-protocol.js';
+import { buildPlanIdSource } from '../domain/buildPlanIdSource.js';
 import { buildPlanInputFingerprintSource } from '../domain/buildPlanInputFingerprintSource.js';
 import { buildPlanResolutionRequests } from '../domain/buildPlanResolutionRequests.js';
 import { buildPlanSteps } from '../domain/buildPlanSteps.js';
@@ -49,8 +50,18 @@ export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promi
     ...protocol.blockers,
     ...ordered.blockers,
   ];
-  const planCore = stablePlanCore(input, policy, inputFingerprint, selected.targets, resolutions, protocol, effects, ordered.steps, blockers);
-  const id = await ports.digest.digestAsync(JSON.stringify(planCore));
+  const planCore = stablePlanCore(
+    input,
+    policy,
+    inputFingerprint,
+    selected.targets,
+    resolutions,
+    protocol,
+    effects,
+    ordered.steps,
+    blockers,
+  );
+  const id = await ports.digest.digestAsync(buildPlanIdSource(planCore));
   return {
     schemaVersion: 1,
     operation: 'plan',
@@ -65,7 +76,9 @@ async function fingerprintAsync(
   policy: ReturnType<typeof normalizePlanPolicy>,
   ports: ApmPlanPorts,
 ): Promise<ApmPlanInputFingerprint> {
-  const value = await ports.digest.digestAsync(buildPlanInputFingerprintSource(input.status, policy));
+  const value = await ports.digest.digestAsync(
+    buildPlanInputFingerprintSource(input.status, policy),
+  );
   return {
     value,
     statusSchemaVersion: input.status.schemaVersion,
@@ -206,9 +219,10 @@ function stablePlanCore(
   const packages = resolutions
     .flatMap(({ packages: items }) => items)
     .sort((left, right) => compareText(left.id, right.id));
-  const artifacts = [...resolutions.flatMap(({ artifacts: items }) => items), ...protocol.artifacts].sort(
-    (left, right) => compareText(left.id, right.id),
-  );
+  const artifacts = [
+    ...resolutions.flatMap(({ artifacts: items }) => items),
+    ...protocol.artifacts,
+  ].sort((left, right) => compareText(left.id, right.id));
   const diagnostics = [
     ...input.status.diagnostics,
     ...resolutions.flatMap(({ diagnostics: items }) => items),
@@ -242,16 +256,14 @@ function incompleteStatusBlocker(input: ApmPlanInput): ApmPlanBlocker {
     code: 'plan.status-incomplete',
     scope: { kind: 'project', path: input.status.rootPath },
     evidence: input.status.diagnostics.map(({ code }) => code),
-    reason: 'Planning input is incomplete; missing evidence cannot be converted into a safe executable plan.',
+    reason:
+      'Planning input is incomplete; missing evidence cannot be converted into a safe executable plan.',
     nextAction: 'Resolve status diagnostics and refresh evidence before applying an update plan.',
   };
 }
 
 /*** Explain an unexpected native resolver failure without leaking transport-specific exceptions into the plan schema. */
-function resolverFailureBlocker(
-  request: ApmPlanResolutionRequest,
-  error: unknown,
-): ApmPlanBlocker {
+function resolverFailureBlocker(request: ApmPlanResolutionRequest, error: unknown): ApmPlanBlocker {
   return {
     code: 'plan.resolution-failed',
     scope: { kind: 'install-root', id: request.installRootId, path: request.installRootPath },
