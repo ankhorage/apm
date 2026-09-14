@@ -11,6 +11,7 @@ export interface ApmVerifyInput {
 export type ApmVerifyCheckStatus = 'passed' | 'failed' | 'unknown' | 'skipped';
 
 export type ApmVerifyCheckKind =
+  | 'operation'
   | 'dependency-state'
   | 'migration'
   | 'projection'
@@ -26,7 +27,10 @@ export interface ApmVerifyCheckResult {
 }
 
 export interface ApmVerifyJournalPort {
-  readonly readAsync: (rootPath: string, operationId: string) => Promise<ApmApplyJournal | undefined>;
+  readonly readAsync: (
+    rootPath: string,
+    operationId: string,
+  ) => Promise<ApmApplyJournal | undefined>;
 }
 
 export interface ApmVerifyStatusPort {
@@ -51,7 +55,7 @@ export interface ApmVerifyResult {
   readonly schemaVersion: 1;
   readonly operation: 'verify';
   readonly operationId: string;
-  readonly planId: string;
+  readonly planId?: string;
   readonly rootPath: string;
   readonly verified: boolean;
   readonly checks: readonly ApmVerifyCheckResult[];
