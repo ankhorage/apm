@@ -4,10 +4,10 @@ import type {
   ApmPlanProjectOptions,
   ApmPlanResult,
 } from '../../../types/plan.js';
+import { statusProjectAsync } from '../../status/composition/statusProjectAsync.js';
 import { createNativePlanResolutionPort } from '../adapters/outbound/createNativePlanResolutionPort.js';
 import { createSha256PlanDigestPort } from '../adapters/outbound/createSha256PlanDigestPort.js';
 import { planAsync } from '../application/planAsync.js';
-import { statusProjectAsync } from '../../status/composition/statusProjectAsync.js';
 
 const digestPort = createSha256PlanDigestPort();
 const resolutionPort = createNativePlanResolutionPort();
