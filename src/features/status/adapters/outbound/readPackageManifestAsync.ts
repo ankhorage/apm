@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { isRecord } from '@ankhorage/utility/object';
 
-import type { ApmParsedPackageManifest } from '../../../types/status-inventory.js';
+import type { ApmParsedPackageManifest } from '../../../../types/status-inventory.js';
 
 /*** Read only dependency declarations needed for APM inventory from one package manifest. */
 export async function readPackageManifestAsync(
@@ -38,6 +38,8 @@ export async function readPackageManifestAsync(
 function readStringMap(value: unknown): Readonly<Record<string, string>> {
   if (!isRecord(value)) return {};
   return Object.fromEntries(
-    Object.entries(value).filter((entry): entry is [string, string] => typeof entry[1] === 'string'),
+    Object.entries(value).flatMap(([name, entryValue]) =>
+      typeof entryValue === 'string' ? [[name, entryValue] as const] : [],
+    ),
   );
 }
