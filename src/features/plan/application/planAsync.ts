@@ -11,9 +11,9 @@ import type {
 import type { ApmReleaseEffect } from '../../../types/update-protocol.js';
 import { buildPlanCore } from '../domain/buildPlanCore.js';
 import { buildPlanIdSource } from '../domain/buildPlanIdSource.js';
-import { buildPlanInputFingerprintSource } from '../domain/buildPlanInputFingerprintSource.js';
 import { buildPlanResolutionRequests } from '../domain/buildPlanResolutionRequests.js';
 import { buildPlanSteps } from '../domain/buildPlanSteps.js';
+import { createPlanInputFingerprintAsync } from '../domain/createPlanInputFingerprintAsync.js';
 import { mergePlanSelections } from '../domain/mergePlanSelections.js';
 import { normalizePlanPolicy } from '../domain/normalizePlanPolicy.js';
 import { orderPlanSteps } from '../domain/orderPlanSteps.js';
@@ -22,7 +22,7 @@ import { selectDependencyTargets } from '../domain/selectDependencyTargets.js';
 /*** Build one serializable reproducible update plan without mutating the inspected project. */
 export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promise<ApmPlanResult> {
   const policy = normalizePlanPolicy(input.policy);
-  const inputFingerprint = await fingerprintAsync(input, policy, ports);
+  const inputFingerprint = await createPlanInputFingerprintAsync(input.status, policy, ports.digest);
   const evidence = await buildPlanEvidenceAsync(input, policy, inputFingerprint, ports);
   const planCore = buildPlanCore({
     planInput: input,
@@ -151,36 +151,6 @@ function blockedEvidence(
     steps: [],
     blockers,
   };
-}
-
-/*** Hash stable planning evidence while recording registry freshness separately. */
-async function fingerprintAsync(
-  input: ApmPlanInput,
-  policy: ReturnType<typeof normalizePlanPolicy>,
-  ports: ApmPlanPorts,
-): Promise<ApmPlanInputFingerprint> {
-  const value = await ports.digest.digestAsync(
-    buildPlanInputFingerprintSource(input.status, policy),
-  );
-  return {
-    value,
-    statusSchemaVersion: input.status.schemaVersion,
-    availabilityCheckedAt: availabilityCheckedAt(input),
-  };
-}
-
-/*** Collect registry freshness timestamps without making them part of fingerprint validity. */
-function availabilityCheckedAt(input: ApmPlanInput): readonly string[] {
-  return [
-    ...input.status.dependencies.flatMap(({ availability }) =>
-      availability.checkedAt === undefined ? [] : [availability.checkedAt],
-    ),
-    ...input.status.hosts.flatMap(({ availability }) =>
-      availability.checkedAt === undefined ? [] : [availability.checkedAt],
-    ),
-  ]
-    .filter((value, index, values) => values.indexOf(value) === index)
-    .sort(compareText);
 }
 
 /*** Resolve install roots independently so one failed native solver remains explicit plan evidence. */
@@ -335,10 +305,4 @@ function protocolUnavailableBlocker(): ApmPlanBlocker {
       'Migration or projection work is pending but no package-owned protocol planner is available.',
     nextAction: 'Load or install the required trusted owner extension before applying updates.',
   };
-}
-
-/*** Compare stable IDs without locale-dependent ordering. */
-function compareText(left: string, right: string): number {
-  if (left < right) return -1;
-  return left > right ? 1 : 0;
 }
