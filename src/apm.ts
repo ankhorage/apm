@@ -1,3 +1,5 @@
+export { planAsync } from './features/plan/application/planAsync.js';
+export { validateSavedPlanAsync } from './features/plan/domain/validateSavedPlanAsync.js';
 export { statusAsync } from './features/status/application/statusAsync.js';
 export { APM_STATUS_SUPPORT } from './features/status/constants/support.js';
 export { resolveMigrationPath } from './features/update-protocol/domain/resolveMigrationPath.js';
