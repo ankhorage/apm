@@ -9,6 +9,7 @@ import type {
 import type {
   ApmPackageManagerPlanCommand,
   ApmPlanCommandResult,
+  ApmPlanStage,
 } from '../../../../types/plan-staging.js';
 import { runPackageManagerCommandAsync } from '../../../../utils/runPackageManagerCommandAsync.js';
 import { applyStagedPlanTargetsAsync } from './applyStagedPlanTargetsAsync.js';
@@ -25,57 +26,63 @@ export function createNativePlanResolutionPort(): ApmPlanResolutionPort {
   return { resolveAsync: resolveNativePlanAsync };
 }
 
-/*** Resolve one install root entirely in disposable staging and return only reviewed serializable evidence. */
+/*** Own disposable staging lifecycle independently from native resolution semantics. */
 async function resolveNativePlanAsync(
   request: ApmPlanResolutionRequest,
 ): Promise<ApmPlanResolutionResult> {
   const stage = await stagePlanInstallRootAsync(request);
   try {
-    const manifestExpectations = await applyStagedPlanTargetsAsync(request, stage);
-    const versionResult = await runPackageManagerCommandAsync(
-      { executable: request.manager, args: ['--version'] },
-      stage.rootPath,
-      { lifecycleScripts: false },
-    );
-    if (versionResult.exitCode !== 0) {
-      return failedResolution(request, [
-        toPlanCommandFailureBlocker(request, versionCommand(request), versionResult),
-      ]);
-    }
-    const commands = buildPackageManagerPlanCommands(request);
-    const failed = await runCommandsAsync(commands, stage.rootPath);
-    if (failed !== undefined) {
-      return failedResolution(request, [
-        toPlanCommandFailureBlocker(request, failed.command, failed.result),
-      ]);
-    }
-    const root = await inspectStagedPlanInventoryAsync(request, stage);
-    if (root === undefined) return failedResolution(request, [stagedInventoryBlocker(request)]);
-    const targetBlockers = validateStagedPlanTargets(request, root);
-    const fileChanges = await collectStagedPlanFileChangesAsync(
-      request,
-      stage,
-      manifestExpectations,
-    );
-    const graph = toPlanResolutionGraph(root, request.installRootId);
-    const blockers = [...targetBlockers, ...fileChanges.blockers, ...graph.blockers];
-    return {
-      installRootId: request.installRootId,
-      installRootPath: request.installRootPath,
-      complete: blockers.length === 0,
-      manager: request.manager,
-      ...managerVersion(versionResult, request),
-      ...(root.linker === undefined ? {} : { linker: root.linker }),
-      files: fileChanges.files,
-      packages: graph.packages,
-      artifacts: graph.artifacts,
-      effects: resolutionEffects(),
-      blockers,
-      diagnostics: root.diagnostics,
-    };
+    return await resolveStagedPlanAsync(request, stage);
   } finally {
     await rm(stage.rootPath, { recursive: true, force: true });
   }
+}
+
+/*** Resolve one already-staged install root and return only reviewed serializable evidence. */
+async function resolveStagedPlanAsync(
+  request: ApmPlanResolutionRequest,
+  stage: ApmPlanStage,
+): Promise<ApmPlanResolutionResult> {
+  const manifestExpectations = await applyStagedPlanTargetsAsync(request, stage);
+  const versionResult = await runPackageManagerCommandAsync(
+    { executable: request.manager, args: ['--version'] },
+    stage.rootPath,
+    { lifecycleScripts: false },
+  );
+  if (versionResult.exitCode !== 0) {
+    return failedResolution(request, [
+      toPlanCommandFailureBlocker(request, versionCommand(request), versionResult),
+    ]);
+  }
+  const failed = await runCommandsAsync(buildPackageManagerPlanCommands(request), stage.rootPath);
+  if (failed !== undefined) {
+    return failedResolution(request, [
+      toPlanCommandFailureBlocker(request, failed.command, failed.result),
+    ]);
+  }
+  const root = await inspectStagedPlanInventoryAsync(request, stage);
+  if (root === undefined) return failedResolution(request, [stagedInventoryBlocker(request)]);
+  const fileChanges = await collectStagedPlanFileChangesAsync(request, stage, manifestExpectations);
+  const graph = toPlanResolutionGraph(root, request.installRootId);
+  const blockers = [
+    ...validateStagedPlanTargets(request, root),
+    ...fileChanges.blockers,
+    ...graph.blockers,
+  ];
+  return {
+    installRootId: request.installRootId,
+    installRootPath: request.installRootPath,
+    complete: blockers.length === 0,
+    manager: request.manager,
+    ...managerVersion(versionResult, request),
+    ...(root.linker === undefined ? {} : { linker: root.linker }),
+    files: fileChanges.files,
+    packages: graph.packages,
+    artifacts: graph.artifacts,
+    effects: resolutionEffects(),
+    blockers,
+    diagnostics: root.diagnostics,
+  };
 }
 
 interface FailedCommand {
