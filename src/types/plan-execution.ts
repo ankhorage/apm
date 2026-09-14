@@ -35,7 +35,7 @@ export type ApmPlanStepExecution =
       readonly managerVersion?: string;
       readonly linker?: string;
       readonly packageIds: readonly string[];
-      readonly lifecycleScripts: false;
+      readonly lifecycleScripts: boolean;
     }
   | {
       readonly kind: 'migration';
