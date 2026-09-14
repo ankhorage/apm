@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 
 import { expect, test } from 'bun:test';
 
+import type { ApmPlanStepExecution } from '../../../types/plan-execution.js';
 import type { ApmPlanDigestPort, ApmPlanProtocolPort } from '../../../types/plan.js';
 import type { ApmStatusResult } from '../../../types/status.js';
 import { planAsync } from './planAsync.js';
@@ -66,6 +67,7 @@ function projectionProtocolPort(): ApmPlanProtocolPort {
             owner: '@owner/package',
             reason: 'Generator fingerprint changed and the owned projection is stale.',
             evidence: ['generator:v2'],
+            execution: projectionExecution(),
           },
         ],
         effects: [],
@@ -73,6 +75,45 @@ function projectionProtocolPort(): ApmPlanProtocolPort {
         blockers: [],
         diagnostics: [],
       }),
+  };
+}
+
+/*** Freeze exact projection owner, artifact and reviewed mutation identity for execution. */
+function projectionExecution(): Extract<ApmPlanStepExecution, { readonly kind: 'projection' }> {
+  const claim = { kind: 'file' as const, path: 'generated.json' };
+  return {
+    kind: 'projection',
+    descriptor: {
+      id: 'generated',
+      claims: [claim],
+      requiresExtension: true,
+      reason: 'Materialize generated.json from the current owner generator.',
+    },
+    artifact: {
+      role: 'target',
+      packageName: '@owner/package',
+      version: '2.0.0',
+      integrity: 'sha512-owner-v2',
+      descriptorDigest: 'sha256:owner-update-descriptor',
+    },
+    plan: {
+      projectionId: 'generated',
+      mutations: [
+        {
+          id: 'projection:generated:write',
+          claim,
+          kind: 'write-file',
+          path: 'generated.json',
+          encoding: 'utf8',
+          content: '{"version":2}',
+          expectedBeforeDigest: 'old-generator-output',
+          afterDigest: 'new-generator-output',
+        },
+      ],
+      inputFingerprint: 'projection-input-v2',
+      generatorFingerprint: 'generator:v2',
+      evidence: ['generated.json'],
+    },
   };
 }
 
