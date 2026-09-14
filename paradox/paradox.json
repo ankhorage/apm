@@ -79,7 +79,7 @@
     {
       "path": "examples/basic-usage/status.ts",
       "isEntrypoint": false,
-      "dependencies": ["dist/apm.d.ts", "dist/nodeApm.d.ts"],
+      "dependencies": [],
       "exports": []
     },
     {
@@ -665,14 +665,14 @@
   "exports": [
     {
       "name": "APM_STATUS_SUPPORT",
-      "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Offline cache misses and registry/auth/network failures make availability unknown.\n\n`status` is read-only. `plan`, `apply`, and `verify` remain separate roadmap operations.",
+      "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nOrdinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,\nworkspace and package-manager evidence from Project Detector plus package-manager-native files.\nDetected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns\ntheir dependency semantics; they never become a false complete/current result.\n\nInstall-root selection is evidence based. An explicit `packageManager` declaration wins over\nlockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If\nmultiple manager lockfiles exist without an explicit selection, the root is conflicting and\nincomplete. Nested packages that carry their own manager/lock evidence become independent\ninstall roots rather than being folded into the parent workspace.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\nDuplicate versions remain separate physical package instances and dependency edges retain the\ninstance identity they actually resolve to.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain\ndistinct package instances rather than being collapsed by package name.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Offline cache misses and registry/auth/network failures make availability unknown.\n\n`status` is read-only. It reads manifests, lockfiles, installation metadata and registry data;\nit does not install packages, execute lifecycle hooks, run migrations or write project files.\n`plan`, `apply`, and `verify` remain separate roadmap operations.",
       "isReadme": true,
       "examples": [],
       "kind": "value",
       "modulePath": "src/features/status/constants/support.ts",
       "sourceLocation": {
         "filePath": "src/features/status/constants/support.ts",
-        "line": 29,
+        "line": 45,
         "column": 14
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -2676,7 +2676,7 @@
       "description": "Render the registry request target without falling back to Object stringification.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts",
-        "line": 144,
+        "line": 141,
         "column": 1
       }
     },
@@ -2685,7 +2685,7 @@
       "description": "Run one isolated registry-config fixture and clean it after each behavior assertion.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts",
-        "line": 151,
+        "line": 148,
         "column": 1
       }
     },
@@ -2937,7 +2937,7 @@
       "description": "Run one isolated filesystem fixture and remove it after the assertion.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 130,
+        "line": 133,
         "column": 1
       }
     },
@@ -2946,7 +2946,7 @@
       "description": "Write JSON fixture data while creating any nested package directory.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 140,
+        "line": 143,
         "column": 1
       }
     },
@@ -2955,7 +2955,7 @@
       "description": "Build the minimum Bun text-lock fixture used by manager-selection tests.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 147,
+        "line": 150,
         "column": 1
       }
     },
@@ -2964,7 +2964,7 @@
       "description": "Build the minimum pnpm v9 lock fixture used by inventory parsing tests.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 157,
+        "line": 160,
         "column": 1
       }
     },
@@ -2973,7 +2973,7 @@
       "description": "Build the minimum Yarn Berry lock fixture used by PnP safety tests.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 175,
+        "line": 178,
         "column": 1
       }
     },
@@ -2982,7 +2982,7 @@
       "description": "Build the minimum npm package-lock fixture used by selection tests.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 187,
+        "line": 190,
         "column": 1
       }
     },
@@ -2991,7 +2991,7 @@
       "description": "Build npm lock evidence with two physical versions of the same transitive package.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 207,
+        "line": 210,
         "column": 1
       }
     },
@@ -3000,7 +3000,7 @@
       "description": "Build Project Detector evidence without coupling adapter tests to filesystem scanning.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts",
-        "line": 225,
+        "line": 228,
         "column": 1
       }
     },
@@ -3603,7 +3603,7 @@
       "description": "Convert a validated Bun lock into immutable APM graph evidence.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 83,
+        "line": 81,
         "column": 1
       }
     },
@@ -3612,7 +3612,7 @@
       "description": "Narrow parsed JSONC to the text-lock v2 shape APM understands.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 108,
+        "line": 106,
         "column": 1
       }
     },
@@ -3621,7 +3621,7 @@
       "description": "Serialize the Bun config version without falling back to Object stringification.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 113,
+        "line": 111,
         "column": 1
       }
     },
@@ -3630,7 +3630,7 @@
       "description": "Convert one Bun package tuple into a stable lock instance with dependency edges.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 118,
+        "line": 116,
         "column": 1
       }
     },
@@ -3639,7 +3639,7 @@
       "description": "Parse Bun's package locator while retaining peer-variant data when present.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 147,
+        "line": 145,
         "column": 1
       }
     },
@@ -3648,7 +3648,7 @@
       "description": "Classify Bun locator sources before semantic-version handling.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 164,
+        "line": 162,
         "column": 1
       }
     },
@@ -3657,7 +3657,7 @@
       "description": "Resolve direct package.json declarations to unique Bun lock instances.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 172,
+        "line": 170,
         "column": 1
       }
     },
@@ -3666,7 +3666,7 @@
       "description": "Resolve one transitive Bun dependency to a unique semantic lock instance.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 191,
+        "line": 189,
         "column": 1
       }
     },
@@ -3675,7 +3675,7 @@
       "description": "Test one lock package against a Bun/npm semantic declaration.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 209,
+        "line": 207,
         "column": 1
       }
     },
@@ -3684,7 +3684,7 @@
       "description": "Test one parsed locator identity against a semantic dependency request.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 214,
+        "line": 212,
         "column": 1
       }
     },
@@ -3693,7 +3693,7 @@
       "description": "Evaluate Bun's npm protocol aliases through standard semantic-version rules.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 223,
+        "line": 221,
         "column": 1
       }
     },
@@ -3702,7 +3702,7 @@
       "description": "Read string-valued dependency metadata from a Bun lock tuple.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 231,
+        "line": 229,
         "column": 1
       }
     },
@@ -3711,7 +3711,7 @@
       "description": "List direct package declarations used for Bun lock resolution.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 239,
+        "line": 237,
         "column": 1
       }
     },
@@ -3720,7 +3720,7 @@
       "description": "Avoid adding undefined packageId properties under exact optional property semantics.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 251,
+        "line": 249,
         "column": 1
       }
     },
@@ -3729,7 +3729,7 @@
       "description": "Return missing/binary/malformed Bun lock evidence without invoking Bun.",
       "sourceLocation": {
         "filePath": "src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts",
-        "line": 256,
+        "line": 254,
         "column": 1
       }
     },
@@ -4383,16 +4383,6 @@
         "fromPath": "src/nodeApm.ts",
         "toPath": "src/types/public.ts",
         "sourcePath": "src/nodeApm.ts"
-      },
-      {
-        "fromPath": "examples/basic-usage/status.ts",
-        "toPath": "dist/apm.d.ts",
-        "sourcePath": "examples/basic-usage/status.ts"
-      },
-      {
-        "fromPath": "examples/basic-usage/status.ts",
-        "toPath": "dist/nodeApm.d.ts",
-        "sourcePath": "examples/basic-usage/status.ts"
       },
       {
         "fromPath": "src/cli/createCliProvider.test.ts",

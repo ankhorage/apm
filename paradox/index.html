@@ -550,16 +550,10 @@
 
           <section class="panel">
             <h2>Modules</h2>
-            <article
-              class="item"
-              data-search="examples/basic-usage/status.ts dist/apm.d.ts dist/nodeApm.d.ts"
-            >
+            <article class="item" data-search="examples/basic-usage/status.ts">
               <h3>examples/basic-usage/status.ts</h3>
               <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
-                <code>dist/nodeApm.d.ts</code>
-              </p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article class="item" data-search="package.json">
@@ -1525,33 +1519,49 @@
               <article
                 class="item"
                 id="symbol-apm-status-support"
-                data-search="APM_STATUS_SUPPORT value src/features/status/constants/support.ts Publish the exact read-only status matrix proven by the evidence adapters.&#10;&#10;Runtime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer&#10;projects may use any explicitly supported manager below.&#10;&#10;npm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are&#10;checked without executing package code. package-lock v1 is detected but remains inspection-only.&#10;&#10;pnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,&#10;workspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual&#10;store lock when present; unknown/custom layouts stay explicit.&#10;&#10;Yarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;&#10;`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined&#10;PnP map therefore remains incomplete by design. Yarn Classic and Yarn&#39;s pnpm linker are detected&#10;but are not claimed as complete inventory modes in this release.&#10;&#10;Bun: text `bun.lock` v2 is parsed. Bun&#39;s isolated `.bun` store and ordinary node_modules links are&#10;inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.&#10;&#10;Registry availability uses npm-compatible registries selected from project/user npmrc and&#10;environment overrides. Credentials are used only at the HTTP edge and are never returned in&#10;reports. Offline cache misses and registry/auth/network failures make availability unknown.&#10;&#10;`status` is read-only. `plan`, `apply`, and `verify` remain separate roadmap operations."
+                data-search="APM_STATUS_SUPPORT value src/features/status/constants/support.ts Publish the exact read-only status matrix proven by the evidence adapters.&#10;&#10;Runtime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer&#10;projects may use any explicitly supported manager below.&#10;&#10;Ordinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,&#10;workspace and package-manager evidence from Project Detector plus package-manager-native files.&#10;Detected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns&#10;their dependency semantics; they never become a false complete/current result.&#10;&#10;Install-root selection is evidence based. An explicit `packageManager` declaration wins over&#10;lockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If&#10;multiple manager lockfiles exist without an explicit selection, the root is conflicting and&#10;incomplete. Nested packages that carry their own manager/lock evidence become independent&#10;install roots rather than being folded into the parent workspace.&#10;&#10;npm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are&#10;checked without executing package code. package-lock v1 is detected but remains inspection-only.&#10;Duplicate versions remain separate physical package instances and dependency edges retain the&#10;instance identity they actually resolve to.&#10;&#10;pnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,&#10;workspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual&#10;store lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain&#10;distinct package instances rather than being collapsed by package name.&#10;&#10;Yarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;&#10;`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined&#10;PnP map therefore remains incomplete by design. Yarn Classic and Yarn&#39;s pnpm linker are detected&#10;but are not claimed as complete inventory modes in this release.&#10;&#10;Bun: text `bun.lock` v2 is parsed. Bun&#39;s isolated `.bun` store and ordinary node_modules links are&#10;inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.&#10;&#10;Registry availability uses npm-compatible registries selected from project/user npmrc and&#10;environment overrides. Credentials are used only at the HTTP edge and are never returned in&#10;reports. Offline cache misses and registry/auth/network failures make availability unknown.&#10;&#10;`status` is read-only. It reads manifests, lockfiles, installation metadata and registry data;&#10;it does not install packages, execute lifecycle hooks, run migrations or write project files.&#10;`plan`, `apply`, and `verify` remain separate roadmap operations."
               >
                 <h4>APM_STATUS_SUPPORT</h4>
                 <p class="muted">
-                  value • <code>src/features/status/constants/support.ts:29:14</code>
+                  value • <code>src/features/status/constants/support.ts:45:14</code>
                 </p>
                 <p>
                   Publish the exact read-only status matrix proven by the evidence adapters.
                   Runtime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected
-                  customer projects may use any explicitly supported manager below. npm:
-                  package-lock v2 and v3 are parsed. The physical node_modules locations recorded by
-                  npm are checked without executing package code. package-lock v1 is detected but
-                  remains inspection-only. pnpm: lockfile v9 is parsed, including importer roots,
+                  customer projects may use any explicitly supported manager below. Ordinary
+                  JavaScript and TypeScript projects require no `ankh.config.json`. APM derives
+                  package, workspace and package-manager evidence from Project Detector plus
+                  package-manager-native files. Detected non-JavaScript ecosystems remain
+                  inspection-only until an explicit APM adapter owns their dependency semantics;
+                  they never become a false complete/current result. Install-root selection is
+                  evidence based. An explicit `packageManager` declaration wins over lockfile
+                  heuristics while stale lockfiles from other managers remain diagnostic evidence.
+                  If multiple manager lockfiles exist without an explicit selection, the root is
+                  conflicting and incomplete. Nested packages that carry their own manager/lock
+                  evidence become independent install roots rather than being folded into the parent
+                  workspace. npm: package-lock v2 and v3 are parsed. The physical node_modules
+                  locations recorded by npm are checked without executing package code. package-lock
+                  v1 is detected but remains inspection-only. Duplicate versions remain separate
+                  physical package instances and dependency edges retain the instance identity they
+                  actually resolve to. pnpm: lockfile v9 is parsed, including importer roots,
                   package/snapshot instance identities, workspace links and peer-context suffixes.
                   Installed state is confirmed from the pnpm virtual store lock when present;
-                  unknown/custom layouts stay explicit. Yarn: Berry lock metadata v8 is parsed.
-                  `nodeLinker: node-modules` uses `.yarn-state.yml`; `nodeLinker: pnp` reads
-                  `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined PnP map
-                  therefore remains incomplete by design. Yarn Classic and Yarn&#39;s pnpm linker
-                  are detected but are not claimed as complete inventory modes in this release. Bun:
-                  text `bun.lock` v2 is parsed. Bun&#39;s isolated `.bun` store and ordinary
-                  node_modules links are inspected as data. Binary `bun.lockb` and unknown lock
-                  versions are inspection-only. Registry availability uses npm-compatible registries
-                  selected from project/user npmrc and environment overrides. Credentials are used
-                  only at the HTTP edge and are never returned in reports. Offline cache misses and
-                  registry/auth/network failures make availability unknown. `status` is read-only.
-                  `plan`, `apply`, and `verify` remain separate roadmap operations.
+                  unknown/custom layouts stay explicit. Peer variants therefore remain distinct
+                  package instances rather than being collapsed by package name. Yarn: Berry lock
+                  metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;
+                  `nodeLinker: pnp` reads `.pnp.data.json` when present and never executes
+                  `.pnp.cjs`. An inlined PnP map therefore remains incomplete by design. Yarn
+                  Classic and Yarn&#39;s pnpm linker are detected but are not claimed as complete
+                  inventory modes in this release. Bun: text `bun.lock` v2 is parsed. Bun&#39;s
+                  isolated `.bun` store and ordinary node_modules links are inspected as data.
+                  Binary `bun.lockb` and unknown lock versions are inspection-only. Registry
+                  availability uses npm-compatible registries selected from project/user npmrc and
+                  environment overrides. Credentials are used only at the HTTP edge and are never
+                  returned in reports. Offline cache misses and registry/auth/network failures make
+                  availability unknown. `status` is read-only. It reads manifests, lockfiles,
+                  installation metadata and registry data; it does not install packages, execute
+                  lifecycle hooks, run migrations or write project files. `plan`, `apply`, and
+                  `verify` remain separate roadmap operations.
                 </p>
                 <p>
                   <strong>Export paths:</strong> <code>src/apm.ts</code>,
@@ -3737,8 +3747,6 @@
                 entrypoint_src_nodeApm_ts
                 module_examples_basic_usage_status_ts[&quot;examples/basic-usage/status.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_examples_basic_usage_status_ts
-                module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-                module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
                 module_package_json[&quot;package.json&quot;] package__ankhorage_apm -.-&gt;
                 module_package_json module_paradox_config_ts[&quot;paradox.config.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_paradox_config_ts
@@ -4068,8 +4076,6 @@ graph TD
   package__ankhorage_apm --&gt; entrypoint_src_nodeApm_ts
   module_examples_basic_usage_status_ts[&quot;examples/basic-usage/status.ts&quot;]
   package__ankhorage_apm -.-&gt; module_examples_basic_usage_status_ts
-  module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-  module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
   module_package_json[&quot;package.json&quot;]
   package__ankhorage_apm -.-&gt; module_package_json
   module_paradox_config_ts[&quot;paradox.config.ts&quot;]
@@ -4339,8 +4345,6 @@ graph TD
                 module_src_types_status_inventory_ts[&quot;src/types/status-inventory.ts&quot;]
                 module_src_types_status_registry_ts[&quot;src/types/status-registry.ts&quot;]
                 module_src_types_status_ts[&quot;src/types/status.ts&quot;]
-                module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-                module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
                 module_src_cli_commands_apply_ts --&gt; module_src_cli_renderUnavailableOperation_ts
                 module_src_cli_commands_apply_ts --&gt; module_src_types_cli_ts
                 module_src_cli_commands_plan_ts --&gt; module_src_cli_renderUnavailableOperation_ts
@@ -4583,8 +4587,6 @@ graph LR
   module_src_types_status_inventory_ts[&quot;src/types/status-inventory.ts&quot;]
   module_src_types_status_registry_ts[&quot;src/types/status-registry.ts&quot;]
   module_src_types_status_ts[&quot;src/types/status.ts&quot;]
-  module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-  module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
   module_src_cli_commands_apply_ts --&gt; module_src_cli_renderUnavailableOperation_ts
   module_src_cli_commands_apply_ts --&gt; module_src_types_cli_ts
   module_src_cli_commands_plan_ts --&gt; module_src_cli_renderUnavailableOperation_ts
@@ -5310,7 +5312,7 @@ sequenceDiagram
               <h3>requestUrl</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts:144:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts:141:1</code
                 >
               </p>
               <p>
@@ -5324,7 +5326,7 @@ sequenceDiagram
               <h3>withRegistryFixture</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts:151:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts:148:1</code
                 >
               </p>
               <p>
@@ -5750,7 +5752,7 @@ sequenceDiagram
               <h3>withFixture</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:130:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:133:1</code
                 >
               </p>
               <p>Run one isolated filesystem fixture and remove it after the assertion.</p>
@@ -5762,7 +5764,7 @@ sequenceDiagram
               <h3>writeJson</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:140:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:143:1</code
                 >
               </p>
               <p>Write JSON fixture data while creating any nested package directory.</p>
@@ -5774,7 +5776,7 @@ sequenceDiagram
               <h3>bunLock</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:147:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:150:1</code
                 >
               </p>
               <p>Build the minimum Bun text-lock fixture used by manager-selection tests.</p>
@@ -5786,7 +5788,7 @@ sequenceDiagram
               <h3>pnpmLock</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:157:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:160:1</code
                 >
               </p>
               <p>Build the minimum pnpm v9 lock fixture used by inventory parsing tests.</p>
@@ -5798,7 +5800,7 @@ sequenceDiagram
               <h3>yarnLock</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:175:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:178:1</code
                 >
               </p>
               <p>Build the minimum Yarn Berry lock fixture used by PnP safety tests.</p>
@@ -5810,7 +5812,7 @@ sequenceDiagram
               <h3>npmLock</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:187:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:190:1</code
                 >
               </p>
               <p>Build the minimum npm package-lock fixture used by selection tests.</p>
@@ -5822,7 +5824,7 @@ sequenceDiagram
               <h3>duplicateNpmLock</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:207:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:210:1</code
                 >
               </p>
               <p>
@@ -5836,7 +5838,7 @@ sequenceDiagram
               <h3>createInspection</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:225:1</code
+                  >src/features/status/adapters/outbound/inspectDependencyInventoryAsync.test.ts:228:1</code
                 >
               </p>
               <p>
@@ -6771,7 +6773,7 @@ sequenceDiagram
             >
               <h3>toBunLockEvidence</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:83:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:81:1</code>
               </p>
               <p>Convert a validated Bun lock into immutable APM graph evidence.</p>
             </article>
@@ -6781,7 +6783,7 @@ sequenceDiagram
             >
               <h3>isSupportedBunLock</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:108:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:106:1</code>
               </p>
               <p>Narrow parsed JSONC to the text-lock v2 shape APM understands.</p>
             </article>
@@ -6791,7 +6793,7 @@ sequenceDiagram
             >
               <h3>serializeConfigVersion</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:113:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:111:1</code>
               </p>
               <p>
                 Serialize the Bun config version without falling back to Object stringification.
@@ -6803,7 +6805,7 @@ sequenceDiagram
             >
               <h3>readBunPackage</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:118:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:116:1</code>
               </p>
               <p>
                 Convert one Bun package tuple into a stable lock instance with dependency edges.
@@ -6815,7 +6817,7 @@ sequenceDiagram
             >
               <h3>parseBunLocator</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:147:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:145:1</code>
               </p>
               <p>Parse Bun&#39;s package locator while retaining peer-variant data when present.</p>
             </article>
@@ -6825,7 +6827,7 @@ sequenceDiagram
             >
               <h3>bunSource</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:164:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:162:1</code>
               </p>
               <p>Classify Bun locator sources before semantic-version handling.</p>
             </article>
@@ -6835,7 +6837,7 @@ sequenceDiagram
             >
               <h3>readBunDirectResolutions</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:172:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:170:1</code>
               </p>
               <p>Resolve direct package.json declarations to unique Bun lock instances.</p>
             </article>
@@ -6845,7 +6847,7 @@ sequenceDiagram
             >
               <h3>resolveBunPackageId</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:191:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:189:1</code>
               </p>
               <p>Resolve one transitive Bun dependency to a unique semantic lock instance.</p>
             </article>
@@ -6855,7 +6857,7 @@ sequenceDiagram
             >
               <h3>matchesBunRange</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:209:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:207:1</code>
               </p>
               <p>Test one lock package against a Bun/npm semantic declaration.</p>
             </article>
@@ -6865,7 +6867,7 @@ sequenceDiagram
             >
               <h3>matchesBunIdentity</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:214:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:212:1</code>
               </p>
               <p>Test one parsed locator identity against a semantic dependency request.</p>
             </article>
@@ -6875,7 +6877,7 @@ sequenceDiagram
             >
               <h3>semanticMatch</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:223:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:221:1</code>
               </p>
               <p>
                 Evaluate Bun&#39;s npm protocol aliases through standard semantic-version rules.
@@ -6887,7 +6889,7 @@ sequenceDiagram
             >
               <h3>readStringMap</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:231:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:229:1</code>
               </p>
               <p>Read string-valued dependency metadata from a Bun lock tuple.</p>
             </article>
@@ -6897,7 +6899,7 @@ sequenceDiagram
             >
               <h3>declarationPairs</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:239:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:237:1</code>
               </p>
               <p>List direct package declarations used for Bun lock resolution.</p>
             </article>
@@ -6907,7 +6909,7 @@ sequenceDiagram
             >
               <h3>optionalId</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:251:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:249:1</code>
               </p>
               <p>
                 Avoid adding undefined packageId properties under exact optional property semantics.
@@ -6919,7 +6921,7 @@ sequenceDiagram
             >
               <h3>unsupportedBun</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:256:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:254:1</code>
               </p>
               <p>Return missing/binary/malformed Bun lock evidence without invoking Bun.</p>
             </article>
