@@ -1,4 +1,5 @@
-import type { ApmPackageManagerName, ApmStatusDiagnostic, ApmStatusFinding } from './status.js';
+import type { ApmReleaseEffect } from './update-protocol.js';
+import type { ApmPackageManagerName, ApmStatusDiagnostic, ApmStatusFinding, ApmStatusResult } from './status.js';
 
 export type ApmPlanDependencyUpdateMode = 'safe' | 'selected' | 'none';
 
@@ -10,9 +11,7 @@ export interface ApmPlanPackageSelector {
 }
 
 export type ApmPlanTargetSelection =
-  | {
-      readonly kind: 'compatible';
-    }
+  | { readonly kind: 'compatible' }
   | {
       readonly kind: 'latest';
       readonly allowPrerelease?: boolean;
@@ -58,7 +57,9 @@ export type ApmPlanBlockerCode =
   | 'plan.non-registry-selection-unsupported'
   | 'plan.resolution-failed'
   | 'plan.peer-conflict'
+  | 'plan.protocol-unavailable'
   | 'plan.generator-nonconvergent'
+  | 'plan.step-cycle'
   | 'plan.host-upgrade-required'
   | 'plan.executor-incompatible'
   | 'plan.input-changed'
@@ -103,8 +104,8 @@ export interface ApmPlanFileChange {
   readonly kind: 'create' | 'update' | 'delete';
   readonly beforeDigest?: string;
   readonly afterDigest?: string;
+  readonly beforeContent?: string;
   readonly afterContent?: string;
-  readonly diff: string;
 }
 
 export interface ApmPlanArtifactIdentity {
@@ -131,6 +132,8 @@ export interface ApmPlanResolutionRequest {
   readonly rootPath: string;
   readonly installRootId: string;
   readonly installRootPath: string;
+  readonly packagePaths: readonly string[];
+  readonly lockfilePath?: string;
   readonly manager: ApmPackageManagerName;
   readonly managerVersion?: string;
   readonly linker?: string;
@@ -168,6 +171,16 @@ export interface ApmPlanExecutorIdentity {
   readonly runtimeVersion?: string;
 }
 
+export interface ApmPlanInput {
+  readonly status: ApmStatusResult;
+  readonly policy?: ApmPlanPolicyInput;
+  readonly executor: ApmPlanExecutorIdentity;
+}
+
+export interface ApmPlanDigestPort {
+  readonly digestAsync: (value: string) => Promise<string>;
+}
+
 export interface ApmPlanInputFingerprint {
   readonly value: string;
   readonly statusSchemaVersion: number;
@@ -191,6 +204,35 @@ export interface ApmPlanStep {
   readonly evidence: readonly string[];
 }
 
+export interface ApmPlanProtocolRequest {
+  readonly status: ApmStatusResult;
+  readonly policy: ApmPlanPolicy;
+  readonly inputFingerprint: ApmPlanInputFingerprint;
+  readonly targets: readonly ApmPlanDependencyTarget[];
+  readonly resolutions: readonly ApmPlanResolutionResult[];
+}
+
+export interface ApmPlanProtocolResult {
+  readonly complete: boolean;
+  readonly files: readonly ApmPlanFileChange[];
+  readonly artifacts: readonly ApmPlanArtifactIdentity[];
+  readonly steps: readonly ApmPlanStep[];
+  readonly effects: readonly ApmReleaseEffect[];
+  readonly findings: readonly ApmStatusFinding[];
+  readonly blockers: readonly ApmPlanBlocker[];
+  readonly diagnostics: readonly ApmStatusDiagnostic[];
+}
+
+export interface ApmPlanProtocolPort {
+  readonly planProtocolAsync: (input: ApmPlanProtocolRequest) => Promise<ApmPlanProtocolResult>;
+}
+
+export interface ApmPlanPorts {
+  readonly digest: ApmPlanDigestPort;
+  readonly resolution: ApmPlanResolutionPort;
+  readonly protocol?: ApmPlanProtocolPort;
+}
+
 export interface ApmPlanResult {
   readonly schemaVersion: 1;
   readonly operation: 'plan';
@@ -205,6 +247,7 @@ export interface ApmPlanResult {
   readonly packages: readonly ApmPlanResolvedPackage[];
   readonly artifacts: readonly ApmPlanArtifactIdentity[];
   readonly steps: readonly ApmPlanStep[];
+  readonly effects: readonly ApmReleaseEffect[];
   readonly findings: readonly ApmStatusFinding[];
   readonly blockers: readonly ApmPlanBlocker[];
   readonly diagnostics: readonly ApmStatusDiagnostic[];
