@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.3.0
+
+### Minor Changes
+
+- aa5f54b: Add the package-owned update protocol, including public migration/projection types, descriptor validation, deterministic migration-path resolution, and trusted extension execution boundaries.
+
 ## 0.2.0
 
 ### Minor Changes
