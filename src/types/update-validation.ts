@@ -1,10 +1,15 @@
 import type { ApmMigrationDescriptor, ApmUpdateDescriptor } from './update-protocol.js';
 
 export type ApmUpdateProtocolBlockerCode =
+  | 'protocol.invalid-descriptor'
   | 'protocol.unsupported-version'
   | 'protocol.unsupported-schema'
   | 'protocol.owner-mismatch'
   | 'protocol.invalid-version-range'
+  | 'protocol.history-overlap'
+  | 'protocol.history-ambiguous'
+  | 'protocol.history-unsupported'
+  | 'protocol.downgrade-unsupported'
   | 'protocol.duplicate-migration-id'
   | 'protocol.duplicate-projection-id'
   | 'protocol.migration-checksum-changed'
@@ -12,7 +17,6 @@ export type ApmUpdateProtocolBlockerCode =
   | 'protocol.migration-prerequisite-cycle'
   | 'protocol.migration-path-missing'
   | 'protocol.migration-path-ambiguous'
-  | 'protocol.history-unsupported'
   | 'protocol.intermediate-version-required'
   | 'protocol.intermediate-version-unexpected'
   | 'protocol.reversible-migration-missing-reverse'
@@ -33,7 +37,7 @@ export interface ApmUpdateProtocolBlocker {
 }
 
 export interface ApmUpdateDescriptorValidationInput {
-  readonly descriptor: ApmUpdateDescriptor;
+  readonly descriptor: unknown;
   readonly previousDescriptors?: readonly ApmUpdateDescriptor[];
   readonly relatedDescriptors?: readonly ApmUpdateDescriptor[];
   readonly expectedOwner?: {
@@ -44,6 +48,7 @@ export interface ApmUpdateDescriptorValidationInput {
 
 export interface ApmUpdateDescriptorValidationResult {
   readonly valid: boolean;
+  readonly descriptor?: ApmUpdateDescriptor;
   readonly blockers: readonly ApmUpdateProtocolBlocker[];
 }
 
