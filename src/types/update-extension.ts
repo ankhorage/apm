@@ -39,6 +39,7 @@ export interface ApmExtensionProjectReadPort {
 export type ApmProjectMutation =
   | {
       readonly id: string;
+      readonly claim: ApmProjectScope;
       readonly kind: 'write-file';
       readonly path: string;
       readonly encoding: 'utf8' | 'base64';
@@ -48,12 +49,14 @@ export type ApmProjectMutation =
     }
   | {
       readonly id: string;
+      readonly claim: ApmProjectScope;
       readonly kind: 'delete-file';
       readonly path: string;
       readonly expectedBeforeDigest?: string;
     }
   | {
       readonly id: string;
+      readonly claim: ApmProjectScope;
       readonly kind: 'set-json-pointer';
       readonly path: string;
       readonly pointer: string;
@@ -63,6 +66,7 @@ export type ApmProjectMutation =
     }
   | {
       readonly id: string;
+      readonly claim: ApmProjectScope;
       readonly kind: 'remove-json-pointer';
       readonly path: string;
       readonly pointer: string;
