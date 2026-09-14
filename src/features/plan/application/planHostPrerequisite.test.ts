@@ -85,37 +85,36 @@ function hostStatusFixture(): ApmStatusResult {
     },
     installRoots: [],
     dependencies: [],
-    hosts: [
-      {
-        id: 'apm',
-        name: '@ankhorage/apm',
-        version: '0.3.0',
-        availability: {
-          packageId: 'apm',
-          name: '@ankhorage/apm',
-          state: 'known',
-          latestVersion: '0.4.0',
-          compatibleVersion: '0.4.0',
-        },
-        findings: [
-          {
-            code: 'host-update',
-            scope: { kind: 'host', id: 'apm' },
-            evidence: ['0.3.0', '0.4.0'],
-            reason: 'A newer APM host is available.',
-          },
-        ],
-      },
-    ],
+    hosts: [hostPackageFixture()],
     extensions: { state: 'available', complete: true, observations: [], diagnostics: [] },
-    findings: [
-      {
-        code: 'host-update',
-        scope: { kind: 'host', id: 'apm' },
-        evidence: ['0.3.0', '0.4.0'],
-        reason: 'A newer APM host is available.',
-      },
-    ],
+    findings: [hostUpdateFindingFixture()],
     diagnostics: [],
+  };
+}
+
+/*** Build host availability evidence independently from project dependency targets. */
+function hostPackageFixture(): ApmStatusResult['hosts'][number] {
+  return {
+    id: 'apm',
+    name: '@ankhorage/apm',
+    version: '0.3.0',
+    availability: {
+      packageId: 'apm',
+      name: '@ankhorage/apm',
+      state: 'known',
+      latestVersion: '0.4.0',
+      compatibleVersion: '0.4.0',
+    },
+    findings: [hostUpdateFindingFixture()],
+  };
+}
+
+/*** Build the host update finding shared by aggregate and per-host status evidence. */
+function hostUpdateFindingFixture(): ApmStatusResult['findings'][number] {
+  return {
+    code: 'host-update',
+    scope: { kind: 'host', id: 'apm' },
+    evidence: ['0.3.0', '0.4.0'],
+    reason: 'A newer APM host is available.',
   };
 }
