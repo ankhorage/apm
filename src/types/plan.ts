@@ -1,5 +1,10 @@
 import type { ApmReleaseEffect } from './update-protocol.js';
-import type { ApmPackageManagerName, ApmStatusDiagnostic, ApmStatusFinding, ApmStatusResult } from './status.js';
+import type {
+  ApmPackageManagerName,
+  ApmStatusDiagnostic,
+  ApmStatusFinding,
+  ApmStatusResult,
+} from './status.js';
 
 export type ApmPlanDependencyUpdateMode = 'safe' | 'selected' | 'none';
 
@@ -111,7 +116,7 @@ export interface ApmPlanFileChange {
 export interface ApmPlanArtifactIdentity {
   readonly id: string;
   readonly packageName: string;
-  readonly version: string;
+  readonly version?: string;
   readonly source: 'registry' | 'workspace' | 'file' | 'git';
   readonly integrity?: string;
   readonly resolved?: string;
@@ -120,7 +125,7 @@ export interface ApmPlanArtifactIdentity {
 export interface ApmPlanResolvedPackage {
   readonly id: string;
   readonly name: string;
-  readonly version: string;
+  readonly version?: string;
   readonly direct: boolean;
   readonly source: ApmPlanArtifactIdentity['source'];
   readonly integrity?: string;
