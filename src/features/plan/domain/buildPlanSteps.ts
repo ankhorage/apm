@@ -55,6 +55,7 @@ function resolutionSteps(resolution: ApmPlanResolutionResult): readonly ApmPlanS
       evidence: resolution.packages.map(({ id }) => id),
       execution: {
         kind: 'install',
+        installRootPath: resolution.installRootPath,
         manager: resolution.manager,
         ...(resolution.managerVersion === undefined
           ? {}
