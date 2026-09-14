@@ -44,6 +44,12 @@ jobs:
           path.write_text(text.replace(marker, '\n'))
           PY
 
+      - name: Build generated self-exports
+        run: bun run build
+
+      - name: Regenerate documentation
+        run: bun run docs
+
       - name: Apply canonical formatting and lint fixes
         run: |
           bun run format
@@ -60,7 +66,6 @@ jobs:
           bun run test
           bun run changeset
           bun run format:check
-          bun run docs
           git diff --check
 
       - name: Remove temporary workflow and commit validated result
