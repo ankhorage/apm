@@ -66,7 +66,7 @@ function isResolvedDeclaration(
 /*** Classify non-registry declaration protocols before registry availability is queried. */
 function sourceFromDeclaration(
   range: string,
-): ApmAvailabilityRequest['source'] {
+): NonNullable<ApmAvailabilityRequest['source']> {
   if (/^(?:workspace|link):/u.test(range)) return 'workspace';
   if (/^(?:file|portal):/u.test(range)) return 'file';
   if (/^(?:git\+|github:|gitlab:|bitbucket:)/u.test(range)) return 'git';
