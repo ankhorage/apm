@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.6.0
+
+### Minor Changes
+
+- efa561b: Expose owner-aware Node update composition and exact npm extension artifact identity resolution for package-owned update integrations.
+
 ## 0.5.0
 
 ### Minor Changes
