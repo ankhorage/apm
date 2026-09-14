@@ -13,11 +13,17 @@ export async function persistApplyJournalAsync(
   input: PersistApplyJournalInput,
   ports: ApmApplyPorts,
 ): Promise<ApmApplyJournal> {
-  const next = input.kind === 'operation'
-    ? operationJournal(input, ports.clock.nowIso())
-    : stepJournal(input, ports.clock.nowIso());
+  const next =
+    input.kind === 'operation'
+      ? operationJournal(input, ports.clock.nowIso())
+      : stepJournal(input, ports.clock.nowIso());
   await ports.journal.writeAsync(next);
-  await publishProgressAsync(next, input.kind === 'step' ? input.step.id : undefined, input.state, ports);
+  await publishProgressAsync(
+    next,
+    input.kind === 'step' ? input.step.id : undefined,
+    input.state,
+    ports,
+  );
   return next;
 }
 
@@ -67,7 +73,7 @@ function stepJournal(input: PersistApplyStepInput, now: string): ApmApplyJournal
 
 /*** Transition only the enclosing operation status once no individual step transition is needed. */
 function operationJournal(input: PersistApplyOperationInput, now: string): ApmApplyJournal {
-  const { failure: previousFailure, ...withoutFailure } = input.journal;
+  const { failure: _previousFailure, ...withoutFailure } = input.journal;
   return {
     ...(input.clearFailure === true ? withoutFailure : input.journal),
     status: input.state,
