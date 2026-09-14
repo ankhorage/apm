@@ -75,7 +75,7 @@ export type ApmProjectMutation =
     };
 
 export interface ApmExtensionProjectWritePort {
-  readonly applyReviewedMutationAsync: (mutation: ApmProjectMutation) => Promise<void>;
+  readonly applyReviewedMutationAsync: (mutationId: string) => Promise<void>;
 }
 
 export interface ApmExtensionVerificationResult {
