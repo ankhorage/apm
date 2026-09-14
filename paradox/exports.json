@@ -1,0 +1,376 @@
+[
+  {
+    "name": "APM_BOOTSTRAP_SUPPORT",
+    "description": "Describe exactly what the bootstrap release proves without claiming update support prematurely.\n\nRuntime: APM itself requires Node 24 or newer. Repository development uses Bun 1.4.2, but APM\ndoes not require inspected customer projects to use Bun.\n\nPackage managers: npm, pnpm, Yarn, and Bun are read-only inspection targets in the bootstrap.\nTheir mutation semantics, supported versions, lock formats, and linker modes are deliberately\nunqualified until the inventory/planning work proves them.\n\nPlatforms: Linux is exercised by bootstrap CI. macOS and Windows update execution remain\nunqualified. Read-only Project Detector behavior is delegated to its published support contract.\n\nOperations: `status` is the first real use case. `plan`, `apply`, and `verify` reserve their\ncommand paths but return an explicit unavailable result until their owning roadmap work lands.\n\nDependency direction is inward: headless status depends on an injected inspection port; Node\ncomposition binds that port to `@ankhorage/project-detector/node`; standalone CLI and Ankh are\ninbound adapters over the same Node composition. The root package has no Node import side effect.",
+    "isReadme": true,
+    "examples": [],
+    "kind": "value",
+    "modulePath": "src/constants/support.ts",
+    "sourceLocation": {
+      "filePath": "src/constants/support.ts",
+      "line": 22,
+      "column": 14
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusDiagnostic",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 11,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "code",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "message",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "path",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 3,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusInspectionPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 7,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectProjectAsync",
+        "kind": "property",
+        "type": "(rootPath: string) => Promise<ProjectInspection>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusLanguage",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 17,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "score",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "sourceRoots",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusProjectSummary",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 23,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusLanguage"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "buildTools",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "languages",
+        "kind": "property",
+        "type": "readonly ApmStatusLanguage[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageCount",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageManagers",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "traits",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "workspaceCount",
+        "kind": "property",
+        "type": "number",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusResult",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 32,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusDiagnostic", "ApmStatusProjectSummary"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "operation",
+        "kind": "property",
+        "type": "\"status\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "project",
+        "kind": "property",
+        "type": "ApmStatusProjectSummary",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "schemaVersion",
+        "kind": "property",
+        "type": "1",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "createCliProvider",
+    "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/cli/createCliProvider.ts",
+    "sourceLocation": {
+      "filePath": "src/cli/createCliProvider.ts",
+      "line": 10,
+      "column": 1
+    },
+    "exportPaths": ["src/cli/createCliProvider.ts"],
+    "relatedSymbols": [],
+    "signatures": [
+      {
+        "label": "(version: string) => AnkhRuntimeCommandProvider",
+        "parameters": [
+          {
+            "name": "version",
+            "type": "string",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "AnkhRuntimeCommandProvider",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "statusAsync",
+    "description": "Build serializable APM status from read-only project evidence supplied by an outbound port.\n\nHosts can call this use case without a terminal, filesystem access, or Node composition and can\nprovide a deterministic fake port in tests. Status never installs dependencies or executes\nproject lifecycle scripts.",
+    "isReadme": true,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/status/application/statusAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/status/application/statusAsync.ts",
+      "line": 15,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusInspectionPort", "ApmStatusResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmStatusInput, inspectionPort: ApmStatusInspectionPort) => Promise<ApmStatusResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmStatusInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "inspectionPort",
+            "type": "ApmStatusInspectionPort",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmStatusResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "statusProjectAsync",
+    "description": "Compose the headless status use case with Project Detector's published Node inspection edge.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/status/composition/statusProjectAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/status/composition/statusProjectAsync.ts",
+      "line": 7,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmStatusInput) => Promise<ApmStatusResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmStatusInput",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmStatusResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  }
+]

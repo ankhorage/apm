@@ -4,7 +4,8 @@ export default defineParadoxConfig({
   mode: 'write',
   docs: {
     title: '@ankhorage/apm',
-    description: 'Headless project update analysis, planning, execution, recovery, and verification.',
+    description:
+      'Headless project update analysis, planning, execution, recovery, and verification.',
   },
   package: {
     root: '.',

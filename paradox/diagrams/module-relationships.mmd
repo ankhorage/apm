@@ -1,0 +1,50 @@
+graph LR
+  module_examples_basic_usage_status_ts["examples/basic-usage/status.ts"]
+  module_package_json["package.json"]
+  module_paradox_config_ts["paradox.config.ts"]
+  module_src_apm_ts["src/apm.ts"]
+  module_src_cli_commands_apply_ts["src/cli/commands/apply.ts"]
+  module_src_cli_commands_plan_ts["src/cli/commands/plan.ts"]
+  module_src_cli_commands_status_ts["src/cli/commands/status.ts"]
+  module_src_cli_commands_verify_ts["src/cli/commands/verify.ts"]
+  module_src_cli_createCliProvider_test_ts["src/cli/createCliProvider.test.ts"]
+  module_src_cli_createCliProvider_ts["src/cli/createCliProvider.ts"]
+  module_src_cli_provider_ts["src/cli/provider.ts"]
+  module_src_cli_renderUnavailableOperation_ts["src/cli/renderUnavailableOperation.ts"]
+  module_src_cli_runAsync_test_ts["src/cli/runAsync.test.ts"]
+  module_src_cli_runAsync_ts["src/cli/runAsync.ts"]
+  module_src_constants_support_ts["src/constants/support.ts"]
+  module_src_features_status_application_statusAsync_test_ts["src/features/status/application/statusAsync.test.ts"]
+  module_src_features_status_application_statusAsync_ts["src/features/status/application/statusAsync.ts"]
+  module_src_features_status_composition_statusProjectAsync_ts["src/features/status/composition/statusProjectAsync.ts"]
+  module_src_nodeApm_ts["src/nodeApm.ts"]
+  module_src_types_cli_ts["src/types/cli.ts"]
+  module_src_types_public_ts["src/types/public.ts"]
+  module_src_types_status_ts["src/types/status.ts"]
+  module_src_cli_commands_apply_ts --> module_src_cli_renderUnavailableOperation_ts
+  module_src_cli_commands_apply_ts --> module_src_types_cli_ts
+  module_src_cli_commands_plan_ts --> module_src_cli_renderUnavailableOperation_ts
+  module_src_cli_commands_plan_ts --> module_src_types_cli_ts
+  module_src_cli_commands_status_ts --> module_src_features_status_composition_statusProjectAsync_ts
+  module_src_cli_commands_status_ts --> module_src_types_cli_ts
+  module_src_cli_commands_verify_ts --> module_src_cli_renderUnavailableOperation_ts
+  module_src_cli_commands_verify_ts --> module_src_types_cli_ts
+  module_src_cli_createCliProvider_test_ts --> module_src_cli_createCliProvider_ts
+  module_src_cli_createCliProvider_ts --> module_src_cli_commands_apply_ts
+  module_src_cli_createCliProvider_ts --> module_src_cli_commands_plan_ts
+  module_src_cli_createCliProvider_ts --> module_src_cli_commands_status_ts
+  module_src_cli_createCliProvider_ts --> module_src_cli_commands_verify_ts
+  module_src_cli_createCliProvider_ts --> module_src_cli_runAsync_ts
+  module_src_cli_provider_ts --> module_package_json
+  module_src_cli_provider_ts --> module_src_cli_createCliProvider_ts
+  module_src_cli_renderUnavailableOperation_ts --> module_src_types_cli_ts
+  module_src_cli_runAsync_test_ts --> module_src_cli_runAsync_ts
+  module_src_cli_runAsync_ts --> module_src_cli_commands_apply_ts
+  module_src_cli_runAsync_ts --> module_src_cli_commands_plan_ts
+  module_src_cli_runAsync_ts --> module_src_cli_commands_status_ts
+  module_src_cli_runAsync_ts --> module_src_cli_commands_verify_ts
+  module_src_cli_runAsync_ts --> module_src_types_cli_ts
+  module_src_features_status_application_statusAsync_test_ts --> module_src_features_status_application_statusAsync_ts
+  module_src_features_status_application_statusAsync_ts --> module_src_types_status_ts
+  module_src_features_status_composition_statusProjectAsync_ts --> module_src_features_status_application_statusAsync_ts
+  module_src_features_status_composition_statusProjectAsync_ts --> module_src_types_status_ts

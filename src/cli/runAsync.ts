@@ -13,10 +13,7 @@ import { verify } from './commands/verify.js';
  * machine-readable command output; human status output is the default.
  * @readme
  */
-export async function runAsync(
-  argv: readonly string[],
-  context: ApmCliContext,
-): Promise<number> {
+export async function runAsync(argv: readonly string[], context: ApmCliContext): Promise<number> {
   try {
     const [command, ...args] = argv;
     if (command === '--help' || command === 'help' || command === undefined) {

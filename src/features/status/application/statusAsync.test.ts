@@ -1,6 +1,5 @@
-import { describe, expect, test } from 'bun:test';
-
 import type { ProjectInspection } from '@ankhorage/project-detector/types';
+import { describe, expect, test } from 'bun:test';
 
 import { statusAsync } from './statusAsync.js';
 

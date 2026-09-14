@@ -1,7 +1,4 @@
-import type {
-  ApmCliContext,
-  ApmUnavailableOperation,
-} from '../types/cli.js';
+import type { ApmCliContext, ApmUnavailableOperation } from '../types/cli.js';
 
 /*** Render a reserved operation as an explicit non-success until its owning roadmap issue lands. */
 export function renderUnavailableOperation(
