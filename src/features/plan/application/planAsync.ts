@@ -21,6 +21,38 @@ import { selectDependencyTargets } from '../domain/selectDependencyTargets.js';
 export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promise<ApmPlanResult> {
   const policy = normalizePlanPolicy(input.policy);
   const inputFingerprint = await fingerprintAsync(input, policy, ports);
+  const evidence = await buildPlanEvidenceAsync(input, policy, inputFingerprint, ports);
+  const planCore = stablePlanCore(
+    input,
+    policy,
+    inputFingerprint,
+    evidence.targets,
+    evidence.resolutions,
+    evidence.protocol,
+    evidence.effects,
+    evidence.steps,
+    evidence.blockers,
+  );
+  const id = await ports.digest.digestAsync(buildPlanIdSource(planCore));
+  return { schemaVersion: 1, operation: 'plan', id, ...planCore };
+}
+
+interface PlanEvidence {
+  readonly targets: ApmPlanResult['targets'];
+  readonly resolutions: readonly ApmPlanResolutionResult[];
+  readonly protocol: ApmPlanProtocolResult;
+  readonly effects: readonly ApmReleaseEffect[];
+  readonly steps: ApmPlanResult['steps'];
+  readonly blockers: readonly ApmPlanBlocker[];
+}
+
+/*** Resolve dependency, protocol, shipment, and DAG evidence into one deterministic planning snapshot. */
+async function buildPlanEvidenceAsync(
+  input: ApmPlanInput,
+  policy: ReturnType<typeof normalizePlanPolicy>,
+  inputFingerprint: ApmPlanInputFingerprint,
+  ports: ApmPlanPorts,
+): Promise<PlanEvidence> {
   const statusBlockers = input.status.complete ? [] : [incompleteStatusBlocker(input)];
   const selected = selectDependencyTargets(input.status, policy);
   const resolutionRequests = buildPlanResolutionRequests(input.status, policy, selected.targets);
@@ -42,31 +74,20 @@ export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promi
     ports,
   );
   const effects = planEffects(selected.targets.length > 0, protocol.effects);
-  const unorderedSteps = buildPlanSteps(resolutions, protocol, effects);
-  const ordered = orderPlanSteps(unorderedSteps);
+  const ordered = orderPlanSteps(buildPlanSteps(resolutions, protocol, effects));
   const blockers = [
     ...preliminaryBlockers,
     ...resolutions.flatMap(({ blockers: resolutionBlockers }) => resolutionBlockers),
     ...protocol.blockers,
     ...ordered.blockers,
   ];
-  const planCore = stablePlanCore(
-    input,
-    policy,
-    inputFingerprint,
-    selected.targets,
+  return {
+    targets: selected.targets,
     resolutions,
     protocol,
     effects,
-    ordered.steps,
+    steps: ordered.steps,
     blockers,
-  );
-  const id = await ports.digest.digestAsync(buildPlanIdSource(planCore));
-  return {
-    schemaVersion: 1,
-    operation: 'plan',
-    id,
-    ...planCore,
   };
 }
 
