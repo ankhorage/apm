@@ -9,6 +9,7 @@ import type {
   ApmPlanResult,
 } from '../../../types/plan.js';
 import type { ApmReleaseEffect } from '../../../types/update-protocol.js';
+import { buildPlanCore } from '../domain/buildPlanCore.js';
 import { buildPlanIdSource } from '../domain/buildPlanIdSource.js';
 import { buildPlanInputFingerprintSource } from '../domain/buildPlanInputFingerprintSource.js';
 import { buildPlanResolutionRequests } from '../domain/buildPlanResolutionRequests.js';
@@ -23,7 +24,12 @@ export async function planAsync(input: ApmPlanInput, ports: ApmPlanPorts): Promi
   const policy = normalizePlanPolicy(input.policy);
   const inputFingerprint = await fingerprintAsync(input, policy, ports);
   const evidence = await buildPlanEvidenceAsync(input, policy, inputFingerprint, ports);
-  const planCore = stablePlanCore(input, policy, inputFingerprint, evidence);
+  const planCore = buildPlanCore({
+    planInput: input,
+    policy,
+    inputFingerprint,
+    ...evidence,
+  });
   const id = await ports.digest.digestAsync(buildPlanIdSource(planCore));
   return { schemaVersion: 1, operation: 'plan', id, ...planCore };
 }
@@ -81,7 +87,9 @@ async function runPlanIterationAsync(
   if (merged.blockers.length > 0) return blockedEvidence(dependency, protocol, merged.blockers);
   if (!merged.changed) return finalizedEvidence(dependency, protocol);
   if (iteration >= requestedPolicy.maxGeneratorIterations) {
-    return blockedEvidence(dependency, protocol, [nonconvergentGeneratorBlocker(iteration, protocol)]);
+    return blockedEvidence(dependency, protocol, [
+      nonconvergentGeneratorBlocker(iteration, protocol),
+    ]);
   }
   return runPlanIterationAsync(
     input,
@@ -108,10 +116,7 @@ async function resolveDependencyIterationAsync(
   return {
     targets: selected.targets,
     resolutions,
-    blockers: [
-      ...preliminaryBlockers,
-      ...resolutions.flatMap(({ blockers }) => blockers),
-    ],
+    blockers: [...preliminaryBlockers, ...resolutions.flatMap(({ blockers }) => blockers)],
   };
 }
 
@@ -280,57 +285,6 @@ function planEffects(
     : effects;
 }
 
-/*** Assemble stable sorted plan payload before deriving its immutable plan ID. */
-function stablePlanCore(
-  input: ApmPlanInput,
-  policy: ReturnType<typeof normalizePlanPolicy>,
-  inputFingerprint: ApmPlanInputFingerprint,
-  evidence: PlanEvidence,
-): Omit<ApmPlanResult, 'schemaVersion' | 'operation' | 'id'> {
-  const executable =
-    input.status.complete &&
-    evidence.resolutions.every(({ complete }) => complete) &&
-    evidence.protocol.complete &&
-    evidence.blockers.length === 0;
-  const files = executable
-    ? [...evidence.resolutions.flatMap(({ files }) => files), ...evidence.protocol.files].sort(
-        (left, right) => compareText(left.path, right.path),
-      )
-    : [];
-  const packages = executable
-    ? evidence.resolutions
-        .flatMap(({ packages: items }) => items)
-        .sort((left, right) => compareText(left.id, right.id))
-    : [];
-  const artifacts = executable
-    ? [
-        ...evidence.resolutions.flatMap(({ artifacts: items }) => items),
-        ...evidence.protocol.artifacts,
-      ].sort((left, right) => compareText(left.id, right.id))
-    : [];
-  const diagnostics = [
-    ...input.status.diagnostics,
-    ...evidence.resolutions.flatMap(({ diagnostics: items }) => items),
-    ...evidence.protocol.diagnostics,
-  ];
-  return {
-    rootPath: input.status.rootPath,
-    complete: executable,
-    policy,
-    executor: input.executor,
-    inputFingerprint,
-    targets: evidence.targets,
-    files,
-    packages,
-    artifacts,
-    steps: executable ? evidence.steps : [],
-    effects: evidence.effects,
-    findings: [...input.status.findings, ...evidence.protocol.findings],
-    blockers: evidence.blockers,
-    diagnostics,
-  };
-}
-
 /*** Explain why incomplete status evidence cannot produce a complete executable plan. */
 function incompleteStatusBlocker(input: ApmPlanInput): ApmPlanBlocker {
   return {
@@ -366,7 +320,8 @@ function nonconvergentGeneratorBlocker(
       ...protocol.requiredSelections.map(({ selector }) => selector.name),
     ],
     reason: 'Package-owned dependency requirements did not converge within the planning bound.',
-    nextAction: 'Review owner package policy or raise the explicit iteration bound before re-planning.',
+    nextAction:
+      'Review owner package policy or raise the explicit iteration bound before re-planning.',
   };
 }
 
