@@ -9,33 +9,61 @@ import { isApmUpdateHistoryDescriptor } from './isApmUpdateHistoryDescriptor.js'
 
 /*** Parse unknown static package metadata into the canonical APM update descriptor shape. */
 export function parseUpdateDescriptor(value: unknown): ApmUpdateDescriptor | undefined {
-  if (!isRecord(value) || value.protocolVersion !== 1 || value.schemaVersion !== 1) return undefined;
-  const owner = value.owner;
-  const history = value.history;
-  const compatibility = value.compatibility;
-  const migrations = value.migrations;
-  const projections = value.projections;
-  const effects = value.effects;
-  const extension = value.extension;
-  if (!isOwner(owner) || !isApmUpdateHistoryDescriptor(history)) return undefined;
-  if (!Array.isArray(compatibility) || !compatibility.every(isApmCompatibilityConstraint)) {
-    return undefined;
-  }
-  if (!Array.isArray(migrations) || !migrations.every(isApmMigrationDescriptor)) return undefined;
-  if (!Array.isArray(projections) || !projections.every(isApmProjectionDescriptor)) return undefined;
-  if (!Array.isArray(effects) || !effects.every(isApmReleaseEffect)) return undefined;
-  if (!isExtension(extension)) return undefined;
+  if (!hasSupportedDescriptorHeader(value)) return undefined;
+  const identity = parseDescriptorIdentity(value);
+  const capabilities = parseDescriptorCapabilities(value);
+  if (identity === undefined || capabilities === undefined) return undefined;
   return {
     protocolVersion: 1,
     schemaVersion: 1,
+    ...identity,
+    ...capabilities,
+  };
+}
+
+interface DescriptorIdentity {
+  readonly owner: ApmUpdateDescriptor['owner'];
+  readonly history: ApmUpdateDescriptor['history'];
+  readonly extension?: ApmUpdateDescriptor['extension'];
+}
+
+interface DescriptorCapabilities {
+  readonly compatibility: ApmUpdateDescriptor['compatibility'];
+  readonly migrations: ApmUpdateDescriptor['migrations'];
+  readonly projections: ApmUpdateDescriptor['projections'];
+  readonly effects: ApmUpdateDescriptor['effects'];
+}
+
+/*** Narrow static metadata to the protocol/schema header supported by this APM release. */
+function hasSupportedDescriptorHeader(
+  value: unknown,
+): value is Readonly<Record<string, unknown>> & { readonly protocolVersion: 1; readonly schemaVersion: 1 } {
+  return isRecord(value) && value.protocolVersion === 1 && value.schemaVersion === 1;
+}
+
+/*** Parse immutable owner/history identity and the optional executable extension export. */
+function parseDescriptorIdentity(
+  value: Readonly<Record<string, unknown>>,
+): DescriptorIdentity | undefined {
+  const { owner, history, extension } = value;
+  if (!isOwner(owner) || !isApmUpdateHistoryDescriptor(history) || !isExtension(extension)) {
+    return undefined;
+  }
+  return {
     owner,
     history,
-    compatibility,
-    migrations,
-    projections,
-    effects,
     ...(extension === undefined ? {} : { extension }),
   };
+}
+
+/*** Parse compatibility, migration, projection and shipment capability collections. */
+function parseDescriptorCapabilities(
+  value: Readonly<Record<string, unknown>>,
+): DescriptorCapabilities | undefined {
+  const { compatibility, migrations, projections, effects } = value;
+  if (!isCompatibilityList(compatibility) || !isMigrationList(migrations)) return undefined;
+  if (!isProjectionList(projections) || !isEffectList(effects)) return undefined;
+  return { compatibility, migrations, projections, effects };
 }
 
 /*** Validate immutable owner identity fields. */
@@ -46,4 +74,24 @@ function isOwner(value: unknown): value is ApmUpdateDescriptor['owner'] {
 /*** Validate the optional public extension export declaration. */
 function isExtension(value: unknown): value is ApmUpdateDescriptor['extension'] | undefined {
   return value === undefined || (isRecord(value) && typeof value.export === 'string');
+}
+
+/*** Validate compatibility constraint collections. */
+function isCompatibilityList(value: unknown): value is ApmUpdateDescriptor['compatibility'] {
+  return Array.isArray(value) && value.every(isApmCompatibilityConstraint);
+}
+
+/*** Validate migration descriptor collections. */
+function isMigrationList(value: unknown): value is ApmUpdateDescriptor['migrations'] {
+  return Array.isArray(value) && value.every(isApmMigrationDescriptor);
+}
+
+/*** Validate projection descriptor collections. */
+function isProjectionList(value: unknown): value is ApmUpdateDescriptor['projections'] {
+  return Array.isArray(value) && value.every(isApmProjectionDescriptor);
+}
+
+/*** Validate release-effect descriptor collections. */
+function isEffectList(value: unknown): value is ApmUpdateDescriptor['effects'] {
+  return Array.isArray(value) && value.every(isApmReleaseEffect);
 }
