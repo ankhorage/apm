@@ -121,9 +121,25 @@ interface ApplyFixtureState {
   executeCalls: number;
 }
 
-/*** Build in-memory apply ports that expose all externally observable state-machine interactions. */
+/*** Build in-memory apply ports around independently owned fake boundaries. */
 function portsFixture(): { readonly ports: ApmApplyPorts; readonly state: ApplyFixtureState } {
-  const state: ApplyFixtureState = {
+  const state = initialFixtureState();
+  const ports: ApmApplyPorts = {
+    clock: { nowIso: () => '2026-09-14T20:00:00.000Z' },
+    operationId: { createOperationId: () => 'op-1' },
+    lock: lockPortFixture(state),
+    journal: journalPortFixture(state),
+    status: { inspectStatusAsync: () => Promise.resolve(statusFixture()) },
+    planValidation: { validateAsync: () => Promise.resolve(state.planValidationBlockers) },
+    executor: { current: () => EXECUTOR },
+    step: stepPortFixture(state),
+  };
+  return { ports, state };
+}
+
+/*** Create the mutable fake state observed through the apply port boundaries. */
+function initialFixtureState(): ApplyFixtureState {
+  return {
     planValidationBlockers: [],
     lockResult: { state: 'acquired', lock: lockIdentity('op-1') },
     recoveredLockResult: { state: 'acquired', lock: lockIdentity('op-1') },
@@ -134,45 +150,49 @@ function portsFixture(): { readonly ports: ApmApplyPorts; readonly state: ApplyF
     recoverCalls: 0,
     executeCalls: 0,
   };
-  const ports: ApmApplyPorts = {
-    clock: { nowIso: () => '2026-09-14T20:00:00.000Z' },
-    operationId: { createOperationId: () => 'op-1' },
-    lock: {
-      acquireAsync: () => {
-        state.lockCalls += 1;
-        return Promise.resolve(state.lockResult);
-      },
-      recoverStaleAsync: () => {
-        state.recoverCalls += 1;
-        return Promise.resolve(state.recoveredLockResult);
-      },
-      releaseAsync: () => Promise.resolve(),
+}
+
+/*** Build the exclusive-lock fake independently from journal and step behavior. */
+function lockPortFixture(state: ApplyFixtureState): ApmApplyPorts['lock'] {
+  return {
+    acquireAsync: () => {
+      state.lockCalls += 1;
+      return Promise.resolve(state.lockResult);
     },
-    journal: {
-      createAsync: (journal) => {
-        state.createdJournals += 1;
-        state.journal = journal;
-        return Promise.resolve();
-      },
-      readAsync: () => Promise.resolve(state.journal),
-      writeAsync: (journal) => {
-        state.journal = journal;
-        return Promise.resolve();
-      },
+    recoverStaleAsync: () => {
+      state.recoverCalls += 1;
+      return Promise.resolve(state.recoveredLockResult);
     },
-    status: { inspectStatusAsync: () => Promise.resolve(statusFixture()) },
-    planValidation: { validateAsync: () => Promise.resolve(state.planValidationBlockers) },
-    executor: { current: () => EXECUTOR },
-    step: {
-      observeAsync: () => Promise.resolve(state.observation),
-      executeAsync: () => {
-        state.executeCalls += 1;
-        return Promise.resolve(state.execution);
-      },
-      rollbackAsync: () => Promise.resolve({ state: 'completed', evidence: [], diagnostics: [] }),
+    releaseAsync: () => Promise.resolve(),
+  };
+}
+
+/*** Build the durable-journal fake independently from lock and effect behavior. */
+function journalPortFixture(state: ApplyFixtureState): ApmApplyPorts['journal'] {
+  return {
+    createAsync: (journal) => {
+      state.createdJournals += 1;
+      state.journal = journal;
+      return Promise.resolve();
+    },
+    readAsync: () => Promise.resolve(state.journal),
+    writeAsync: (journal) => {
+      state.journal = journal;
+      return Promise.resolve();
     },
   };
-  return { ports, state };
+}
+
+/*** Build the reviewed-effect fake independently from operation persistence. */
+function stepPortFixture(state: ApplyFixtureState): ApmApplyPorts['step'] {
+  return {
+    observeAsync: () => Promise.resolve(state.observation),
+    executeAsync: () => {
+      state.executeCalls += 1;
+      return Promise.resolve(state.execution);
+    },
+    rollbackAsync: () => Promise.resolve({ state: 'completed', evidence: [], diagnostics: [] }),
+  };
 }
 
 /*** Build one complete executable plan containing a single reversible local file step. */
