@@ -12,8 +12,8 @@ import type {
   ApmStatusDiagnostic,
 } from '../../../../types/status.js';
 import type { ApmRegistryCacheEntry } from '../../../../types/status-registry.js';
+import { readRegistryConfigAsync } from '../../../../utils/readRegistryConfigAsync.js';
 import { queryRegistryPackageAsync } from './queryRegistryPackageAsync.js';
-import { readRegistryConfigAsync } from './readRegistryConfigAsync.js';
 
 /*** Create a bounded npm-compatible registry adapter with redacted config and process-local TTL cache. */
 export function createNpmRegistryAvailabilityPort(
