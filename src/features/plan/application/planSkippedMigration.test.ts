@@ -13,6 +13,7 @@ import type { ApmUpdateDescriptor } from '../../../types/update-protocol.js';
 import type { ApmUpdateProtocolBlocker } from '../../../types/update-validation.js';
 import { resolveMigrationPath } from '../../update-protocol/domain/resolveMigrationPath.js';
 import { planExecutionFixtures } from './fixtures/planExecutionFixtures.js';
+import { createNpmInstallRootFixture } from './fixtures/planStatusFixtures.js';
 import { planAsync } from './planAsync.js';
 
 const DIGEST: ApmPlanDigestPort = {
@@ -234,7 +235,7 @@ function migrationStatusFixture(): ApmStatusResult {
       packageCount: 1,
       workspaceCount: 0,
     },
-    installRoots: [ownerInstallRootFixture(dependency)],
+    installRoots: [createNpmInstallRootFixture(dependency)],
     dependencies: [dependency],
     hosts: [],
     extensions: {
@@ -286,38 +287,5 @@ function ownerDependencyFixture(): ApmStatusResult['dependencies'][number] {
     },
     dependencyPaths: [['root::node_modules/@owner/package']],
     findings: [],
-  };
-}
-
-/*** Build the npm root containing the current owner package instance. */
-function ownerInstallRootFixture(
-  dependency: ApmStatusResult['dependencies'][number],
-): ApmStatusResult['installRoots'][number] {
-  return {
-    id: 'root',
-    rootPath: '/project',
-    packagePaths: ['/project'],
-    manager: { state: 'selected', name: 'npm', version: '11.0.0', source: 'package-manager-field' },
-    lockfile: {
-      state: 'supported',
-      path: '/project/package-lock.json',
-      format: 'npm-package-lock',
-      version: '3',
-      evidence: ['package-lock.json'],
-    },
-    declarations: dependency.declaration === undefined ? [] : [dependency.declaration],
-    lockedPackages: [
-      {
-        id: dependency.packageId,
-        name: dependency.name,
-        version: '1.0.0',
-        source: 'registry',
-        optional: false,
-        dependencies: [],
-      },
-    ],
-    installedPackages: [dependency.installed],
-    complete: true,
-    diagnostics: [],
   };
 }
