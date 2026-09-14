@@ -24,9 +24,9 @@ export async function runAsync(
       return 0;
     }
     if (command === 'status') return await status.executeAsync(args, context);
-    if (command === 'plan') return await plan.executeAsync(args, context);
-    if (command === 'apply') return await apply.executeAsync(args, context);
-    if (command === 'verify') return await verify.executeAsync(args, context);
+    if (command === 'plan') return plan.executeAsync(args, context);
+    if (command === 'apply') return apply.executeAsync(args, context);
+    if (command === 'verify') return verify.executeAsync(args, context);
     throw new Error(`Unknown command: ${command}`);
   } catch (error) {
     context.writeStderr(`${error instanceof Error ? error.message : String(error)}\n`);

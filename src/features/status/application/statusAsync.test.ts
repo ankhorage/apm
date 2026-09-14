@@ -26,9 +26,9 @@ describe('statusAsync', () => {
     const result = await statusAsync(
       { rootPath: '/fixture' },
       {
-        inspectProjectAsync: async (rootPath) => {
+        inspectProjectAsync: (rootPath) => {
           expect(rootPath).toBe('/fixture');
-          return inspection;
+          return Promise.resolve(inspection);
         },
       },
     );

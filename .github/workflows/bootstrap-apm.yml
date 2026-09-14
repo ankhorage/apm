@@ -42,8 +42,11 @@ jobs:
       - name: Generate documentation
         run: bun run docs
 
-      - name: Format repository
-        run: bun run format
+      - name: Canonically format and fix imports
+        run: |
+          bun run format
+          bun run lint:fix
+          bun run format
 
       - name: Validate package
         run: |
