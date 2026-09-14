@@ -10,11 +10,11 @@ import type {
   ApmPackageManagerPlanCommand,
   ApmPlanCommandResult,
 } from '../../../../types/plan-staging.js';
+import { runPackageManagerCommandAsync } from '../../../../utils/runPackageManagerCommandAsync.js';
 import { applyStagedPlanTargetsAsync } from './applyStagedPlanTargetsAsync.js';
 import { buildPackageManagerPlanCommands } from './buildPackageManagerPlanCommands.js';
 import { collectStagedPlanFileChangesAsync } from './collectStagedPlanFileChangesAsync.js';
 import { inspectStagedPlanInventoryAsync } from './inspectStagedPlanInventoryAsync.js';
-import { runPlanCommandAsync } from './runPlanCommandAsync.js';
 import { stagePlanInstallRootAsync } from './stagePlanInstallRootAsync.js';
 import { toPlanCommandFailureBlocker } from './toPlanCommandFailureBlocker.js';
 import { toPlanResolutionGraph } from './toPlanResolutionGraph.js';
@@ -32,9 +32,10 @@ async function resolveNativePlanAsync(
   const stage = await stagePlanInstallRootAsync(request);
   try {
     const manifestExpectations = await applyStagedPlanTargetsAsync(request, stage);
-    const versionResult = await runPlanCommandAsync(
+    const versionResult = await runPackageManagerCommandAsync(
       { executable: request.manager, args: ['--version'] },
       stage.rootPath,
+      { lifecycleScripts: false },
     );
     if (versionResult.exitCode !== 0) {
       return failedResolution(request, [
@@ -89,7 +90,7 @@ async function runCommandsAsync(
 ): Promise<FailedCommand | undefined> {
   const [command, ...remaining] = commands;
   if (command === undefined) return undefined;
-  const result = await runPlanCommandAsync(command, cwd);
+  const result = await runPackageManagerCommandAsync(command, cwd, { lifecycleScripts: false });
   if (result.exitCode !== 0) return { command, result };
   return runCommandsAsync(remaining, cwd);
 }
