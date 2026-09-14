@@ -6,6 +6,7 @@ import type {
   ApmUpdateProtocolBlocker,
 } from '../../../types/update-validation.js';
 import { createProtocolBlocker } from '../utils/createProtocolBlocker.js';
+import { isProtocolPackageSubpath } from '../utils/isProtocolPackageSubpath.js';
 import { parseUpdateDescriptor } from './parseUpdateDescriptor.js';
 import { validateCompatibilityConstraints } from './validateCompatibilityConstraints.js';
 import { validateHistoryDescriptor } from './validateHistoryDescriptor.js';
@@ -24,6 +25,7 @@ export function validateUpdateDescriptor(
   if (descriptor === undefined) return invalidResult([invalidDescriptor()]);
   const blockers = [
     ...ownerBlockers(descriptor, input.expectedOwner),
+    ...extensionExportBlockers(descriptor),
     ...validateHistoryDescriptor(descriptor),
     ...validateCompatibilityConstraints(descriptor),
     ...validateMigrationDescriptors(descriptor, input.previousDescriptors),
@@ -64,6 +66,23 @@ function ownerBlockers(
             `${expected.name}@${expected.version}`,
           ],
           reason: 'Descriptor owner identity does not match the package artifact that supplied it.',
+        }),
+      ];
+}
+
+/*** Require executable extension exports to remain inside the package public subpath namespace. */
+function extensionExportBlockers(
+  descriptor: NonNullable<ApmUpdateDescriptorValidationResult['descriptor']>,
+): readonly ApmUpdateProtocolBlocker[] {
+  const extensionExport = descriptor.extension?.export;
+  return extensionExport === undefined || isProtocolPackageSubpath(extensionExport)
+    ? []
+    : [
+        createProtocolBlocker({
+          code: 'protocol.invalid-extension-export',
+          kind: 'extension',
+          evidence: [extensionExport],
+          reason: 'Extension export must be a traversal-free package-relative `./…` subpath.',
         }),
       ];
 }
