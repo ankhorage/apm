@@ -41,6 +41,7 @@ export type {
   ApmStatusProjectSummary,
   ApmStatusResult,
 } from './status.js';
+export type * from './status-project.js';
 export type * from './update-extension.js';
 export type * from './update-protocol.js';
 export type * from './update-validation.js';
