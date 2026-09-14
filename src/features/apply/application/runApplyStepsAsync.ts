@@ -50,7 +50,7 @@ async function runNextStepAsync(
   return processStepAsync(journal, step, ports, diagnostics);
 }
 
-/*** Observe a step before deciding whether to commit, recover, defer, or execute it. */
+/*** Observe a step before delegating the resulting commit/recovery/execute decision. */
 async function processStepAsync(
   journal: ApmApplyJournal,
   step: ApmPlanStep,
@@ -62,47 +62,47 @@ async function processStepAsync(
     return runNextStepAsync(committed, ports, diagnostics);
   }
   const observation = await ports.step.observeAsync({ journal, step });
-  switch (decideApplyStepObservation(journal, step, observation).action) {
-    case 'commit': {
-      const committed = await commitObservedStepAsync(journal, step, observation, ports);
-      return runNextStepAsync(committed, ports, diagnostics);
-    }
-    case 'recover-precondition':
-      return finishApplyOperationAsync(
-        {
-          kind: 'recovery-required',
-          journal,
-          step,
-          blocker: createApplyBlocker({ kind: 'precondition-changed', step, observation }),
-          diagnostics,
-        },
-        ports,
-      );
-    case 'recover-journal':
-      return finishApplyOperationAsync(
-        {
-          kind: 'recovery-required',
-          journal,
-          step,
-          blocker: createApplyBlocker({ kind: 'journal-step-missing', step }),
-          diagnostics,
-        },
-        ports,
-      );
-    case 'recover-uncertain':
-      return finishApplyOperationAsync(
-        {
-          kind: 'recovery-required',
-          journal,
-          step,
-          blocker: createApplyBlocker({ kind: 'uncertain-effect', step, observation }),
-          diagnostics,
-        },
-        ports,
-      );
-    case 'execute':
-      return executeStepAsync(journal, step, ports, diagnostics);
+  return handleObservedStepAsync(journal, step, observation, ports, diagnostics);
+}
+
+/*** Apply the pure observation decision without mixing it into observation I/O. */
+async function handleObservedStepAsync(
+  journal: ApmApplyJournal,
+  step: ApmPlanStep,
+  observation: ApmApplyStepObservation,
+  ports: ApmApplyPorts,
+  diagnostics: readonly ApmStatusDiagnostic[],
+): Promise<ApmApplyRunOutcome> {
+  const decision = decideApplyStepObservation(journal, step, observation).action;
+  if (decision === 'commit') {
+    const committed = await commitObservedStepAsync(journal, step, observation, ports);
+    return runNextStepAsync(committed, ports, diagnostics);
   }
+  if (decision === 'execute') return executeStepAsync(journal, step, ports, diagnostics);
+  return finishApplyOperationAsync(
+    {
+      kind: 'recovery-required',
+      journal,
+      step,
+      blocker: observedRecoveryBlocker(decision, step, observation),
+      diagnostics,
+    },
+    ports,
+  );
+}
+
+/*** Convert one non-executable observation decision to its stable recovery blocker. */
+function observedRecoveryBlocker(
+  decision: 'recover-precondition' | 'recover-journal' | 'recover-uncertain',
+  step: ApmPlanStep,
+  observation: ApmApplyStepObservation,
+) {
+  if (decision === 'recover-precondition') {
+    return createApplyBlocker({ kind: 'precondition-changed', step, observation });
+  }
+  return decision === 'recover-journal'
+    ? createApplyBlocker({ kind: 'journal-step-missing', step })
+    : createApplyBlocker({ kind: 'uncertain-effect', step, observation });
 }
 
 /*** Persist intent/start markers, invoke the effect port, and verify the reviewed postcondition. */
