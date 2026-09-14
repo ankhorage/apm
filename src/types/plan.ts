@@ -56,6 +56,7 @@ export type ApmPlanBlockerCode =
   | 'plan.status-incomplete'
   | 'plan.selection-not-found'
   | 'plan.selection-ambiguous'
+  | 'plan.selection-conflict'
   | 'plan.target-unavailable'
   | 'plan.target-invalid'
   | 'plan.prerelease-not-allowed'
@@ -65,6 +66,7 @@ export type ApmPlanBlockerCode =
   | 'plan.artifact-identity-unknown'
   | 'plan.peer-conflict'
   | 'plan.protocol-unavailable'
+  | 'plan.generator-selection-conflict'
   | 'plan.generator-nonconvergent'
   | 'plan.step-cycle'
   | 'plan.host-upgrade-required'
@@ -227,6 +229,7 @@ export interface ApmPlanProtocolRequest {
 
 export interface ApmPlanProtocolResult {
   readonly complete: boolean;
+  readonly requiredSelections: readonly ApmPlanPackageSelection[];
   readonly files: readonly ApmPlanFileChange[];
   readonly artifacts: readonly ApmPlanArtifactIdentity[];
   readonly steps: readonly ApmPlanStep[];
