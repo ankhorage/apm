@@ -1,8 +1,8 @@
 import type {
   ApmAvailabilityRequest,
   ApmDependencyInventory,
-  ApmStatusHostPackage,
   ApmInstallRootInventory,
+  ApmStatusHostPackage,
 } from '../../../types/status.js';
 
 /*** Build availability requests for lock instances, unresolved declarations, and host packages. */
@@ -64,9 +64,7 @@ function isResolvedDeclaration(
 }
 
 /*** Classify non-registry declaration protocols before registry availability is queried. */
-function sourceFromDeclaration(
-  range: string,
-): NonNullable<ApmAvailabilityRequest['source']> {
+function sourceFromDeclaration(range: string): NonNullable<ApmAvailabilityRequest['source']> {
   if (/^(?:workspace|link):/u.test(range)) return 'workspace';
   if (/^(?:file|portal):/u.test(range)) return 'file';
   if (/^(?:git\+|github:|gitlab:|bitbucket:)/u.test(range)) return 'git';

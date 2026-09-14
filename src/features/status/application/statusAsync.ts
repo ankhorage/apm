@@ -17,7 +17,10 @@ import { buildAvailabilityRequests } from './buildAvailabilityRequests.js';
  * Hosts can call this boundary without a terminal and can test it with deterministic fake ports.
  * @readme
  */
-export async function statusAsync(input: ApmStatusInput, ports: ApmStatusPorts): Promise<ApmStatusResult> {
+export async function statusAsync(
+  input: ApmStatusInput,
+  ports: ApmStatusPorts,
+): Promise<ApmStatusResult> {
   const inspection = await ports.projectInspection.inspectProjectAsync(input.rootPath);
   const inventory = await ports.dependencyInventory.inspectDependencyInventoryAsync({ inspection });
   const hostPackages = input.hostPackages ?? [];

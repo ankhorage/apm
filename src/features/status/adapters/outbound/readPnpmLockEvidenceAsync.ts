@@ -5,11 +5,11 @@ import { toPortablePath } from '@ankhorage/utility/node/path';
 import { isRecord } from '@ankhorage/utility/object';
 import { parseAllDocuments } from 'yaml';
 
+import type { ApmLockedPackageEvidence } from '../../../../types/status.js';
 import type {
   ApmManagerInspectionInput,
   ApmManagerLockEvidence,
 } from '../../../../types/status-inventory.js';
-import type { ApmLockedPackageEvidence } from '../../../../types/status.js';
 import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 
 /*** Read pnpm v9 lock graph evidence, including multi-document environment locks. */
@@ -70,11 +70,7 @@ function selectPnpmDocument(text: string): PnpmDocument | undefined {
 
 /*** Narrow one YAML document to the v9 lock schema required by dependency inventory. */
 function isSupportedPnpmDocument(value: unknown): value is PnpmDocument {
-  return (
-    isRecord(value) &&
-    String(value.lockfileVersion) === '9.0' &&
-    isRecord(value.importers)
-  );
+  return isRecord(value) && String(value.lockfileVersion) === '9.0' && isRecord(value.importers);
 }
 
 /*** Parse pnpm's package key while retaining peer-context suffixes in the native instance ID. */
@@ -130,14 +126,16 @@ function readWorkspacePackages(
       if (reference === undefined || !/^(?:link:|workspace:)/u.test(reference)) return [];
       const target = reference.replace(/^(?:link:|workspace:)/u, '');
       const id = `pnpm:workspace:${importerPath}:${name}:${target}`;
-      return [{
-        id,
-        name,
-        source: 'workspace' as const,
-        optional: false,
-        location: target,
-        dependencies: [],
-      }];
+      return [
+        {
+          id,
+          name,
+          source: 'workspace' as const,
+          optional: false,
+          location: target,
+          dependencies: [],
+        },
+      ];
     });
   });
 }
@@ -156,10 +154,12 @@ function readPnpmDirectResolutions(
     const entries = new Map(readImporterDependencies(importer));
     for (const name of declaredNames(manifest)) {
       const reference = readPnpmImporterVersion(entries.get(name));
-      const resolved = reference === undefined
-        ? undefined
-        : resolveDirectPnpmPackage(importerPath, name, reference, lockedPackages);
-      if (resolved !== undefined) result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
+      const resolved =
+        reference === undefined
+          ? undefined
+          : resolveDirectPnpmPackage(importerPath, name, reference, lockedPackages);
+      if (resolved !== undefined)
+        result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
     }
   }
   return result;
@@ -174,11 +174,15 @@ function resolveDirectPnpmPackage(
 ): string | undefined {
   if (/^(?:link:|workspace:)/u.test(reference)) {
     return packages.find(
-      (pkg) => pkg.source === 'workspace' && pkg.name === name && pkg.id.includes(`${importerPath}:${name}:`),
+      (pkg) =>
+        pkg.source === 'workspace' &&
+        pkg.name === name &&
+        pkg.id.includes(`${importerPath}:${name}:`),
     )?.id;
   }
   return packages.find(
-    (pkg) => pkg.name === name && (pkg.version === reference || pkg.id.includes(`${name}@${reference}`)),
+    (pkg) =>
+      pkg.name === name && (pkg.version === reference || pkg.id.includes(`${name}@${reference}`)),
   )?.id;
 }
 
@@ -223,13 +227,17 @@ function optionalId(packageId: string | undefined): object {
 }
 
 /*** List declared dependency names owned by a workspace/package manifest. */
-function declaredNames(manifest: ApmManagerInspectionInput['root']['manifests'][number]): readonly string[] {
-  return [...new Set([
-    ...Object.keys(manifest.dependencies),
-    ...Object.keys(manifest.devDependencies),
-    ...Object.keys(manifest.optionalDependencies),
-    ...Object.keys(manifest.peerDependencies),
-  ])];
+function declaredNames(
+  manifest: ApmManagerInspectionInput['root']['manifests'][number],
+): readonly string[] {
+  return [
+    ...new Set([
+      ...Object.keys(manifest.dependencies),
+      ...Object.keys(manifest.devDependencies),
+      ...Object.keys(manifest.optionalDependencies),
+      ...Object.keys(manifest.peerDependencies),
+    ]),
+  ];
 }
 
 /*** Serialize a relative pnpm importer path with Utility's portable-path primitive. */
@@ -245,14 +253,16 @@ function incompletePnpmLock(rootId: string, state: 'missing'): ApmManagerLockEvi
     lockedPackages: [],
     directResolutions: new Map(),
     complete: false,
-    diagnostics: [{
-      code: 'status.lockfile.missing',
-      severity: 'error',
-      scope: { kind: 'install-root', id: rootId },
-      evidence: ['pnpm-lock.yaml'],
-      reason: 'Selected pnpm root has no pnpm-lock.yaml.',
-      nextAction: 'Generate pnpm lockfile v9 before relying on full status.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.lockfile.missing',
+        severity: 'error',
+        scope: { kind: 'install-root', id: rootId },
+        evidence: ['pnpm-lock.yaml'],
+        reason: 'Selected pnpm root has no pnpm-lock.yaml.',
+        nextAction: 'Generate pnpm lockfile v9 before relying on full status.',
+      },
+    ],
   };
 }
 
@@ -275,13 +285,15 @@ function unsupportedPnpmLock(
     lockedPackages: [],
     directResolutions: new Map(),
     complete: false,
-    diagnostics: [{
-      code: 'status.lockfile.pnpm.unsupported-version',
-      severity: 'error',
-      scope: { kind: 'install-root', id: rootId, path: lockPath },
-      evidence: version === undefined ? [lockPath] : [`${lockPath}: lockfileVersion ${version}`],
-      reason: 'APM status supports pnpm v9 lock documents containing importer state.',
-      nextAction: 'Use pnpm lockfile v9 or keep this root inspection-only.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.lockfile.pnpm.unsupported-version',
+        severity: 'error',
+        scope: { kind: 'install-root', id: rootId, path: lockPath },
+        evidence: version === undefined ? [lockPath] : [`${lockPath}: lockfileVersion ${version}`],
+        reason: 'APM status supports pnpm v9 lock documents containing importer state.',
+        nextAction: 'Use pnpm lockfile v9 or keep this root inspection-only.',
+      },
+    ],
   };
 }

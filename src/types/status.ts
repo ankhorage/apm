@@ -7,11 +7,7 @@ export type ApmStatusAvailabilityMode = 'refresh' | 'offline';
 export type ApmPackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun';
 
 export type ApmDependencyKind =
-  | 'dependency'
-  | 'development'
-  | 'optional'
-  | 'peer'
-  | 'peer-optional';
+  'dependency' | 'development' | 'optional' | 'peer' | 'peer-optional';
 
 export type ApmInstallationState = 'present' | 'absent' | 'unknown';
 
@@ -46,13 +42,7 @@ export interface ApmStatusHostPackage {
 
 export interface ApmStatusDiagnosticScope {
   readonly kind:
-    | 'project'
-    | 'install-root'
-    | 'package'
-    | 'registry'
-    | 'projection'
-    | 'migration'
-    | 'host';
+    'project' | 'install-root' | 'package' | 'registry' | 'projection' | 'migration' | 'host';
   readonly id?: string;
   readonly path?: string;
 }
@@ -122,12 +112,7 @@ export interface ApmInstalledPackageEvidence {
   readonly packageId: string;
   readonly state: ApmInstallationState;
   readonly source:
-    | 'node-modules'
-    | 'pnpm-store'
-    | 'yarn-state'
-    | 'pnp-data'
-    | 'bun-store'
-    | 'unknown';
+    'node-modules' | 'pnpm-store' | 'yarn-state' | 'pnp-data' | 'bun-store' | 'unknown';
   readonly version?: string;
   readonly location?: string;
   readonly reason?: string;

@@ -8,22 +8,34 @@ export function evaluateExtensionFindings(
     const id = observation.packageId ?? observation.owner ?? `extension:${index}`;
     return [
       ...(observation.projection === 'stale'
-        ? [{
-            code: 'projection-stale' as const,
-            scope: { kind: 'projection' as const, id },
-            evidence: observation.evidence,
-            reason: observation.reason ?? 'An owned generated projection differs from current source state.',
-            ...(observation.nextAction === undefined ? {} : { nextAction: observation.nextAction }),
-          }]
+        ? [
+            {
+              code: 'projection-stale' as const,
+              scope: { kind: 'projection' as const, id },
+              evidence: observation.evidence,
+              reason:
+                observation.reason ??
+                'An owned generated projection differs from current source state.',
+              ...(observation.nextAction === undefined
+                ? {}
+                : { nextAction: observation.nextAction }),
+            },
+          ]
         : []),
       ...(observation.migration === 'pending'
-        ? [{
-            code: 'migration-pending' as const,
-            scope: { kind: 'migration' as const, id },
-            evidence: observation.evidence,
-            reason: observation.reason ?? 'A package-owned migration is pending for this project state.',
-            ...(observation.nextAction === undefined ? {} : { nextAction: observation.nextAction }),
-          }]
+        ? [
+            {
+              code: 'migration-pending' as const,
+              scope: { kind: 'migration' as const, id },
+              evidence: observation.evidence,
+              reason:
+                observation.reason ??
+                'A package-owned migration is pending for this project state.',
+              ...(observation.nextAction === undefined
+                ? {}
+                : { nextAction: observation.nextAction }),
+            },
+          ]
         : []),
     ];
   });

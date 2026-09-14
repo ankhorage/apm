@@ -35,7 +35,12 @@ export const APM_STATUS_SUPPORT = {
     bun: { lockfileVersions: [2], linkers: ['isolated', 'hoisted'] },
   },
   registry: { protocol: 'npm-compatible', offlineCache: true },
-  operations: { status: 'implemented', plan: 'unavailable', apply: 'unavailable', verify: 'unavailable' },
+  operations: {
+    status: 'implemented',
+    plan: 'unavailable',
+    apply: 'unavailable',
+    verify: 'unavailable',
+  },
 } as const;
 
 export const STATUS_LOCKFILES = [

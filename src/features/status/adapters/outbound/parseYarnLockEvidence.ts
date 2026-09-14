@@ -1,8 +1,11 @@
 import { isRecord } from '@ankhorage/utility/object';
 import { satisfies, valid, validRange } from 'semver';
 
-import type { ApmManagerInspectionInput, ApmManagerLockEvidence } from '../../../../types/status-inventory.js';
 import type { ApmLockedPackageEvidence } from '../../../../types/status.js';
+import type {
+  ApmManagerInspectionInput,
+  ApmManagerLockEvidence,
+} from '../../../../types/status-inventory.js';
 import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 
 /*** Convert one supported Yarn Berry v8 lock object into package graph evidence. */
@@ -108,7 +111,8 @@ function readYarnDirectResolutions(
       const semantic = packages.filter((pkg) => matchesYarnRange(pkg, name, range));
       const [onlySemantic] = semantic;
       const packageId = exact ?? (semantic.length === 1 ? onlySemantic?.id : undefined);
-      if (packageId !== undefined) result.set(declarationResolutionKey(manifest.manifestPath, name), packageId);
+      if (packageId !== undefined)
+        result.set(declarationResolutionKey(manifest.manifestPath, name), packageId);
     }
   }
   return result;

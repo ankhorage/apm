@@ -3,17 +3,19 @@ import { maxSatisfying, rsort, valid, validRange } from 'semver';
 
 import type { ApmRegistryFetch } from '../../../../types/registry.js';
 import type {
+  ApmAvailabilityRequest,
+  ApmPackageAvailabilityEvidence,
+} from '../../../../types/status.js';
+import type {
   ApmRegistryCacheEntry,
   ApmRegistryConfig,
   ApmRegistryMetadata,
 } from '../../../../types/status-registry.js';
-import type {
-  ApmAvailabilityRequest,
-  ApmPackageAvailabilityEvidence,
-} from '../../../../types/status.js';
 
 /*** Query one package with bounded cache semantics and no credential leakage into evidence. */
-export async function queryRegistryPackageAsync(input: QueryRegistryPackageInput): Promise<ApmPackageAvailabilityEvidence> {
+export async function queryRegistryPackageAsync(
+  input: QueryRegistryPackageInput,
+): Promise<ApmPackageAvailabilityEvidence> {
   const registry = registryForPackage(input.request.name, input.config);
   const cacheKey = `${registry}\u0000${input.request.name}`;
   const cached = input.cache.get(cacheKey);
@@ -55,11 +57,17 @@ async function fetchRegistryPackageAsync(
       signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok) {
-      return unknownAvailability(input.request, `Registry request failed with HTTP ${response.status}.`);
+      return unknownAvailability(
+        input.request,
+        `Registry request failed with HTTP ${response.status}.`,
+      );
     }
     const metadata = parseRegistryMetadata(await response.json());
     if (metadata.versions.length === 0) {
-      return unknownAvailability(input.request, 'Registry metadata contained no semantic versions.');
+      return unknownAvailability(
+        input.request,
+        'Registry metadata contained no semantic versions.',
+      );
     }
     const entry: ApmRegistryCacheEntry = {
       fetchedAt: currentTime,
@@ -86,9 +94,10 @@ function parseRegistryMetadata(value: unknown): ApmRegistryMetadata {
     ? rsort(Object.keys(value.versions).filter((version) => valid(version) !== null))
     : [];
   const distTags = isRecord(value['dist-tags']) ? value['dist-tags'] : {};
-  const latestVersion = typeof distTags.latest === 'string' && valid(distTags.latest) !== null
-    ? distTags.latest
-    : versions[0];
+  const latestVersion =
+    typeof distTags.latest === 'string' && valid(distTags.latest) !== null
+      ? distTags.latest
+      : versions[0];
   return { versions, ...(latestVersion === undefined ? {} : { latestVersion }) };
 }
 
@@ -97,19 +106,23 @@ function toAvailability(
   request: ApmAvailabilityRequest,
   entry: ApmRegistryCacheEntry,
 ): ApmPackageAvailabilityEvidence {
-  const range = request.declaredRange === undefined ? undefined : normalizeRange(request.declaredRange);
-  const compatibleVersion = range === undefined
-    ? entry.metadata.latestVersion
-    : validRange(range) === null
-      ? undefined
-      : maxSatisfying(entry.metadata.versions, range) ?? undefined;
+  const range =
+    request.declaredRange === undefined ? undefined : normalizeRange(request.declaredRange);
+  const compatibleVersion =
+    range === undefined
+      ? entry.metadata.latestVersion
+      : validRange(range) === null
+        ? undefined
+        : (maxSatisfying(entry.metadata.versions, range) ?? undefined);
   return {
     packageId: request.packageId,
     name: request.name,
     state: 'known',
     registry: entry.registry,
     checkedAt: entry.checkedAt,
-    ...(entry.metadata.latestVersion === undefined ? {} : { latestVersion: entry.metadata.latestVersion }),
+    ...(entry.metadata.latestVersion === undefined
+      ? {}
+      : { latestVersion: entry.metadata.latestVersion }),
     ...(compatibleVersion === undefined ? {} : { compatibleVersion }),
   };
 }
@@ -123,7 +136,9 @@ function normalizeRange(range: string): string {
 function registryForPackage(name: string, config: ApmRegistryConfig): string {
   const slash = name.indexOf('/');
   const scope = name.startsWith('@') && slash > 0 ? name.slice(0, slash) : undefined;
-  return (scope === undefined ? undefined : config.scopedRegistries.get(scope)) ?? config.defaultRegistry;
+  return (
+    (scope === undefined ? undefined : config.scopedRegistries.get(scope)) ?? config.defaultRegistry
+  );
 }
 
 /*** Build Authorization headers from npmrc auth entries while keeping values inside the HTTP edge. */
@@ -132,8 +147,10 @@ function buildAuthHeaders(url: URL, config: ApmRegistryConfig): Headers {
   const basePath = url.pathname.slice(0, url.pathname.lastIndexOf('/') + 1);
   const authPrefix = `//${url.host}${basePath}`;
   const hostPrefix = `//${url.host}/`;
-  const token = config.values.get(`${authPrefix}:_authToken`) ?? config.values.get(`${hostPrefix}:_authToken`);
-  const basic = config.values.get(`${authPrefix}:_auth`) ?? config.values.get(`${hostPrefix}:_auth`);
+  const token =
+    config.values.get(`${authPrefix}:_authToken`) ?? config.values.get(`${hostPrefix}:_authToken`);
+  const basic =
+    config.values.get(`${authPrefix}:_auth`) ?? config.values.get(`${hostPrefix}:_auth`);
   if (token !== undefined && token !== '') headers.set('authorization', `Bearer ${token}`);
   else if (basic !== undefined && basic !== '') headers.set('authorization', `Basic ${basic}`);
   return headers;

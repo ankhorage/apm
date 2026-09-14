@@ -4,13 +4,22 @@ import path from 'node:path';
 import { toPortablePath } from '@ankhorage/utility/node/path';
 import { isRecord } from '@ankhorage/utility/object';
 
-import type { ApmManagerInspectionInput, ApmManagerInspectionResult } from '../../../../types/status-inventory.js';
-import type { ApmLockedDependencyEdge, ApmLockedPackageEvidence, ApmStatusDiagnostic } from '../../../../types/status.js';
+import type {
+  ApmLockedDependencyEdge,
+  ApmLockedPackageEvidence,
+  ApmStatusDiagnostic,
+} from '../../../../types/status.js';
+import type {
+  ApmManagerInspectionInput,
+  ApmManagerInspectionResult,
+} from '../../../../types/status-inventory.js';
 import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 import { readInstalledPackageVersionAsync } from '../../utils/readInstalledPackageVersionAsync.js';
 
 /*** Inspect npm package-lock v2/v3 plus physical node_modules package versions as read-only evidence. */
-export async function inspectNpmRootAsync(input: ApmManagerInspectionInput): Promise<ApmManagerInspectionResult> {
+export async function inspectNpmRootAsync(
+  input: ApmManagerInspectionInput,
+): Promise<ApmManagerInspectionResult> {
   const candidate = input.root.lockfileCandidates.find(
     (item) => item.manager === 'npm' && item.fileName === 'package-lock.json',
   );
@@ -67,7 +76,11 @@ function buildDirectResolutions(
   for (const manifest of input.root.manifests) {
     const ownerLocation = portableRelative(input.root.rootPath, manifest.packageRoot);
     for (const name of declaredNames(manifest)) {
-      const resolved = resolveNpmTarget(ownerLocation === '.' ? '' : ownerLocation, name, locations);
+      const resolved = resolveNpmTarget(
+        ownerLocation === '.' ? '' : ownerLocation,
+        name,
+        locations,
+      );
       if (resolved !== undefined) {
         result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
       }
@@ -108,9 +121,10 @@ function resolveNpmTarget(
 ): string | undefined {
   const search = [fromLocation];
   for (const current of search) {
-    const candidate = current === ''
-      ? `node_modules/${dependencyName}`
-      : `${current}/node_modules/${dependencyName}`;
+    const candidate =
+      current === ''
+        ? `node_modules/${dependencyName}`
+        : `${current}/node_modules/${dependencyName}`;
     if (locations.has(candidate)) return candidate;
     if (current === '') continue;
     const marker = current.lastIndexOf('/node_modules/');
@@ -124,7 +138,7 @@ function inferPackageName(location: string): string {
   const marker = location.lastIndexOf('node_modules/');
   const tail = marker < 0 ? location : location.slice(marker + 'node_modules/'.length);
   const segments = tail.split('/');
-  return tail.startsWith('@') ? segments.slice(0, 2).join('/') : segments[0] ?? tail;
+  return tail.startsWith('@') ? segments.slice(0, 2).join('/') : (segments[0] ?? tail);
 }
 
 /*** Read string dependency edges from npm lock data. */
@@ -136,17 +150,23 @@ function readDependencyMap(value: unknown): readonly [string, string][] {
 }
 
 /*** List declared names across package dependency sections for direct-lock resolution. */
-function declaredNames(manifest: ApmManagerInspectionInput['root']['manifests'][number]): readonly string[] {
-  return [...new Set([
-    ...Object.keys(manifest.dependencies),
-    ...Object.keys(manifest.devDependencies),
-    ...Object.keys(manifest.optionalDependencies),
-    ...Object.keys(manifest.peerDependencies),
-  ])];
+function declaredNames(
+  manifest: ApmManagerInspectionInput['root']['manifests'][number],
+): readonly string[] {
+  return [
+    ...new Set([
+      ...Object.keys(manifest.dependencies),
+      ...Object.keys(manifest.devDependencies),
+      ...Object.keys(manifest.optionalDependencies),
+      ...Object.keys(manifest.peerDependencies),
+    ]),
+  ];
 }
 
 /*** Preserve an edge without fabricating a target when npm evidence cannot resolve one. */
-function optionalPackageId(packageId: string | undefined): Pick<ApmLockedDependencyEdge, 'packageId'> | object {
+function optionalPackageId(
+  packageId: string | undefined,
+): Pick<ApmLockedDependencyEdge, 'packageId'> | object {
   return packageId === undefined ? {} : { packageId };
 }
 
@@ -191,9 +211,10 @@ function unsupportedLockfile(
   lockPath: string,
   parsed: unknown,
 ): ApmManagerInspectionResult {
-  const version = isRecord(parsed) && typeof parsed.lockfileVersion === 'number'
-    ? String(parsed.lockfileVersion)
-    : undefined;
+  const version =
+    isRecord(parsed) && typeof parsed.lockfileVersion === 'number'
+      ? String(parsed.lockfileVersion)
+      : undefined;
   return {
     linker: 'node-modules',
     lockfile: {

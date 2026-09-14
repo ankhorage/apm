@@ -6,10 +6,13 @@ import { isRecord } from '@ankhorage/utility/object';
 import { parseAllDocuments } from 'yaml';
 
 import type {
+  ApmInstalledPackageEvidence,
+  ApmLockedPackageEvidence,
+} from '../../../../types/status.js';
+import type {
   ApmManagerInspectionInput,
   ApmManagerInstallationEvidence,
 } from '../../../../types/status-inventory.js';
-import type { ApmInstalledPackageEvidence, ApmLockedPackageEvidence } from '../../../../types/status.js';
 import { readInstalledPackageVersionAsync } from '../../utils/readInstalledPackageVersionAsync.js';
 
 /*** Inspect pnpm installation state from node_modules and the virtual-store installation lock. */
@@ -99,14 +102,16 @@ function missingVirtualLock(
       reason: 'pnpm virtual-store lock evidence is absent.',
     })),
     complete: false,
-    diagnostics: [{
-      code: 'status.install.pnpm.virtual-lock-missing',
-      severity: 'warning',
-      scope: { kind: 'install-root', id: input.root.id },
-      evidence: ['node_modules/.pnpm/lock.yaml'],
-      reason: 'node_modules exists but pnpm virtual-store lock evidence is unavailable.',
-      nextAction: 'Run a supported pnpm install before treating installed state as complete.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.install.pnpm.virtual-lock-missing',
+        severity: 'warning',
+        scope: { kind: 'install-root', id: input.root.id },
+        evidence: ['node_modules/.pnpm/lock.yaml'],
+        reason: 'node_modules exists but pnpm virtual-store lock evidence is unavailable.',
+        nextAction: 'Run a supported pnpm install before treating installed state as complete.',
+      },
+    ],
   };
 }
 

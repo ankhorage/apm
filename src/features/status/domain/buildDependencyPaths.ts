@@ -42,7 +42,10 @@ function appendPaths(
 }
 
 /*** Compare serialized path identities without mutating stored evidence. */
-function containsPath(existing: readonly (readonly string[])[], candidate: readonly string[]): boolean {
+function containsPath(
+  existing: readonly (readonly string[])[],
+  candidate: readonly string[],
+): boolean {
   const key = candidate.join('\u0000');
   return existing.some((path) => path.join('\u0000') === key);
 }

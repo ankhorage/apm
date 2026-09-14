@@ -12,7 +12,9 @@ describe('createNpmRegistryAvailabilityPort', () => {
     await withRegistryFixture(async (root) => {
       await writeFile(
         path.join(root, '.npmrc'),
-        ['registry=https://registry.example/', '//registry.example/:_authToken=${TOKEN}', ''].join('\n'),
+        ['registry=https://registry.example/', '//registry.example/:_authToken=${TOKEN}', ''].join(
+          '\n',
+        ),
       );
       const requests: RequestInit[] = [];
       const fetchFn: ApmRegistryFetch = (_input, init) => {
@@ -51,7 +53,9 @@ describe('createNpmRegistryAvailabilityPort', () => {
       expect(result.complete).toBe(true);
       expect(result.packages[0]?.latestVersion).toBe('3.0.0');
       expect(result.packages[0]?.compatibleVersion).toBe('1.5.0');
-      expect(new Headers(requests[0]?.headers).get('authorization')).toBe('Bearer super-secret-token');
+      expect(new Headers(requests[0]?.headers).get('authorization')).toBe(
+        'Bearer super-secret-token',
+      );
       expect(JSON.stringify(result)).not.toContain('super-secret-token');
     });
   });
@@ -63,7 +67,10 @@ describe('createNpmRegistryAvailabilityPort', () => {
         calls.push(String(input));
         return Promise.reject(new Error('network must not be called'));
       };
-      const port = createNpmRegistryAvailabilityPort({ fetchFn, home: path.join(root, 'empty-home') });
+      const port = createNpmRegistryAvailabilityPort({
+        fetchFn,
+        home: path.join(root, 'empty-home'),
+      });
       const result = await port.queryAvailabilityAsync({
         rootPath: root,
         mode: 'offline',
@@ -81,8 +88,13 @@ describe('createNpmRegistryAvailabilityPort', () => {
     await withRegistryFixture(async (root) => {
       await writeFile(path.join(root, '.npmrc'), 'registry=https://registry.example/\n');
       const fetchFn: ApmRegistryFetch = () =>
-        Promise.reject(new Error('request to https://user:private-password@registry.example/pkg failed'));
-      const port = createNpmRegistryAvailabilityPort({ fetchFn, home: path.join(root, 'empty-home') });
+        Promise.reject(
+          new Error('request to https://user:private-password@registry.example/pkg failed'),
+        );
+      const port = createNpmRegistryAvailabilityPort({
+        fetchFn,
+        home: path.join(root, 'empty-home'),
+      });
       const result = await port.queryAvailabilityAsync({
         rootPath: root,
         mode: 'refresh',
@@ -102,19 +114,30 @@ describe('createNpmRegistryAvailabilityPort', () => {
         calls.push(String(input));
         return Promise.reject(new Error('network must not be called'));
       };
-      const port = createNpmRegistryAvailabilityPort({ fetchFn, home: path.join(root, 'empty-home') });
+      const port = createNpmRegistryAvailabilityPort({
+        fetchFn,
+        home: path.join(root, 'empty-home'),
+      });
       const result = await port.queryAvailabilityAsync({
         rootPath: root,
         mode: 'refresh',
         packages: [
-          { packageId: 'workspace', name: 'workspace-pkg', role: 'application', source: 'workspace' },
+          {
+            packageId: 'workspace',
+            name: 'workspace-pkg',
+            role: 'application',
+            source: 'workspace',
+          },
           { packageId: 'file', name: 'file-pkg', role: 'application', source: 'file' },
         ],
       });
 
       expect(calls).toEqual([]);
       expect(result.complete).toBe(true);
-      expect(result.packages.map((item) => item.state)).toEqual(['not-applicable', 'not-applicable']);
+      expect(result.packages.map((item) => item.state)).toEqual([
+        'not-applicable',
+        'not-applicable',
+      ]);
     });
   });
 });

@@ -14,7 +14,9 @@ export async function readInstalledPackageVersionAsync(input: {
   readonly serializedLocation: string;
 }): Promise<ApmInstalledPackageEvidence> {
   try {
-    const parsed = JSON.parse(await readFile(path.join(input.packagePath, 'package.json'), 'utf8')) as unknown;
+    const parsed = JSON.parse(
+      await readFile(path.join(input.packagePath, 'package.json'), 'utf8'),
+    ) as unknown;
     if (!isRecord(parsed) || typeof parsed.version !== 'string') {
       return {
         packageId: input.packageId,
@@ -46,7 +48,8 @@ export async function readInstalledPackageVersionAsync(input: {
       state: 'unknown',
       source: input.source,
       location: input.serializedLocation,
-      reason: error instanceof Error ? error.message : 'Installed package evidence could not be read.',
+      reason:
+        error instanceof Error ? error.message : 'Installed package evidence could not be read.',
     };
   }
 }

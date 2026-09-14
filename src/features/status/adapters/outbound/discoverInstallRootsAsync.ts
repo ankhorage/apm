@@ -4,12 +4,12 @@ import type { ProjectInspection } from '@ankhorage/project-detector/types';
 import { pathExists } from '@ankhorage/utility/node/fs';
 import { toPortablePath } from '@ankhorage/utility/node/path';
 
+import type { ApmPackageManagerName, ApmStatusDiagnostic } from '../../../../types/status.js';
 import type {
   ApmDiscoveredInstallRoot,
   ApmLockfileCandidate,
   ApmParsedPackageManifest,
 } from '../../../../types/status-inventory.js';
-import type { ApmPackageManagerName, ApmStatusDiagnostic } from '../../../../types/status.js';
 import { STATUS_LOCKFILES } from '../../constants/support.js';
 
 /*** Resolve nested independent install roots and package-manager selection from filesystem evidence. */
@@ -26,7 +26,9 @@ export async function discoverInstallRootsAsync(
   );
   const potentialRoots = rootEvidence.filter(
     ({ manifest, candidates, explicitManager }) =>
-      manifest.packageRoot === inspection.rootPath || candidates.length > 0 || explicitManager !== undefined,
+      manifest.packageRoot === inspection.rootPath ||
+      candidates.length > 0 ||
+      explicitManager !== undefined,
   );
   if (potentialRoots.length === 0) return [];
 
@@ -132,7 +134,10 @@ function selectConflictingManagers(
 }
 
 /*** Fall back to Project Detector only for the project root when no lockfile selects a manager. */
-function selectDetectedManager(relativeRoot: string, inspection: ProjectInspection): ManagerSelection {
+function selectDetectedManager(
+  relativeRoot: string,
+  inspection: ProjectInspection,
+): ManagerSelection {
   const detected = inspection.detection.packageManagers.filter(isSupportedManager);
   const [onlyDetectedManager] = detected;
   if (relativeRoot === '.' && detected.length === 1 && onlyDetectedManager !== undefined) {

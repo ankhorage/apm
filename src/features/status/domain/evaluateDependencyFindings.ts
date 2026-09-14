@@ -9,7 +9,9 @@ import type {
 } from '../../../types/status.js';
 
 /*** Derive dependency drift findings only from explicit declaration, lock, install, and availability evidence. */
-export function evaluateDependencyFindings(input: EvaluateDependencyFindingsInput): readonly ApmStatusFinding[] {
+export function evaluateDependencyFindings(
+  input: EvaluateDependencyFindingsInput,
+): readonly ApmStatusFinding[] {
   return [
     ...declarationFindings(input),
     ...installationFindings(input),
@@ -28,8 +30,8 @@ interface EvaluateDependencyFindingsInput {
 
 /*** Detect declaration/lock divergence only when both sides are semantic-version evidence. */
 function declarationFindings(input: EvaluateDependencyFindingsInput): readonly ApmStatusFinding[] {
-  const declaration = input.declaration;
-  const version = input.pkg.version;
+  const { declaration } = input;
+  const { version } = input.pkg;
   if (
     declaration === undefined ||
     version === undefined ||
@@ -81,7 +83,12 @@ function availabilityFindings(input: EvaluateDependencyFindingsInput): readonly 
   if (input.availability.state === 'unknown') return [unknownAvailabilityFinding(input)];
   const current = input.pkg.version;
   const latest = input.availability.latestVersion;
-  if (current === undefined || latest === undefined || valid(current) === null || !gt(latest, current)) {
+  if (
+    current === undefined ||
+    latest === undefined ||
+    valid(current) === null ||
+    !gt(latest, current)
+  ) {
     return [];
   }
   if (input.declaration === undefined) return [transitiveUpdateFinding(input, current, latest)];
@@ -141,7 +148,11 @@ function constraintBlockedFinding(
   return {
     code: 'constraint-blocked',
     scope: packageScope(input.packageId),
-    evidence: [`locked ${current}`, `declared ${input.declaration?.range ?? 'unknown'}`, `latest ${latest}`],
+    evidence: [
+      `locked ${current}`,
+      `declared ${input.declaration?.range ?? 'unknown'}`,
+      `latest ${latest}`,
+    ],
     reason: 'A newer version exists but the current declaration does not admit it.',
     nextAction: 'Review the declaration before planning a constraint-changing update.',
   };

@@ -27,7 +27,9 @@ describe('inspectDependencyInventoryAsync', () => {
       });
       expect(conflict.complete).toBe(false);
       expect(conflict.roots[0]?.manager.state).toBe('conflict');
-      expect(conflict.diagnostics.map((diagnostic) => diagnostic.code)).toContain('status.manager.conflict');
+      expect(conflict.diagnostics.map((diagnostic) => diagnostic.code)).toContain(
+        'status.manager.conflict',
+      );
 
       await writeJson(root, 'package.json', {
         name: 'fixture',
@@ -66,7 +68,11 @@ describe('inspectDependencyInventoryAsync', () => {
       );
 
       const inventory = await inspectDependencyInventoryAsync({
-        inspection: createInspection(root, ['package.json', 'packages/app/package.json'], ['npm', 'bun']),
+        inspection: createInspection(
+          root,
+          ['package.json', 'packages/app/package.json'],
+          ['npm', 'bun'],
+        ),
       });
 
       expect(inventory.roots.map((item) => item.id).sort()).toEqual(['.', 'packages/app']);
@@ -169,13 +175,13 @@ describe('inspectDependencyInventoryAsync', () => {
         inspection: createInspection(root, ['package.json'], ['npm']),
       });
       const rootEvidence = inventory.roots[0]!;
-      expect(rootEvidence.lockedPackages.filter((pkg) => pkg.name === 'dep').map((pkg) => pkg.id)).toEqual([
-        'node_modules/dep',
-        'node_modules/parent/node_modules/dep',
-      ]);
-      expect(rootEvidence.lockedPackages.find((pkg) => pkg.name === 'parent')?.dependencies[0]?.packageId).toBe(
-        'node_modules/parent/node_modules/dep',
-      );
+      expect(
+        rootEvidence.lockedPackages.filter((pkg) => pkg.name === 'dep').map((pkg) => pkg.id),
+      ).toEqual(['node_modules/dep', 'node_modules/parent/node_modules/dep']);
+      expect(
+        rootEvidence.lockedPackages.find((pkg) => pkg.name === 'parent')?.dependencies[0]
+          ?.packageId,
+      ).toBe('node_modules/parent/node_modules/dep');
     });
   });
 });
@@ -203,7 +209,10 @@ function npmLock(packages: Readonly<Record<string, string>>): unknown {
     name: 'fixture',
     lockfileVersion: 3,
     packages: {
-      '': { name: 'fixture', dependencies: Object.fromEntries(Object.keys(packages).map((name) => [name, '^1.0.0'])) },
+      '': {
+        name: 'fixture',
+        dependencies: Object.fromEntries(Object.keys(packages).map((name) => [name, '^1.0.0'])),
+      },
       ...Object.fromEntries(
         Object.entries(packages).map(([name, version]) => [
           `node_modules/${name}`,
@@ -233,7 +242,10 @@ function createInspection(
     complete: true,
     detection,
     packages: manifests.map((manifestPath) => ({
-      rootPath: path.dirname(manifestPath) === '.' ? '.' : path.dirname(manifestPath).split(path.sep).join('/'),
+      rootPath:
+        path.dirname(manifestPath) === '.'
+          ? '.'
+          : path.dirname(manifestPath).split(path.sep).join('/'),
       manifestPath,
       detection,
     })),

@@ -5,8 +5,11 @@ import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
 import { satisfies, valid, validRange } from 'semver';
 
-import type { ApmManagerInspectionInput, ApmManagerLockEvidence } from '../../../../types/status-inventory.js';
 import type { ApmLockedPackageEvidence } from '../../../../types/status.js';
+import type {
+  ApmManagerInspectionInput,
+  ApmManagerLockEvidence,
+} from '../../../../types/status-inventory.js';
 import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 
 /*** Read Bun text-lock v2 dependency graph evidence without invoking Bun. */
@@ -36,7 +39,13 @@ export async function readBunLockEvidenceAsync(
     { allowTrailingComma: true },
   ) as unknown;
   if (errors.length > 0 || !isSupportedBunLock(parsed)) {
-    return unsupportedBun(input.root.id, textCandidate.path, 'APM status supports valid Bun text lock version 2 only.', parsed, errors.length);
+    return unsupportedBun(
+      input.root.id,
+      textCandidate.path,
+      'APM status supports valid Bun text lock version 2 only.',
+      parsed,
+      errors.length,
+    );
   }
 
   const lockedPackages = Object.entries(parsed.packages).flatMap(([key, value]) => {
@@ -142,7 +151,8 @@ function readBunDirectResolutions(
       const semantic = packages.filter((pkg) => matchesBunRange(pkg, name, range));
       const [onlySemantic] = semantic;
       const resolved = exact?.id ?? (semantic.length === 1 ? onlySemantic?.id : undefined);
-      if (resolved !== undefined) result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
+      if (resolved !== undefined)
+        result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
     }
   }
   return result;
@@ -158,7 +168,9 @@ function resolveBunPackageId(
   const candidates = Object.entries(packages).flatMap(([key, value]) => {
     if (!Array.isArray(value) || typeof value[0] !== 'string') return [];
     const identity = parseBunLocator(value[0]);
-    return identity !== undefined && matchesBunIdentity(identity, name, requested) ? [`bun:${key}`] : [];
+    return identity !== undefined && matchesBunIdentity(identity, name, requested)
+      ? [`bun:${key}`]
+      : [];
   });
   const [onlyCandidate] = candidates;
   return candidates.length === 1 ? onlyCandidate : undefined;
@@ -171,13 +183,19 @@ function matchesBunRange(pkg: ApmLockedPackageEvidence, name: string, range: str
 
 /*** Test one parsed locator identity against a semantic dependency request. */
 function matchesBunIdentity(identity: BunIdentity, name: string, range: string): boolean {
-  return identity.name === name && identity.version !== undefined && semanticMatch(identity.version, range);
+  return (
+    identity.name === name &&
+    identity.version !== undefined &&
+    semanticMatch(identity.version, range)
+  );
 }
 
 /*** Evaluate Bun's npm protocol aliases through standard semantic-version rules. */
 function semanticMatch(version: string, range: string): boolean {
   const normalized = range.startsWith('npm:') ? range.slice('npm:'.length) : range;
-  return valid(version) !== null && validRange(normalized) !== null && satisfies(version, normalized);
+  return (
+    valid(version) !== null && validRange(normalized) !== null && satisfies(version, normalized)
+  );
 }
 
 /*** Read string-valued dependency metadata from a Bun lock tuple. */
@@ -213,9 +231,10 @@ function unsupportedBun(
   parsed?: unknown,
   parseErrorCount = 0,
 ): ApmManagerLockEvidence {
-  const version = isRecord(parsed) && typeof parsed.lockfileVersion === 'number'
-    ? String(parsed.lockfileVersion)
-    : undefined;
+  const version =
+    isRecord(parsed) && typeof parsed.lockfileVersion === 'number'
+      ? String(parsed.lockfileVersion)
+      : undefined;
   return {
     lockfile: {
       state: 'unsupported',
@@ -227,13 +246,15 @@ function unsupportedBun(
     lockedPackages: [],
     directResolutions: new Map(),
     complete: false,
-    diagnostics: [{
-      code: 'status.lockfile.bun.unsupported',
-      severity: 'error',
-      scope: { kind: 'install-root', id: rootId, path: lockPath },
-      evidence: [lockPath],
-      reason,
-      nextAction: 'Generate Bun text lock v2 before relying on full status.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.lockfile.bun.unsupported',
+        severity: 'error',
+        scope: { kind: 'install-root', id: rootId, path: lockPath },
+        evidence: [lockPath],
+        reason,
+        nextAction: 'Generate Bun text lock v2 before relying on full status.',
+      },
+    ],
   };
 }

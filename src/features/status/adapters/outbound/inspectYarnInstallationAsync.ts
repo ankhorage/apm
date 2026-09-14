@@ -6,10 +6,13 @@ import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseYaml } from 'yaml';
 
 import type {
+  ApmInstalledPackageEvidence,
+  ApmLockedPackageEvidence,
+} from '../../../../types/status.js';
+import type {
   ApmManagerInspectionInput,
   ApmManagerInstallationEvidence,
 } from '../../../../types/status-inventory.js';
-import type { ApmInstalledPackageEvidence, ApmLockedPackageEvidence } from '../../../../types/status.js';
 
 /*** Inspect Yarn installation markers without importing or executing `.pnp.cjs`. */
 export async function inspectYarnInstallationAsync(
@@ -69,7 +72,11 @@ interface PnpLocator {
 function readPnpLocators(value: unknown): readonly PnpLocator[] {
   if (!isRecord(value) || !Array.isArray(value.packageRegistryData)) return [];
   return value.packageRegistryData.flatMap((identEntry) => {
-    if (!Array.isArray(identEntry) || typeof identEntry[0] !== 'string' || !Array.isArray(identEntry[1])) {
+    if (
+      !Array.isArray(identEntry) ||
+      typeof identEntry[0] !== 'string' ||
+      !Array.isArray(identEntry[1])
+    ) {
       return [];
     }
     return identEntry[1].flatMap((referenceEntry) =>
@@ -133,7 +140,8 @@ function yarnStateInstallation(
   locatorKeys: readonly string[],
 ): ApmInstalledPackageEvidence {
   const present = locatorKeys.some(
-    (key) => key.includes(`${pkg.name}@`) && (pkg.version === undefined || key.includes(pkg.version)),
+    (key) =>
+      key.includes(`${pkg.name}@`) && (pkg.version === undefined || key.includes(pkg.version)),
   );
   return present
     ? {
@@ -158,16 +166,20 @@ function inlinedPnpEvidence(
 ): ApmManagerInstallationEvidence {
   return {
     linker: 'pnp',
-    installedPackages: packages.map((pkg) => unknownInstall(pkg.id, 'Yarn PnP data is inlined in executable .pnp.cjs.')),
+    installedPackages: packages.map((pkg) =>
+      unknownInstall(pkg.id, 'Yarn PnP data is inlined in executable .pnp.cjs.'),
+    ),
     complete: false,
-    diagnostics: [{
-      code: 'status.install.yarn.pnp-inlined',
-      severity: 'warning',
-      scope: { kind: 'install-root', id: rootId },
-      evidence: ['.pnp.cjs'],
-      reason: 'Yarn PnP installation exists, but its dependency map is executable JavaScript.',
-      nextAction: 'Set pnpEnableInlining: false to expose read-only .pnp.data.json evidence.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.install.yarn.pnp-inlined',
+        severity: 'warning',
+        scope: { kind: 'install-root', id: rootId },
+        evidence: ['.pnp.cjs'],
+        reason: 'Yarn PnP installation exists, but its dependency map is executable JavaScript.',
+        nextAction: 'Set pnpEnableInlining: false to expose read-only .pnp.data.json evidence.',
+      },
+    ],
   };
 }
 
@@ -195,15 +207,19 @@ function missingYarnState(
 ): ApmManagerInstallationEvidence {
   return {
     linker: 'node-modules',
-    installedPackages: packages.map((pkg) => unknownInstall(pkg.id, 'node_modules/.yarn-state.yml is absent.')),
+    installedPackages: packages.map((pkg) =>
+      unknownInstall(pkg.id, 'node_modules/.yarn-state.yml is absent.'),
+    ),
     complete: false,
-    diagnostics: [{
-      code: 'status.install.yarn.state-missing',
-      severity: 'warning',
-      scope: { kind: 'install-root', id: rootId },
-      evidence: ['node_modules/.yarn-state.yml'],
-      reason: 'node_modules exists without Yarn installation-state evidence.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.install.yarn.state-missing',
+        severity: 'warning',
+        scope: { kind: 'install-root', id: rootId },
+        evidence: ['node_modules/.yarn-state.yml'],
+        reason: 'node_modules exists without Yarn installation-state evidence.',
+      },
+    ],
   };
 }
 
@@ -215,16 +231,20 @@ function unsupportedLinker(
 ): ApmManagerInstallationEvidence {
   return {
     linker,
-    installedPackages: packages.map((pkg) => unknownInstall(pkg.id, 'Unsupported Yarn linker mode.')),
+    installedPackages: packages.map((pkg) =>
+      unknownInstall(pkg.id, 'Unsupported Yarn linker mode.'),
+    ),
     complete: false,
-    diagnostics: [{
-      code: 'status.install.yarn.unsupported-linker',
-      severity: 'error',
-      scope: { kind: 'install-root', id: rootId },
-      evidence: [`nodeLinker: ${linker}`],
-      reason: `Yarn linker ${linker} is detected but not a complete APM inventory mode.`,
-      nextAction: 'Use Yarn PnP or node-modules for complete status evidence.',
-    }],
+    diagnostics: [
+      {
+        code: 'status.install.yarn.unsupported-linker',
+        severity: 'error',
+        scope: { kind: 'install-root', id: rootId },
+        evidence: [`nodeLinker: ${linker}`],
+        reason: `Yarn linker ${linker} is detected but not a complete APM inventory mode.`,
+        nextAction: 'Use Yarn PnP or node-modules for complete status evidence.',
+      },
+    ],
   };
 }
 

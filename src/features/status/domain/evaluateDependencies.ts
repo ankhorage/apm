@@ -63,7 +63,9 @@ function isResolvedDeclaration(
   declaration: ApmDependencyDeclaration,
   resolvedIds: ReadonlySet<string>,
 ): boolean {
-  return declaration.resolvedPackageId !== undefined && resolvedIds.has(declaration.resolvedPackageId);
+  return (
+    declaration.resolvedPackageId !== undefined && resolvedIds.has(declaration.resolvedPackageId)
+  );
 }
 
 /*** Represent a declaration with no lock target as first-class stale-lock evidence. */
@@ -74,14 +76,17 @@ function unresolvedDeclaration(
 ): ApmStatusDependency {
   const packageId = `decl:${root.id}:${declaration.ownerPath}:${declaration.name}`;
   const availability = findAvailability(packageId, declaration.name, availabilityEvidence);
-  const findings: ApmStatusFinding[] = [{
-    code: 'lock-stale',
-    scope: { kind: 'package', id: packageId },
-    evidence: [`${declaration.ownerPath}: ${declaration.name}@${declaration.range}`],
-    reason: 'The declared dependency has no matching locked package instance.',
-    nextAction: 'Regenerate the selected package-manager lockfile.',
-  }];
-  if (availability.state === 'unknown') findings.push(unknownAvailabilityFinding(packageId, availability));
+  const findings: ApmStatusFinding[] = [
+    {
+      code: 'lock-stale',
+      scope: { kind: 'package', id: packageId },
+      evidence: [`${declaration.ownerPath}: ${declaration.name}@${declaration.range}`],
+      reason: 'The declared dependency has no matching locked package instance.',
+      nextAction: 'Regenerate the selected package-manager lockfile.',
+    },
+  ];
+  if (availability.state === 'unknown')
+    findings.push(unknownAvailabilityFinding(packageId, availability));
   return {
     packageId,
     installRootId: root.id,
@@ -101,12 +106,14 @@ function findAvailability(
   name: string,
   availability: ApmAvailabilityEvidence,
 ): ApmPackageAvailabilityEvidence {
-  return availability.packages.find((item) => item.packageId === packageId) ?? {
-    packageId,
-    name,
-    state: 'unknown',
-    reason: 'No availability evidence was returned for this package instance.',
-  };
+  return (
+    availability.packages.find((item) => item.packageId === packageId) ?? {
+      packageId,
+      name,
+      state: 'unknown',
+      reason: 'No availability evidence was returned for this package instance.',
+    }
+  );
 }
 
 /*** Provide explicit unknown installation evidence when an adapter omitted an instance. */

@@ -1,16 +1,16 @@
 import type { ProjectInspection } from '@ankhorage/project-detector/types';
 
 import type {
-  ApmDiscoveredInstallRoot,
-  ApmManagerInspectionResult,
-  ApmParsedPackageManifest,
-} from '../../../../types/status-inventory.js';
-import type {
   ApmDependencyDeclaration,
   ApmDependencyInventory,
   ApmInstallRootInventory,
   ApmStatusDiagnostic,
 } from '../../../../types/status.js';
+import type {
+  ApmDiscoveredInstallRoot,
+  ApmManagerInspectionResult,
+  ApmParsedPackageManifest,
+} from '../../../../types/status-inventory.js';
 import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 import { discoverInstallRootsAsync } from './discoverInstallRootsAsync.js';
 import { inspectBunRootAsync } from './inspectBunRootAsync.js';
@@ -38,10 +38,7 @@ export async function inspectDependencyInventoryAsync(input: {
       manifestEvidence.diagnostics.length === 0 &&
       roots.length > 0 &&
       roots.every((root) => root.complete),
-    diagnostics: [
-      ...manifestEvidence.diagnostics,
-      ...roots.flatMap((root) => root.diagnostics),
-    ],
+    diagnostics: [...manifestEvidence.diagnostics, ...roots.flatMap((root) => root.diagnostics)],
   };
 }
 
@@ -68,7 +65,9 @@ async function readManifestsAsync(inspection: ProjectInspection): Promise<Manife
 }
 
 /*** Delegate one selected install root to its package-manager-specific evidence adapter. */
-async function inspectInstallRootAsync(root: ApmDiscoveredInstallRoot): Promise<ApmInstallRootInventory> {
+async function inspectInstallRootAsync(
+  root: ApmDiscoveredInstallRoot,
+): Promise<ApmInstallRootInventory> {
   const managerResult = await inspectSelectedManagerAsync(root);
   const declarations = buildDeclarations(root.manifests, managerResult.directResolutions);
   const conflict = root.manager.state === 'conflict';
@@ -193,7 +192,8 @@ function noJavaScriptInventory(
         scope: { kind: 'project' },
         evidence: inspection.manifests,
         reason: 'No JavaScript package manifest is available for APM dependency inventory.',
-        nextAction: 'Treat detected non-JavaScript ecosystems as inspection-only until an adapter exists.',
+        nextAction:
+          'Treat detected non-JavaScript ecosystems as inspection-only until an adapter exists.',
       },
     ],
   };

@@ -1,7 +1,9 @@
 import { homedir } from 'node:os';
 
-import type { ApmRegistryAvailabilityOptions, ApmRegistryFetch } from '../../../../types/registry.js';
-import type { ApmRegistryCacheEntry } from '../../../../types/status-registry.js';
+import type {
+  ApmRegistryAvailabilityOptions,
+  ApmRegistryFetch,
+} from '../../../../types/registry.js';
 import type {
   ApmAvailabilityEvidence,
   ApmAvailabilityRequest,
@@ -9,6 +11,7 @@ import type {
   ApmStatusAvailabilityPort,
   ApmStatusDiagnostic,
 } from '../../../../types/status.js';
+import type { ApmRegistryCacheEntry } from '../../../../types/status-registry.js';
 import { queryRegistryPackageAsync } from './queryRegistryPackageAsync.js';
 import { readRegistryConfigAsync } from './readRegistryConfigAsync.js';
 
@@ -102,21 +105,20 @@ function availabilityDiagnostic(
   item: ApmPackageAvailabilityEvidence,
 ): readonly ApmStatusDiagnostic[] {
   if (item.state !== 'unknown') return [];
-  return [{
-    code: 'status.registry.availability-unknown',
-    severity: 'warning',
-    scope: { kind: 'registry', id: item.packageId },
-    evidence: [item.name],
-    reason: item.reason ?? 'Package availability is unknown.',
-    nextAction: 'Restore registry/auth access or use fresh cached evidence.',
-  }];
+  return [
+    {
+      code: 'status.registry.availability-unknown',
+      severity: 'warning',
+      scope: { kind: 'registry', id: item.packageId },
+      evidence: [item.name],
+      reason: item.reason ?? 'Package availability is unknown.',
+      nextAction: 'Restore registry/auth access or use fresh cached evidence.',
+    },
+  ];
 }
 
 /*** Explain a bounded registry request batch that could not inspect every registry-backed package. */
-function requestLimitDiagnostic(
-  requested: number,
-  limit: number,
-): ApmStatusDiagnostic {
+function requestLimitDiagnostic(requested: number, limit: number): ApmStatusDiagnostic {
   return {
     code: 'status.registry.request-limit',
     severity: 'warning',

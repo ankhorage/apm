@@ -11,7 +11,9 @@ export const status = {
   executeAsync: async (argv, context) => {
     const json = argv.includes('--json');
     const offline = argv.includes('--offline');
-    const positionals = argv.filter((argument) => argument !== '--json' && argument !== '--offline');
+    const positionals = argv.filter(
+      (argument) => argument !== '--json' && argument !== '--offline',
+    );
     const invalidFlag = positionals.find((argument) => argument.startsWith('-'));
     if (positionals.length > 1 || invalidFlag !== undefined) {
       throw new Error('Usage: apm status [directory] [--json] [--offline]');

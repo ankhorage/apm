@@ -4,10 +4,13 @@ import path from 'node:path';
 import { pathExists } from '@ankhorage/utility/node/fs';
 
 import type {
+  ApmInstalledPackageEvidence,
+  ApmLockedPackageEvidence,
+} from '../../../../types/status.js';
+import type {
   ApmManagerInspectionInput,
   ApmManagerInstallationEvidence,
 } from '../../../../types/status-inventory.js';
-import type { ApmInstalledPackageEvidence, ApmLockedPackageEvidence } from '../../../../types/status.js';
 import { readInstalledPackageVersionAsync } from '../../utils/readInstalledPackageVersionAsync.js';
 
 /*** Inspect Bun isolated-store or hoisted node_modules installation evidence. */
@@ -27,13 +30,15 @@ export async function inspectBunInstallationAsync(
     complete,
     diagnostics: complete
       ? []
-      : [{
-          code: 'status.install.bun.instance-unknown',
-          severity: 'warning',
-          scope: { kind: 'install-root', id: input.root.id },
-          evidence: [isolated ? 'node_modules/.bun' : 'node_modules'],
-          reason: 'At least one Bun lock instance could not be mapped to installed package data.',
-        }],
+      : [
+          {
+            code: 'status.install.bun.instance-unknown',
+            severity: 'warning',
+            scope: { kind: 'install-root', id: input.root.id },
+            evidence: [isolated ? 'node_modules/.bun' : 'node_modules'],
+            reason: 'At least one Bun lock instance could not be mapped to installed package data.',
+          },
+        ],
   };
 }
 
@@ -44,9 +49,7 @@ async function inspectIsolatedAsync(
   storePath: string,
 ): Promise<readonly ApmInstalledPackageEvidence[]> {
   const entries = await readdir(storePath).catch(() => [] as string[]);
-  return Promise.all(
-    packages.map((pkg) => inspectIsolatedPackageAsync(input, pkg, entries)),
-  );
+  return Promise.all(packages.map((pkg) => inspectIsolatedPackageAsync(input, pkg, entries)));
 }
 
 /*** Inspect one Bun isolated store instance without following executable package entrypoints. */
@@ -55,7 +58,8 @@ function inspectIsolatedPackageAsync(
   pkg: ApmLockedPackageEvidence,
   entries: readonly string[],
 ): Promise<ApmInstalledPackageEvidence> {
-  if (pkg.source !== 'registry' || pkg.version === undefined) return readDirectLinkAsync(input, pkg);
+  if (pkg.source !== 'registry' || pkg.version === undefined)
+    return readDirectLinkAsync(input, pkg);
   const prefix = `${bunStorePackageName(pkg.name)}@${pkg.version}`;
   const candidates = entries.filter((entry) => entry === prefix || entry.startsWith(`${prefix}+`));
   const [onlyCandidate] = candidates;
@@ -100,7 +104,8 @@ async function inspectHoistedAsync(
             packageId: pkg.id,
             state: 'unknown' as const,
             source: 'node-modules' as const,
-            reason: 'Hoisted node_modules cannot identify which duplicate Bun lock instance occupies this name.',
+            reason:
+              'Hoisted node_modules cannot identify which duplicate Bun lock instance occupies this name.',
           }),
     ),
   );
