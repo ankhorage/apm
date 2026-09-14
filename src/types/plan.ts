@@ -4,6 +4,7 @@ export type ApmPlanDependencyUpdateMode = 'safe' | 'selected' | 'none';
 
 export interface ApmPlanPackageSelector {
   readonly name: string;
+  readonly packageId?: string;
   readonly installRootId?: string;
   readonly ownerPath?: string;
 }
@@ -80,13 +81,14 @@ export interface ApmPlanBlocker {
 export interface ApmPlanDependencyTarget {
   readonly installRootId: string;
   readonly packageId: string;
-  readonly ownerPath: string;
   readonly name: string;
-  readonly kind: 'dependency' | 'development' | 'optional' | 'peer' | 'peer-optional';
-  readonly currentRange: string;
+  readonly direct: boolean;
+  readonly ownerPath?: string;
+  readonly kind?: 'dependency' | 'development' | 'optional' | 'peer' | 'peer-optional';
+  readonly currentRange?: string;
   readonly currentVersion?: string;
   readonly targetVersion: string;
-  readonly targetRange: string;
+  readonly targetRange?: string;
   readonly source: 'compatible' | 'latest' | 'exact';
   readonly reason: string;
 }
@@ -135,6 +137,13 @@ export interface ApmPlanResolutionRequest {
   readonly targets: readonly ApmPlanDependencyTarget[];
 }
 
+export interface ApmPlanResolutionEffects {
+  readonly projectWrites: false;
+  readonly lifecycleScripts: false;
+  readonly network: 'allowed' | 'offline';
+  readonly cache: 'manager-default' | 'isolated';
+}
+
 export interface ApmPlanResolutionResult {
   readonly installRootId: string;
   readonly complete: boolean;
@@ -144,6 +153,7 @@ export interface ApmPlanResolutionResult {
   readonly files: readonly ApmPlanFileChange[];
   readonly packages: readonly ApmPlanResolvedPackage[];
   readonly artifacts: readonly ApmPlanArtifactIdentity[];
+  readonly effects: ApmPlanResolutionEffects;
   readonly blockers: readonly ApmPlanBlocker[];
   readonly diagnostics: readonly ApmStatusDiagnostic[];
 }
