@@ -1,4 +1,4 @@
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
@@ -38,7 +38,7 @@ describe('runAsync', () => {
   test('returns a distinct non-success exit code for reserved operations', async () => {
     const stdout: string[] = [];
     const stderr: string[] = [];
-    const exitCode = await runAsync(['plan', '--json'], {
+    const exitCode = await runAsync(['apply', '--json'], {
       cwd: '.',
       writeStdout: (text) => stdout.push(text),
       writeStderr: (text) => stderr.push(text),
@@ -48,4 +48,31 @@ describe('runAsync', () => {
     expect(stderr).toEqual([]);
     expect(stdout.join('')).toContain('"status": "unavailable"');
   });
+});
+
+test('plan CLI returns a blocked serializable plan without mutating incomplete projects', async () => {
+  const rootPath = await mkdtemp(path.join(tmpdir(), 'apm-plan-'));
+  const manifestPath = path.join(rootPath, 'package.json');
+  const manifest = JSON.stringify({ name: 'fixture', packageManager: 'npm@11.6.0' });
+  const stdout: string[] = [];
+  const stderr: string[] = [];
+
+  try {
+    await writeFile(manifestPath, manifest);
+    const exitCode = await runAsync(['plan', rootPath, '--json', '--offline'], {
+      cwd: rootPath,
+      writeStdout: (text) => stdout.push(text),
+      writeStderr: (text) => stderr.push(text),
+    });
+    const output = stdout.join('');
+
+    expect(exitCode).toBe(2);
+    expect(stderr).toEqual([]);
+    expect(output).toContain('"operation": "plan"');
+    expect(output).toContain('"complete": false');
+    expect(output).toContain('"plan.status-incomplete"');
+    expect(await readFile(manifestPath, 'utf8')).toBe(manifest);
+  } finally {
+    await rm(rootPath, { recursive: true, force: true });
+  }
 });

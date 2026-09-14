@@ -1,3 +1,4 @@
+export type * from './plan.js';
 export type { ApmRegistryAvailabilityOptions, ApmRegistryFetch } from './registry.js';
 export type {
   ApmAvailabilityEvidence,

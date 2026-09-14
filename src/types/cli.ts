@@ -1,6 +1,6 @@
 type ApmOperation = 'status' | 'plan' | 'apply' | 'verify';
 
-export type ApmUnavailableOperation = Exclude<ApmOperation, 'status'>;
+export type ApmUnavailableOperation = Exclude<ApmOperation, 'status' | 'plan'>;
 
 export interface ApmCliContext {
   readonly cwd: string;

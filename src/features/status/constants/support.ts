@@ -37,9 +37,11 @@
  * environment overrides. Credentials are used only at the HTTP edge and are never returned in
  * reports. Offline cache misses and registry/auth/network failures make availability unknown.
  *
- * `status` is read-only. It reads manifests, lockfiles, installation metadata and registry data;
- * it does not install packages, execute lifecycle hooks, run migrations or write project files.
- * `plan`, `apply`, and `verify` remain separate roadmap operations.
+ * `status` and `plan` are read-only project operations. Status reads manifests, lockfiles,
+ * installation metadata and registry data. Plan performs package-manager-native resolution only in
+ * disposable staging and returns reviewed diffs without writing the inspected project. Neither
+ * operation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate
+ * roadmap operations.
  * @readme
  */
 export const APM_STATUS_SUPPORT = {
@@ -53,7 +55,7 @@ export const APM_STATUS_SUPPORT = {
   registry: { protocol: 'npm-compatible', offlineCache: true },
   operations: {
     status: 'implemented',
-    plan: 'unavailable',
+    plan: 'implemented',
     apply: 'unavailable',
     verify: 'unavailable',
   },
