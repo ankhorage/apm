@@ -160,6 +160,7 @@ function protocolPortFixture(): ApmPlanProtocolPort {
     planProtocolAsync: () =>
       Promise.resolve({
         complete: true,
+        requiredSelections: [],
         files: [
           {
             path: 'generated.json',
@@ -294,7 +295,12 @@ function installRootFixture(
     id: 'root',
     rootPath: '/project',
     packagePaths: ['/project'],
-    manager: { state: 'selected', name: 'npm', version: '11.0.0', source: 'package-manager-field' },
+    manager: {
+      state: 'selected',
+      name: 'npm',
+      version: '11.0.0',
+      source: 'package-manager-field',
+    },
     lockfile: {
       state: 'supported',
       path: '/project/package-lock.json',
