@@ -3,11 +3,14 @@ export type ApmRegistryFetch = (
   init?: RequestInit,
 ) => Promise<Response>;
 
-export interface ApmRegistryAvailabilityOptions {
+export interface ApmRegistryRequestOptions {
   readonly fetchFn?: ApmRegistryFetch;
+  readonly env?: Readonly<Record<string, string | undefined>>;
+  readonly home?: string;
+}
+
+export interface ApmRegistryAvailabilityOptions extends ApmRegistryRequestOptions {
   readonly now?: () => number;
   readonly maxRequests?: number;
   readonly cacheTtlMs?: number;
-  readonly env?: Readonly<Record<string, string | undefined>>;
-  readonly home?: string;
 }
