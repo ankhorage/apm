@@ -330,6 +330,20 @@ Source: `src/types/apply.ts:201:1`
 | ------------ | -------- | ------------------------------------------------- | -------- | ----------- |
 | publishAsync | property | `(event: ApmApplyProgressEvent) => Promise<void>` | yes      |             |
 
+## ApmApplyProjectOptions
+
+Kind: `type`
+Module: `src/types/apply-project.ts`
+Source: `src/types/apply-project.ts:3:1`
+
+### Members
+
+| Name         | Kind     | Type                       | Required | Description |
+| ------------ | -------- | -------------------------- | -------- | ----------- |
+| cancellation | property | `ApmApplyCancellationPort` | no       |             |
+| ownerStep    | property | `ApmApplyStepPort`         | no       |             |
+| progress     | property | `ApmApplyProgressPort`     | no       |             |
+
 ## ApmApplyResult
 
 Kind: `type`
@@ -1178,7 +1192,7 @@ Source: `src/types/plan.ts:11:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:196:1`
+Source: `src/types/plan.ts:197:1`
 
 ### Members
 
@@ -1190,7 +1204,7 @@ Source: `src/types/plan.ts:196:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:178:1`
+Source: `src/types/plan.ts:179:1`
 
 ### Members
 
@@ -1221,7 +1235,7 @@ Source: `src/types/plan.ts:112:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:184:1`
+Source: `src/types/plan.ts:185:1`
 
 ### Members
 
@@ -1235,7 +1249,7 @@ Source: `src/types/plan.ts:184:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:200:1`
+Source: `src/types/plan.ts:201:1`
 
 ### Members
 
@@ -1309,7 +1323,7 @@ Source: `src/types/plan.ts:40:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:252:1`
+Source: `src/types/plan.ts:253:1`
 
 ### Members
 
@@ -1323,7 +1337,7 @@ Source: `src/types/plan.ts:252:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:190:1`
+Source: `src/types/plan.ts:191:1`
 
 ### Members
 
@@ -1337,7 +1351,7 @@ Source: `src/types/plan.ts:190:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:248:1`
+Source: `src/types/plan.ts:249:1`
 
 ### Members
 
@@ -1349,7 +1363,7 @@ Source: `src/types/plan.ts:248:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:244:1`
+Source: `src/types/plan.ts:245:1`
 
 ### Members
 
@@ -1361,7 +1375,7 @@ Source: `src/types/plan.ts:244:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:224:1`
+Source: `src/types/plan.ts:225:1`
 
 ### Members
 
@@ -1377,7 +1391,7 @@ Source: `src/types/plan.ts:224:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:232:1`
+Source: `src/types/plan.ts:233:1`
 
 ### Members
 
@@ -1412,7 +1426,7 @@ Source: `src/types/plan.ts:153:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:174:1`
+Source: `src/types/plan.ts:175:1`
 
 ### Members
 
@@ -1448,19 +1462,20 @@ Source: `src/types/plan.ts:160:1`
 
 ### Members
 
-| Name           | Kind     | Type                                 | Required | Description |
-| -------------- | -------- | ------------------------------------ | -------- | ----------- |
-| artifacts      | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
-| blockers       | property | `readonly ApmPlanBlocker[]`          | yes      |             |
-| complete       | property | `boolean`                            | yes      |             |
-| diagnostics    | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| effects        | property | `ApmPlanResolutionEffects`           | yes      |             |
-| files          | property | `readonly ApmPlanFileChange[]`       | yes      |             |
-| installRootId  | property | `string`                             | yes      |             |
-| linker         | property | `string`                             | no       |             |
-| manager        | property | `ApmPackageManagerName`              | yes      |             |
-| managerVersion | property | `string`                             | no       |             |
-| packages       | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
+| Name            | Kind     | Type                                 | Required | Description |
+| --------------- | -------- | ------------------------------------ | -------- | ----------- |
+| artifacts       | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
+| blockers        | property | `readonly ApmPlanBlocker[]`          | yes      |             |
+| complete        | property | `boolean`                            | yes      |             |
+| diagnostics     | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
+| effects         | property | `ApmPlanResolutionEffects`           | yes      |             |
+| files           | property | `readonly ApmPlanFileChange[]`       | yes      |             |
+| installRootId   | property | `string`                             | yes      |             |
+| installRootPath | property | `string`                             | yes      |             |
+| linker          | property | `string`                             | no       |             |
+| manager         | property | `ApmPackageManagerName`              | yes      |             |
+| managerVersion  | property | `string`                             | no       |             |
+| packages        | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
 
 ## ApmPlanResolvedPackage
 
@@ -1485,7 +1500,7 @@ Source: `src/types/plan.ts:130:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:258:1`
+Source: `src/types/plan.ts:259:1`
 
 ### Members
 
@@ -1513,7 +1528,7 @@ Source: `src/types/plan.ts:258:1`
 
 Kind: `type`
 Module: `src/types/plan.ts`
-Source: `src/types/plan.ts:206:1`
+Source: `src/types/plan.ts:207:1`
 
 ### Members
 
@@ -2196,7 +2211,7 @@ Source: `src/types/verify.ts:25:1`
 
 Kind: `type`
 Module: `src/types/verify.ts`
-Source: `src/types/verify.ts:44:1`
+Source: `src/types/verify.ts:45:1`
 
 ### Members
 
@@ -2206,11 +2221,23 @@ Source: `src/types/verify.ts:44:1`
 | status  | property | `ApmVerifyStatusPort`  | yes      |             |
 | step    | property | `ApmVerifyStepPort`    | yes      |             |
 
+## ApmVerifyProjectOptions
+
+Kind: `type`
+Module: `src/types/verify-project.ts`
+Source: `src/types/verify-project.ts:3:1`
+
+### Members
+
+| Name      | Kind     | Type                | Required | Description |
+| --------- | -------- | ------------------- | -------- | ----------- |
+| ownerStep | property | `ApmVerifyStepPort` | no       |             |
+
 ## ApmVerifyResult
 
 Kind: `type`
 Module: `src/types/verify.ts`
-Source: `src/types/verify.ts:50:1`
+Source: `src/types/verify.ts:51:1`
 
 ### Members
 
@@ -2247,9 +2274,39 @@ Source: `src/types/verify.ts:36:1`
 
 ### Members
 
-| Name        | Kind     | Type                                                                                                                                                   | Required | Description |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
-| verifyAsync | property | `(input: { readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes      |             |
+| Name        | Kind     | Type                                                                                                                                                                                      | Required | Description |
+| ----------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| verifyAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes      |             |
+
+## applyAsync
+
+Kind: `function`
+Module: `src/features/apply/application/applyAsync.ts`
+Source: `src/features/apply/application/applyAsync.ts:21:1`
+
+Start or resume one reviewed plan under an exclusive durable project operation lock.
+
+### Signatures
+
+- `(input: ApmApplyInput, ports: ApmApplyPorts) => Promise<ApmApplyResult>`
+  - input: `ApmApplyInput`
+  - ports: `ApmApplyPorts`
+  - returns: `Promise<ApmApplyResult>`
+
+## applyProjectAsync
+
+Kind: `function`
+Module: `src/features/apply/composition/applyProjectAsync.ts`
+Source: `src/features/apply/composition/applyProjectAsync.ts:17:1`
+
+Compose durable Node execution/recovery adapters behind the shared headless apply use case.
+
+### Signatures
+
+- `(input: ApmApplyInput, options?: ApmApplyProjectOptions) => Promise<ApmApplyResult>`
+  - input: `ApmApplyInput`
+  - options: `ApmApplyProjectOptions` (optional)
+  - returns: `Promise<ApmApplyResult>`
 
 ## createCliProvider
 
@@ -2269,7 +2326,7 @@ Create the thin Ankh command provider over the same standalone APM command adapt
 
 Kind: `function`
 Module: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts`
-Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:24:1`
+Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:25:1`
 
 Create the Node native package-manager resolution adapter used by headless project planning.
 
@@ -2472,3 +2529,33 @@ Validate only the handlers required from the selected source/target/intermediate
   - descriptor: `ApmUpdateDescriptor`
   - extension: `ApmUpdateExtension`
   - returns: `readonly ApmUpdateProtocolBlocker[]`
+
+## verifyAsync
+
+Kind: `function`
+Module: `src/features/verify/application/verifyAsync.ts`
+Source: `src/features/verify/application/verifyAsync.ts:12:1`
+
+Verify one durable applied operation against fresh project and reviewed step postconditions.
+
+### Signatures
+
+- `(input: ApmVerifyInput, ports: ApmVerifyPorts) => Promise<ApmVerifyResult>`
+  - input: `ApmVerifyInput`
+  - ports: `ApmVerifyPorts`
+  - returns: `Promise<ApmVerifyResult>`
+
+## verifyProjectAsync
+
+Kind: `function`
+Module: `src/features/verify/composition/verifyProjectAsync.ts`
+Source: `src/features/verify/composition/verifyProjectAsync.ts:12:1`
+
+Compose durable Node journal/status/postcondition adapters behind the shared headless verify use case.
+
+### Signatures
+
+- `(input: ApmVerifyInput, options?: ApmVerifyProjectOptions) => Promise<ApmVerifyResult>`
+  - input: `ApmVerifyInput`
+  - options: `ApmVerifyProjectOptions` (optional)
+  - returns: `Promise<ApmVerifyResult>`

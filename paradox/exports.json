@@ -793,6 +793,46 @@
     "structuredRows": []
   },
   {
+    "name": "ApmApplyProjectOptions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/apply-project.ts",
+    "sourceLocation": {
+      "filePath": "src/types/apply-project.ts",
+      "line": 3,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyCancellationPort", "ApmApplyProgressPort", "ApmApplyStepPort"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "cancellation",
+        "kind": "property",
+        "type": "ApmApplyCancellationPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "ownerStep",
+        "kind": "property",
+        "type": "ApmApplyStepPort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "progress",
+        "kind": "property",
+        "type": "ApmApplyProgressPort",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmApplyResult",
     "description": null,
     "isReadme": false,
@@ -3579,7 +3619,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 196,
+      "line": 197,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3605,7 +3645,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 178,
+      "line": 179,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3706,7 +3746,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 184,
+      "line": 185,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3746,7 +3786,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 200,
+      "line": 201,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -3974,7 +4014,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 252,
+      "line": 253,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4014,7 +4054,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 190,
+      "line": 191,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4054,7 +4094,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 248,
+      "line": 249,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4080,7 +4120,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 244,
+      "line": 245,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4106,7 +4146,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 224,
+      "line": 225,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4166,7 +4206,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 232,
+      "line": 233,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4304,7 +4344,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 174,
+      "line": 175,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4477,6 +4517,13 @@
         "description": null
       },
       {
+        "name": "installRootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
         "name": "linker",
         "kind": "property",
         "type": "string",
@@ -4591,7 +4638,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 258,
+      "line": 259,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -4742,7 +4789,7 @@
     "modulePath": "src/types/plan.ts",
     "sourceLocation": {
       "filePath": "src/types/plan.ts",
-      "line": 206,
+      "line": 207,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6957,7 +7004,7 @@
     "modulePath": "src/types/verify.ts",
     "sourceLocation": {
       "filePath": "src/types/verify.ts",
-      "line": 44,
+      "line": 45,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -6989,6 +7036,32 @@
     "structuredRows": []
   },
   {
+    "name": "ApmVerifyProjectOptions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/verify-project.ts",
+    "sourceLocation": {
+      "filePath": "src/types/verify-project.ts",
+      "line": 3,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyStepPort"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "ownerStep",
+        "kind": "property",
+        "type": "ApmVerifyStepPort",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmVerifyResult",
     "description": null,
     "isReadme": false,
@@ -6997,7 +7070,7 @@
     "modulePath": "src/types/verify.ts",
     "sourceLocation": {
       "filePath": "src/types/verify.ts",
-      "line": 50,
+      "line": 51,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7121,17 +7194,99 @@
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmPlanResult", "ApmPlanStep", "ApmStatusResult", "ApmVerifyCheckResult"],
+    "relatedSymbols": [
+      "ApmApplyJournal",
+      "ApmPlanResult",
+      "ApmPlanStep",
+      "ApmStatusResult",
+      "ApmVerifyCheckResult"
+    ],
     "signatures": [],
     "members": [
       {
         "name": "verifyAsync",
         "kind": "property",
-        "type": "(input: { readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>",
+        "type": "(input: { readonly journal: ApmApplyJournal; readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>",
         "required": true,
         "description": null
       }
     ],
+    "structuredRows": []
+  },
+  {
+    "name": "applyAsync",
+    "description": "Start or resume one reviewed plan under an exclusive durable project operation lock.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/apply/application/applyAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/apply/application/applyAsync.ts",
+      "line": 21,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyInput", "ApmApplyPorts", "ApmApplyResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmApplyInput, ports: ApmApplyPorts) => Promise<ApmApplyResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmApplyInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "ports",
+            "type": "ApmApplyPorts",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmApplyResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "applyProjectAsync",
+    "description": "Compose durable Node execution/recovery adapters behind the shared headless apply use case.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/apply/composition/applyProjectAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/apply/composition/applyProjectAsync.ts",
+      "line": 17,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyInput", "ApmApplyProjectOptions", "ApmApplyResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmApplyInput, options?: ApmApplyProjectOptions) => Promise<ApmApplyResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmApplyInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "options",
+            "type": "ApmApplyProjectOptions",
+            "required": false,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmApplyResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
     "structuredRows": []
   },
   {
@@ -7175,7 +7330,7 @@
     "modulePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
     "sourceLocation": {
       "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-      "line": 24,
+      "line": 25,
       "column": 1
     },
     "exportPaths": ["src/nodeApm.ts"],
@@ -7659,6 +7814,82 @@
           }
         ],
         "returnType": "readonly ApmUpdateProtocolBlocker[]",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "verifyAsync",
+    "description": "Verify one durable applied operation against fresh project and reviewed step postconditions.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/verify/application/verifyAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/verify/application/verifyAsync.ts",
+      "line": 12,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyInput", "ApmVerifyPorts", "ApmVerifyResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmVerifyInput, ports: ApmVerifyPorts) => Promise<ApmVerifyResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmVerifyInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "ports",
+            "type": "ApmVerifyPorts",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmVerifyResult>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "verifyProjectAsync",
+    "description": "Compose durable Node journal/status/postcondition adapters behind the shared headless verify use case.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/verify/composition/verifyProjectAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/verify/composition/verifyProjectAsync.ts",
+      "line": 12,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyInput", "ApmVerifyProjectOptions", "ApmVerifyResult"],
+    "signatures": [
+      {
+        "label": "(input: ApmVerifyInput, options?: ApmVerifyProjectOptions) => Promise<ApmVerifyResult>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "ApmVerifyInput",
+            "required": true,
+            "description": null
+          },
+          {
+            "name": "options",
+            "type": "ApmVerifyProjectOptions",
+            "required": false,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmVerifyResult>",
         "returnDescription": null
       }
     ],
