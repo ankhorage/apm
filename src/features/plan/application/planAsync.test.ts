@@ -112,6 +112,7 @@ function portsFixture(protocol?: ApmPlanProtocolPort): ApmPlanPorts {
 function resolutionResult(): Awaited<ReturnType<ApmPlanResolutionPort['resolveAsync']>> {
   return {
     installRootId: 'root',
+    installRootPath: '/project',
     complete: true,
     manager: 'npm',
     managerVersion: '11.0.0',
