@@ -1,3 +1,4 @@
+export { applyAsync } from './features/apply/application/applyAsync.js';
 export { planAsync } from './features/plan/application/planAsync.js';
 export { APM_PLAN_SUPPORT } from './features/plan/constants/support.js';
 export { validateSavedPlanAsync } from './features/plan/domain/validateSavedPlanAsync.js';
@@ -8,4 +9,5 @@ export { validatePackageUpdateMetadata } from './features/update-protocol/domain
 export { validateUpdateDescriptor } from './features/update-protocol/domain/validateUpdateDescriptor.js';
 export { validateUpdateExtensionBinding } from './features/update-protocol/domain/validateUpdateExtensionBinding.js';
 export { validateUpdateExtensionCapabilities } from './features/update-protocol/domain/validateUpdateExtensionCapabilities.js';
+export { verifyAsync } from './features/verify/application/verifyAsync.js';
 export type * from './types/public.js';
