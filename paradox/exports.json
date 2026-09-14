@@ -1,20 +1,1140 @@
 [
   {
-    "name": "APM_BOOTSTRAP_SUPPORT",
-    "description": "Describe exactly what the bootstrap release proves without claiming update support prematurely.\n\nRuntime: APM itself requires Node 24 or newer. Repository development uses Bun 1.4.2, but APM\ndoes not require inspected customer projects to use Bun.\n\nPackage managers: npm, pnpm, Yarn, and Bun are read-only inspection targets in the bootstrap.\nTheir mutation semantics, supported versions, lock formats, and linker modes are deliberately\nunqualified until the inventory/planning work proves them.\n\nPlatforms: Linux is exercised by bootstrap CI. macOS and Windows update execution remain\nunqualified. Read-only Project Detector behavior is delegated to its published support contract.\n\nOperations: `status` is the first real use case. `plan`, `apply`, and `verify` reserve their\ncommand paths but return an explicit unavailable result until their owning roadmap work lands.\n\nDependency direction is inward: headless status depends on an injected inspection port; Node\ncomposition binds that port to `@ankhorage/project-detector/node`; standalone CLI and Ankh are\ninbound adapters over the same Node composition. The root package has no Node import side effect.",
+    "name": "APM_STATUS_SUPPORT",
+    "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nOrdinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,\nworkspace and package-manager evidence from Project Detector plus package-manager-native files.\nDetected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns\ntheir dependency semantics; they never become a false complete/current result.\n\nInstall-root selection is evidence based. An explicit `packageManager` declaration wins over\nlockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If\nmultiple manager lockfiles exist without an explicit selection, the root is conflicting and\nincomplete. Nested packages that carry their own manager/lock evidence become independent\ninstall roots rather than being folded into the parent workspace.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\nDuplicate versions remain separate physical package instances and dependency edges retain the\ninstance identity they actually resolve to.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain\ndistinct package instances rather than being collapsed by package name.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Offline cache misses and registry/auth/network failures make availability unknown.\n\n`status` is read-only. It reads manifests, lockfiles, installation metadata and registry data;\nit does not install packages, execute lifecycle hooks, run migrations or write project files.\n`plan`, `apply`, and `verify` remain separate roadmap operations.",
     "isReadme": true,
     "examples": [],
     "kind": "value",
-    "modulePath": "src/constants/support.ts",
+    "modulePath": "src/features/status/constants/support.ts",
     "sourceLocation": {
-      "filePath": "src/constants/support.ts",
-      "line": 22,
+      "filePath": "src/features/status/constants/support.ts",
+      "line": 45,
       "column": 14
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmAvailabilityEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 182,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageAvailabilityEvidence", "ApmStatusDiagnostic"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packages",
+        "kind": "property",
+        "type": "readonly ApmPackageAvailabilityEvidence[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmAvailabilityRequest",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 162,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "currentVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "declaredRange",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "role",
+        "kind": "property",
+        "type": "\"application\" | \"host\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"registry\" | \"workspace\" | \"file\" | \"git\" | \"unknown\"",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmDependencyDeclaration",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 86,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyKind"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "ApmDependencyKind",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "ownerPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "range",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "resolvedPackageId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmDependencyInventory",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 150,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmInstallRootInventory", "ApmStatusDiagnostic"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "roots",
+        "kind": "property",
+        "type": "readonly ApmInstallRootInventory[]",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmDependencyKind",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 9,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 206,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmExtensionObservation", "ApmStatusDiagnostic"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "observations",
+        "kind": "property",
+        "type": "readonly ApmExtensionObservation[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"available\" | \"unavailable\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmExtensionObservation",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 196,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationState", "ApmProjectionState"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "migration",
+        "kind": "property",
+        "type": "ApmMigrationState",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "owner",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "projection",
+        "kind": "property",
+        "type": "ApmProjectionState",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmInstallationState",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 12,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmInstalledPackageEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 111,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmInstallationState"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "location",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"unknown\" | \"node-modules\" | \"pnpm-store\" | \"yarn-state\" | \"pnp-data\" | \"bun-store\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "ApmInstallationState",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmInstallRootInventory",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 136,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmDependencyDeclaration",
+      "ApmInstalledPackageEvidence",
+      "ApmLockedPackageEvidence",
+      "ApmLockfileEvidence",
+      "ApmPackageManagerEvidence",
+      "ApmStatusDiagnostic"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "complete",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "declarations",
+        "kind": "property",
+        "type": "readonly ApmDependencyDeclaration[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "diagnostics",
+        "kind": "property",
+        "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installedPackages",
+        "kind": "property",
+        "type": "readonly ApmInstalledPackageEvidence[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "linker",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "lockedPackages",
+        "kind": "property",
+        "type": "readonly ApmLockedPackageEvidence[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "lockfile",
+        "kind": "property",
+        "type": "ApmLockfileEvidence",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "manager",
+        "kind": "property",
+        "type": "ApmPackageManagerEvidence",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packagePaths",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmLockedDependencyEdge",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 94,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "requested",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmLockedPackageEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 100,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmLockedDependencyEdge"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "dependencies",
+        "kind": "property",
+        "type": "readonly ApmLockedDependencyEdge[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "location",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "optional",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "peerContext",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"registry\" | \"workspace\" | \"file\" | \"git\" | \"unknown\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmLockfileEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 128,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "format",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "path",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"supported\" | \"unsupported\" | \"missing\" | \"conflict\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmMigrationState",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 16,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPackageAvailabilityEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 171,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "checkedAt",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "compatibleVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "latestVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "registry",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"unknown\" | \"not-applicable\" | \"known\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPackageManagerEvidence",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 121,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageManagerName"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "ApmPackageManagerName",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "source",
+        "kind": "property",
+        "type": "\"package-manager-field\" | \"lockfile\" | \"project-detector\"",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "state",
+        "kind": "property",
+        "type": "\"unknown\" | \"conflict\" | \"selected\"",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmPackageManagerName",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 7,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmProjectionState",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 14,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmRegistryAvailabilityOptions",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/registry.ts",
+    "sourceLocation": {
+      "filePath": "src/types/registry.ts",
+      "line": 6,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmRegistryFetch"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "cacheTtlMs",
+        "kind": "property",
+        "type": "number",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "env",
+        "kind": "property",
+        "type": "Readonly<Record<string, string | undefined>>",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "fetchFn",
+        "kind": "property",
+        "type": "ApmRegistryFetch",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "home",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "maxRequests",
+        "kind": "property",
+        "type": "number",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "now",
+        "kind": "property",
+        "type": "() => number",
+        "required": false,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmRegistryFetch",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/registry.ts",
+    "sourceLocation": {
+      "filePath": "src/types/registry.ts",
+      "line": 1,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusAvailabilityMode",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 5,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusAvailabilityPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 188,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmAvailabilityEvidence",
+      "ApmAvailabilityRequest",
+      "ApmStatusAvailabilityMode"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "queryAvailabilityAsync",
+        "kind": "property",
+        "type": "(input: { readonly rootPath: string; readonly mode: ApmStatusAvailabilityMode; readonly packages: readonly ApmAvailabilityRequest[]; }) => Promise<ApmAvailabilityEvidence>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusCurrency",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 3,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusDependency",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 227,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmDependencyDeclaration",
+      "ApmInstalledPackageEvidence",
+      "ApmPackageAvailabilityEvidence",
+      "ApmStatusFinding"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "availability",
+        "kind": "property",
+        "type": "ApmPackageAvailabilityEvidence",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "declaration",
+        "kind": "property",
+        "type": "ApmDependencyDeclaration",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "dependencyPaths",
+        "kind": "property",
+        "type": "readonly (readonly string[])[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "direct",
+        "kind": "property",
+        "type": "boolean",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "findings",
+        "kind": "property",
+        "type": "readonly ApmStatusFinding[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installed",
+        "kind": "property",
+        "type": "ApmInstalledPackageEvidence",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installRootId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "lockedVersion",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "packageId",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusDependencyInventoryPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 156,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyInventory"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectDependencyInventoryAsync",
+        "kind": "property",
+        "type": "(input: { readonly inspection: ProjectInspection; }) => Promise<ApmDependencyInventory>",
+        "required": true,
+        "description": null
+      }
+    ],
     "structuredRows": []
   },
   {
@@ -26,11 +1146,11 @@
     "modulePath": "src/types/status.ts",
     "sourceLocation": {
       "filePath": "src/types/status.ts",
-      "line": 11,
+      "line": 50,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": [],
+    "relatedSymbols": ["ApmStatusDiagnosticScope"],
     "signatures": [],
     "members": [
       {
@@ -41,9 +1161,70 @@
         "description": null
       },
       {
-        "name": "message",
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
         "kind": "property",
         "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "scope",
+        "kind": "property",
+        "type": "ApmStatusDiagnosticScope",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "severity",
+        "kind": "property",
+        "type": "\"info\" | \"warning\" | \"error\"",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusDiagnosticScope",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 43,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "kind",
+        "kind": "property",
+        "type": "\"host\" | \"registry\" | \"project\" | \"install-root\" | \"package\" | \"projection\" | \"migration\"",
         "required": true,
         "description": null
       },
@@ -58,7 +1239,7 @@
     "structuredRows": []
   },
   {
-    "name": "ApmStatusInput",
+    "name": "ApmStatusExtensionEvidencePort",
     "description": null,
     "isReadme": false,
     "examples": [],
@@ -66,7 +1247,105 @@
     "modulePath": "src/types/status.ts",
     "sourceLocation": {
       "filePath": "src/types/status.ts",
-      "line": 3,
+      "line": 213,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyInventory", "ApmExtensionEvidence"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectExtensionEvidenceAsync",
+        "kind": "property",
+        "type": "(input: { readonly rootPath: string; readonly inventory: ApmDependencyInventory; }) => Promise<ApmExtensionEvidence>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusFinding",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 59,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusDiagnosticScope", "ApmStatusFindingCode"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "code",
+        "kind": "property",
+        "type": "ApmStatusFindingCode",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "evidence",
+        "kind": "property",
+        "type": "readonly string[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "nextAction",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "reason",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "scope",
+        "kind": "property",
+        "type": "ApmStatusDiagnosticScope",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusFindingCode",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "unknown",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 18,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusHostPackage",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 36,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -74,7 +1353,28 @@
     "signatures": [],
     "members": [
       {
-        "name": "rootPath",
+        "name": "declaredRange",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
         "kind": "property",
         "type": "string",
         "required": true,
@@ -84,7 +1384,7 @@
     "structuredRows": []
   },
   {
-    "name": "ApmStatusInspectionPort",
+    "name": "ApmStatusHostPackageResult",
     "description": null,
     "isReadme": false,
     "examples": [],
@@ -92,17 +1392,92 @@
     "modulePath": "src/types/status.ts",
     "sourceLocation": {
       "filePath": "src/types/status.ts",
-      "line": 7,
+      "line": 240,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": [],
+    "relatedSymbols": ["ApmPackageAvailabilityEvidence", "ApmStatusFinding"],
     "signatures": [],
     "members": [
       {
-        "name": "inspectProjectAsync",
+        "name": "availability",
         "kind": "property",
-        "type": "(rootPath: string) => Promise<ProjectInspection>",
+        "type": "ApmPackageAvailabilityEvidence",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "declaredRange",
+        "kind": "property",
+        "type": "string",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "findings",
+        "kind": "property",
+        "type": "readonly ApmStatusFinding[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "id",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "name",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "version",
+        "kind": "property",
+        "type": "string",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusInput",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 30,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusAvailabilityMode", "ApmStatusHostPackage"],
+    "signatures": [],
+    "members": [
+      {
+        "name": "availability",
+        "kind": "property",
+        "type": "ApmStatusAvailabilityMode",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "hostPackages",
+        "kind": "property",
+        "type": "readonly ApmStatusHostPackage[]",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "rootPath",
+        "kind": "property",
+        "type": "string",
         "required": true,
         "description": null
       }
@@ -118,7 +1493,7 @@
     "modulePath": "src/types/status.ts",
     "sourceLocation": {
       "filePath": "src/types/status.ts",
-      "line": 17,
+      "line": 67,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -150,6 +1525,84 @@
     "structuredRows": []
   },
   {
+    "name": "ApmStatusPorts",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 220,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [
+      "ApmStatusAvailabilityPort",
+      "ApmStatusDependencyInventoryPort",
+      "ApmStatusExtensionEvidencePort",
+      "ApmStatusProjectInspectionPort"
+    ],
+    "signatures": [],
+    "members": [
+      {
+        "name": "availability",
+        "kind": "property",
+        "type": "ApmStatusAvailabilityPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "dependencyInventory",
+        "kind": "property",
+        "type": "ApmStatusDependencyInventoryPort",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "extensions",
+        "kind": "property",
+        "type": "ApmStatusExtensionEvidencePort",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "projectInspection",
+        "kind": "property",
+        "type": "ApmStatusProjectInspectionPort",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
+    "name": "ApmStatusProjectInspectionPort",
+    "description": null,
+    "isReadme": false,
+    "examples": [],
+    "kind": "type",
+    "modulePath": "src/types/status.ts",
+    "sourceLocation": {
+      "filePath": "src/types/status.ts",
+      "line": 82,
+      "column": 1
+    },
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": [],
+    "signatures": [],
+    "members": [
+      {
+        "name": "inspectProjectAsync",
+        "kind": "property",
+        "type": "(rootPath: string) => Promise<ProjectInspection>",
+        "required": true,
+        "description": null
+      }
+    ],
+    "structuredRows": []
+  },
+  {
     "name": "ApmStatusProjectSummary",
     "description": null,
     "isReadme": false,
@@ -158,7 +1611,7 @@
     "modulePath": "src/types/status.ts",
     "sourceLocation": {
       "filePath": "src/types/status.ts",
-      "line": 23,
+      "line": 73,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -219,11 +1672,20 @@
     "modulePath": "src/types/status.ts",
     "sourceLocation": {
       "filePath": "src/types/status.ts",
-      "line": 32,
+      "line": 245,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmStatusDiagnostic", "ApmStatusProjectSummary"],
+    "relatedSymbols": [
+      "ApmExtensionEvidence",
+      "ApmInstallRootInventory",
+      "ApmStatusCurrency",
+      "ApmStatusDependency",
+      "ApmStatusDiagnostic",
+      "ApmStatusFinding",
+      "ApmStatusHostPackageResult",
+      "ApmStatusProjectSummary"
+    ],
     "signatures": [],
     "members": [
       {
@@ -234,9 +1696,51 @@
         "description": null
       },
       {
+        "name": "currency",
+        "kind": "property",
+        "type": "ApmStatusCurrency",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "dependencies",
+        "kind": "property",
+        "type": "readonly ApmStatusDependency[]",
+        "required": true,
+        "description": null
+      },
+      {
         "name": "diagnostics",
         "kind": "property",
         "type": "readonly ApmStatusDiagnostic[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "extensions",
+        "kind": "property",
+        "type": "ApmExtensionEvidence",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "findings",
+        "kind": "property",
+        "type": "readonly ApmStatusFinding[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "hosts",
+        "kind": "property",
+        "type": "readonly ApmStatusHostPackageResult[]",
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "installRoots",
+        "kind": "property",
+        "type": "readonly ApmInstallRootInventory[]",
         "required": true,
         "description": null
       },
@@ -264,7 +1768,7 @@
       {
         "name": "schemaVersion",
         "kind": "property",
-        "type": "1",
+        "type": "2",
         "required": true,
         "description": null
       }
@@ -304,22 +1808,86 @@
     "structuredRows": []
   },
   {
+    "name": "createNpmRegistryAvailabilityPort",
+    "description": "Create a bounded npm-compatible registry adapter with redacted config and process-local TTL cache.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
+    "sourceLocation": {
+      "filePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
+      "line": 19,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmRegistryAvailabilityOptions", "ApmStatusAvailabilityPort"],
+    "signatures": [
+      {
+        "label": "(options?: ApmRegistryAvailabilityOptions) => ApmStatusAvailabilityPort",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "ApmRegistryAvailabilityOptions",
+            "required": false,
+            "description": null
+          }
+        ],
+        "returnType": "ApmStatusAvailabilityPort",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
+    "name": "inspectDependencyInventoryAsync",
+    "description": "Inspect package declarations, lock instances, and installed state without running package code.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.ts",
+    "sourceLocation": {
+      "filePath": "src/features/status/adapters/outbound/inspectDependencyInventoryAsync.ts",
+      "line": 23,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyInventory"],
+    "signatures": [
+      {
+        "label": "(input: { readonly inspection: ProjectInspection; }) => Promise<ApmDependencyInventory>",
+        "parameters": [
+          {
+            "name": "input",
+            "type": "{ readonly inspection: ProjectInspection; }",
+            "required": true,
+            "description": null
+          }
+        ],
+        "returnType": "Promise<ApmDependencyInventory>",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "statusAsync",
-    "description": "Build serializable APM status from read-only project evidence supplied by an outbound port.\n\nHosts can call this use case without a terminal, filesystem access, or Node composition and can\nprovide a deterministic fake port in tests. Status never installs dependencies or executes\nproject lifecycle scripts.",
+    "description": "Build evidence-based, serializable APM status without mutating the inspected project.\n\nThe use case separates Project Detector evidence, package-manager inventory, registry\navailability, and optional package-owned projection/migration evidence behind outbound ports.\nMissing or partial evidence makes currency `unknown`; it never becomes a green current result.\nHosts can call this boundary without a terminal and can test it with deterministic fake ports.",
     "isReadme": true,
     "examples": [],
     "kind": "function",
     "modulePath": "src/features/status/application/statusAsync.ts",
     "sourceLocation": {
       "filePath": "src/features/status/application/statusAsync.ts",
-      "line": 15,
+      "line": 20,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmStatusInput", "ApmStatusInspectionPort", "ApmStatusResult"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusPorts", "ApmStatusResult"],
     "signatures": [
       {
-        "label": "(input: ApmStatusInput, inspectionPort: ApmStatusInspectionPort) => Promise<ApmStatusResult>",
+        "label": "(input: ApmStatusInput, ports: ApmStatusPorts) => Promise<ApmStatusResult>",
         "parameters": [
           {
             "name": "input",
@@ -328,8 +1896,8 @@
             "description": null
           },
           {
-            "name": "inspectionPort",
-            "type": "ApmStatusInspectionPort",
+            "name": "ports",
+            "type": "ApmStatusPorts",
             "required": true,
             "description": null
           }
@@ -343,14 +1911,14 @@
   },
   {
     "name": "statusProjectAsync",
-    "description": "Compose the headless status use case with Project Detector's published Node inspection edge.",
+    "description": "Compose APM status with published Project Detector, local package-manager, and registry edges.",
     "isReadme": false,
     "examples": [],
     "kind": "function",
     "modulePath": "src/features/status/composition/statusProjectAsync.ts",
     "sourceLocation": {
       "filePath": "src/features/status/composition/statusProjectAsync.ts",
-      "line": 7,
+      "line": 10,
       "column": 1
     },
     "exportPaths": ["src/nodeApm.ts"],

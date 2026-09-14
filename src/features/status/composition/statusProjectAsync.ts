@@ -1,9 +1,26 @@
 import { inspectProjectAsync } from '@ankhorage/project-detector/node';
 
+import metadata from '../../../../package.json' with { type: 'json' };
 import type { ApmStatusInput, ApmStatusResult } from '../../../types/status.js';
+import { createNpmRegistryAvailabilityPort } from '../adapters/outbound/createNpmRegistryAvailabilityPort.js';
+import { inspectDependencyInventoryAsync } from '../adapters/outbound/inspectDependencyInventoryAsync.js';
 import { statusAsync } from '../application/statusAsync.js';
 
-/*** Compose the headless status use case with Project Detector's published Node inspection edge. */
+/*** Compose APM status with published Project Detector, local package-manager, and registry edges. */
 export async function statusProjectAsync(input: ApmStatusInput): Promise<ApmStatusResult> {
-  return statusAsync(input, { inspectProjectAsync });
+  return statusAsync(
+    {
+      ...input,
+      hostPackages: input.hostPackages ?? [
+        { id: 'apm', name: metadata.name, version: metadata.version },
+      ],
+    },
+    {
+      projectInspection: { inspectProjectAsync },
+      dependencyInventory: { inspectDependencyInventoryAsync },
+      availability: registryAvailabilityPort,
+    },
+  );
 }
+
+const registryAvailabilityPort = createNpmRegistryAvailabilityPort();

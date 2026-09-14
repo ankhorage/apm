@@ -7,7 +7,7 @@ import { describe, expect, test } from 'bun:test';
 import { runAsync } from './runAsync.js';
 
 describe('runAsync', () => {
-  test('runs the real status operation and renders JSON', async () => {
+  test('runs real status and returns incomplete when lock evidence is absent', async () => {
     const rootPath = await mkdtemp(path.join(tmpdir(), 'apm-status-'));
     const stdout: string[] = [];
     const stderr: string[] = [];
@@ -22,11 +22,14 @@ describe('runAsync', () => {
         writeStdout: (text) => stdout.push(text),
         writeStderr: (text) => stderr.push(text),
       });
+      const output = stdout.join('');
 
-      expect(exitCode).toBe(0);
+      expect(exitCode).toBe(2);
       expect(stderr).toEqual([]);
-      expect(stdout.join('')).toContain('"operation": "status"');
-      expect(stdout.join('')).toContain('"npm"');
+      expect(output).toContain('"operation": "status"');
+      expect(output).toContain('"complete": false');
+      expect(output).toContain('"status.lockfile.missing"');
+      expect(output).toContain('"npm"');
     } finally {
       await rm(rootPath, { recursive: true, force: true });
     }
