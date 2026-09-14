@@ -17,8 +17,7 @@ import { createRegistryPackageRequest } from '../../../../utils/createRegistryPa
 export async function queryRegistryPackageAsync(
   input: QueryRegistryPackageInput,
 ): Promise<ApmPackageAvailabilityEvidence> {
-  const { url } = createRegistryPackageRequest(input.request.name, input.config);
-  const registry = `${url.protocol}//${url.host}${url.pathname.slice(0, url.pathname.lastIndexOf('/') + 1)}`;
+  const { registry } = createRegistryPackageRequest(input.request.name, input.config);
   const cacheKey = `${registry}\u0000${input.request.name}`;
   const cached = input.cache.get(cacheKey);
   const currentTime = input.now();
