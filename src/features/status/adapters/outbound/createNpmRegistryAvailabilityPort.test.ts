@@ -4,6 +4,7 @@ import path from 'node:path';
 
 import { describe, expect, test } from 'bun:test';
 
+import type { ApmRegistryFetch } from '../../../../types/registry.js';
 import { createNpmRegistryAvailabilityPort } from './createNpmRegistryAvailabilityPort.js';
 
 describe('createNpmRegistryAvailabilityPort', () => {
@@ -14,7 +15,7 @@ describe('createNpmRegistryAvailabilityPort', () => {
         ['registry=https://registry.example/', '//registry.example/:_authToken=${TOKEN}', ''].join('\n'),
       );
       const requests: RequestInit[] = [];
-      const fetchFn: typeof fetch = (_input, init) => {
+      const fetchFn: ApmRegistryFetch = (_input, init) => {
         requests.push(init ?? {});
         return Promise.resolve(
           new Response(
@@ -36,7 +37,14 @@ describe('createNpmRegistryAvailabilityPort', () => {
         rootPath: root,
         mode: 'refresh',
         packages: [
-          { packageId: 'pkg', name: 'pkg', role: 'application', currentVersion: '1.0.0', declaredRange: '^1.0.0' },
+          {
+            packageId: 'pkg',
+            name: 'pkg',
+            role: 'application',
+            source: 'registry',
+            currentVersion: '1.0.0',
+            declaredRange: '^1.0.0',
+          },
         ],
       });
 
@@ -51,7 +59,7 @@ describe('createNpmRegistryAvailabilityPort', () => {
   test('offline cache miss makes availability incomplete without making a network request', async () => {
     await withRegistryFixture(async (root) => {
       const calls: string[] = [];
-      const fetchFn: typeof fetch = (input) => {
+      const fetchFn: ApmRegistryFetch = (input) => {
         calls.push(String(input));
         return Promise.reject(new Error('network must not be called'));
       };
@@ -59,7 +67,7 @@ describe('createNpmRegistryAvailabilityPort', () => {
       const result = await port.queryAvailabilityAsync({
         rootPath: root,
         mode: 'offline',
-        packages: [{ packageId: 'pkg', name: 'pkg', role: 'application' }],
+        packages: [{ packageId: 'pkg', name: 'pkg', role: 'application', source: 'registry' }],
       });
 
       expect(calls).toEqual([]);
@@ -72,18 +80,41 @@ describe('createNpmRegistryAvailabilityPort', () => {
   test('auth or network failures stay redacted and incomplete', async () => {
     await withRegistryFixture(async (root) => {
       await writeFile(path.join(root, '.npmrc'), 'registry=https://registry.example/\n');
-      const fetchFn: typeof fetch = () =>
+      const fetchFn: ApmRegistryFetch = () =>
         Promise.reject(new Error('request to https://user:private-password@registry.example/pkg failed'));
       const port = createNpmRegistryAvailabilityPort({ fetchFn, home: path.join(root, 'empty-home') });
       const result = await port.queryAvailabilityAsync({
         rootPath: root,
         mode: 'refresh',
-        packages: [{ packageId: 'pkg', name: 'pkg', role: 'application' }],
+        packages: [{ packageId: 'pkg', name: 'pkg', role: 'application', source: 'registry' }],
       });
 
       expect(result.complete).toBe(false);
       expect(JSON.stringify(result)).not.toContain('private-password');
       expect(result.packages[0]?.state).toBe('unknown');
+    });
+  });
+
+  test('workspace and file packages are complete without registry requests', async () => {
+    await withRegistryFixture(async (root) => {
+      const calls: string[] = [];
+      const fetchFn: ApmRegistryFetch = (input) => {
+        calls.push(String(input));
+        return Promise.reject(new Error('network must not be called'));
+      };
+      const port = createNpmRegistryAvailabilityPort({ fetchFn, home: path.join(root, 'empty-home') });
+      const result = await port.queryAvailabilityAsync({
+        rootPath: root,
+        mode: 'refresh',
+        packages: [
+          { packageId: 'workspace', name: 'workspace-pkg', role: 'application', source: 'workspace' },
+          { packageId: 'file', name: 'file-pkg', role: 'application', source: 'file' },
+        ],
+      });
+
+      expect(calls).toEqual([]);
+      expect(result.complete).toBe(true);
+      expect(result.packages.map((item) => item.state)).toEqual(['not-applicable', 'not-applicable']);
     });
   });
 });
