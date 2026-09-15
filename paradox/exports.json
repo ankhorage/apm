@@ -11,10 +11,7 @@
       "line": 34,
       "column": 14
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -32,10 +29,7 @@
       "line": 47,
       "column": 14
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -53,13 +47,8 @@
       "line": 118,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyBlockerCode"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyBlockerCode"],
     "signatures": [],
     "members": [
       {
@@ -112,10 +101,7 @@
       "line": 103,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -133,10 +119,7 @@
       "line": 205,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -162,10 +145,7 @@
       "line": 130,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -191,13 +171,8 @@
       "line": 175,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanExecutorIdentity"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanExecutorIdentity"],
     "signatures": [],
     "members": [
       {
@@ -222,10 +197,7 @@
       "line": 41,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -272,10 +244,7 @@
       "line": 15,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -293,10 +262,7 @@
       "line": 57,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmApplyFailure",
       "ApmApplyJournalStatus",
@@ -391,13 +357,8 @@
       "line": 154,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyJournal"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyJournal"],
     "signatures": [],
     "members": [
       {
@@ -436,10 +397,7 @@
       "line": 28,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -457,10 +415,7 @@
       "line": 79,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -478,10 +433,7 @@
       "line": 70,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -542,14 +494,8 @@
       "line": 138,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyLockAcquireResult",
-      "ApmApplyLockIdentity"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyLockAcquireResult", "ApmApplyLockIdentity"],
     "signatures": [],
     "members": [
       {
@@ -588,10 +534,7 @@
       "line": 134,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -617,10 +560,7 @@
       "line": 9,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -660,10 +600,7 @@
       "line": 167,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmPlanBlocker",
       "ApmPlanExecutorIdentity",
@@ -694,10 +631,7 @@
       "line": 209,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmApplyCancellationPort",
       "ApmApplyClockPort",
@@ -797,10 +731,7 @@
       "line": 194,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -847,13 +778,8 @@
       "line": 201,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyProgressEvent"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyProgressEvent"],
     "signatures": [],
     "members": [
       {
@@ -878,10 +804,7 @@
       "line": 4,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmApplyCancellationPort",
       "ApmApplyProgressPort",
@@ -933,10 +856,7 @@
       "line": 225,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmApplyBlocker",
       "ApmApplyJournal",
@@ -1030,10 +950,7 @@
       "line": 222,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -1051,13 +968,8 @@
       "line": 163,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusResult"],
     "signatures": [],
     "members": [
       {
@@ -1082,14 +994,8 @@
       "line": 96,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyFailure",
-      "ApmStatusDiagnostic"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyFailure", "ApmStatusDiagnostic"],
     "signatures": [],
     "members": [
       {
@@ -1135,14 +1041,8 @@
       "line": 48,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyFailure",
-      "ApmApplyStepState"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyFailure", "ApmApplyStepState"],
     "signatures": [],
     "members": [
       {
@@ -1202,10 +1102,7 @@
       "line": 90,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -1245,10 +1142,7 @@
       "line": 179,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmApplyJournal",
       "ApmApplyStepExecutionResult",
@@ -1293,10 +1187,7 @@
       "line": 31,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -1314,14 +1205,8 @@
       "line": 182,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPackageAvailabilityEvidence",
-      "ApmStatusDiagnostic"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageAvailabilityEvidence", "ApmStatusDiagnostic"],
     "signatures": [],
     "members": [
       {
@@ -1360,10 +1245,7 @@
       "line": 162,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -1424,10 +1306,7 @@
       "line": 41,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -1474,10 +1353,7 @@
       "line": 79,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -1510,13 +1386,8 @@
       "line": 86,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmDependencyKind"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyKind"],
     "signatures": [],
     "members": [
       {
@@ -1569,14 +1440,8 @@
       "line": 150,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmInstallRootInventory",
-      "ApmStatusDiagnostic"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmInstallRootInventory", "ApmStatusDiagnostic"],
     "signatures": [],
     "members": [
       {
@@ -1615,10 +1480,7 @@
       "line": 9,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -1636,13 +1498,8 @@
       "line": 11,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationArtifactRole"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationArtifactRole"],
     "signatures": [],
     "members": [
       {
@@ -1695,13 +1552,8 @@
       "line": 4,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationArtifactRole"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationArtifactRole"],
     "signatures": [],
     "members": [
       {
@@ -1754,10 +1606,7 @@
       "line": 12,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -1775,14 +1624,8 @@
       "line": 206,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmExtensionObservation",
-      "ApmStatusDiagnostic"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmExtensionObservation", "ApmStatusDiagnostic"],
     "signatures": [],
     "members": [
       {
@@ -1828,13 +1671,8 @@
       "line": 19,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmExtensionArtifactIdentity"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmExtensionArtifactIdentity"],
     "signatures": [],
     "members": [
       {
@@ -1880,10 +1718,7 @@
       "line": 131,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -1901,14 +1736,8 @@
       "line": 196,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationState",
-      "ApmProjectionState"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationState", "ApmProjectionState"],
     "signatures": [],
     "members": [
       {
@@ -1975,14 +1804,8 @@
       "line": 34,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmProjectFileSnapshot",
-      "ApmProjectScope"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectFileSnapshot", "ApmProjectScope"],
     "signatures": [],
     "members": [
       {
@@ -2014,10 +1837,7 @@
       "line": 77,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -2043,10 +1863,7 @@
       "line": 81,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -2086,10 +1903,7 @@
       "line": 12,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -2107,13 +1921,8 @@
       "line": 111,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmInstallationState"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmInstallationState"],
     "signatures": [],
     "members": [
       {
@@ -2173,10 +1982,7 @@
       "line": 136,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmDependencyDeclaration",
       "ApmInstalledPackageEvidence",
@@ -2279,10 +2085,7 @@
       "line": 5,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -2300,10 +2103,7 @@
       "line": 94,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -2343,13 +2143,8 @@
       "line": 100,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmLockedDependencyEdge"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmLockedDependencyEdge"],
     "signatures": [],
     "members": [
       {
@@ -2423,10 +2218,7 @@
       "line": 128,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -2480,10 +2272,7 @@
       "line": 58,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -2501,10 +2290,7 @@
       "line": 101,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmMigrationImplementation",
       "ApmMigrationPrerequisite",
@@ -2609,10 +2395,7 @@
       "line": 106,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -2665,10 +2448,7 @@
       "line": 148,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -2728,10 +2508,7 @@
       "line": 94,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -2771,10 +2548,7 @@
       "line": 120,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionVerificationResult",
       "ApmMigrationExecutionInput",
@@ -2828,13 +2602,8 @@
       "line": 60,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationArtifactRole"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationArtifactRole"],
     "signatures": [],
     "members": [
       {
@@ -2866,14 +2635,8 @@
       "line": 84,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmCompletedMigrationEvidence",
-      "ApmUpdateDescriptor"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmCompletedMigrationEvidence", "ApmUpdateDescriptor"],
     "signatures": [],
     "members": [
       {
@@ -2926,14 +2689,8 @@
       "line": 92,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationDescriptor",
-      "ApmUpdateProtocolBlocker"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationDescriptor", "ApmUpdateProtocolBlocker"],
     "signatures": [],
     "members": [
       {
@@ -2979,10 +2736,7 @@
       "line": 100,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -3026,10 +2780,7 @@
       "line": 141,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -3080,13 +2831,8 @@
       "line": 87,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmProjectMutation"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectMutation"],
     "signatures": [],
     "members": [
       {
@@ -3132,10 +2878,7 @@
       "line": 65,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3168,10 +2911,7 @@
       "line": 94,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3218,10 +2958,7 @@
       "line": 85,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -3239,10 +2976,7 @@
       "line": 48,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3275,10 +3009,7 @@
       "line": 16,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -3296,10 +3027,7 @@
       "line": 53,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3332,10 +3060,7 @@
       "line": 113,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -3387,10 +3112,7 @@
       "line": 88,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3430,10 +3152,7 @@
       "line": 132,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3480,10 +3199,7 @@
       "line": 171,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3558,13 +3274,8 @@
       "line": 121,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPackageManagerName"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageManagerName"],
     "signatures": [],
     "members": [
       {
@@ -3610,10 +3321,7 @@
       "line": 7,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -3631,10 +3339,7 @@
       "line": 13,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3667,14 +3372,8 @@
       "line": 57,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPackageUpdateMetadata",
-      "ApmUpdateProtocolBlocker"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageUpdateMetadata", "ApmUpdateProtocolBlocker"],
     "signatures": [],
     "members": [
       {
@@ -3713,10 +3412,7 @@
       "line": 122,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3777,14 +3473,8 @@
       "line": 85,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanBlockerCode",
-      "ApmPlanBlockerScope"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanBlockerCode", "ApmPlanBlockerScope"],
     "signatures": [],
     "members": [
       {
@@ -3837,10 +3527,7 @@
       "line": 57,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -3858,10 +3545,7 @@
       "line": 79,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -3901,10 +3585,7 @@
       "line": 93,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4007,10 +3688,7 @@
       "line": 12,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -4028,10 +3706,7 @@
       "line": 198,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4057,10 +3732,7 @@
       "line": 180,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4100,10 +3772,7 @@
       "line": 113,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4164,15 +3833,8 @@
       "line": 186,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanExecutorIdentity",
-      "ApmPlanPolicyInput",
-      "ApmStatusResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanExecutorIdentity", "ApmPlanPolicyInput", "ApmStatusResult"],
     "signatures": [],
     "members": [
       {
@@ -4211,10 +3873,7 @@
       "line": 202,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4254,14 +3913,8 @@
       "line": 36,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanPackageSelector",
-      "ApmPlanTargetSelection"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanPackageSelector", "ApmPlanTargetSelection"],
     "signatures": [],
     "members": [
       {
@@ -4293,10 +3946,7 @@
       "line": 14,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4343,14 +3993,8 @@
       "line": 49,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanDependencyUpdateMode",
-      "ApmPlanPackageSelection"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDependencyUpdateMode", "ApmPlanPackageSelection"],
     "signatures": [],
     "members": [
       {
@@ -4403,14 +4047,8 @@
       "line": 41,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanDependencyUpdateMode",
-      "ApmPlanPackageSelection"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDependencyUpdateMode", "ApmPlanPackageSelection"],
     "signatures": [],
     "members": [
       {
@@ -4463,15 +4101,8 @@
       "line": 255,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanDigestPort",
-      "ApmPlanProtocolPort",
-      "ApmPlanResolutionPort"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDigestPort", "ApmPlanProtocolPort", "ApmPlanResolutionPort"],
     "signatures": [],
     "members": [
       {
@@ -4510,14 +4141,8 @@
       "line": 192,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanPolicyInput",
-      "ApmStatusAvailabilityMode"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanPolicyInput", "ApmStatusAvailabilityMode"],
     "signatures": [],
     "members": [
       {
@@ -4556,14 +4181,8 @@
       "line": 250,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanProtocolPort",
-      "ApmProjectStatusPort"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanProtocolPort", "ApmProjectStatusPort"],
     "signatures": [],
     "members": [
       {
@@ -4595,14 +4214,8 @@
       "line": 246,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanProtocolRequest",
-      "ApmPlanProtocolResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanProtocolRequest", "ApmPlanProtocolResult"],
     "signatures": [],
     "members": [
       {
@@ -4627,10 +4240,7 @@
       "line": 226,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmPlanDependencyTarget",
       "ApmPlanInputFingerprint",
@@ -4690,10 +4300,7 @@
       "line": 234,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmPlanArtifactIdentity",
       "ApmPlanBlocker",
@@ -4784,10 +4391,7 @@
       "line": 154,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -4834,14 +4438,8 @@
       "line": 176,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanResolutionRequest",
-      "ApmPlanResolutionResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanResolutionRequest", "ApmPlanResolutionResult"],
     "signatures": [],
     "members": [
       {
@@ -4866,14 +4464,8 @@
       "line": 142,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPackageManagerName",
-      "ApmPlanDependencyTarget"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageManagerName", "ApmPlanDependencyTarget"],
     "signatures": [],
     "members": [
       {
@@ -4954,10 +4546,7 @@
       "line": 161,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmPackageManagerName",
       "ApmPlanArtifactIdentity",
@@ -5068,10 +4657,7 @@
       "line": 131,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -5146,10 +4732,7 @@
       "line": 261,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmPlanArtifactIdentity",
       "ApmPlanBlocker",
@@ -5300,13 +4883,8 @@
       "line": 208,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanStepExecution"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanStepExecution"],
     "signatures": [],
     "members": [
       {
@@ -5380,10 +4958,7 @@
       "line": 27,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -5401,10 +4976,7 @@
       "line": 21,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -5422,14 +4994,8 @@
       "line": 108,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanBlocker",
-      "ApmPlanDependencyTarget"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanBlocker", "ApmPlanDependencyTarget"],
     "signatures": [],
     "members": [
       {
@@ -5461,10 +5027,7 @@
       "line": 13,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -5482,10 +5045,7 @@
       "line": 26,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -5539,13 +5099,8 @@
       "line": 115,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmProjectScope"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectScope"],
     "signatures": [],
     "members": [
       {
@@ -5591,10 +5146,7 @@
       "line": 184,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionVerificationResult",
       "ApmProjectionInput",
@@ -5654,10 +5206,7 @@
       "line": 173,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -5701,10 +5250,7 @@
       "line": 156,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -5765,10 +5311,7 @@
       "line": 179,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionExecutionContext",
       "ApmExtensionProjectReadPort",
@@ -5821,13 +5364,8 @@
       "line": 165,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmProjectMutation"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectMutation"],
     "signatures": [],
     "members": [
       {
@@ -5880,10 +5418,7 @@
       "line": 14,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -5901,10 +5436,7 @@
       "line": 39,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -5922,10 +5454,7 @@
       "line": 70,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -5943,14 +5472,8 @@
       "line": 4,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusInput",
-      "ApmStatusResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusResult"],
     "signatures": [],
     "members": [
       {
@@ -5975,13 +5498,8 @@
       "line": 12,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmRegistryFetch"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmRegistryFetch"],
     "signatures": [],
     "members": [
       {
@@ -6041,10 +5559,7 @@
       "line": 1,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -6062,13 +5577,8 @@
       "line": 6,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmRegistryFetch"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmRegistryFetch"],
     "signatures": [],
     "members": [
       {
@@ -6107,10 +5617,7 @@
       "line": 139,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -6128,13 +5635,8 @@
       "line": 125,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmReleaseRequirementEffectKind"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmReleaseRequirementEffectKind"],
     "signatures": [],
     "members": [
       {
@@ -6180,10 +5682,7 @@
       "line": 122,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -6201,10 +5700,7 @@
       "line": 5,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -6222,10 +5718,7 @@
       "line": 188,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmAvailabilityEvidence",
       "ApmAvailabilityRequest",
@@ -6255,10 +5748,7 @@
       "line": 3,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -6276,10 +5766,7 @@
       "line": 227,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmDependencyDeclaration",
       "ApmInstalledPackageEvidence",
@@ -6373,13 +5860,8 @@
       "line": 156,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmDependencyInventory"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyInventory"],
     "signatures": [],
     "members": [
       {
@@ -6404,13 +5886,8 @@
       "line": 50,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusDiagnosticScope"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusDiagnosticScope"],
     "signatures": [],
     "members": [
       {
@@ -6470,10 +5947,7 @@
       "line": 43,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -6513,14 +5987,8 @@
       "line": 213,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmDependencyInventory",
-      "ApmExtensionEvidence"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyInventory", "ApmExtensionEvidence"],
     "signatures": [],
     "members": [
       {
@@ -6545,14 +6013,8 @@
       "line": 59,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusDiagnosticScope",
-      "ApmStatusFindingCode"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusDiagnosticScope", "ApmStatusFindingCode"],
     "signatures": [],
     "members": [
       {
@@ -6605,10 +6067,7 @@
       "line": 18,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -6626,10 +6085,7 @@
       "line": 36,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -6676,14 +6132,8 @@
       "line": 240,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPackageAvailabilityEvidence",
-      "ApmStatusFinding"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageAvailabilityEvidence", "ApmStatusFinding"],
     "signatures": [],
     "members": [
       {
@@ -6743,14 +6193,8 @@
       "line": 30,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusAvailabilityMode",
-      "ApmStatusHostPackage"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusAvailabilityMode", "ApmStatusHostPackage"],
     "signatures": [],
     "members": [
       {
@@ -6789,10 +6233,7 @@
       "line": 67,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -6832,10 +6273,7 @@
       "line": 220,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmStatusAvailabilityPort",
       "ApmStatusDependencyInventoryPort",
@@ -6887,10 +6325,7 @@
       "line": 82,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -6916,13 +6351,8 @@
       "line": 9,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusExtensionEvidencePort"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusExtensionEvidencePort"],
     "signatures": [],
     "members": [
       {
@@ -6947,13 +6377,8 @@
       "line": 73,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusLanguage"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusLanguage"],
     "signatures": [],
     "members": [
       {
@@ -7013,10 +6438,7 @@
       "line": 245,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionEvidence",
       "ApmInstallRootInventory",
@@ -7128,10 +6550,7 @@
       "line": 23,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -7171,10 +6590,7 @@
       "line": 29,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -7214,10 +6630,7 @@
       "line": 141,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmCompatibilityConstraint",
       "ApmMigrationDescriptor",
@@ -7306,10 +6719,7 @@
       "line": 3,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -7327,13 +6737,8 @@
       "line": 63,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmUpdateDescriptor"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateDescriptor"],
     "signatures": [],
     "members": [
       {
@@ -7379,14 +6784,8 @@
       "line": 73,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmUpdateDescriptor",
-      "ApmUpdateProtocolBlocker"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateDescriptor", "ApmUpdateProtocolBlocker"],
     "signatures": [],
     "members": [
       {
@@ -7425,14 +6824,8 @@
       "line": 194,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationHandler",
-      "ApmProjectionHandler"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationHandler", "ApmProjectionHandler"],
     "signatures": [],
     "members": [
       {
@@ -7478,14 +6871,8 @@
       "line": 35,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmSupportedSourceHistory",
-      "ApmUnsupportedSourceHistory"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmSupportedSourceHistory", "ApmUnsupportedSourceHistory"],
     "signatures": [],
     "members": [
       {
@@ -7524,10 +6911,7 @@
       "line": 18,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -7560,13 +6944,8 @@
       "line": 39,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmUpdateProtocolBlockerCode"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateProtocolBlockerCode"],
     "signatures": [],
     "members": [
       {
@@ -7619,10 +6998,7 @@
       "line": 7,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -7640,10 +7016,7 @@
       "line": 1,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -7661,10 +7034,7 @@
       "line": 13,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -7682,14 +7052,8 @@
       "line": 16,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmVerifyCheckKind",
-      "ApmVerifyCheckStatus"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyCheckKind", "ApmVerifyCheckStatus"],
     "signatures": [],
     "members": [
       {
@@ -7749,10 +7113,7 @@
       "line": 11,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [],
@@ -7770,10 +7131,7 @@
       "line": 6,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [],
     "signatures": [],
     "members": [
@@ -7806,13 +7164,8 @@
       "line": 25,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyJournal"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyJournal"],
     "signatures": [],
     "members": [
       {
@@ -7837,15 +7190,8 @@
       "line": 45,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmVerifyJournalPort",
-      "ApmVerifyStatusPort",
-      "ApmVerifyStepPort"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyJournalPort", "ApmVerifyStatusPort", "ApmVerifyStepPort"],
     "signatures": [],
     "members": [
       {
@@ -7884,14 +7230,8 @@
       "line": 4,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmProjectStatusPort",
-      "ApmVerifyStepPort"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmProjectStatusPort", "ApmVerifyStepPort"],
     "signatures": [],
     "members": [
       {
@@ -7923,10 +7263,7 @@
       "line": 51,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmReleaseEffect",
       "ApmStatusDiagnostic",
@@ -8020,13 +7357,8 @@
       "line": 32,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusResult"],
     "signatures": [],
     "members": [
       {
@@ -8051,10 +7383,7 @@
       "line": 36,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmApplyJournal",
       "ApmPlanResult",
@@ -8086,15 +7415,8 @@
       "line": 21,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyInput",
-      "ApmApplyPorts",
-      "ApmApplyResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyInput", "ApmApplyPorts", "ApmApplyResult"],
     "signatures": [
       {
         "label": "(input: ApmApplyInput, ports: ApmApplyPorts) => Promise<ApmApplyResult>",
@@ -8131,14 +7453,8 @@
       "line": 17,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyInput",
-      "ApmApplyProjectOptions",
-      "ApmApplyResult"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyInput", "ApmApplyProjectOptions", "ApmApplyResult"],
     "signatures": [
       {
         "label": "(input: ApmApplyInput, options?: ApmApplyProjectOptions) => Promise<ApmApplyResult>",
@@ -8175,9 +7491,7 @@
       "line": 10,
       "column": 1
     },
-    "exportPaths": [
-      "src/cli/createCliProvider.ts"
-    ],
+    "exportPaths": ["src/cli/createCliProvider.ts"],
     "relatedSymbols": [],
     "signatures": [
       {
@@ -8209,12 +7523,8 @@
       "line": 25,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanResolutionPort"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanResolutionPort"],
     "signatures": [
       {
         "label": "() => ApmPlanResolutionPort",
@@ -8238,12 +7548,8 @@
       "line": 19,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmApplyLockPort"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyLockPort"],
     "signatures": [
       {
         "label": "() => ApmApplyLockPort",
@@ -8267,13 +7573,8 @@
       "line": 19,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmRegistryAvailabilityOptions",
-      "ApmStatusAvailabilityPort"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmRegistryAvailabilityOptions", "ApmStatusAvailabilityPort"],
     "signatures": [
       {
         "label": "(options?: ApmRegistryAvailabilityOptions) => ApmStatusAvailabilityPort",
@@ -8304,12 +7605,8 @@
       "line": 6,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanDigestPort"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanDigestPort"],
     "signatures": [
       {
         "label": "() => ApmPlanDigestPort",
@@ -8333,12 +7630,8 @@
       "line": 23,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmDependencyInventory"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmDependencyInventory"],
     "signatures": [
       {
         "label": "(input: { readonly inspection: ProjectInspection; }) => Promise<ApmDependencyInventory>",
@@ -8369,15 +7662,8 @@
       "line": 23,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanInput",
-      "ApmPlanPorts",
-      "ApmPlanResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanInput", "ApmPlanPorts", "ApmPlanResult"],
     "signatures": [
       {
         "label": "(input: ApmPlanInput, ports: ApmPlanPorts) => Promise<ApmPlanResult>",
@@ -8414,14 +7700,8 @@
       "line": 16,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPlanProjectInput",
-      "ApmPlanProjectOptions",
-      "ApmPlanResult"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPlanProjectInput", "ApmPlanProjectOptions", "ApmPlanResult"],
     "signatures": [
       {
         "label": "(input: ApmPlanProjectInput, options?: ApmPlanProjectOptions) => Promise<ApmPlanResult>",
@@ -8458,14 +7738,8 @@
       "line": 16,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmMigrationPathInput",
-      "ApmMigrationPathResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmMigrationPathInput", "ApmMigrationPathResult"],
     "signatures": [
       {
         "label": "(input: ApmMigrationPathInput) => ApmMigrationPathResult",
@@ -8496,9 +7770,7 @@
       "line": 14,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionArtifactIdentityRequest",
       "ApmExtensionArtifactIdentityResolution",
@@ -8540,15 +7812,8 @@
       "line": 20,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusInput",
-      "ApmStatusPorts",
-      "ApmStatusResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusPorts", "ApmStatusResult"],
     "signatures": [
       {
         "label": "(input: ApmStatusInput, ports: ApmStatusPorts) => Promise<ApmStatusResult>",
@@ -8585,14 +7850,8 @@
       "line": 11,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmStatusInput",
-      "ApmStatusProjectOptions",
-      "ApmStatusResult"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmStatusInput", "ApmStatusProjectOptions", "ApmStatusResult"],
     "signatures": [
       {
         "label": "(input: ApmStatusInput, options?: ApmStatusProjectOptions) => Promise<ApmStatusResult>",
@@ -8629,13 +7888,8 @@
       "line": 8,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmPackageUpdateMetadataValidationResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmPackageUpdateMetadataValidationResult"],
     "signatures": [
       {
         "label": "(value: unknown) => ApmPackageUpdateMetadataValidationResult",
@@ -8666,10 +7920,7 @@
       "line": 11,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmPlanBlocker",
       "ApmPlanDigestPort",
@@ -8725,14 +7976,8 @@
       "line": 19,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmUpdateDescriptorValidationInput",
-      "ApmUpdateDescriptorValidationResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmUpdateDescriptorValidationInput", "ApmUpdateDescriptorValidationResult"],
     "signatures": [
       {
         "label": "(input: ApmUpdateDescriptorValidationInput) => ApmUpdateDescriptorValidationResult",
@@ -8763,14 +8008,8 @@
       "line": 9,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmExtensionArtifactIdentity",
-      "ApmUpdateProtocolBlocker"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmExtensionArtifactIdentity", "ApmUpdateProtocolBlocker"],
     "signatures": [
       {
         "label": "(artifact: ApmExtensionArtifactIdentity, extension: unknown) => readonly ApmUpdateProtocolBlocker[]",
@@ -8807,10 +8046,7 @@
       "line": 13,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
     "relatedSymbols": [
       "ApmExtensionArtifactIdentity",
       "ApmUpdateDescriptor",
@@ -8859,15 +8095,8 @@
       "line": 12,
       "column": 1
     },
-    "exportPaths": [
-      "src/apm.ts",
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmVerifyInput",
-      "ApmVerifyPorts",
-      "ApmVerifyResult"
-    ],
+    "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyInput", "ApmVerifyPorts", "ApmVerifyResult"],
     "signatures": [
       {
         "label": "(input: ApmVerifyInput, ports: ApmVerifyPorts) => Promise<ApmVerifyResult>",
@@ -8904,14 +8133,8 @@
       "line": 12,
       "column": 1
     },
-    "exportPaths": [
-      "src/nodeApm.ts"
-    ],
-    "relatedSymbols": [
-      "ApmVerifyInput",
-      "ApmVerifyProjectOptions",
-      "ApmVerifyResult"
-    ],
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmVerifyInput", "ApmVerifyProjectOptions", "ApmVerifyResult"],
     "signatures": [
       {
         "label": "(input: ApmVerifyInput, options?: ApmVerifyProjectOptions) => Promise<ApmVerifyResult>",
