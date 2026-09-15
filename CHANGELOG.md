@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.0
+
+### Minor Changes
+
+- a298a28: Inspect nested hoisted Bun package instances and dependency edges by their lockfile placement. Deduplicate registry lookups, bound their concurrency and support realistic dependency graphs while preserving explicit budget and unknown-evidence semantics.
+
 ## 0.7.0
 
 ### Minor Changes
