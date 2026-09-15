@@ -19,14 +19,14 @@
   },
   {
     "name": "APM_STATUS_SUPPORT",
-    "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nOrdinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,\nworkspace and package-manager evidence from Project Detector plus package-manager-native files.\nDetected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns\ntheir dependency semantics; they never become a false complete/current result.\n\nInstall-root selection is evidence based. An explicit `packageManager` declaration wins over\nlockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If\nmultiple manager lockfiles exist without an explicit selection, the root is conflicting and\nincomplete. Nested packages that carry their own manager/lock evidence become independent\ninstall roots rather than being folded into the parent workspace.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\nDuplicate versions remain separate physical package instances and dependency edges retain the\ninstance identity they actually resolve to.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain\ndistinct package instances rather than being collapsed by package name.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Offline cache misses and registry/auth/network failures make availability unknown.\n\n`status` and `plan` are read-only project operations. Status reads manifests, lockfiles,\ninstallation metadata and registry data. Plan performs package-manager-native resolution only in\ndisposable staging and returns reviewed diffs without writing the inspected project. Neither\noperation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate\nroadmap operations.",
+    "description": "Publish the exact read-only status matrix proven by the evidence adapters.\n\nRuntime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer\nprojects may use any explicitly supported manager below.\n\nOrdinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,\nworkspace and package-manager evidence from Project Detector plus package-manager-native files.\nDetected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns\ntheir dependency semantics; they never become a false complete/current result.\n\nInstall-root selection is evidence based. An explicit `packageManager` declaration wins over\nlockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If\nmultiple manager lockfiles exist without an explicit selection, the root is conflicting and\nincomplete. Nested packages that carry their own manager/lock evidence become independent\ninstall roots rather than being folded into the parent workspace.\n\nnpm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are\nchecked without executing package code. package-lock v1 is detected but remains inspection-only.\nDuplicate versions remain separate physical package instances and dependency edges retain the\ninstance identity they actually resolve to.\n\npnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,\nworkspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual\nstore lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain\ndistinct package instances rather than being collapsed by package name.\n\nYarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;\n`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined\nPnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected\nbut are not claimed as complete inventory modes in this release.\n\nBun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are\ninspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed\nidentity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.\n\nRegistry availability uses npm-compatible registries selected from project/user npmrc and\nenvironment overrides. Credentials are used only at the HTTP edge and are never returned in\nreports. Lookups deduplicate registry names, retain each instance's declared constraint, and run\nin batches of at most eight requests (configurable 1–64), with a default budget of 4096 names.\nHosts can pass a configured registry availability port to `statusProjectAsync`; exceeding an\nexplicit budget leaves uncached packages unknown rather than truncating them from the report.\nOffline cache misses and registry/auth/network failures make availability unknown.\n\n`status` and `plan` are read-only project operations. Status reads manifests, lockfiles,\ninstallation metadata and registry data. Plan performs package-manager-native resolution only in\ndisposable staging and returns reviewed diffs without writing the inspected project. Neither\noperation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate\nroadmap operations.",
     "isReadme": true,
     "examples": [],
     "kind": "value",
     "modulePath": "src/features/status/constants/support.ts",
     "sourceLocation": {
       "filePath": "src/features/status/constants/support.ts",
-      "line": 47,
+      "line": 52,
       "column": 14
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5469,7 +5469,7 @@
     "modulePath": "src/types/status-project.ts",
     "sourceLocation": {
       "filePath": "src/types/status-project.ts",
-      "line": 4,
+      "line": 9,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -5504,6 +5504,13 @@
     "members": [
       {
         "name": "cacheTtlMs",
+        "kind": "property",
+        "type": "number",
+        "required": false,
+        "description": null
+      },
+      {
+        "name": "concurrency",
         "kind": "property",
         "type": "number",
         "required": false,
@@ -6348,13 +6355,20 @@
     "modulePath": "src/types/status-project.ts",
     "sourceLocation": {
       "filePath": "src/types/status-project.ts",
-      "line": 9,
+      "line": 14,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
-    "relatedSymbols": ["ApmStatusExtensionEvidencePort"],
+    "relatedSymbols": ["ApmStatusAvailabilityPort", "ApmStatusExtensionEvidencePort"],
     "signatures": [],
     "members": [
+      {
+        "name": "availability",
+        "kind": "property",
+        "type": "ApmStatusAvailabilityPort",
+        "required": false,
+        "description": null
+      },
       {
         "name": "extensions",
         "kind": "property",
@@ -7412,7 +7426,7 @@
     "modulePath": "src/features/apply/application/applyAsync.ts",
     "sourceLocation": {
       "filePath": "src/features/apply/application/applyAsync.ts",
-      "line": 19,
+      "line": 21,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -7570,7 +7584,7 @@
     "modulePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
     "sourceLocation": {
       "filePath": "src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts",
-      "line": 19,
+      "line": 21,
       "column": 1
     },
     "exportPaths": ["src/nodeApm.ts"],

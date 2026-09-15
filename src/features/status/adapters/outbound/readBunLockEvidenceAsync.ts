@@ -3,13 +3,14 @@ import path from 'node:path';
 
 import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
-import { satisfies, valid, validRange } from 'semver';
+import { valid } from 'semver';
 
 import type { ApmLockedPackageEvidence } from '../../../../types/status.js';
 import type {
   ApmManagerInspectionInput,
   ApmManagerLockEvidence,
 } from '../../../../types/status-inventory.js';
+import { parseBunPackagePath } from '../../domain/parseBunPackagePath.js';
 import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
 
 /*** Read Bun text-lock v2 dependency graph evidence without invoking Bun. */
@@ -97,8 +98,16 @@ function toBunLockEvidence(
     },
     lockedPackages,
     directResolutions: readBunDirectResolutions(input, lockedPackages),
-    complete: true,
-    diagnostics: [],
+    complete: lockedPackages.length === Object.keys(lock.packages).length,
+    diagnostics: Object.keys(lock.packages)
+      .filter((key) => !lockedPackages.some((pkg) => pkg.id === `bun:${key}`))
+      .map((key) => ({
+        code: 'status.lockfile.bun.invalid-instance',
+        severity: 'error' as const,
+        scope: { kind: 'install-root' as const, id: input.root.id, path: lockPath },
+        evidence: [key],
+        reason: 'Bun lock instance has an unsupported locator or unsafe placement key.',
+      })),
   };
 }
 
@@ -120,18 +129,20 @@ function readBunPackage(
 ): ApmLockedPackageEvidence | undefined {
   if (!Array.isArray(value) || typeof value[0] !== 'string') return undefined;
   const identity = parseBunLocator(value[0]);
-  if (identity === undefined) return undefined;
-  const metadata = isRecord(value[2]) ? value[2] : {};
+  const names = parseBunPackagePath(key);
+  if (identity === undefined || names === undefined) return undefined;
+  const metadata = isRecord(value[1]) ? value[1] : isRecord(value[2]) ? value[2] : {};
   const dependencies = [
     ...readStringMap(metadata.dependencies),
     ...readStringMap(metadata.optionalDependencies),
   ].map(([name, requested]) => ({
     name,
     requested,
-    ...optionalId(resolveBunPackageId(name, requested, packages)),
+    ...optionalId(resolveBunPackageId(names, name, packages)),
   }));
   return {
     id: `bun:${key}`,
+    location: names.map((name) => `node_modules/${name}`).join('/'),
     name: identity.name,
     ...(identity.version === undefined ? {} : { version: identity.version }),
     source: identity.source,
@@ -147,9 +158,10 @@ function parseBunLocator(locator: string): BunIdentity | undefined {
   if (match === null) return undefined;
   const [, name, raw] = match;
   if (name === undefined || raw === undefined) return undefined;
-  const peerIndex = raw.indexOf('+');
+  const source = bunSource(raw);
+  const peerIndex = source === 'registry' ? raw.indexOf('+') : -1;
   const versionOrSource = peerIndex < 0 ? raw : raw.slice(0, peerIndex);
-  const source = bunSource(versionOrSource);
+  if (source === 'registry' && valid(versionOrSource) === null) return undefined;
   return {
     name,
     ...(source === 'registry' ? { version: versionOrSource } : {}),
@@ -161,68 +173,55 @@ function parseBunLocator(locator: string): BunIdentity | undefined {
 /*** Classify Bun locator sources before semantic-version handling. */
 function bunSource(value: string): ApmLockedPackageEvidence['source'] {
   if (value.startsWith('workspace:')) return 'workspace';
-  if (value.startsWith('file:')) return 'file';
+  if (
+    value.startsWith('file:') ||
+    value.startsWith('./') ||
+    value.startsWith('../') ||
+    path.posix.isAbsolute(value) ||
+    path.win32.isAbsolute(value)
+  )
+    return 'file';
   if (value.startsWith('git+') || value.startsWith('github:')) return 'git';
   return 'registry';
 }
 
-/*** Resolve direct package.json declarations to unique Bun lock instances. */
+/*** Resolve direct declarations from their root/workspace placement, never by a global version guess. */
 function readBunDirectResolutions(
   input: ApmManagerInspectionInput,
   packages: readonly ApmLockedPackageEvidence[],
 ): ReadonlyMap<string, string> {
-  const result = new Map<string, string>();
-  for (const manifest of input.root.manifests) {
-    for (const [name, range] of declarationPairs(manifest)) {
-      const exact = packages.find((pkg) => pkg.id === `bun:${name}`);
-      const semantic = packages.filter((pkg) => matchesBunRange(pkg, name, range));
-      const [onlySemantic] = semantic;
-      const resolved = exact?.id ?? (semantic.length === 1 ? onlySemantic?.id : undefined);
-      if (resolved !== undefined)
-        result.set(declarationResolutionKey(manifest.manifestPath, name), resolved);
-    }
-  }
-  return result;
+  const placements = Object.fromEntries(packages.map((pkg) => [pkg.id.slice(4), pkg]));
+  return new Map(
+    input.root.manifests.flatMap((manifest) => {
+      const names =
+        manifest.packageRoot === input.root.rootPath
+          ? []
+          : manifest.name === undefined
+            ? undefined
+            : parseBunPackagePath(manifest.name);
+      if (names === undefined) return [];
+      return declarationPairs(manifest).flatMap(([name]) => {
+        const resolved = resolveBunPackageId(names, name, placements);
+        return resolved === undefined
+          ? []
+          : [[declarationResolutionKey(manifest.manifestPath, name), resolved] as const];
+      });
+    }),
+  );
 }
 
-/*** Resolve one transitive Bun dependency to a unique semantic lock instance. */
+/*** Follow the nearest Bun placement, preserving nested/scoped instances instead of selecting by name. */
 function resolveBunPackageId(
+  from: readonly string[],
   name: string,
-  requested: string,
-  packages: Record<string, unknown>,
+  packages: Readonly<Record<string, unknown>>,
 ): string | undefined {
-  if (Object.hasOwn(packages, name)) return `bun:${name}`;
-  const candidates = Object.entries(packages).flatMap(([key, value]) => {
-    if (!Array.isArray(value) || typeof value[0] !== 'string') return [];
-    const identity = parseBunLocator(value[0]);
-    return identity !== undefined && matchesBunIdentity(identity, name, requested)
-      ? [`bun:${key}`]
-      : [];
-  });
-  const [onlyCandidate] = candidates;
-  return candidates.length === 1 ? onlyCandidate : undefined;
-}
-
-/*** Test one lock package against a Bun/npm semantic declaration. */
-function matchesBunRange(pkg: ApmLockedPackageEvidence, name: string, range: string): boolean {
-  return pkg.name === name && pkg.version !== undefined && semanticMatch(pkg.version, range);
-}
-
-/*** Test one parsed locator identity against a semantic dependency request. */
-function matchesBunIdentity(identity: BunIdentity, name: string, range: string): boolean {
-  return (
-    identity.name === name &&
-    identity.version !== undefined &&
-    semanticMatch(identity.version, range)
+  if (parseBunPackagePath(name)?.length !== 1) return undefined;
+  const candidates = Array.from({ length: from.length + 1 }, (_, index) =>
+    [...from.slice(0, from.length - index), name].join('/'),
   );
-}
-
-/*** Evaluate Bun's npm protocol aliases through standard semantic-version rules. */
-function semanticMatch(version: string, range: string): boolean {
-  const normalized = range.startsWith('npm:') ? range.slice('npm:'.length) : range;
-  return (
-    valid(version) !== null && validRange(normalized) !== null && satisfies(version, normalized)
-  );
+  const selected = candidates.find((candidate) => Object.hasOwn(packages, candidate));
+  return selected === undefined ? undefined : `bun:${selected}`;
 }
 
 /*** Read string-valued dependency metadata from a Bun lock tuple. */

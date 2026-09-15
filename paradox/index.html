@@ -373,10 +373,20 @@
               <button
                 class="nav-button"
                 type="button"
+                data-target="src/features/apply/application/applyAsync.test.ts"
+              >
+                src/features/apply/application/applyAsync.test.ts
+                <small>11 functions</small>
+              </button>
+            </li>
+            <li>
+              <button
+                class="nav-button"
+                type="button"
                 data-target="src/features/apply/application/applyAsync.ts"
               >
                 src/features/apply/application/applyAsync.ts
-                <small>13 functions</small>
+                <small>18 functions</small>
               </button>
             </li>
             <li>
@@ -417,16 +427,6 @@
               >
                 src/features/apply/application/finishApplyOperationAsync.ts
                 <small>5 functions</small>
-              </button>
-            </li>
-            <li>
-              <button
-                class="nav-button"
-                type="button"
-                data-target="src/features/apply/application/fixtures/createApplyFixture.test.ts"
-              >
-                src/features/apply/application/fixtures/createApplyFixture.test.ts
-                <small>13 functions</small>
               </button>
             </li>
             <li>
@@ -486,7 +486,7 @@
                 data-target="src/features/apply/domain/createApplyBlocker.ts"
               >
                 src/features/apply/domain/createApplyBlocker.ts
-                <small>6 functions</small>
+                <small>5 functions</small>
               </button>
             </li>
             <li>
@@ -567,16 +567,6 @@
               >
                 src/features/apply/domain/transitionApplyJournal.ts
                 <small>2 functions</small>
-              </button>
-            </li>
-            <li>
-              <button
-                class="nav-button"
-                type="button"
-                data-target="src/features/apply/domain/validateResumeJournal.ts"
-              >
-                src/features/apply/domain/validateResumeJournal.ts
-                <small>6 functions</small>
               </button>
             </li>
             <li>
@@ -963,6 +953,16 @@
               <button
                 class="nav-button"
                 type="button"
+                data-target="src/features/status/adapters/outbound/bunPlacement.test.ts"
+              >
+                src/features/status/adapters/outbound/bunPlacement.test.ts
+                <small>4 functions</small>
+              </button>
+            </li>
+            <li>
+              <button
+                class="nav-button"
+                type="button"
                 data-target="src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts"
               >
                 src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts
@@ -976,7 +976,7 @@
                 data-target="src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts"
               >
                 src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts
-                <small>7 functions</small>
+                <small>9 functions</small>
               </button>
             </li>
             <li>
@@ -1093,9 +1093,9 @@
               <button
                 class="nav-button"
                 type="button"
-                data-target="src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
+                data-target="src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts"
               >
-                src/features/status/adapters/outbound/queryRegistryPackageAsync.ts
+                src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts
                 <small>7 functions</small>
               </button>
             </li>
@@ -1106,7 +1106,7 @@
                 data-target="src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts"
               >
                 src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts
-                <small>17 functions</small>
+                <small>14 functions</small>
               </button>
             </li>
             <li>
@@ -1253,6 +1253,16 @@
               <button
                 class="nav-button"
                 type="button"
+                data-target="src/features/status/domain/parseBunPackagePath.ts"
+              >
+                src/features/status/domain/parseBunPackagePath.ts
+                <small>2 functions</small>
+              </button>
+            </li>
+            <li>
+              <button
+                class="nav-button"
+                type="button"
                 data-target="src/features/status/utils/declarationResolutionKey.ts"
               >
                 src/features/status/utils/declarationResolutionKey.ts
@@ -1266,7 +1276,7 @@
                 data-target="src/features/status/utils/readInstalledPackageVersionAsync.ts"
               >
                 src/features/status/utils/readInstalledPackageVersionAsync.ts
-                <small>1 function</small>
+                <small>2 functions</small>
               </button>
             </li>
             <li>
@@ -1741,7 +1751,7 @@
             <div class="summary">
               <div><strong>191</strong><span class="muted">public exports</span></div>
               <div><strong>0</strong><span class="muted">components</span></div>
-              <div><strong>199</strong><span class="muted">modules</span></div>
+              <div><strong>197</strong><span class="muted">modules</span></div>
               <div><strong>3</strong><span class="muted">entrypoints</span></div>
             </div>
             <h3>Entrypoints</h3>
@@ -1754,10 +1764,16 @@
 
           <section class="panel">
             <h2>Modules</h2>
-            <article class="item" data-search="examples/basic-usage/status.ts">
+            <article
+              class="item"
+              data-search="examples/basic-usage/status.ts dist/apm.d.ts dist/nodeApm.d.ts"
+            >
               <h3>examples/basic-usage/status.ts</h3>
               <p class="muted">Referenced module</p>
-              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+              <p>
+                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
+                <code>dist/nodeApm.d.ts</code>
+              </p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article class="item" data-search="package.json">
@@ -2198,20 +2214,22 @@
             </article>
             <article
               class="item"
-              data-search="src/features/apply/application/applyAsync.test.ts src/features/apply/application/applyAsync.ts src/features/apply/application/fixtures/createApplyFixture.test.ts"
+              data-search="src/features/apply/application/applyAsync.test.ts src/features/apply/application/applyAsync.ts src/features/apply/domain/createApplyJournal.ts src/types/apply.ts src/types/plan.ts src/types/status.ts"
             >
               <h3>src/features/apply/application/applyAsync.test.ts</h3>
               <p class="muted">Referenced module</p>
               <p>
                 <strong>Dependencies:</strong>
                 <code>src/features/apply/application/applyAsync.ts</code>,
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts</code>
+                <code>src/features/apply/domain/createApplyJournal.ts</code>,
+                <code>src/types/apply.ts</code>, <code>src/types/plan.ts</code>,
+                <code>src/types/status.ts</code>
               </p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
               class="item"
-              data-search="src/features/apply/application/applyAsync.ts src/features/apply/application/persistApplyJournalAsync.ts src/features/apply/application/runApplyStepsAsync.ts src/features/apply/domain/applyPermissionBlockers.ts src/features/apply/domain/createApplyBlocker.ts src/features/apply/domain/createApplyJournal.ts src/features/apply/domain/validateResumeJournal.ts src/types/apply-runtime.ts src/types/apply.ts src/types/plan.ts applyAsync"
+              data-search="src/features/apply/application/applyAsync.ts src/features/apply/application/persistApplyJournalAsync.ts src/features/apply/application/runApplyStepsAsync.ts src/features/apply/domain/applyPermissionBlockers.ts src/features/apply/domain/createApplyJournal.ts src/types/apply-runtime.ts src/types/apply.ts src/types/plan.ts applyAsync"
             >
               <h3>src/features/apply/application/applyAsync.ts</h3>
               <p class="muted">Referenced module</p>
@@ -2220,9 +2238,7 @@
                 <code>src/features/apply/application/persistApplyJournalAsync.ts</code>,
                 <code>src/features/apply/application/runApplyStepsAsync.ts</code>,
                 <code>src/features/apply/domain/applyPermissionBlockers.ts</code>,
-                <code>src/features/apply/domain/createApplyBlocker.ts</code>,
                 <code>src/features/apply/domain/createApplyJournal.ts</code>,
-                <code>src/features/apply/domain/validateResumeJournal.ts</code>,
                 <code>src/types/apply-runtime.ts</code>, <code>src/types/apply.ts</code>,
                 <code>src/types/plan.ts</code>
               </p>
@@ -2298,21 +2314,6 @@
             </article>
             <article
               class="item"
-              data-search="src/features/apply/application/fixtures/createApplyFixture.test.ts src/features/apply/application/applyAsync.ts src/features/apply/domain/createApplyJournal.ts src/types/apply.ts src/types/plan.ts src/types/status.ts createApplyFixture"
-            >
-              <h3>src/features/apply/application/fixtures/createApplyFixture.test.ts</h3>
-              <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong>
-                <code>src/features/apply/application/applyAsync.ts</code>,
-                <code>src/features/apply/domain/createApplyJournal.ts</code>,
-                <code>src/types/apply.ts</code>, <code>src/types/plan.ts</code>,
-                <code>src/types/status.ts</code>
-              </p>
-              <p><strong>Exports:</strong> <code>createApplyFixture</code></p>
-            </article>
-            <article
-              class="item"
               data-search="src/features/apply/application/persistApplyJournalAsync.ts src/features/apply/domain/transitionApplyJournal.ts src/types/apply.ts src/types/plan.ts persistApplyJournalAsync"
             >
               <h3>src/features/apply/application/persistApplyJournalAsync.ts</h3>
@@ -2323,34 +2324,6 @@
                 <code>src/types/apply.ts</code>, <code>src/types/plan.ts</code>
               </p>
               <p><strong>Exports:</strong> <code>persistApplyJournalAsync</code></p>
-            </article>
-            <article
-              class="item"
-              data-search="src/features/apply/application/resumeApplyAdmission.test.ts src/features/apply/application/fixtures/createApplyFixture.test.ts src/types/apply.ts"
-            >
-              <h3>src/features/apply/application/resumeApplyAdmission.test.ts</h3>
-              <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong>
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts</code>,
-                <code>src/types/apply.ts</code>
-              </p>
-              <p><strong>Exports:</strong> <span class="empty">None</span></p>
-            </article>
-            <article
-              class="item"
-              data-search="src/features/apply/application/resumeApplyAsync.test.ts src/features/apply/application/applyAsync.ts src/features/apply/application/fixtures/createApplyFixture.test.ts src/features/apply/domain/createApplyJournal.ts src/types/apply.ts src/types/plan.ts"
-            >
-              <h3>src/features/apply/application/resumeApplyAsync.test.ts</h3>
-              <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong>
-                <code>src/features/apply/application/applyAsync.ts</code>,
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts</code>,
-                <code>src/features/apply/domain/createApplyJournal.ts</code>,
-                <code>src/types/apply.ts</code>, <code>src/types/plan.ts</code>
-              </p>
-              <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
               class="item"
@@ -2508,19 +2481,6 @@
               <p class="muted">Referenced module</p>
               <p><strong>Dependencies:</strong> <code>src/types/apply.ts</code></p>
               <p><strong>Exports:</strong> <code>transitionApplyJournal</code></p>
-            </article>
-            <article
-              class="item"
-              data-search="src/features/apply/domain/validateResumeJournal.ts src/features/apply/domain/createApplyBlocker.ts src/types/apply.ts src/types/plan.ts validateResumeJournal"
-            >
-              <h3>src/features/apply/domain/validateResumeJournal.ts</h3>
-              <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong>
-                <code>src/features/apply/domain/createApplyBlocker.ts</code>,
-                <code>src/types/apply.ts</code>, <code>src/types/plan.ts</code>
-              </p>
-              <p><strong>Exports:</strong> <code>validateResumeJournal</code></p>
             </article>
             <article
               class="item"
@@ -3058,6 +3018,15 @@
             </article>
             <article
               class="item"
+              data-search="src/features/status/adapters/outbound/bunPlacement.test.ts src/nodeApm.ts"
+            >
+              <h3>src/features/status/adapters/outbound/bunPlacement.test.ts</h3>
+              <p class="muted">Referenced module</p>
+              <p><strong>Dependencies:</strong> <code>src/nodeApm.ts</code></p>
+              <p><strong>Exports:</strong> <span class="empty">None</span></p>
+            </article>
+            <article
+              class="item"
               data-search="src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts src/types/registry.ts"
             >
               <h3>
@@ -3074,14 +3043,14 @@
             </article>
             <article
               class="item"
-              data-search="src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts src/features/status/adapters/outbound/queryRegistryPackageAsync.ts src/types/registry.ts src/types/status-registry.ts src/types/status.ts src/utils/readRegistryConfigAsync.ts createNpmRegistryAvailabilityPort"
+              data-search="src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts src/types/registry.ts src/types/status-registry.ts src/types/status.ts src/utils/readRegistryConfigAsync.ts createNpmRegistryAvailabilityPort"
             >
               <h3>src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts</h3>
               <p class="muted">Referenced module</p>
               <p>
                 <strong>Dependencies:</strong>
-                <code>src/features/status/adapters/outbound/queryRegistryPackageAsync.ts</code>,
-                <code>src/types/registry.ts</code>, <code>src/types/status-registry.ts</code>,
+                <code>src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts</code
+                >, <code>src/types/registry.ts</code>, <code>src/types/status-registry.ts</code>,
                 <code>src/types/status.ts</code>, <code>src/utils/readRegistryConfigAsync.ts</code>
               </p>
               <p><strong>Exports:</strong> <code>createNpmRegistryAvailabilityPort</code></p>
@@ -3241,25 +3210,26 @@
             </article>
             <article
               class="item"
-              data-search="src/features/status/adapters/outbound/queryRegistryPackageAsync.ts src/types/registry.ts src/types/status-registry.ts src/types/status.ts src/utils/createRegistryPackageRequest.ts queryRegistryPackageAsync"
+              data-search="src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts src/types/registry.ts src/types/status-registry.ts src/types/status.ts src/utils/createRegistryPackageRequest.ts queryRegistryPackageGroupAsync"
             >
-              <h3>src/features/status/adapters/outbound/queryRegistryPackageAsync.ts</h3>
+              <h3>src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts</h3>
               <p class="muted">Referenced module</p>
               <p>
                 <strong>Dependencies:</strong> <code>src/types/registry.ts</code>,
                 <code>src/types/status-registry.ts</code>, <code>src/types/status.ts</code>,
                 <code>src/utils/createRegistryPackageRequest.ts</code>
               </p>
-              <p><strong>Exports:</strong> <code>queryRegistryPackageAsync</code></p>
+              <p><strong>Exports:</strong> <code>queryRegistryPackageGroupAsync</code></p>
             </article>
             <article
               class="item"
-              data-search="src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts src/features/status/utils/declarationResolutionKey.ts src/types/status-inventory.ts src/types/status.ts readBunLockEvidenceAsync"
+              data-search="src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts src/features/status/domain/parseBunPackagePath.ts src/features/status/utils/declarationResolutionKey.ts src/types/status-inventory.ts src/types/status.ts readBunLockEvidenceAsync"
             >
               <h3>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts</h3>
               <p class="muted">Referenced module</p>
               <p>
                 <strong>Dependencies:</strong>
+                <code>src/features/status/domain/parseBunPackagePath.ts</code>,
                 <code>src/features/status/utils/declarationResolutionKey.ts</code>,
                 <code>src/types/status-inventory.ts</code>, <code>src/types/status.ts</code>
               </p>
@@ -3459,6 +3429,15 @@
             </article>
             <article
               class="item"
+              data-search="src/features/status/domain/parseBunPackagePath.ts parseBunPackagePath"
+            >
+              <h3>src/features/status/domain/parseBunPackagePath.ts</h3>
+              <p class="muted">Referenced module</p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+              <p><strong>Exports:</strong> <code>parseBunPackagePath</code></p>
+            </article>
+            <article
+              class="item"
               data-search="src/features/status/utils/declarationResolutionKey.ts declarationResolutionKey"
             >
               <h3>src/features/status/utils/declarationResolutionKey.ts</h3>
@@ -3541,12 +3520,12 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/application/updateExtensionExecution.test.ts src/features/update-protocol/application/executeMigrationExtensionAsync.ts src/features/update-protocol/application/planMigrationExtensionAsync.ts"
+              data-search="src/features/update-protocol/application/updateExtensionExecution.test.ts dist/types/public.d.ts src/features/update-protocol/application/executeMigrationExtensionAsync.ts src/features/update-protocol/application/planMigrationExtensionAsync.ts"
             >
               <h3>src/features/update-protocol/application/updateExtensionExecution.test.ts</h3>
               <p class="muted">Referenced module</p>
               <p>
-                <strong>Dependencies:</strong>
+                <strong>Dependencies:</strong> <code>dist/types/public.d.ts</code>,
                 <code
                   >src/features/update-protocol/application/executeMigrationExtensionAsync.ts</code
                 >,
@@ -3733,11 +3712,14 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/resolveMigrationPath.test.ts"
+              data-search="src/features/update-protocol/domain/resolveMigrationPath.test.ts dist/apm.d.ts dist/types/public.d.ts"
             >
               <h3>src/features/update-protocol/domain/resolveMigrationPath.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+              <p>
+                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
+                <code>dist/types/public.d.ts</code>
+              </p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3846,11 +3828,11 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts"
+              data-search="src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts dist/apm.d.ts"
             >
               <h3>src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+              <p><strong>Dependencies:</strong> <code>dist/apm.d.ts</code></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3897,11 +3879,14 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/validateUpdateDescriptor.test.ts"
+              data-search="src/features/update-protocol/domain/validateUpdateDescriptor.test.ts dist/apm.d.ts dist/types/public.d.ts"
             >
               <h3>src/features/update-protocol/domain/validateUpdateDescriptor.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+              <p>
+                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
+                <code>dist/types/public.d.ts</code>
+              </p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3927,11 +3912,14 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts"
+              data-search="src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts dist/apm.d.ts dist/types/public.d.ts"
             >
               <h3>src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
+              <p>
+                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
+                <code>dist/types/public.d.ts</code>
+              </p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -4735,7 +4723,7 @@
               >
                 <h4>applyAsync</h4>
                 <p class="muted">
-                  function • <code>src/features/apply/application/applyAsync.ts:19:1</code>
+                  function • <code>src/features/apply/application/applyAsync.ts:21:1</code>
                 </p>
                 <p>
                   Start or resume one reviewed plan under an exclusive durable project operation
@@ -5155,7 +5143,7 @@
                 <p class="muted">
                   function •
                   <code
-                    >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:19:1</code
+                    >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:21:1</code
                   >
                 </p>
                 <p>
@@ -5373,11 +5361,11 @@
               <article
                 class="item"
                 id="symbol-apm-status-support"
-                data-search="APM_STATUS_SUPPORT value src/features/status/constants/support.ts Publish the exact read-only status matrix proven by the evidence adapters.&#10;&#10;Runtime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer&#10;projects may use any explicitly supported manager below.&#10;&#10;Ordinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,&#10;workspace and package-manager evidence from Project Detector plus package-manager-native files.&#10;Detected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns&#10;their dependency semantics; they never become a false complete/current result.&#10;&#10;Install-root selection is evidence based. An explicit `packageManager` declaration wins over&#10;lockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If&#10;multiple manager lockfiles exist without an explicit selection, the root is conflicting and&#10;incomplete. Nested packages that carry their own manager/lock evidence become independent&#10;install roots rather than being folded into the parent workspace.&#10;&#10;npm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are&#10;checked without executing package code. package-lock v1 is detected but remains inspection-only.&#10;Duplicate versions remain separate physical package instances and dependency edges retain the&#10;instance identity they actually resolve to.&#10;&#10;pnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,&#10;workspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual&#10;store lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain&#10;distinct package instances rather than being collapsed by package name.&#10;&#10;Yarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;&#10;`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined&#10;PnP map therefore remains incomplete by design. Yarn Classic and Yarn&#39;s pnpm linker are detected&#10;but are not claimed as complete inventory modes in this release.&#10;&#10;Bun: text `bun.lock` v2 is parsed. Bun&#39;s isolated `.bun` store and ordinary node_modules links are&#10;inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.&#10;&#10;Registry availability uses npm-compatible registries selected from project/user npmrc and&#10;environment overrides. Credentials are used only at the HTTP edge and are never returned in&#10;reports. Offline cache misses and registry/auth/network failures make availability unknown.&#10;&#10;`status` and `plan` are read-only project operations. Status reads manifests, lockfiles,&#10;installation metadata and registry data. Plan performs package-manager-native resolution only in&#10;disposable staging and returns reviewed diffs without writing the inspected project. Neither&#10;operation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate&#10;roadmap operations."
+                data-search="APM_STATUS_SUPPORT value src/features/status/constants/support.ts Publish the exact read-only status matrix proven by the evidence adapters.&#10;&#10;Runtime: APM requires Node 24 or newer. Development uses Bun 1.4.2, but inspected customer&#10;projects may use any explicitly supported manager below.&#10;&#10;Ordinary JavaScript and TypeScript projects require no `ankh.config.json`. APM derives package,&#10;workspace and package-manager evidence from Project Detector plus package-manager-native files.&#10;Detected non-JavaScript ecosystems remain inspection-only until an explicit APM adapter owns&#10;their dependency semantics; they never become a false complete/current result.&#10;&#10;Install-root selection is evidence based. An explicit `packageManager` declaration wins over&#10;lockfile heuristics while stale lockfiles from other managers remain diagnostic evidence. If&#10;multiple manager lockfiles exist without an explicit selection, the root is conflicting and&#10;incomplete. Nested packages that carry their own manager/lock evidence become independent&#10;install roots rather than being folded into the parent workspace.&#10;&#10;npm: package-lock v2 and v3 are parsed. The physical node_modules locations recorded by npm are&#10;checked without executing package code. package-lock v1 is detected but remains inspection-only.&#10;Duplicate versions remain separate physical package instances and dependency edges retain the&#10;instance identity they actually resolve to.&#10;&#10;pnpm: lockfile v9 is parsed, including importer roots, package/snapshot instance identities,&#10;workspace links and peer-context suffixes. Installed state is confirmed from the pnpm virtual&#10;store lock when present; unknown/custom layouts stay explicit. Peer variants therefore remain&#10;distinct package instances rather than being collapsed by package name.&#10;&#10;Yarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-state.yml`;&#10;`nodeLinker: pnp` reads `.pnp.data.json` when present and never executes `.pnp.cjs`. An inlined&#10;PnP map therefore remains incomplete by design. Yarn Classic and Yarn&#39;s pnpm linker are detected&#10;but are not claimed as complete inventory modes in this release.&#10;&#10;Bun: text `bun.lock` v2 is parsed. Bun&#39;s isolated `.bun` store and ordinary node_modules links are&#10;inspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed&#10;identity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.&#10;&#10;Registry availability uses npm-compatible registries selected from project/user npmrc and&#10;environment overrides. Credentials are used only at the HTTP edge and are never returned in&#10;reports. Lookups deduplicate registry names, retain each instance&#39;s declared constraint, and run&#10;in batches of at most eight requests (configurable 1–64), with a default budget of 4096 names.&#10;Hosts can pass a configured registry availability port to `statusProjectAsync`; exceeding an&#10;explicit budget leaves uncached packages unknown rather than truncating them from the report.&#10;Offline cache misses and registry/auth/network failures make availability unknown.&#10;&#10;`status` and `plan` are read-only project operations. Status reads manifests, lockfiles,&#10;installation metadata and registry data. Plan performs package-manager-native resolution only in&#10;disposable staging and returns reviewed diffs without writing the inspected project. Neither&#10;operation executes project lifecycle hooks or migrations. `apply` and `verify` remain separate&#10;roadmap operations."
               >
                 <h4>APM_STATUS_SUPPORT</h4>
                 <p class="muted">
-                  value • <code>src/features/status/constants/support.ts:47:14</code>
+                  value • <code>src/features/status/constants/support.ts:52:14</code>
                 </p>
                 <p>
                   Publish the exact read-only status matrix proven by the evidence adapters.
@@ -5408,16 +5396,22 @@
                   Classic and Yarn&#39;s pnpm linker are detected but are not claimed as complete
                   inventory modes in this release. Bun: text `bun.lock` v2 is parsed. Bun&#39;s
                   isolated `.bun` store and ordinary node_modules links are inspected as data.
-                  Binary `bun.lockb` and unknown lock versions are inspection-only. Registry
-                  availability uses npm-compatible registries selected from project/user npmrc and
-                  environment overrides. Credentials are used only at the HTTP edge and are never
-                  returned in reports. Offline cache misses and registry/auth/network failures make
-                  availability unknown. `status` and `plan` are read-only project operations. Status
-                  reads manifests, lockfiles, installation metadata and registry data. Plan performs
-                  package-manager-native resolution only in disposable staging and returns reviewed
-                  diffs without writing the inspected project. Neither operation executes project
-                  lifecycle hooks or migrations. `apply` and `verify` remain separate roadmap
-                  operations.
+                  Hoisted lock-path keys retain nested and scoped package placements; installed
+                  identity/version mismatches remain explicit incomplete evidence. Binary
+                  `bun.lockb` and unknown lock versions are inspection-only. Registry availability
+                  uses npm-compatible registries selected from project/user npmrc and environment
+                  overrides. Credentials are used only at the HTTP edge and are never returned in
+                  reports. Lookups deduplicate registry names, retain each instance&#39;s declared
+                  constraint, and run in batches of at most eight requests (configurable 1–64), with
+                  a default budget of 4096 names. Hosts can pass a configured registry availability
+                  port to `statusProjectAsync`; exceeding an explicit budget leaves uncached
+                  packages unknown rather than truncating them from the report. Offline cache misses
+                  and registry/auth/network failures make availability unknown. `status` and `plan`
+                  are read-only project operations. Status reads manifests, lockfiles, installation
+                  metadata and registry data. Plan performs package-manager-native resolution only
+                  in disposable staging and returns reviewed diffs without writing the inspected
+                  project. Neither operation executes project lifecycle hooks or migrations. `apply`
+                  and `verify` remain separate roadmap operations.
                 </p>
                 <p>
                   <strong>Export paths:</strong> <code>src/apm.ts</code>,
@@ -9479,6 +9473,13 @@
                       <td></td>
                     </tr>
                     <tr>
+                      <td><code>concurrency</code></td>
+                      <td>property</td>
+                      <td><code>number</code></td>
+                      <td>no</td>
+                      <td></td>
+                    </tr>
+                    <tr>
                       <td><code>env</code></td>
                       <td>property</td>
                       <td><code>Readonly&lt;Record&lt;string, string | undefined&gt;&gt;</code></td>
@@ -9593,7 +9594,7 @@
                 data-search="ApmProjectStatusPort type src/types/status-project.ts Reusable project-status boundary shared by planning, apply validation, and verification composition. ApmStatusInput ApmStatusResult"
               >
                 <h4>ApmProjectStatusPort</h4>
-                <p class="muted">type • <code>src/types/status-project.ts:4:1</code></p>
+                <p class="muted">type • <code>src/types/status-project.ts:9:1</code></p>
                 <p>
                   Reusable project-status boundary shared by planning, apply validation, and
                   verification composition.
@@ -9636,10 +9637,10 @@
               <article
                 class="item"
                 id="symbol-apmstatusprojectoptions"
-                data-search="ApmStatusProjectOptions type src/types/status-project.ts Optional owner-specific status evidence composed around the default Node status adapters. ApmStatusExtensionEvidencePort"
+                data-search="ApmStatusProjectOptions type src/types/status-project.ts Optional owner-specific status evidence composed around the default Node status adapters. ApmStatusAvailabilityPort ApmStatusExtensionEvidencePort"
               >
                 <h4>ApmStatusProjectOptions</h4>
-                <p class="muted">type • <code>src/types/status-project.ts:9:1</code></p>
+                <p class="muted">type • <code>src/types/status-project.ts:14:1</code></p>
                 <p>
                   Optional owner-specific status evidence composed around the default Node status
                   adapters.
@@ -9651,6 +9652,7 @@
                 <div>
                   <strong>Related symbols:</strong>
                   <ul class="chips">
+                    <li class="chip">ApmStatusAvailabilityPort</li>
                     <li class="chip">ApmStatusExtensionEvidencePort</li>
                   </ul>
                 </div>
@@ -9666,6 +9668,13 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr>
+                      <td><code>availability</code></td>
+                      <td>property</td>
+                      <td><code>ApmStatusAvailabilityPort</code></td>
+                      <td>no</td>
+                      <td></td>
+                    </tr>
                     <tr>
                       <td><code>extensions</code></td>
                       <td>property</td>
@@ -15085,6 +15094,8 @@
                 entrypoint_src_nodeApm_ts
                 module_examples_basic_usage_status_ts[&quot;examples/basic-usage/status.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_examples_basic_usage_status_ts
+                module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
+                module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
                 module_package_json[&quot;package.json&quot;] package__ankhorage_apm -.-&gt;
                 module_package_json module_paradox_config_ts[&quot;paradox.config.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_paradox_config_ts
@@ -15304,7 +15315,12 @@
                 module_src_features_apply_application_applyAsync_test_ts --&gt;
                 module_src_features_apply_application_applyAsync_ts
                 module_src_features_apply_application_applyAsync_test_ts --&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
+                module_src_features_apply_domain_createApplyJournal_ts
+                module_src_features_apply_application_applyAsync_test_ts --&gt;
+                module_src_types_apply_ts module_src_features_apply_application_applyAsync_test_ts
+                --&gt; module_src_types_plan_ts
+                module_src_features_apply_application_applyAsync_test_ts --&gt;
+                module_src_types_status_ts
                 module_src_features_apply_application_applyAsync_ts[&quot;src/features/apply/application/applyAsync.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_src_features_apply_application_applyAsync_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
@@ -15314,11 +15330,7 @@
                 module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_features_apply_domain_applyPermissionBlockers_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
-                module_src_features_apply_domain_createApplyBlocker_ts
-                module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_features_apply_domain_createApplyJournal_ts
-                module_src_features_apply_application_applyAsync_ts --&gt;
-                module_src_features_apply_domain_validateResumeJournal_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_types_apply_runtime_ts
                 module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_apply_ts
@@ -15395,19 +15407,6 @@
                 module_src_types_plan_ts
                 module_src_features_apply_application_finishApplyOperationAsync_ts --&gt;
                 module_src_types_status_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts[&quot;src/features/apply/application/fixtures/createApplyFixture.test.ts&quot;]
-                package__ankhorage_apm -.-&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_features_apply_application_applyAsync_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_features_apply_domain_createApplyJournal_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_types_apply_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_types_plan_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_types_status_ts
                 module_src_features_apply_application_persistApplyJournalAsync_ts[&quot;src/features/apply/application/persistApplyJournalAsync.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_apply_application_persistApplyJournalAsync_ts
@@ -15416,26 +15415,6 @@
                 module_src_features_apply_application_persistApplyJournalAsync_ts --&gt;
                 module_src_types_apply_ts
                 module_src_features_apply_application_persistApplyJournalAsync_ts --&gt;
-                module_src_types_plan_ts
-                module_src_features_apply_application_resumeApplyAdmission_test_ts[&quot;src/features/apply/application/resumeApplyAdmission.test.ts&quot;]
-                package__ankhorage_apm -.-&gt;
-                module_src_features_apply_application_resumeApplyAdmission_test_ts
-                module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-                module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt;
-                module_src_types_apply_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts[&quot;src/features/apply/application/resumeApplyAsync.test.ts&quot;]
-                package__ankhorage_apm -.-&gt;
-                module_src_features_apply_application_resumeApplyAsync_test_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_features_apply_application_applyAsync_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_features_apply_domain_createApplyJournal_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_types_apply_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
                 module_src_types_plan_ts
                 module_src_features_apply_application_runApplyStepsAsync_ts[&quot;src/features/apply/application/runApplyStepsAsync.ts&quot;]
                 package__ankhorage_apm -.-&gt;
@@ -15545,14 +15524,6 @@
                 module_src_features_apply_domain_transitionApplyJournal_ts
                 module_src_features_apply_domain_transitionApplyJournal_ts --&gt;
                 module_src_types_apply_ts
-                module_src_features_apply_domain_validateResumeJournal_ts[&quot;src/features/apply/domain/validateResumeJournal.ts&quot;]
-                package__ankhorage_apm -.-&gt;
-                module_src_features_apply_domain_validateResumeJournal_ts
-                module_src_features_apply_domain_validateResumeJournal_ts --&gt;
-                module_src_features_apply_domain_createApplyBlocker_ts
-                module_src_features_apply_domain_validateResumeJournal_ts --&gt;
-                module_src_types_apply_ts module_src_features_apply_domain_validateResumeJournal_ts
-                --&gt; module_src_types_plan_ts
                 module_src_features_apply_utils_applySnapshotPath_ts[&quot;src/features/apply/utils/applySnapshotPath.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_src_features_apply_utils_applySnapshotPath_ts
                 module_src_features_apply_utils_applySnapshotPath_ts --&gt;
@@ -15907,6 +15878,11 @@
                 module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt;
                 module_src_types_plan_ts module_src_features_plan_domain_validateSavedPlanAsync_ts
                 --&gt; module_src_types_status_ts
+                module_src_features_status_adapters_outbound_bunPlacement_test_ts[&quot;src/features/status/adapters/outbound/bunPlacement.test.ts&quot;]
+                package__ankhorage_apm -.-&gt;
+                module_src_features_status_adapters_outbound_bunPlacement_test_ts
+                module_src_features_status_adapters_outbound_bunPlacement_test_ts --&gt;
+                module_src_nodeApm_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts
@@ -15919,7 +15895,8 @@
                 package__ankhorage_apm -.-&gt;
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
-                --&gt; module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts
+                --&gt;
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
                 --&gt; module_src_types_registry_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
@@ -16036,20 +16013,22 @@
                 module_src_types_status_inventory_ts
                 module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt;
                 module_src_types_status_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageAsync.ts&quot;]
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts&quot;]
                 package__ankhorage_apm -.-&gt;
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_types_registry_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_types_status_registry_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_types_status_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_utils_createRegistryPackageRequest_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_types_registry_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_types_status_registry_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_types_status_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_utils_createRegistryPackageRequest_ts
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts
+                module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt;
+                module_src_features_status_domain_parseBunPackagePath_ts
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt;
                 module_src_features_status_utils_declarationResolutionKey_ts
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt;
@@ -16171,6 +16150,9 @@
                 module_src_features_status_domain_evaluateHostStatus_ts
                 module_src_features_status_domain_evaluateStatus_ts --&gt;
                 module_src_types_status_ts
+                module_src_features_status_domain_parseBunPackagePath_ts[&quot;src/features/status/domain/parseBunPackagePath.ts&quot;]
+                package__ankhorage_apm -.-&gt;
+                module_src_features_status_domain_parseBunPackagePath_ts
                 module_src_features_status_utils_declarationResolutionKey_ts[&quot;src/features/status/utils/declarationResolutionKey.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_status_utils_declarationResolutionKey_ts
@@ -16230,6 +16212,8 @@
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts[&quot;src/features/update-protocol/application/updateExtensionExecution.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
+                module_src_features_update_protocol_application_updateExtensionExecution_test_ts
+                --&gt; module_dist_types_public_d_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
                 --&gt;
                 module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
@@ -16352,6 +16336,10 @@
                 module_src_features_update_protocol_domain_resolveMigrationPath_test_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_resolveMigrationPath_test_ts
+                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
+                module_dist_apm_d_ts
+                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
+                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts
@@ -16430,6 +16418,8 @@
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
+                module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
+                --&gt; module_dist_apm_d_ts
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts
@@ -16460,6 +16450,10 @@
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts
+                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
+                module_dist_apm_d_ts
+                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
+                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts
@@ -16486,6 +16480,10 @@
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
+                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
+                --&gt; module_dist_apm_d_ts
+                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
+                --&gt; module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts
@@ -16663,6 +16661,8 @@ graph TD
   package__ankhorage_apm --&gt; entrypoint_src_nodeApm_ts
   module_examples_basic_usage_status_ts[&quot;examples/basic-usage/status.ts&quot;]
   package__ankhorage_apm -.-&gt; module_examples_basic_usage_status_ts
+  module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
+  module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
   module_package_json[&quot;package.json&quot;]
   package__ankhorage_apm -.-&gt; module_package_json
   module_paradox_config_ts[&quot;paradox.config.ts&quot;]
@@ -16801,15 +16801,16 @@ graph TD
   module_src_features_apply_application_applyAsync_test_ts[&quot;src/features/apply/application/applyAsync.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_apply_application_applyAsync_test_ts
   module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_features_apply_application_applyAsync_ts
-  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_types_apply_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_types_plan_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_types_status_ts
   module_src_features_apply_application_applyAsync_ts[&quot;src/features/apply/application/applyAsync.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_apply_application_applyAsync_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_application_persistApplyJournalAsync_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_application_runApplyStepsAsync_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_applyPermissionBlockers_ts
-  module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_createApplyBlocker_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
-  module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_validateResumeJournal_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_apply_runtime_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_plan_ts
@@ -16851,29 +16852,11 @@ graph TD
   module_src_features_apply_application_finishApplyOperationAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_application_finishApplyOperationAsync_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_application_finishApplyOperationAsync_ts --&gt; module_src_types_status_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts[&quot;src/features/apply/application/fixtures/createApplyFixture.test.ts&quot;]
-  package__ankhorage_apm -.-&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_features_apply_application_applyAsync_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_types_plan_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_types_status_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts[&quot;src/features/apply/application/persistApplyJournalAsync.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_apply_application_persistApplyJournalAsync_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts --&gt; module_src_features_apply_domain_transitionApplyJournal_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts --&gt; module_src_types_plan_ts
-  module_src_features_apply_application_resumeApplyAdmission_test_ts[&quot;src/features/apply/application/resumeApplyAdmission.test.ts&quot;]
-  package__ankhorage_apm -.-&gt; module_src_features_apply_application_resumeApplyAdmission_test_ts
-  module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-  module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts[&quot;src/features/apply/application/resumeApplyAsync.test.ts&quot;]
-  package__ankhorage_apm -.-&gt; module_src_features_apply_application_resumeApplyAsync_test_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_features_apply_application_applyAsync_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_application_runApplyStepsAsync_ts[&quot;src/features/apply/application/runApplyStepsAsync.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_apply_application_runApplyStepsAsync_ts
   module_src_features_apply_application_runApplyStepsAsync_ts --&gt; module_src_features_apply_application_finishApplyOperationAsync_ts
@@ -16938,11 +16921,6 @@ graph TD
   module_src_features_apply_domain_transitionApplyJournal_ts[&quot;src/features/apply/domain/transitionApplyJournal.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_apply_domain_transitionApplyJournal_ts
   module_src_features_apply_domain_transitionApplyJournal_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_domain_validateResumeJournal_ts[&quot;src/features/apply/domain/validateResumeJournal.ts&quot;]
-  package__ankhorage_apm -.-&gt; module_src_features_apply_domain_validateResumeJournal_ts
-  module_src_features_apply_domain_validateResumeJournal_ts --&gt; module_src_features_apply_domain_createApplyBlocker_ts
-  module_src_features_apply_domain_validateResumeJournal_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_domain_validateResumeJournal_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_utils_applySnapshotPath_ts[&quot;src/features/apply/utils/applySnapshotPath.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_apply_utils_applySnapshotPath_ts
   module_src_features_apply_utils_applySnapshotPath_ts --&gt; module_src_features_apply_utils_applyStatePaths_ts
@@ -17153,13 +17131,16 @@ graph TD
   module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt; module_src_features_plan_domain_createPlanInputFingerprintAsync_ts
   module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt; module_src_types_plan_ts
   module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt; module_src_types_status_ts
+  module_src_features_status_adapters_outbound_bunPlacement_test_ts[&quot;src/features/status/adapters/outbound/bunPlacement.test.ts&quot;]
+  package__ankhorage_apm -.-&gt; module_src_features_status_adapters_outbound_bunPlacement_test_ts
+  module_src_features_status_adapters_outbound_bunPlacement_test_ts --&gt; module_src_nodeApm_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts --&gt; module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts --&gt; module_src_types_registry_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
-  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts
+  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_types_registry_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_types_status_registry_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_types_status_ts
@@ -17223,14 +17204,15 @@ graph TD
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt; module_src_features_status_utils_declarationResolutionKey_ts
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt; module_src_types_status_inventory_ts
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt; module_src_types_status_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageAsync.ts&quot;]
-  package__ankhorage_apm -.-&gt; module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_types_registry_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_types_status_registry_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_types_status_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_utils_createRegistryPackageRequest_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts&quot;]
+  package__ankhorage_apm -.-&gt; module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_types_registry_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_types_status_registry_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_types_status_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_utils_createRegistryPackageRequest_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts
+  module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_features_status_domain_parseBunPackagePath_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_features_status_utils_declarationResolutionKey_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_types_status_inventory_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_types_status_ts
@@ -17301,6 +17283,8 @@ graph TD
   module_src_features_status_domain_evaluateStatus_ts --&gt; module_src_features_status_domain_evaluateExtensionFindings_ts
   module_src_features_status_domain_evaluateStatus_ts --&gt; module_src_features_status_domain_evaluateHostStatus_ts
   module_src_features_status_domain_evaluateStatus_ts --&gt; module_src_types_status_ts
+  module_src_features_status_domain_parseBunPackagePath_ts[&quot;src/features/status/domain/parseBunPackagePath.ts&quot;]
+  package__ankhorage_apm -.-&gt; module_src_features_status_domain_parseBunPackagePath_ts
   module_src_features_status_utils_declarationResolutionKey_ts[&quot;src/features/status/utils/declarationResolutionKey.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_status_utils_declarationResolutionKey_ts
   module_src_features_status_utils_readInstalledPackageVersionAsync_ts[&quot;src/features/status/utils/readInstalledPackageVersionAsync.ts&quot;]
@@ -17332,6 +17316,7 @@ graph TD
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_types_update_extension_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts[&quot;src/features/update-protocol/application/updateExtensionExecution.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_application_updateExtensionExecution_test_ts
+  module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
   module_src_features_update_protocol_domain_isApmCompatibilityConstraint_ts[&quot;src/features/update-protocol/domain/isApmCompatibilityConstraint.ts&quot;]
@@ -17400,6 +17385,8 @@ graph TD
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_test_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_resolveMigrationPath_test_ts
+  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_apm_d_ts
+  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_resolveMigrationPath_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
@@ -17443,6 +17430,7 @@ graph TD
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
+  module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts --&gt; module_dist_apm_d_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
@@ -17460,6 +17448,8 @@ graph TD
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts
+  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_apm_d_ts
+  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateDescriptor_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
@@ -17474,6 +17464,8 @@ graph TD
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
+  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_apm_d_ts
+  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_features_update_protocol_domain_isApmUpdateExtension_ts
@@ -17649,10 +17641,7 @@ graph TD
                 module_src_features_apply_application_applyOwnerFailureRecovery_test_ts[&quot;src/features/apply/application/applyOwnerFailureRecovery.test.ts&quot;]
                 module_src_features_apply_application_applyValidationFailure_test_ts[&quot;src/features/apply/application/applyValidationFailure.test.ts&quot;]
                 module_src_features_apply_application_finishApplyOperationAsync_ts[&quot;src/features/apply/application/finishApplyOperationAsync.ts&quot;]
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts[&quot;src/features/apply/application/fixtures/createApplyFixture.test.ts&quot;]
                 module_src_features_apply_application_persistApplyJournalAsync_ts[&quot;src/features/apply/application/persistApplyJournalAsync.ts&quot;]
-                module_src_features_apply_application_resumeApplyAdmission_test_ts[&quot;src/features/apply/application/resumeApplyAdmission.test.ts&quot;]
-                module_src_features_apply_application_resumeApplyAsync_test_ts[&quot;src/features/apply/application/resumeApplyAsync.test.ts&quot;]
                 module_src_features_apply_application_runApplyStepsAsync_ts[&quot;src/features/apply/application/runApplyStepsAsync.ts&quot;]
                 module_src_features_apply_composition_applyProjectAsync_ts[&quot;src/features/apply/composition/applyProjectAsync.ts&quot;]
                 module_src_features_apply_domain_applyPermissionBlockers_ts[&quot;src/features/apply/domain/applyPermissionBlockers.ts&quot;]
@@ -17666,7 +17655,6 @@ graph TD
                 module_src_features_apply_domain_reviewedFileChanges_ts[&quot;src/features/apply/domain/reviewedFileChanges.ts&quot;]
                 module_src_features_apply_domain_reviewedStepFilePaths_ts[&quot;src/features/apply/domain/reviewedStepFilePaths.ts&quot;]
                 module_src_features_apply_domain_transitionApplyJournal_ts[&quot;src/features/apply/domain/transitionApplyJournal.ts&quot;]
-                module_src_features_apply_domain_validateResumeJournal_ts[&quot;src/features/apply/domain/validateResumeJournal.ts&quot;]
                 module_src_features_apply_utils_applySnapshotPath_ts[&quot;src/features/apply/utils/applySnapshotPath.ts&quot;]
                 module_src_features_apply_utils_applyStatePaths_ts[&quot;src/features/apply/utils/applyStatePaths.ts&quot;]
                 module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts[&quot;src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts&quot;]
@@ -17709,6 +17697,7 @@ graph TD
                 module_src_features_plan_domain_selectDependencyTargets_test_ts[&quot;src/features/plan/domain/selectDependencyTargets.test.ts&quot;]
                 module_src_features_plan_domain_selectDependencyTargets_ts[&quot;src/features/plan/domain/selectDependencyTargets.ts&quot;]
                 module_src_features_plan_domain_validateSavedPlanAsync_ts[&quot;src/features/plan/domain/validateSavedPlanAsync.ts&quot;]
+                module_src_features_status_adapters_outbound_bunPlacement_test_ts[&quot;src/features/status/adapters/outbound/bunPlacement.test.ts&quot;]
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts&quot;]
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts&quot;]
                 module_src_features_status_adapters_outbound_discoverInstallRootsAsync_ts[&quot;src/features/status/adapters/outbound/discoverInstallRootsAsync.ts&quot;]
@@ -17722,7 +17711,7 @@ graph TD
                 module_src_features_status_adapters_outbound_inspectYarnInstallationAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnInstallationAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_inspectYarnRootAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnRootAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts[&quot;src/features/status/adapters/outbound/parseYarnLockEvidence.ts&quot;]
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageAsync.ts&quot;]
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_readPackageManifestAsync_ts[&quot;src/features/status/adapters/outbound/readPackageManifestAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts&quot;]
@@ -17740,6 +17729,7 @@ graph TD
                 module_src_features_status_domain_evaluateExtensionFindings_ts[&quot;src/features/status/domain/evaluateExtensionFindings.ts&quot;]
                 module_src_features_status_domain_evaluateHostStatus_ts[&quot;src/features/status/domain/evaluateHostStatus.ts&quot;]
                 module_src_features_status_domain_evaluateStatus_ts[&quot;src/features/status/domain/evaluateStatus.ts&quot;]
+                module_src_features_status_domain_parseBunPackagePath_ts[&quot;src/features/status/domain/parseBunPackagePath.ts&quot;]
                 module_src_features_status_utils_declarationResolutionKey_ts[&quot;src/features/status/utils/declarationResolutionKey.ts&quot;]
                 module_src_features_status_utils_readInstalledPackageVersionAsync_ts[&quot;src/features/status/utils/readInstalledPackageVersionAsync.ts&quot;]
                 module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_test_ts[&quot;src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts&quot;]
@@ -17814,6 +17804,8 @@ graph TD
                 module_src_utils_packageInstanceId_ts[&quot;src/utils/packageInstanceId.ts&quot;]
                 module_src_utils_readRegistryConfigAsync_ts[&quot;src/utils/readRegistryConfigAsync.ts&quot;]
                 module_src_utils_runPackageManagerCommandAsync_ts[&quot;src/utils/runPackageManagerCommandAsync.ts&quot;]
+                module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
+                module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
                 module_src_cli_commands_apply_ts --&gt;
                 module_src_features_apply_composition_applyProjectAsync_ts
                 module_src_cli_commands_apply_ts --&gt;
@@ -17962,19 +17954,19 @@ graph TD
                 module_src_types_plan_ts module_src_features_apply_application_applyAsync_test_ts
                 --&gt; module_src_features_apply_application_applyAsync_ts
                 module_src_features_apply_application_applyAsync_test_ts --&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-                module_src_features_apply_application_applyAsync_ts --&gt;
-                module_src_features_apply_application_persistApplyJournalAsync_ts
+                module_src_features_apply_domain_createApplyJournal_ts
+                module_src_features_apply_application_applyAsync_test_ts --&gt;
+                module_src_types_apply_ts module_src_features_apply_application_applyAsync_test_ts
+                --&gt; module_src_types_plan_ts
+                module_src_features_apply_application_applyAsync_test_ts --&gt;
+                module_src_types_status_ts module_src_features_apply_application_applyAsync_ts
+                --&gt; module_src_features_apply_application_persistApplyJournalAsync_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_features_apply_application_runApplyStepsAsync_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_features_apply_domain_applyPermissionBlockers_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
-                module_src_features_apply_domain_createApplyBlocker_ts
-                module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_features_apply_domain_createApplyJournal_ts
-                module_src_features_apply_application_applyAsync_ts --&gt;
-                module_src_features_apply_domain_validateResumeJournal_ts
                 module_src_features_apply_application_applyAsync_ts --&gt;
                 module_src_types_apply_runtime_ts
                 module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_apply_ts
@@ -18039,35 +18031,11 @@ graph TD
                 module_src_types_plan_ts
                 module_src_features_apply_application_finishApplyOperationAsync_ts --&gt;
                 module_src_types_status_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_features_apply_application_applyAsync_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_features_apply_domain_createApplyJournal_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_types_apply_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_types_plan_ts
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt;
-                module_src_types_status_ts
                 module_src_features_apply_application_persistApplyJournalAsync_ts --&gt;
                 module_src_features_apply_domain_transitionApplyJournal_ts
                 module_src_features_apply_application_persistApplyJournalAsync_ts --&gt;
                 module_src_types_apply_ts
                 module_src_features_apply_application_persistApplyJournalAsync_ts --&gt;
-                module_src_types_plan_ts
-                module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-                module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt;
-                module_src_types_apply_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_features_apply_application_applyAsync_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_features_apply_domain_createApplyJournal_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
-                module_src_types_apply_ts
-                module_src_features_apply_application_resumeApplyAsync_test_ts --&gt;
                 module_src_types_plan_ts module_src_features_apply_application_runApplyStepsAsync_ts
                 --&gt; module_src_features_apply_application_finishApplyOperationAsync_ts
                 module_src_features_apply_application_runApplyStepsAsync_ts --&gt;
@@ -18133,11 +18101,7 @@ graph TD
                 module_src_types_plan_ts module_src_features_apply_domain_reviewedStepFilePaths_ts
                 --&gt; module_src_types_plan_ts
                 module_src_features_apply_domain_transitionApplyJournal_ts --&gt;
-                module_src_types_apply_ts module_src_features_apply_domain_validateResumeJournal_ts
-                --&gt; module_src_features_apply_domain_createApplyBlocker_ts
-                module_src_features_apply_domain_validateResumeJournal_ts --&gt;
-                module_src_types_apply_ts module_src_features_apply_domain_validateResumeJournal_ts
-                --&gt; module_src_types_plan_ts module_src_features_apply_utils_applySnapshotPath_ts
+                module_src_types_apply_ts module_src_features_apply_utils_applySnapshotPath_ts
                 --&gt; module_src_features_apply_utils_applyStatePaths_ts
                 module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts --&gt;
                 module_src_types_plan_staging_ts
@@ -18368,13 +18332,16 @@ graph TD
                 module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt;
                 module_src_types_plan_ts module_src_features_plan_domain_validateSavedPlanAsync_ts
                 --&gt; module_src_types_status_ts
+                module_src_features_status_adapters_outbound_bunPlacement_test_ts --&gt;
+                module_src_nodeApm_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts
                 --&gt;
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts
                 --&gt; module_src_types_registry_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
-                --&gt; module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts
+                --&gt;
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
                 --&gt; module_src_types_registry_ts
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
@@ -18458,14 +18425,16 @@ graph TD
                 module_src_types_status_inventory_ts
                 module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt;
                 module_src_types_status_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_types_registry_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_types_status_registry_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_types_status_ts
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt;
-                module_src_utils_createRegistryPackageRequest_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_types_registry_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_types_status_registry_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_types_status_ts
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
+                --&gt; module_src_utils_createRegistryPackageRequest_ts
+                module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt;
+                module_src_features_status_domain_parseBunPackagePath_ts
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt;
                 module_src_features_status_utils_declarationResolutionKey_ts
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt;
@@ -18578,6 +18547,8 @@ graph TD
                 module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
                 --&gt; module_src_types_update_extension_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
+                --&gt; module_dist_types_public_d_ts
+                module_src_features_update_protocol_application_updateExtensionExecution_test_ts
                 --&gt;
                 module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
@@ -18651,6 +18622,10 @@ graph TD
                 --&gt; module_src_types_update_protocol_ts
                 module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts
                 --&gt; module_src_types_update_validation_ts
+                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
+                module_dist_apm_d_ts
+                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
+                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt;
                 module_src_features_update_protocol_utils_createProtocolBlocker_ts
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt;
@@ -18705,6 +18680,8 @@ graph TD
                 module_src_types_update_protocol_ts
                 module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt;
                 module_src_types_update_validation_ts
+                module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
+                --&gt; module_dist_apm_d_ts
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt;
                 module_src_features_update_protocol_utils_createProtocolBlocker_ts
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt;
@@ -18723,6 +18700,10 @@ graph TD
                 module_src_types_update_protocol_ts
                 module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt;
                 module_src_types_update_validation_ts
+                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
+                module_dist_apm_d_ts
+                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
+                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt;
                 module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt;
@@ -18743,6 +18724,10 @@ graph TD
                 module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt;
                 module_src_types_update_validation_ts
+                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
+                --&gt; module_dist_apm_d_ts
+                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
+                --&gt; module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt;
                 module_src_features_update_protocol_domain_isApmUpdateExtension_ts
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt;
@@ -18862,10 +18847,7 @@ graph LR
   module_src_features_apply_application_applyOwnerFailureRecovery_test_ts[&quot;src/features/apply/application/applyOwnerFailureRecovery.test.ts&quot;]
   module_src_features_apply_application_applyValidationFailure_test_ts[&quot;src/features/apply/application/applyValidationFailure.test.ts&quot;]
   module_src_features_apply_application_finishApplyOperationAsync_ts[&quot;src/features/apply/application/finishApplyOperationAsync.ts&quot;]
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts[&quot;src/features/apply/application/fixtures/createApplyFixture.test.ts&quot;]
   module_src_features_apply_application_persistApplyJournalAsync_ts[&quot;src/features/apply/application/persistApplyJournalAsync.ts&quot;]
-  module_src_features_apply_application_resumeApplyAdmission_test_ts[&quot;src/features/apply/application/resumeApplyAdmission.test.ts&quot;]
-  module_src_features_apply_application_resumeApplyAsync_test_ts[&quot;src/features/apply/application/resumeApplyAsync.test.ts&quot;]
   module_src_features_apply_application_runApplyStepsAsync_ts[&quot;src/features/apply/application/runApplyStepsAsync.ts&quot;]
   module_src_features_apply_composition_applyProjectAsync_ts[&quot;src/features/apply/composition/applyProjectAsync.ts&quot;]
   module_src_features_apply_domain_applyPermissionBlockers_ts[&quot;src/features/apply/domain/applyPermissionBlockers.ts&quot;]
@@ -18879,7 +18861,6 @@ graph LR
   module_src_features_apply_domain_reviewedFileChanges_ts[&quot;src/features/apply/domain/reviewedFileChanges.ts&quot;]
   module_src_features_apply_domain_reviewedStepFilePaths_ts[&quot;src/features/apply/domain/reviewedStepFilePaths.ts&quot;]
   module_src_features_apply_domain_transitionApplyJournal_ts[&quot;src/features/apply/domain/transitionApplyJournal.ts&quot;]
-  module_src_features_apply_domain_validateResumeJournal_ts[&quot;src/features/apply/domain/validateResumeJournal.ts&quot;]
   module_src_features_apply_utils_applySnapshotPath_ts[&quot;src/features/apply/utils/applySnapshotPath.ts&quot;]
   module_src_features_apply_utils_applyStatePaths_ts[&quot;src/features/apply/utils/applyStatePaths.ts&quot;]
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts[&quot;src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts&quot;]
@@ -18922,6 +18903,7 @@ graph LR
   module_src_features_plan_domain_selectDependencyTargets_test_ts[&quot;src/features/plan/domain/selectDependencyTargets.test.ts&quot;]
   module_src_features_plan_domain_selectDependencyTargets_ts[&quot;src/features/plan/domain/selectDependencyTargets.ts&quot;]
   module_src_features_plan_domain_validateSavedPlanAsync_ts[&quot;src/features/plan/domain/validateSavedPlanAsync.ts&quot;]
+  module_src_features_status_adapters_outbound_bunPlacement_test_ts[&quot;src/features/status/adapters/outbound/bunPlacement.test.ts&quot;]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts&quot;]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts&quot;]
   module_src_features_status_adapters_outbound_discoverInstallRootsAsync_ts[&quot;src/features/status/adapters/outbound/discoverInstallRootsAsync.ts&quot;]
@@ -18935,7 +18917,7 @@ graph LR
   module_src_features_status_adapters_outbound_inspectYarnInstallationAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnInstallationAsync.ts&quot;]
   module_src_features_status_adapters_outbound_inspectYarnRootAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnRootAsync.ts&quot;]
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts[&quot;src/features/status/adapters/outbound/parseYarnLockEvidence.ts&quot;]
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageAsync.ts&quot;]
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts&quot;]
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts&quot;]
   module_src_features_status_adapters_outbound_readPackageManifestAsync_ts[&quot;src/features/status/adapters/outbound/readPackageManifestAsync.ts&quot;]
   module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts&quot;]
@@ -18953,6 +18935,7 @@ graph LR
   module_src_features_status_domain_evaluateExtensionFindings_ts[&quot;src/features/status/domain/evaluateExtensionFindings.ts&quot;]
   module_src_features_status_domain_evaluateHostStatus_ts[&quot;src/features/status/domain/evaluateHostStatus.ts&quot;]
   module_src_features_status_domain_evaluateStatus_ts[&quot;src/features/status/domain/evaluateStatus.ts&quot;]
+  module_src_features_status_domain_parseBunPackagePath_ts[&quot;src/features/status/domain/parseBunPackagePath.ts&quot;]
   module_src_features_status_utils_declarationResolutionKey_ts[&quot;src/features/status/utils/declarationResolutionKey.ts&quot;]
   module_src_features_status_utils_readInstalledPackageVersionAsync_ts[&quot;src/features/status/utils/readInstalledPackageVersionAsync.ts&quot;]
   module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_test_ts[&quot;src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts&quot;]
@@ -19027,6 +19010,8 @@ graph LR
   module_src_utils_packageInstanceId_ts[&quot;src/utils/packageInstanceId.ts&quot;]
   module_src_utils_readRegistryConfigAsync_ts[&quot;src/utils/readRegistryConfigAsync.ts&quot;]
   module_src_utils_runPackageManagerCommandAsync_ts[&quot;src/utils/runPackageManagerCommandAsync.ts&quot;]
+  module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
+  module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
   module_src_cli_commands_apply_ts --&gt; module_src_features_apply_composition_applyProjectAsync_ts
   module_src_cli_commands_apply_ts --&gt; module_src_features_plan_domain_parsePlanResult_ts
   module_src_cli_commands_apply_ts --&gt; module_src_types_apply_ts
@@ -19111,13 +19096,14 @@ graph LR
   module_src_features_apply_adapters_outbound_rollbackNodeFileStepAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_adapters_outbound_rollbackNodeFileStepAsync_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_features_apply_application_applyAsync_ts
-  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_types_apply_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_types_plan_ts
+  module_src_features_apply_application_applyAsync_test_ts --&gt; module_src_types_status_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_application_persistApplyJournalAsync_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_application_runApplyStepsAsync_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_applyPermissionBlockers_ts
-  module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_createApplyBlocker_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
-  module_src_features_apply_application_applyAsync_ts --&gt; module_src_features_apply_domain_validateResumeJournal_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_apply_runtime_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_application_applyAsync_ts --&gt; module_src_types_plan_ts
@@ -19151,21 +19137,9 @@ graph LR
   module_src_features_apply_application_finishApplyOperationAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_application_finishApplyOperationAsync_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_application_finishApplyOperationAsync_ts --&gt; module_src_types_status_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_features_apply_application_applyAsync_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_types_plan_ts
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts --&gt; module_src_types_status_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts --&gt; module_src_features_apply_domain_transitionApplyJournal_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts --&gt; module_src_types_apply_ts
   module_src_features_apply_application_persistApplyJournalAsync_ts --&gt; module_src_types_plan_ts
-  module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-  module_src_features_apply_application_resumeApplyAdmission_test_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_features_apply_application_applyAsync_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_features_apply_application_fixtures_createApplyFixture_test_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_features_apply_domain_createApplyJournal_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_application_resumeApplyAsync_test_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_application_runApplyStepsAsync_ts --&gt; module_src_features_apply_application_finishApplyOperationAsync_ts
   module_src_features_apply_application_runApplyStepsAsync_ts --&gt; module_src_features_apply_application_persistApplyJournalAsync_ts
   module_src_features_apply_application_runApplyStepsAsync_ts --&gt; module_src_features_apply_domain_applyStepRecoveryPolicy_ts
@@ -19204,9 +19178,6 @@ graph LR
   module_src_features_apply_domain_reviewedFileChanges_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_domain_reviewedStepFilePaths_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_domain_transitionApplyJournal_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_domain_validateResumeJournal_ts --&gt; module_src_features_apply_domain_createApplyBlocker_ts
-  module_src_features_apply_domain_validateResumeJournal_ts --&gt; module_src_types_apply_ts
-  module_src_features_apply_domain_validateResumeJournal_ts --&gt; module_src_types_plan_ts
   module_src_features_apply_utils_applySnapshotPath_ts --&gt; module_src_features_apply_utils_applyStatePaths_ts
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts --&gt; module_src_types_plan_staging_ts
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts --&gt; module_src_types_plan_ts
@@ -19333,9 +19304,10 @@ graph LR
   module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt; module_src_features_plan_domain_createPlanInputFingerprintAsync_ts
   module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt; module_src_types_plan_ts
   module_src_features_plan_domain_validateSavedPlanAsync_ts --&gt; module_src_types_status_ts
+  module_src_features_status_adapters_outbound_bunPlacement_test_ts --&gt; module_src_nodeApm_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts --&gt; module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts --&gt; module_src_types_registry_ts
-  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts
+  module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_types_registry_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_types_status_registry_ts
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; module_src_types_status_ts
@@ -19377,10 +19349,11 @@ graph LR
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt; module_src_features_status_utils_declarationResolutionKey_ts
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt; module_src_types_status_inventory_ts
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts --&gt; module_src_types_status_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_types_registry_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_types_status_registry_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_types_status_ts
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts --&gt; module_src_utils_createRegistryPackageRequest_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_types_registry_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_types_status_registry_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_types_status_ts
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts --&gt; module_src_utils_createRegistryPackageRequest_ts
+  module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_features_status_domain_parseBunPackagePath_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_features_status_utils_declarationResolutionKey_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_types_status_inventory_ts
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts --&gt; module_src_types_status_ts
@@ -19436,6 +19409,7 @@ graph LR
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_features_update_protocol_domain_validateMigrationPlanResult_ts
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_types_update_extension_ts
+  module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
   module_src_features_update_protocol_domain_isApmCompatibilityConstraint_ts --&gt; module_src_types_update_protocol_ts
@@ -19472,6 +19446,8 @@ graph LR
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_extension_ts
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_validation_ts
+  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_apm_d_ts
+  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_types_update_validation_ts
@@ -19499,6 +19475,7 @@ graph LR
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_features_update_protocol_utils_migrationIdentity_ts
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_types_update_validation_ts
+  module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts --&gt; module_dist_apm_d_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_types_update_validation_ts
@@ -19508,6 +19485,8 @@ graph LR
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_types_update_validation_ts
+  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_apm_d_ts
+  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_validateCompatibilityConstraints_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_validateHistoryDescriptor_ts
@@ -19518,6 +19497,8 @@ graph LR
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_types_update_validation_ts
+  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_apm_d_ts
+  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_features_update_protocol_domain_isApmUpdateExtension_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_types_update_extension_ts
@@ -19617,10 +19598,7 @@ graph LR
                 module_src_features_apply_application_applyOwnerFailureRecovery_test_ts[&quot;src/features/apply/application/applyOwnerFailureRecovery.test.ts&quot;]
                 module_src_features_apply_application_applyValidationFailure_test_ts[&quot;src/features/apply/application/applyValidationFailure.test.ts&quot;]
                 module_src_features_apply_application_finishApplyOperationAsync_ts[&quot;src/features/apply/application/finishApplyOperationAsync.ts&quot;]
-                module_src_features_apply_application_fixtures_createApplyFixture_test_ts[&quot;src/features/apply/application/fixtures/createApplyFixture.test.ts&quot;]
                 module_src_features_apply_application_persistApplyJournalAsync_ts[&quot;src/features/apply/application/persistApplyJournalAsync.ts&quot;]
-                module_src_features_apply_application_resumeApplyAdmission_test_ts[&quot;src/features/apply/application/resumeApplyAdmission.test.ts&quot;]
-                module_src_features_apply_application_resumeApplyAsync_test_ts[&quot;src/features/apply/application/resumeApplyAsync.test.ts&quot;]
                 module_src_features_apply_application_runApplyStepsAsync_ts[&quot;src/features/apply/application/runApplyStepsAsync.ts&quot;]
                 module_src_features_apply_composition_applyProjectAsync_ts[&quot;src/features/apply/composition/applyProjectAsync.ts&quot;]
                 module_src_features_apply_domain_applyPermissionBlockers_ts[&quot;src/features/apply/domain/applyPermissionBlockers.ts&quot;]
@@ -19634,7 +19612,6 @@ graph LR
                 module_src_features_apply_domain_reviewedFileChanges_ts[&quot;src/features/apply/domain/reviewedFileChanges.ts&quot;]
                 module_src_features_apply_domain_reviewedStepFilePaths_ts[&quot;src/features/apply/domain/reviewedStepFilePaths.ts&quot;]
                 module_src_features_apply_domain_transitionApplyJournal_ts[&quot;src/features/apply/domain/transitionApplyJournal.ts&quot;]
-                module_src_features_apply_domain_validateResumeJournal_ts[&quot;src/features/apply/domain/validateResumeJournal.ts&quot;]
                 module_src_features_apply_utils_applySnapshotPath_ts[&quot;src/features/apply/utils/applySnapshotPath.ts&quot;]
                 module_src_features_apply_utils_applyStatePaths_ts[&quot;src/features/apply/utils/applyStatePaths.ts&quot;]
                 module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts[&quot;src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts&quot;]
@@ -19677,6 +19654,7 @@ graph LR
                 module_src_features_plan_domain_selectDependencyTargets_test_ts[&quot;src/features/plan/domain/selectDependencyTargets.test.ts&quot;]
                 module_src_features_plan_domain_selectDependencyTargets_ts[&quot;src/features/plan/domain/selectDependencyTargets.ts&quot;]
                 module_src_features_plan_domain_validateSavedPlanAsync_ts[&quot;src/features/plan/domain/validateSavedPlanAsync.ts&quot;]
+                module_src_features_status_adapters_outbound_bunPlacement_test_ts[&quot;src/features/status/adapters/outbound/bunPlacement.test.ts&quot;]
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts&quot;]
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts&quot;]
                 module_src_features_status_adapters_outbound_discoverInstallRootsAsync_ts[&quot;src/features/status/adapters/outbound/discoverInstallRootsAsync.ts&quot;]
@@ -19690,7 +19668,7 @@ graph LR
                 module_src_features_status_adapters_outbound_inspectYarnInstallationAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnInstallationAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_inspectYarnRootAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnRootAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts[&quot;src/features/status/adapters/outbound/parseYarnLockEvidence.ts&quot;]
-                module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageAsync.ts&quot;]
+                module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_readPackageManifestAsync_ts[&quot;src/features/status/adapters/outbound/readPackageManifestAsync.ts&quot;]
                 module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts&quot;]
@@ -19708,6 +19686,7 @@ graph LR
                 module_src_features_status_domain_evaluateExtensionFindings_ts[&quot;src/features/status/domain/evaluateExtensionFindings.ts&quot;]
                 module_src_features_status_domain_evaluateHostStatus_ts[&quot;src/features/status/domain/evaluateHostStatus.ts&quot;]
                 module_src_features_status_domain_evaluateStatus_ts[&quot;src/features/status/domain/evaluateStatus.ts&quot;]
+                module_src_features_status_domain_parseBunPackagePath_ts[&quot;src/features/status/domain/parseBunPackagePath.ts&quot;]
                 module_src_features_status_utils_declarationResolutionKey_ts[&quot;src/features/status/utils/declarationResolutionKey.ts&quot;]
                 module_src_features_status_utils_readInstalledPackageVersionAsync_ts[&quot;src/features/status/utils/readInstalledPackageVersionAsync.ts&quot;]
                 module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_test_ts[&quot;src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts&quot;]
@@ -20263,6 +20242,7 @@ graph LR
                 module_src_types_status_ts --&gt; export_ApmStatusProjectInspectionPort
                 export_ApmStatusProjectOptions[&quot;ApmStatusProjectOptions&quot;]
                 module_src_types_status_project_ts --&gt; export_ApmStatusProjectOptions
+                export_ApmStatusProjectOptions -.-&gt; export_ApmStatusAvailabilityPort
                 export_ApmStatusProjectOptions -.-&gt; export_ApmStatusExtensionEvidencePort
                 export_ApmStatusProjectSummary[&quot;ApmStatusProjectSummary&quot;]
                 module_src_types_status_ts --&gt; export_ApmStatusProjectSummary
@@ -20488,10 +20468,7 @@ graph LR
   module_src_features_apply_application_applyOwnerFailureRecovery_test_ts[&quot;src/features/apply/application/applyOwnerFailureRecovery.test.ts&quot;]
   module_src_features_apply_application_applyValidationFailure_test_ts[&quot;src/features/apply/application/applyValidationFailure.test.ts&quot;]
   module_src_features_apply_application_finishApplyOperationAsync_ts[&quot;src/features/apply/application/finishApplyOperationAsync.ts&quot;]
-  module_src_features_apply_application_fixtures_createApplyFixture_test_ts[&quot;src/features/apply/application/fixtures/createApplyFixture.test.ts&quot;]
   module_src_features_apply_application_persistApplyJournalAsync_ts[&quot;src/features/apply/application/persistApplyJournalAsync.ts&quot;]
-  module_src_features_apply_application_resumeApplyAdmission_test_ts[&quot;src/features/apply/application/resumeApplyAdmission.test.ts&quot;]
-  module_src_features_apply_application_resumeApplyAsync_test_ts[&quot;src/features/apply/application/resumeApplyAsync.test.ts&quot;]
   module_src_features_apply_application_runApplyStepsAsync_ts[&quot;src/features/apply/application/runApplyStepsAsync.ts&quot;]
   module_src_features_apply_composition_applyProjectAsync_ts[&quot;src/features/apply/composition/applyProjectAsync.ts&quot;]
   module_src_features_apply_domain_applyPermissionBlockers_ts[&quot;src/features/apply/domain/applyPermissionBlockers.ts&quot;]
@@ -20505,7 +20482,6 @@ graph LR
   module_src_features_apply_domain_reviewedFileChanges_ts[&quot;src/features/apply/domain/reviewedFileChanges.ts&quot;]
   module_src_features_apply_domain_reviewedStepFilePaths_ts[&quot;src/features/apply/domain/reviewedStepFilePaths.ts&quot;]
   module_src_features_apply_domain_transitionApplyJournal_ts[&quot;src/features/apply/domain/transitionApplyJournal.ts&quot;]
-  module_src_features_apply_domain_validateResumeJournal_ts[&quot;src/features/apply/domain/validateResumeJournal.ts&quot;]
   module_src_features_apply_utils_applySnapshotPath_ts[&quot;src/features/apply/utils/applySnapshotPath.ts&quot;]
   module_src_features_apply_utils_applyStatePaths_ts[&quot;src/features/apply/utils/applyStatePaths.ts&quot;]
   module_src_features_plan_adapters_outbound_applyStagedPlanTargetsAsync_ts[&quot;src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts&quot;]
@@ -20548,6 +20524,7 @@ graph LR
   module_src_features_plan_domain_selectDependencyTargets_test_ts[&quot;src/features/plan/domain/selectDependencyTargets.test.ts&quot;]
   module_src_features_plan_domain_selectDependencyTargets_ts[&quot;src/features/plan/domain/selectDependencyTargets.ts&quot;]
   module_src_features_plan_domain_validateSavedPlanAsync_ts[&quot;src/features/plan/domain/validateSavedPlanAsync.ts&quot;]
+  module_src_features_status_adapters_outbound_bunPlacement_test_ts[&quot;src/features/status/adapters/outbound/bunPlacement.test.ts&quot;]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts&quot;]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts[&quot;src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts&quot;]
   module_src_features_status_adapters_outbound_discoverInstallRootsAsync_ts[&quot;src/features/status/adapters/outbound/discoverInstallRootsAsync.ts&quot;]
@@ -20561,7 +20538,7 @@ graph LR
   module_src_features_status_adapters_outbound_inspectYarnInstallationAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnInstallationAsync.ts&quot;]
   module_src_features_status_adapters_outbound_inspectYarnRootAsync_ts[&quot;src/features/status/adapters/outbound/inspectYarnRootAsync.ts&quot;]
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts[&quot;src/features/status/adapters/outbound/parseYarnLockEvidence.ts&quot;]
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageAsync.ts&quot;]
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts[&quot;src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts&quot;]
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts&quot;]
   module_src_features_status_adapters_outbound_readPackageManifestAsync_ts[&quot;src/features/status/adapters/outbound/readPackageManifestAsync.ts&quot;]
   module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts[&quot;src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts&quot;]
@@ -20579,6 +20556,7 @@ graph LR
   module_src_features_status_domain_evaluateExtensionFindings_ts[&quot;src/features/status/domain/evaluateExtensionFindings.ts&quot;]
   module_src_features_status_domain_evaluateHostStatus_ts[&quot;src/features/status/domain/evaluateHostStatus.ts&quot;]
   module_src_features_status_domain_evaluateStatus_ts[&quot;src/features/status/domain/evaluateStatus.ts&quot;]
+  module_src_features_status_domain_parseBunPackagePath_ts[&quot;src/features/status/domain/parseBunPackagePath.ts&quot;]
   module_src_features_status_utils_declarationResolutionKey_ts[&quot;src/features/status/utils/declarationResolutionKey.ts&quot;]
   module_src_features_status_utils_readInstalledPackageVersionAsync_ts[&quot;src/features/status/utils/readInstalledPackageVersionAsync.ts&quot;]
   module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_test_ts[&quot;src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts&quot;]
@@ -21152,6 +21130,7 @@ graph LR
   module_src_types_status_ts --&gt; export_ApmStatusProjectInspectionPort
   export_ApmStatusProjectOptions[&quot;ApmStatusProjectOptions&quot;]
   module_src_types_status_project_ts --&gt; export_ApmStatusProjectOptions
+  export_ApmStatusProjectOptions -.-&gt; export_ApmStatusAvailabilityPort
   export_ApmStatusProjectOptions -.-&gt; export_ApmStatusExtensionEvidencePort
   export_ApmStatusProjectSummary[&quot;ApmStatusProjectSummary&quot;]
   module_src_types_status_ts --&gt; export_ApmStatusProjectSummary
@@ -21376,6 +21355,34 @@ sequenceDiagram
   participant_executeAsync--&gt;&gt;participant_runAsync: return
   participant_runAsync-&gt;&gt;participant_writeStderr: context.writeStderr()
   participant_writeStderr--&gt;&gt;participant_runAsync: return
+</pre>
+              </details>
+            </article>
+            <article
+              class="item"
+              data-search="createNpmRegistryAvailabilityPort sequence diagrams/sequences/create-npm-registry-availability-port.mmd"
+            >
+              <h3>createNpmRegistryAvailabilityPort sequence</h3>
+              <p class="muted">
+                <code>diagrams/sequences/create-npm-registry-availability-port.mmd</code>
+              </p>
+              <div class="mermaid">
+                sequenceDiagram participant participant_createNpmRegistryAvailabilityPort as
+                createNpmRegistryAvailabilityPort participant participant_validateRegistryLimits as
+                validateRegistryLimits
+                participant_createNpmRegistryAvailabilityPort-&gt;&gt;participant_validateRegistryLimits:
+                validateRegistryLimits()
+                participant_validateRegistryLimits--&gt;&gt;participant_createNpmRegistryAvailabilityPort:
+                return
+              </div>
+              <details>
+                <summary>View Mermaid source</summary>
+                <pre>
+sequenceDiagram
+  participant participant_createNpmRegistryAvailabilityPort as createNpmRegistryAvailabilityPort
+  participant participant_validateRegistryLimits as validateRegistryLimits
+  participant_createNpmRegistryAvailabilityPort-&gt;&gt;participant_validateRegistryLimits: validateRegistryLimits()
+  participant_validateRegistryLimits--&gt;&gt;participant_createNpmRegistryAvailabilityPort: return
 </pre>
               </details>
             </article>
@@ -22519,6 +22526,131 @@ sequenceDiagram
           </section>
         </section>
         <section
+          id="view-src-features-apply-application-applyasync-test-ts"
+          class="view"
+          data-view="src/features/apply/application/applyAsync.test.ts"
+          hidden
+        >
+          <section class="panel">
+            <h2>src/features/apply/application/applyAsync.test.ts</h2>
+            <article
+              class="item"
+              data-search="portsFixture src/features/apply/application/applyAsync.test.ts Build in-memory apply ports around independently owned fake boundaries."
+            >
+              <h3>portsFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:125:1</code>
+              </p>
+              <p>Build in-memory apply ports around independently owned fake boundaries.</p>
+            </article>
+            <article
+              class="item"
+              data-search="initialFixtureState src/features/apply/application/applyAsync.test.ts Create the mutable fake state observed through the apply port boundaries."
+            >
+              <h3>initialFixtureState</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:141:1</code>
+              </p>
+              <p>Create the mutable fake state observed through the apply port boundaries.</p>
+            </article>
+            <article
+              class="item"
+              data-search="lockPortFixture src/features/apply/application/applyAsync.test.ts Build the exclusive-lock fake independently from journal and step behavior."
+            >
+              <h3>lockPortFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:156:1</code>
+              </p>
+              <p>Build the exclusive-lock fake independently from journal and step behavior.</p>
+            </article>
+            <article
+              class="item"
+              data-search="journalPortFixture src/features/apply/application/applyAsync.test.ts Build the durable-journal fake independently from lock and effect behavior."
+            >
+              <h3>journalPortFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:171:1</code>
+              </p>
+              <p>Build the durable-journal fake independently from lock and effect behavior.</p>
+            </article>
+            <article
+              class="item"
+              data-search="stepPortFixture src/features/apply/application/applyAsync.test.ts Build the reviewed-effect fake independently from operation persistence."
+            >
+              <h3>stepPortFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:187:1</code>
+              </p>
+              <p>Build the reviewed-effect fake independently from operation persistence.</p>
+            </article>
+            <article
+              class="item"
+              data-search="planFixture src/features/apply/application/applyAsync.test.ts Build one complete executable plan containing a single reversible local file step."
+            >
+              <h3>planFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:199:1</code>
+              </p>
+              <p>
+                Build one complete executable plan containing a single reversible local file step.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="stepFixture src/features/apply/application/applyAsync.test.ts Build one local file step whose postcondition can be observed after an interrupted process."
+            >
+              <h3>stepFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:238:1</code>
+              </p>
+              <p>
+                Build one local file step whose postcondition can be observed after an interrupted
+                process.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="completedJournalFixture src/features/apply/application/applyAsync.test.ts Build a completed operation journal for duplicate invocation behavior."
+            >
+              <h3>completedJournalFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:251:1</code>
+              </p>
+              <p>Build a completed operation journal for duplicate invocation behavior.</p>
+            </article>
+            <article
+              class="item"
+              data-search="startedJournalFixture src/features/apply/application/applyAsync.test.ts Build a journal representing a process lost after the reviewed effect began."
+            >
+              <h3>startedJournalFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:266:1</code>
+              </p>
+              <p>Build a journal representing a process lost after the reviewed effect began.</p>
+            </article>
+            <article
+              class="item"
+              data-search="lockIdentity src/features/apply/application/applyAsync.test.ts Build one lock identity tied to a durable operation and reviewed plan."
+            >
+              <h3>lockIdentity</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:285:1</code>
+              </p>
+              <p>Build one lock identity tied to a durable operation and reviewed plan.</p>
+            </article>
+            <article
+              class="item"
+              data-search="statusFixture src/features/apply/application/applyAsync.test.ts Build status evidence used only by new-operation saved-plan revalidation."
+            >
+              <h3>statusFixture</h3>
+              <p class="muted">
+                <code>src/features/apply/application/applyAsync.test.ts:297:1</code>
+              </p>
+              <p>Build status evidence used only by new-operation saved-plan revalidation.</p>
+            </article>
+          </section>
+        </section>
+        <section
           id="view-src-features-apply-application-applyasync-ts"
           class="view"
           data-view="src/features/apply/application/applyAsync.ts"
@@ -22531,7 +22663,7 @@ sequenceDiagram
               data-search="applyAsync src/features/apply/application/applyAsync.ts Start or resume one reviewed plan under an exclusive durable project operation lock."
             >
               <h3>applyAsync</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:19:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:21:1</code></p>
               <p>
                 Start or resume one reviewed plan under an exclusive durable project operation lock.
               </p>
@@ -22541,7 +22673,7 @@ sequenceDiagram
               data-search="startApplyAsync src/features/apply/application/applyAsync.ts Revalidate a new reviewed plan before creating any durable mutation journal or project effect."
             >
               <h3>startApplyAsync</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:27:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:29:1</code></p>
               <p>
                 Revalidate a new reviewed plan before creating any durable mutation journal or
                 project effect.
@@ -22578,21 +22710,10 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="resumeAuthoritativeJournalAsync src/features/apply/application/applyAsync.ts Resume only the authoritative durable state read and revalidated while holding the writer lock."
-            >
-              <h3>resumeAuthoritativeJournalAsync</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:139:1</code></p>
-              <p>
-                Resume only the authoritative durable state read and revalidated while holding the
-                writer lock.
-              </p>
-            </article>
-            <article
-              class="item"
               data-search="acquireLockAsync src/features/apply/application/applyAsync.ts Acquire a lock and allow stale-lock recovery only for an explicit resume of the same operation."
             >
               <h3>acquireLockAsync</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:178:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:148:1</code></p>
               <p>
                 Acquire a lock and allow stale-lock recovery only for an explicit resume of the same
                 operation.
@@ -22600,10 +22721,29 @@ sequenceDiagram
             </article>
             <article
               class="item"
+              data-search="validateResumeJournal src/features/apply/application/applyAsync.ts Validate journal identity and executor compatibility without treating applied changes as staleness."
+            >
+              <h3>validateResumeJournal</h3>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:167:1</code></p>
+              <p>
+                Validate journal identity and executor compatibility without treating applied
+                changes as staleness.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="executorMatches src/features/apply/application/applyAsync.ts Compare every executor field frozen into the reviewed plan."
+            >
+              <h3>executorMatches</h3>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:184:1</code></p>
+              <p>Compare every executor field frozen into the reviewed plan.</p>
+            </article>
+            <article
+              class="item"
               data-search="outcomeResult src/features/apply/application/applyAsync.ts Convert a completed run-state outcome to the stable public apply result."
             >
               <h3>outcomeResult</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:197:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:196:1</code></p>
               <p>Convert a completed run-state outcome to the stable public apply result.</p>
             </article>
             <article
@@ -22611,7 +22751,7 @@ sequenceDiagram
               data-search="completedDuplicateResult src/features/apply/application/applyAsync.ts Return idempotent success for a duplicate resume of an already completed operation."
             >
               <h3>completedDuplicateResult</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:213:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:212:1</code></p>
               <p>
                 Return idempotent success for a duplicate resume of an already completed operation.
               </p>
@@ -22621,7 +22761,7 @@ sequenceDiagram
               data-search="blockedResult src/features/apply/application/applyAsync.ts Build one blocked result before or without executing further reviewed steps."
             >
               <h3>blockedResult</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:229:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:228:1</code></p>
               <p>Build one blocked result before or without executing further reviewed steps.</p>
             </article>
             <article
@@ -22629,7 +22769,7 @@ sequenceDiagram
               data-search="toApplyValidationBlocker src/features/apply/application/applyAsync.ts Map pre-mutation saved-plan validation evidence into apply-specific blocker semantics."
             >
               <h3>toApplyValidationBlocker</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:251:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:250:1</code></p>
               <p>
                 Map pre-mutation saved-plan validation evidence into apply-specific blocker
                 semantics.
@@ -22637,10 +22777,20 @@ sequenceDiagram
             </article>
             <article
               class="item"
+              data-search="planIncompleteBlocker src/features/apply/application/applyAsync.ts Reject starting or resuming a plan that never passed planning completeness gates."
+            >
+              <h3>planIncompleteBlocker</h3>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:262:1</code></p>
+              <p>
+                Reject starting or resuming a plan that never passed planning completeness gates.
+              </p>
+            </article>
+            <article
+              class="item"
               data-search="lockBlocker src/features/apply/application/applyAsync.ts Reject a live, mismatched or unprovably stale writer lock."
             >
               <h3>lockBlocker</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:263:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:273:1</code></p>
               <p>Reject a live, mismatched or unprovably stale writer lock.</p>
             </article>
             <article
@@ -22648,8 +22798,38 @@ sequenceDiagram
               data-search="operationNotFoundBlocker src/features/apply/application/applyAsync.ts Explain a resume request whose durable operation does not exist."
             >
               <h3>operationNotFoundBlocker</h3>
-              <p class="muted"><code>src/features/apply/application/applyAsync.ts:279:1</code></p>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:289:1</code></p>
               <p>Explain a resume request whose durable operation does not exist.</p>
+            </article>
+            <article
+              class="item"
+              data-search="journalIdentityBlocker src/features/apply/application/applyAsync.ts Explain a durable journal whose project/operation identity differs from the resume request."
+            >
+              <h3>journalIdentityBlocker</h3>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:301:1</code></p>
+              <p>
+                Explain a durable journal whose project/operation identity differs from the resume
+                request.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="executorIncompatibleBlocker src/features/apply/application/applyAsync.ts Reject resume under a host/runtime that differs from the reviewed plan executor identity."
+            >
+              <h3>executorIncompatibleBlocker</h3>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:315:1</code></p>
+              <p>
+                Reject resume under a host/runtime that differs from the reviewed plan executor
+                identity.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="executorKey src/features/apply/application/applyAsync.ts Render one stable executor identity for recovery blocker evidence."
+            >
+              <h3>executorKey</h3>
+              <p class="muted"><code>src/features/apply/application/applyAsync.ts:330:1</code></p>
+              <p>Render one stable executor identity for recovery blocker evidence.</p>
             </article>
           </section>
         </section>
@@ -22957,175 +23137,6 @@ sequenceDiagram
               </p>
               <p>
                 Persist an ambiguous or unsafe effect as recovery-required rather than guessing.
-              </p>
-            </article>
-          </section>
-        </section>
-        <section
-          id="view-src-features-apply-application-fixtures-createapplyfixture-test-ts"
-          class="view"
-          data-view="src/features/apply/application/fixtures/createApplyFixture.test.ts"
-          hidden
-        >
-          <section class="panel">
-            <h2>src/features/apply/application/fixtures/createApplyFixture.test.ts</h2>
-            <article
-              class="item"
-              data-search="createApplyFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Provide independently owned fake ports and immutable reviewed states for apply/recovery behavior."
-            >
-              <h3>createApplyFixture</h3>
-              <p class="muted">
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts:14:1</code>
-              </p>
-              <p>
-                Provide independently owned fake ports and immutable reviewed states for
-                apply/recovery behavior.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="portsFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build in-memory apply ports around independently owned fake boundaries."
-            >
-              <h3>portsFixture</h3>
-              <p class="muted">
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts:50:1</code>
-              </p>
-              <p>Build in-memory apply ports around independently owned fake boundaries.</p>
-            </article>
-            <article
-              class="item"
-              data-search="initialFixtureState src/features/apply/application/fixtures/createApplyFixture.test.ts Create the mutable fake state observed through the apply port boundaries."
-            >
-              <h3>initialFixtureState</h3>
-              <p class="muted">
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts:66:1</code>
-              </p>
-              <p>Create the mutable fake state observed through the apply port boundaries.</p>
-            </article>
-            <article
-              class="item"
-              data-search="lockPortFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build the exclusive-lock fake independently from journal and step behavior."
-            >
-              <h3>lockPortFixture</h3>
-              <p class="muted">
-                <code>src/features/apply/application/fixtures/createApplyFixture.test.ts:85:1</code>
-              </p>
-              <p>Build the exclusive-lock fake independently from journal and step behavior.</p>
-            </article>
-            <article
-              class="item"
-              data-search="journalPortFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build the durable-journal fake independently from lock and effect behavior."
-            >
-              <h3>journalPortFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:103:1</code
-                >
-              </p>
-              <p>Build the durable-journal fake independently from lock and effect behavior.</p>
-            </article>
-            <article
-              class="item"
-              data-search="stepPortFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build the reviewed-effect fake independently from operation persistence."
-            >
-              <h3>stepPortFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:120:1</code
-                >
-              </p>
-              <p>Build the reviewed-effect fake independently from operation persistence.</p>
-            </article>
-            <article
-              class="item"
-              data-search="planFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build one complete executable plan containing a single reversible local file step."
-            >
-              <h3>planFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:136:1</code
-                >
-              </p>
-              <p>
-                Build one complete executable plan containing a single reversible local file step.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="stepFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build one local file step whose postcondition can be observed after an interrupted process."
-            >
-              <h3>stepFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:175:1</code
-                >
-              </p>
-              <p>
-                Build one local file step whose postcondition can be observed after an interrupted
-                process.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="completedJournalFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build a completed operation journal for duplicate invocation behavior."
-            >
-              <h3>completedJournalFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:188:1</code
-                >
-              </p>
-              <p>Build a completed operation journal for duplicate invocation behavior.</p>
-            </article>
-            <article
-              class="item"
-              data-search="startedJournalFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build a journal representing a process lost after the reviewed effect began."
-            >
-              <h3>startedJournalFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:203:1</code
-                >
-              </p>
-              <p>Build a journal representing a process lost after the reviewed effect began.</p>
-            </article>
-            <article
-              class="item"
-              data-search="lockIdentity src/features/apply/application/fixtures/createApplyFixture.test.ts Build one lock identity tied to a durable operation and reviewed plan."
-            >
-              <h3>lockIdentity</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:222:1</code
-                >
-              </p>
-              <p>Build one lock identity tied to a durable operation and reviewed plan.</p>
-            </article>
-            <article
-              class="item"
-              data-search="statusFixture src/features/apply/application/fixtures/createApplyFixture.test.ts Build status evidence used only by new-operation saved-plan revalidation."
-            >
-              <h3>statusFixture</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:234:1</code
-                >
-              </p>
-              <p>Build status evidence used only by new-operation saved-plan revalidation.</p>
-            </article>
-            <article
-              class="item"
-              data-search="resumeAfterAcquisitionAsync src/features/apply/application/fixtures/createApplyFixture.test.ts Advance another writer deterministically after the snapshot read but before lock acquisition completes."
-            >
-              <h3>resumeAfterAcquisitionAsync</h3>
-              <p class="muted">
-                <code
-                  >src/features/apply/application/fixtures/createApplyFixture.test.ts:259:1</code
-                >
-              </p>
-              <p>
-                Advance another writer deterministically after the snapshot read but before lock
-                acquisition completes.
               </p>
             </article>
           </section>
@@ -23530,7 +23541,7 @@ sequenceDiagram
               data-search="createStateBlocker src/features/apply/domain/createApplyBlocker.ts Classify cancellation, prerequisite and project-precondition journal state failures."
             >
               <h3>createStateBlocker</h3>
-              <p class="muted"><code>src/features/apply/domain/createApplyBlocker.ts:72:1</code></p>
+              <p class="muted"><code>src/features/apply/domain/createApplyBlocker.ts:67:1</code></p>
               <p>
                 Classify cancellation, prerequisite and project-precondition journal state failures.
               </p>
@@ -23541,7 +23552,7 @@ sequenceDiagram
             >
               <h3>createRecoveryBlocker</h3>
               <p class="muted">
-                <code>src/features/apply/domain/createApplyBlocker.ts:111:1</code>
+                <code>src/features/apply/domain/createApplyBlocker.ts:106:1</code>
               </p>
               <p>Classify ambiguous effects, output mismatches and failed automatic rollback.</p>
             </article>
@@ -23551,7 +23562,7 @@ sequenceDiagram
             >
               <h3>createFailedStepBlocker</h3>
               <p class="muted">
-                <code>src/features/apply/domain/createApplyBlocker.ts:152:1</code>
+                <code>src/features/apply/domain/createApplyBlocker.ts:147:1</code>
               </p>
               <p>
                 Preserve one known adapter failure after any permitted reversible-local rollback.
@@ -23563,21 +23574,9 @@ sequenceDiagram
             >
               <h3>stepBlocker</h3>
               <p class="muted">
-                <code>src/features/apply/domain/createApplyBlocker.ts:163:1</code>
+                <code>src/features/apply/domain/createApplyBlocker.ts:158:1</code>
               </p>
               <p>Build the common step-scoped blocker representation.</p>
-            </article>
-            <article
-              class="item"
-              data-search="planIncompleteBlocker src/features/apply/domain/createApplyBlocker.ts Reject starting or resuming a plan that never passed planning completeness gates."
-            >
-              <h3>planIncompleteBlocker</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/createApplyBlocker.ts:180:1</code>
-              </p>
-              <p>
-                Reject starting or resuming a plan that never passed planning completeness gates.
-              </p>
             </article>
           </section>
         </section>
@@ -23861,88 +23860,6 @@ sequenceDiagram
               <p>
                 Transition one immutable step record and optionally clear stale failure evidence.
               </p>
-            </article>
-          </section>
-        </section>
-        <section
-          id="view-src-features-apply-domain-validateresumejournal-ts"
-          class="view"
-          data-view="src/features/apply/domain/validateResumeJournal.ts"
-          hidden
-        >
-          <section class="panel">
-            <h2>src/features/apply/domain/validateResumeJournal.ts</h2>
-            <article
-              class="item"
-              data-search="validateResumeJournal src/features/apply/domain/validateResumeJournal.ts Validate journal identity and executor compatibility without treating applied changes as staleness."
-            >
-              <h3>validateResumeJournal</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/validateResumeJournal.ts:6:1</code>
-              </p>
-              <p>
-                Validate journal identity and executor compatibility without treating applied
-                changes as staleness.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="executorMatches src/features/apply/domain/validateResumeJournal.ts Compare every executor field frozen into the reviewed plan."
-            >
-              <h3>executorMatches</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/validateResumeJournal.ts:31:1</code>
-              </p>
-              <p>Compare every executor field frozen into the reviewed plan.</p>
-            </article>
-            <article
-              class="item"
-              data-search="journalIdentityBlocker src/features/apply/domain/validateResumeJournal.ts Explain a durable journal whose project/operation identity differs from the resume request."
-            >
-              <h3>journalIdentityBlocker</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/validateResumeJournal.ts:43:1</code>
-              </p>
-              <p>
-                Explain a durable journal whose project/operation identity differs from the resume
-                request.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="journalPlanChangedBlocker src/features/apply/domain/validateResumeJournal.ts Reject a durable plan replaced between the preliminary journal read and acquiring its writer lock."
-            >
-              <h3>journalPlanChangedBlocker</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/validateResumeJournal.ts:57:1</code>
-              </p>
-              <p>
-                Reject a durable plan replaced between the preliminary journal read and acquiring
-                its writer lock.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="executorIncompatibleBlocker src/features/apply/domain/validateResumeJournal.ts Reject resume under a host/runtime that differs from the reviewed plan executor identity."
-            >
-              <h3>executorIncompatibleBlocker</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/validateResumeJournal.ts:71:1</code>
-              </p>
-              <p>
-                Reject resume under a host/runtime that differs from the reviewed plan executor
-                identity.
-              </p>
-            </article>
-            <article
-              class="item"
-              data-search="executorKey src/features/apply/domain/validateResumeJournal.ts Render one stable executor identity for recovery blocker evidence."
-            >
-              <h3>executorKey</h3>
-              <p class="muted">
-                <code>src/features/apply/domain/validateResumeJournal.ts:86:1</code>
-              </p>
-              <p>Render one stable executor identity for recovery blocker evidence.</p>
             </article>
           </section>
         </section>
@@ -26886,6 +26803,67 @@ sequenceDiagram
           </section>
         </section>
         <section
+          id="view-src-features-status-adapters-outbound-bunplacement-test-ts"
+          class="view"
+          data-view="src/features/status/adapters/outbound/bunPlacement.test.ts"
+          hidden
+        >
+          <section class="panel">
+            <h2>src/features/status/adapters/outbound/bunPlacement.test.ts</h2>
+            <article
+              class="item"
+              data-search="inspectAsync src/features/status/adapters/outbound/bunPlacement.test.ts Exercise the Node inventory boundary with the published detector and a real isolated filesystem."
+            >
+              <h3>inspectAsync</h3>
+              <p class="muted">
+                <code>src/features/status/adapters/outbound/bunPlacement.test.ts:129:1</code>
+              </p>
+              <p>
+                Exercise the Node inventory boundary with the published detector and a real isolated
+                filesystem.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="writeFixtureAsync src/features/status/adapters/outbound/bunPlacement.test.ts Create deterministic Bun text-lock v2 data independently from the implementation being tested."
+            >
+              <h3>writeFixtureAsync</h3>
+              <p class="muted">
+                <code>src/features/status/adapters/outbound/bunPlacement.test.ts:134:1</code>
+              </p>
+              <p>
+                Create deterministic Bun text-lock v2 data independently from the implementation
+                being tested.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="installAsync src/features/status/adapters/outbound/bunPlacement.test.ts Write a data-only installed package manifest at a manually specified expected physical location."
+            >
+              <h3>installAsync</h3>
+              <p class="muted">
+                <code>src/features/status/adapters/outbound/bunPlacement.test.ts:153:1</code>
+              </p>
+              <p>
+                Write a data-only installed package manifest at a manually specified expected
+                physical location.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="withFixtureAsync src/features/status/adapters/outbound/bunPlacement.test.ts Keep all filesystem state test-local and remove it on failures as well as success."
+            >
+              <h3>withFixtureAsync</h3>
+              <p class="muted">
+                <code>src/features/status/adapters/outbound/bunPlacement.test.ts:164:1</code>
+              </p>
+              <p>
+                Keep all filesystem state test-local and remove it on failures as well as success.
+              </p>
+            </article>
+          </section>
+        </section>
+        <section
           id="view-src-features-status-adapters-outbound-createnpmregistryavailabilityport-test-ts"
           class="view"
           data-view="src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts"
@@ -26986,7 +26964,7 @@ sequenceDiagram
               <h3>createNpmRegistryAvailabilityPort</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:19:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:21:1</code
                 >
               </p>
               <p>
@@ -26996,12 +26974,27 @@ sequenceDiagram
             </article>
             <article
               class="item"
+              data-search="inspectRegistryAvailabilityAsync src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts Inspect all registry groups through bounded batches while preserving original instance order."
+            >
+              <h3>inspectRegistryAvailabilityAsync</h3>
+              <p class="muted">
+                <code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:56:1</code
+                >
+              </p>
+              <p>
+                Inspect all registry groups through bounded batches while preserving original
+                instance order.
+              </p>
+            </article>
+            <article
+              class="item"
               data-search="needsRegistry src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts Determine whether a package source can meaningfully be queried through an npm-compatible registry."
             >
               <h3>needsRegistry</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:63:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:103:1</code
                 >
               </p>
               <p>
@@ -27016,7 +27009,7 @@ sequenceDiagram
               <h3>notApplicable</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:68:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:108:1</code
                 >
               </p>
               <p>
@@ -27031,7 +27024,7 @@ sequenceDiagram
               <h3>unknownAvailability</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:78:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:118:1</code
                 >
               </p>
               <p>
@@ -27046,7 +27039,7 @@ sequenceDiagram
               <h3>buildAvailabilityEvidence</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:86:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:126:1</code
                 >
               </p>
               <p>
@@ -27061,7 +27054,7 @@ sequenceDiagram
               <h3>availabilityDiagnostic</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:104:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:147:1</code
                 >
               </p>
               <p>
@@ -27075,12 +27068,27 @@ sequenceDiagram
               <h3>requestLimitDiagnostic</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:121:1</code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:164:1</code
                 >
               </p>
               <p>
                 Explain a bounded registry request batch that could not inspect every
                 registry-backed package.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="validateRegistryLimits src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts Reject invalid budgets before they can silently remove inspection work or disable resource bounds."
+            >
+              <h3>validateRegistryLimits</h3>
+              <p class="muted">
+                <code
+                  >src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:176:1</code
+                >
+              </p>
+              <p>
+                Reject invalid budgets before they can silently remove inspection work or disable
+                resource bounds.
               </p>
             </article>
           </section>
@@ -27290,7 +27298,7 @@ sequenceDiagram
               <h3>inspectIsolatedAsync</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:46:1</code
+                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:59:1</code
                 >
               </p>
               <p>
@@ -27305,7 +27313,7 @@ sequenceDiagram
               <h3>inspectIsolatedPackageAsync</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:56:1</code
+                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:69:1</code
                 >
               </p>
               <p>
@@ -27315,16 +27323,16 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="inspectHoistedAsync src/features/status/adapters/outbound/inspectBunInstallationAsync.ts Inspect hoisted Bun package names only when a lock instance is unambiguous by name."
+              data-search="inspectHoistedAsync src/features/status/adapters/outbound/inspectBunInstallationAsync.ts Read each hoisted instance at the exact placement represented by its Bun lock key."
             >
               <h3>inspectHoistedAsync</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:93:1</code
+                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:106:1</code
                 >
               </p>
               <p>
-                Inspect hoisted Bun package names only when a lock instance is unambiguous by name.
+                Read each hoisted instance at the exact placement represented by its Bun lock key.
               </p>
             </article>
             <article
@@ -27334,7 +27342,7 @@ sequenceDiagram
               <h3>readDirectLinkAsync</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:115:1</code
+                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:131:1</code
                 >
               </p>
               <p>Read the top-level Bun package link for direct or uniquely hoisted evidence.</p>
@@ -27346,7 +27354,7 @@ sequenceDiagram
               <h3>bunStorePackageName</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:128:1</code
+                  >src/features/status/adapters/outbound/inspectBunInstallationAsync.ts:144:1</code
                 >
               </p>
               <p>Encode scoped package names using Bun&#39;s plus-sign isolated-store naming.</p>
@@ -28228,33 +28236,37 @@ sequenceDiagram
           </section>
         </section>
         <section
-          id="view-src-features-status-adapters-outbound-queryregistrypackageasync-ts"
+          id="view-src-features-status-adapters-outbound-queryregistrypackagegroupasync-ts"
           class="view"
-          data-view="src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"
+          data-view="src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts"
           hidden
         >
           <section class="panel">
-            <h2>src/features/status/adapters/outbound/queryRegistryPackageAsync.ts</h2>
+            <h2>src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts</h2>
             <article
               class="item"
-              data-search="queryRegistryPackageAsync src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Query one package with bounded cache semantics and no credential leakage into evidence."
+              data-search="queryRegistryPackageGroupAsync src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Query one registry name once and retain every instance&#39;s distinct declared version constraint."
             >
-              <h3>queryRegistryPackageAsync</h3>
+              <h3>queryRegistryPackageGroupAsync</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:17:1</code>
+                <code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:17:1</code
+                >
               </p>
               <p>
-                Query one package with bounded cache semantics and no credential leakage into
-                evidence.
+                Query one registry name once and retain every instance&#39;s distinct declared
+                version constraint.
               </p>
             </article>
             <article
               class="item"
-              data-search="fetchRegistryPackageAsync src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Fetch fresh npm-compatible package metadata and cache only parsed semantic evidence."
+              data-search="fetchRegistryPackageAsync src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Fetch fresh npm-compatible package metadata and cache only parsed semantic evidence."
             >
               <h3>fetchRegistryPackageAsync</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:48:1</code>
+                <code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:53:1</code
+                >
               </p>
               <p>
                 Fetch fresh npm-compatible package metadata and cache only parsed semantic evidence.
@@ -28262,11 +28274,13 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="parseRegistryMetadata src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Parse registry metadata into semantic versions only, ignoring executable package fields."
+              data-search="parseRegistryMetadata src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Parse registry metadata into semantic versions only, ignoring executable package fields."
             >
               <h3>parseRegistryMetadata</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:92:1</code>
+                <code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:98:1</code
+                >
               </p>
               <p>
                 Parse registry metadata into semantic versions only, ignoring executable package
@@ -28275,12 +28289,12 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="toAvailability src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Compute latest and constraint-compatible candidates without treating URLs/tags as semver ranges."
+              data-search="toAvailability src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Compute latest and constraint-compatible candidates without treating URLs/tags as semver ranges."
             >
               <h3>toAvailability</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:106:1</code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:112:1</code
                 >
               </p>
               <p>
@@ -28290,12 +28304,12 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="normalizeRange src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Normalize npm protocol aliases while leaving unsupported declarations unmatched."
+              data-search="normalizeRange src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Normalize npm protocol aliases while leaving unsupported declarations unmatched."
             >
               <h3>normalizeRange</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:132:1</code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:138:1</code
                 >
               </p>
               <p>
@@ -28304,12 +28318,12 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="unknownAvailability src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Return explicit unknown package availability without registry credentials or raw headers."
+              data-search="unknownAvailability src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Return explicit unknown package availability without registry credentials or raw headers."
             >
               <h3>unknownAvailability</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:137:1</code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:143:1</code
                 >
               </p>
               <p>
@@ -28319,12 +28333,12 @@ sequenceDiagram
             </article>
             <article
               class="item"
-              data-search="redactUrlCredentials src/features/status/adapters/outbound/queryRegistryPackageAsync.ts Redact embedded URL credentials in network error text without a backtracking expression."
+              data-search="redactUrlCredentials src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts Redact embedded URL credentials in network error text without a backtracking expression."
             >
               <h3>redactUrlCredentials</h3>
               <p class="muted">
                 <code
-                  >src/features/status/adapters/outbound/queryRegistryPackageAsync.ts:145:1</code
+                  >src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts:151:1</code
                 >
               </p>
               <p>
@@ -28348,7 +28362,7 @@ sequenceDiagram
             >
               <h3>readBunLockEvidenceAsync</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:16:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:17:1</code>
               </p>
               <p>Read Bun text-lock v2 dependency graph evidence without invoking Bun.</p>
             </article>
@@ -28358,7 +28372,7 @@ sequenceDiagram
             >
               <h3>parseBunTextLockAsync</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:68:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:69:1</code>
               </p>
               <p>
                 Parse Bun text-lock JSONC into a supported v2 shape without executing package code.
@@ -28370,7 +28384,7 @@ sequenceDiagram
             >
               <h3>toBunLockEvidence</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:81:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:82:1</code>
               </p>
               <p>Convert a validated Bun lock into immutable APM graph evidence.</p>
             </article>
@@ -28380,7 +28394,7 @@ sequenceDiagram
             >
               <h3>isSupportedBunLock</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:106:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:115:1</code>
               </p>
               <p>Narrow parsed JSONC to the text-lock v2 shape APM understands.</p>
             </article>
@@ -28390,7 +28404,7 @@ sequenceDiagram
             >
               <h3>serializeConfigVersion</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:111:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:120:1</code>
               </p>
               <p>
                 Serialize the Bun config version without falling back to Object stringification.
@@ -28402,7 +28416,7 @@ sequenceDiagram
             >
               <h3>readBunPackage</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:116:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:125:1</code>
               </p>
               <p>
                 Convert one Bun package tuple into a stable lock instance with dependency edges.
@@ -28414,7 +28428,7 @@ sequenceDiagram
             >
               <h3>parseBunLocator</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:145:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:156:1</code>
               </p>
               <p>Parse Bun&#39;s package locator while retaining peer-variant data when present.</p>
             </article>
@@ -28424,60 +28438,34 @@ sequenceDiagram
             >
               <h3>bunSource</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:162:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:174:1</code>
               </p>
               <p>Classify Bun locator sources before semantic-version handling.</p>
             </article>
             <article
               class="item"
-              data-search="readBunDirectResolutions src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Resolve direct package.json declarations to unique Bun lock instances."
+              data-search="readBunDirectResolutions src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Resolve direct declarations from their root/workspace placement, never by a global version guess."
             >
               <h3>readBunDirectResolutions</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:170:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:189:1</code>
               </p>
-              <p>Resolve direct package.json declarations to unique Bun lock instances.</p>
+              <p>
+                Resolve direct declarations from their root/workspace placement, never by a global
+                version guess.
+              </p>
             </article>
             <article
               class="item"
-              data-search="resolveBunPackageId src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Resolve one transitive Bun dependency to a unique semantic lock instance."
+              data-search="resolveBunPackageId src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Follow the nearest Bun placement, preserving nested/scoped instances instead of selecting by name."
             >
               <h3>resolveBunPackageId</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:189:1</code>
-              </p>
-              <p>Resolve one transitive Bun dependency to a unique semantic lock instance.</p>
-            </article>
-            <article
-              class="item"
-              data-search="matchesBunRange src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Test one lock package against a Bun/npm semantic declaration."
-            >
-              <h3>matchesBunRange</h3>
-              <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:207:1</code>
-              </p>
-              <p>Test one lock package against a Bun/npm semantic declaration.</p>
-            </article>
-            <article
-              class="item"
-              data-search="matchesBunIdentity src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Test one parsed locator identity against a semantic dependency request."
-            >
-              <h3>matchesBunIdentity</h3>
-              <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:212:1</code>
-              </p>
-              <p>Test one parsed locator identity against a semantic dependency request.</p>
-            </article>
-            <article
-              class="item"
-              data-search="semanticMatch src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts Evaluate Bun&#39;s npm protocol aliases through standard semantic-version rules."
-            >
-              <h3>semanticMatch</h3>
-              <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:221:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:214:1</code>
               </p>
               <p>
-                Evaluate Bun&#39;s npm protocol aliases through standard semantic-version rules.
+                Follow the nearest Bun placement, preserving nested/scoped instances instead of
+                selecting by name.
               </p>
             </article>
             <article
@@ -28486,7 +28474,7 @@ sequenceDiagram
             >
               <h3>readStringMap</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:229:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:228:1</code>
               </p>
               <p>Read string-valued dependency metadata from a Bun lock tuple.</p>
             </article>
@@ -28496,7 +28484,7 @@ sequenceDiagram
             >
               <h3>declarationPairs</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:237:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:236:1</code>
               </p>
               <p>List direct package declarations used for Bun lock resolution.</p>
             </article>
@@ -28506,7 +28494,7 @@ sequenceDiagram
             >
               <h3>optionalId</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:249:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:248:1</code>
               </p>
               <p>
                 Avoid adding undefined packageId properties under exact optional property semantics.
@@ -28518,7 +28506,7 @@ sequenceDiagram
             >
               <h3>unsupportedBun</h3>
               <p class="muted">
-                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:254:1</code>
+                <code>src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts:253:1</code>
               </p>
               <p>Return missing/binary/malformed Bun lock evidence without invoking Bun.</p>
             </article>
@@ -29343,6 +29331,39 @@ sequenceDiagram
           </section>
         </section>
         <section
+          id="view-src-features-status-domain-parsebunpackagepath-ts"
+          class="view"
+          data-view="src/features/status/domain/parseBunPackagePath.ts"
+          hidden
+        >
+          <section class="panel">
+            <h2>src/features/status/domain/parseBunPackagePath.ts</h2>
+            <article
+              class="item"
+              data-search="parseBunPackagePath src/features/status/domain/parseBunPackagePath.ts Parse Bun lock instance paths without confusing scoped names with nesting or permitting traversal."
+            >
+              <h3>parseBunPackagePath</h3>
+              <p class="muted">
+                <code>src/features/status/domain/parseBunPackagePath.ts:2:1</code>
+              </p>
+              <p>
+                Parse Bun lock instance paths without confusing scoped names with nesting or
+                permitting traversal.
+              </p>
+            </article>
+            <article
+              class="item"
+              data-search="isPackageName src/features/status/domain/parseBunPackagePath.ts Accept only safe npm name segments used by Bun&#39;s lockfile placement keys."
+            >
+              <h3>isPackageName</h3>
+              <p class="muted">
+                <code>src/features/status/domain/parseBunPackagePath.ts:10:1</code>
+              </p>
+              <p>Accept only safe npm name segments used by Bun&#39;s lockfile placement keys.</p>
+            </article>
+          </section>
+        </section>
+        <section
           id="view-src-features-status-utils-declarationresolutionkey-ts"
           class="view"
           data-view="src/features/status/utils/declarationResolutionKey.ts"
@@ -29381,6 +29402,19 @@ sequenceDiagram
                 <code>src/features/status/utils/readInstalledPackageVersionAsync.ts:10:1</code>
               </p>
               <p>Read one installed package manifest without loading or executing the package.</p>
+            </article>
+            <article
+              class="item"
+              data-search="toInstalledPackageEvidence src/features/status/utils/readInstalledPackageVersionAsync.ts Validate the data-only installed manifest before recording identity and version evidence."
+            >
+              <h3>toInstalledPackageEvidence</h3>
+              <p class="muted">
+                <code>src/features/status/utils/readInstalledPackageVersionAsync.ts:48:1</code>
+              </p>
+              <p>
+                Validate the data-only installed manifest before recording identity and version
+                evidence.
+              </p>
             </article>
           </section>
         </section>

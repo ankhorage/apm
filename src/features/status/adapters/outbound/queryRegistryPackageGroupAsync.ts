@@ -13,30 +13,35 @@ import type {
 } from '../../../../types/status-registry.js';
 import { createRegistryPackageRequest } from '../../../../utils/createRegistryPackageRequest.js';
 
-/*** Query one package with bounded cache semantics and no credential leakage into evidence. */
-export async function queryRegistryPackageAsync(
+/*** Query one registry name once and retain every instance's distinct declared version constraint. */
+export async function queryRegistryPackageGroupAsync(
   input: QueryRegistryPackageInput,
-): Promise<ApmPackageAvailabilityEvidence> {
-  const { registry } = createRegistryPackageRequest(input.request.name, input.config);
-  const cacheKey = `${registry}\u0000${input.request.name}`;
+): Promise<readonly ApmPackageAvailabilityEvidence[]> {
+  const [request] = input.requests;
+  if (request === undefined) return [];
+  const { registry } = createRegistryPackageRequest(request.name, input.config);
+  const cacheKey = `${registry}\u0000${request.name}`;
   const cached = input.cache.get(cacheKey);
   const currentTime = input.now();
   const fresh = cached !== undefined && currentTime - cached.fetchedAt <= input.cacheTtlMs;
-  if (cached !== undefined && fresh) return toAvailability(input.request, cached);
-  if (input.mode === 'offline') {
-    return unknownAvailability(
-      input.request,
-      cached === undefined
-        ? 'Offline mode has no cached registry evidence.'
-        : 'Offline cached registry evidence is stale.',
-    );
+  if (cached !== undefined && fresh)
+    return input.requests.map((item) => toAvailability(item, cached));
+  if (input.mode === 'offline' || !input.allowNetwork) {
+    const reason =
+      input.mode === 'offline'
+        ? cached === undefined
+          ? 'Offline mode has no cached registry evidence.'
+          : 'Offline cached registry evidence is stale.'
+        : 'Registry request budget was exhausted for uncached package names.';
+    return input.requests.map((item) => unknownAvailability(item, reason));
   }
-  return fetchRegistryPackageAsync(input, registry, cacheKey, currentTime);
+  return fetchRegistryPackageAsync(input, request.name, registry, cacheKey, currentTime);
 }
 
 interface QueryRegistryPackageInput {
-  readonly request: ApmAvailabilityRequest;
+  readonly requests: readonly ApmAvailabilityRequest[];
   readonly mode: 'refresh' | 'offline';
+  readonly allowNetwork: boolean;
   readonly config: ApmRegistryConfig;
   readonly fetchFn: ApmRegistryFetch;
   readonly now: () => number;
@@ -47,27 +52,26 @@ interface QueryRegistryPackageInput {
 /*** Fetch fresh npm-compatible package metadata and cache only parsed semantic evidence. */
 async function fetchRegistryPackageAsync(
   input: QueryRegistryPackageInput,
+  name: string,
   registry: string,
   cacheKey: string,
   currentTime: number,
-): Promise<ApmPackageAvailabilityEvidence> {
+): Promise<readonly ApmPackageAvailabilityEvidence[]> {
   try {
-    const { url, headers } = createRegistryPackageRequest(input.request.name, input.config);
+    const { url, headers } = createRegistryPackageRequest(name, input.config);
     const response = await input.fetchFn(url, {
       headers,
       signal: AbortSignal.timeout(10_000),
     });
     if (!response.ok) {
-      return unknownAvailability(
-        input.request,
-        `Registry request failed with HTTP ${response.status}.`,
+      return input.requests.map((request) =>
+        unknownAvailability(request, `Registry request failed with HTTP ${response.status}.`),
       );
     }
     const metadata = parseRegistryMetadata(await response.json());
     if (metadata.versions.length === 0) {
-      return unknownAvailability(
-        input.request,
-        'Registry metadata contained no semantic versions.',
+      return input.requests.map((request) =>
+        unknownAvailability(request, 'Registry metadata contained no semantic versions.'),
       );
     }
     const entry: ApmRegistryCacheEntry = {
@@ -77,13 +81,15 @@ async function fetchRegistryPackageAsync(
       registry,
     };
     input.cache.set(cacheKey, entry);
-    return toAvailability(input.request, entry);
+    return input.requests.map((request) => toAvailability(request, entry));
   } catch (error) {
-    return unknownAvailability(
-      input.request,
-      error instanceof Error
-        ? `Registry request failed: ${redactUrlCredentials(error.message)}`
-        : 'Registry request failed.',
+    return input.requests.map((request) =>
+      unknownAvailability(
+        request,
+        error instanceof Error
+          ? `Registry request failed: ${redactUrlCredentials(error.message)}`
+          : 'Registry request failed.',
+      ),
     );
   }
 }
