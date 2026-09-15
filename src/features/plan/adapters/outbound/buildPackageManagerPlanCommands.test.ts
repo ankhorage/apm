@@ -28,6 +28,21 @@ test('all direct native resolvers use lock-only planning with lifecycle executio
   ]);
 });
 
+test('missing lockfiles bootstrap through the selected manager even without version targets', () => {
+  const request: ApmPlanResolutionRequest = {
+    rootPath: '/project',
+    installRootId: '.',
+    installRootPath: '/project',
+    packagePaths: ['/project'],
+    manager: 'pnpm',
+    targets: [],
+  };
+
+  expect(buildPackageManagerPlanCommands(request)).toEqual([
+    { executable: 'pnpm', args: ['install', '--lockfile-only', '--ignore-scripts'] },
+  ]);
+});
+
 test('transitive native resolution remains a lock operation instead of adding a root dependency', () => {
   expect(buildPackageManagerPlanCommands(requestFixture('npm', false))).toEqual([
     {
@@ -58,6 +73,7 @@ function requestFixture(manager: ApmPackageManagerName, direct: boolean): ApmPla
     installRootId: '.',
     installRootPath: '/project',
     packagePaths: ['/project'],
+    lockfilePath: '/project/lockfile',
     manager,
     targets: [
       {
