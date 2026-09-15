@@ -7426,7 +7426,7 @@
     "modulePath": "src/features/apply/application/applyAsync.ts",
     "sourceLocation": {
       "filePath": "src/features/apply/application/applyAsync.ts",
-      "line": 21,
+      "line": 19,
       "column": 1
     },
     "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
