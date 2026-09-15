@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.2
+
+### Patch Changes
+
+- 23502ea: Fix automatic safe dependency updates when status package IDs are qualified by their install root.
+
 ## 0.8.1
 
 ### Patch Changes
