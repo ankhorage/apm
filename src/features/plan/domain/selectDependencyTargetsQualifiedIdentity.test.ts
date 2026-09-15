@@ -104,7 +104,7 @@ function rootFixture(
   dependency: ApmStatusDependency,
   source: ApmInstallRootInventory['lockedPackages'][number]['source'],
 ): ApmInstallRootInventory {
-  const declaration = dependency.declaration;
+  const { declaration, lockedVersion } = dependency;
   const nativePackageId = declaration?.resolvedPackageId;
   if (declaration === undefined || nativePackageId === undefined)
     throw new Error('Fixture requires direct resolution evidence.');
@@ -131,7 +131,7 @@ function rootFixture(
       {
         id: nativePackageId,
         name: dependency.name,
-        ...(dependency.lockedVersion === undefined ? {} : { version: dependency.lockedVersion }),
+        ...(lockedVersion === undefined ? {} : { version: lockedVersion }),
         source,
         optional: false,
         dependencies: [],
