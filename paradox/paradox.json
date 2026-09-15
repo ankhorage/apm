@@ -14,7 +14,7 @@
     {
       "id": "npm",
       "label": "npm",
-      "value": "v0.6.0",
+      "value": "v0.7.0",
       "color": "cb3837"
     },
     {
@@ -516,10 +516,7 @@
       "isEntrypoint": false,
       "dependencies": [
         "src/features/apply/application/applyAsync.ts",
-        "src/features/apply/domain/createApplyJournal.ts",
-        "src/types/apply.ts",
-        "src/types/plan.ts",
-        "src/types/status.ts"
+        "src/features/apply/application/fixtures/createApplyFixture.test.ts"
       ],
       "exports": []
     },
@@ -530,7 +527,9 @@
         "src/features/apply/application/persistApplyJournalAsync.ts",
         "src/features/apply/application/runApplyStepsAsync.ts",
         "src/features/apply/domain/applyPermissionBlockers.ts",
+        "src/features/apply/domain/createApplyBlocker.ts",
         "src/features/apply/domain/createApplyJournal.ts",
+        "src/features/apply/domain/validateResumeJournal.ts",
         "src/types/apply-runtime.ts",
         "src/types/apply.ts",
         "src/types/plan.ts"
@@ -596,6 +595,18 @@
       "exports": ["finishApplyOperationAsync"]
     },
     {
+      "path": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/applyAsync.ts",
+        "src/features/apply/domain/createApplyJournal.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts",
+        "src/types/status.ts"
+      ],
+      "exports": ["createApplyFixture"]
+    },
+    {
       "path": "src/features/apply/application/persistApplyJournalAsync.ts",
       "isEntrypoint": false,
       "dependencies": [
@@ -604,6 +615,27 @@
         "src/types/plan.ts"
       ],
       "exports": ["persistApplyJournalAsync"]
+    },
+    {
+      "path": "src/features/apply/application/resumeApplyAdmission.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "src/types/apply.ts"
+      ],
+      "exports": []
+    },
+    {
+      "path": "src/features/apply/application/resumeApplyAsync.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/application/applyAsync.ts",
+        "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "src/features/apply/domain/createApplyJournal.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts"
+      ],
+      "exports": []
     },
     {
       "path": "src/features/apply/application/runApplyStepsAsync.ts",
@@ -708,6 +740,16 @@
       "isEntrypoint": false,
       "dependencies": ["src/types/apply.ts"],
       "exports": ["transitionApplyJournal"]
+    },
+    {
+      "path": "src/features/apply/domain/validateResumeJournal.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/features/apply/domain/createApplyBlocker.ts",
+        "src/types/apply.ts",
+        "src/types/plan.ts"
+      ],
+      "exports": ["validateResumeJournal"]
     },
     {
       "path": "src/features/apply/utils/applySnapshotPath.ts",
@@ -9908,7 +9950,7 @@
       "modulePath": "src/features/apply/application/applyAsync.ts",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 21,
+        "line": 19,
         "column": 1
       },
       "exportPaths": ["src/apm.ts", "src/nodeApm.ts"],
@@ -11274,110 +11316,11 @@
       }
     },
     {
-      "name": "portsFixture",
-      "description": "Build in-memory apply ports around independently owned fake boundaries.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 125,
-        "column": 1
-      }
-    },
-    {
-      "name": "initialFixtureState",
-      "description": "Create the mutable fake state observed through the apply port boundaries.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 141,
-        "column": 1
-      }
-    },
-    {
-      "name": "lockPortFixture",
-      "description": "Build the exclusive-lock fake independently from journal and step behavior.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 156,
-        "column": 1
-      }
-    },
-    {
-      "name": "journalPortFixture",
-      "description": "Build the durable-journal fake independently from lock and effect behavior.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 171,
-        "column": 1
-      }
-    },
-    {
-      "name": "stepPortFixture",
-      "description": "Build the reviewed-effect fake independently from operation persistence.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 187,
-        "column": 1
-      }
-    },
-    {
-      "name": "planFixture",
-      "description": "Build one complete executable plan containing a single reversible local file step.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 199,
-        "column": 1
-      }
-    },
-    {
-      "name": "stepFixture",
-      "description": "Build one local file step whose postcondition can be observed after an interrupted process.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 238,
-        "column": 1
-      }
-    },
-    {
-      "name": "completedJournalFixture",
-      "description": "Build a completed operation journal for duplicate invocation behavior.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 251,
-        "column": 1
-      }
-    },
-    {
-      "name": "startedJournalFixture",
-      "description": "Build a journal representing a process lost after the reviewed effect began.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 266,
-        "column": 1
-      }
-    },
-    {
-      "name": "lockIdentity",
-      "description": "Build one lock identity tied to a durable operation and reviewed plan.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 285,
-        "column": 1
-      }
-    },
-    {
-      "name": "statusFixture",
-      "description": "Build status evidence used only by new-operation saved-plan revalidation.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.test.ts",
-        "line": 297,
-        "column": 1
-      }
-    },
-    {
       "name": "applyAsync",
       "description": "Start or resume one reviewed plan under an exclusive durable project operation lock.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 21,
+        "line": 19,
         "column": 1
       }
     },
@@ -11386,7 +11329,7 @@
       "description": "Revalidate a new reviewed plan before creating any durable mutation journal or project effect.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 29,
+        "line": 27,
         "column": 1
       }
     },
@@ -11418,29 +11361,20 @@
       }
     },
     {
+      "name": "resumeAuthoritativeJournalAsync",
+      "description": "Resume only the authoritative durable state read and revalidated while holding the writer lock.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/applyAsync.ts",
+        "line": 139,
+        "column": 1
+      }
+    },
+    {
       "name": "acquireLockAsync",
       "description": "Acquire a lock and allow stale-lock recovery only for an explicit resume of the same operation.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 148,
-        "column": 1
-      }
-    },
-    {
-      "name": "validateResumeJournal",
-      "description": "Validate journal identity and executor compatibility without treating applied changes as staleness.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 167,
-        "column": 1
-      }
-    },
-    {
-      "name": "executorMatches",
-      "description": "Compare every executor field frozen into the reviewed plan.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 184,
+        "line": 178,
         "column": 1
       }
     },
@@ -11449,7 +11383,7 @@
       "description": "Convert a completed run-state outcome to the stable public apply result.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 196,
+        "line": 197,
         "column": 1
       }
     },
@@ -11458,7 +11392,7 @@
       "description": "Return idempotent success for a duplicate resume of an already completed operation.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 212,
+        "line": 213,
         "column": 1
       }
     },
@@ -11467,7 +11401,7 @@
       "description": "Build one blocked result before or without executing further reviewed steps.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 228,
+        "line": 229,
         "column": 1
       }
     },
@@ -11476,16 +11410,7 @@
       "description": "Map pre-mutation saved-plan validation evidence into apply-specific blocker semantics.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 250,
-        "column": 1
-      }
-    },
-    {
-      "name": "planIncompleteBlocker",
-      "description": "Reject starting or resuming a plan that never passed planning completeness gates.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 262,
+        "line": 251,
         "column": 1
       }
     },
@@ -11494,7 +11419,7 @@
       "description": "Reject a live, mismatched or unprovably stale writer lock.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 273,
+        "line": 263,
         "column": 1
       }
     },
@@ -11503,34 +11428,7 @@
       "description": "Explain a resume request whose durable operation does not exist.",
       "sourceLocation": {
         "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 289,
-        "column": 1
-      }
-    },
-    {
-      "name": "journalIdentityBlocker",
-      "description": "Explain a durable journal whose project/operation identity differs from the resume request.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 301,
-        "column": 1
-      }
-    },
-    {
-      "name": "executorIncompatibleBlocker",
-      "description": "Reject resume under a host/runtime that differs from the reviewed plan executor identity.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 315,
-        "column": 1
-      }
-    },
-    {
-      "name": "executorKey",
-      "description": "Render one stable executor identity for recovery blocker evidence.",
-      "sourceLocation": {
-        "filePath": "src/features/apply/application/applyAsync.ts",
-        "line": 330,
+        "line": 279,
         "column": 1
       }
     },
@@ -11747,6 +11645,123 @@
       "sourceLocation": {
         "filePath": "src/features/apply/application/finishApplyOperationAsync.ts",
         "line": 123,
+        "column": 1
+      }
+    },
+    {
+      "name": "createApplyFixture",
+      "description": "Provide independently owned fake ports and immutable reviewed states for apply/recovery behavior.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 14,
+        "column": 1
+      }
+    },
+    {
+      "name": "portsFixture",
+      "description": "Build in-memory apply ports around independently owned fake boundaries.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 50,
+        "column": 1
+      }
+    },
+    {
+      "name": "initialFixtureState",
+      "description": "Create the mutable fake state observed through the apply port boundaries.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 66,
+        "column": 1
+      }
+    },
+    {
+      "name": "lockPortFixture",
+      "description": "Build the exclusive-lock fake independently from journal and step behavior.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 85,
+        "column": 1
+      }
+    },
+    {
+      "name": "journalPortFixture",
+      "description": "Build the durable-journal fake independently from lock and effect behavior.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 103,
+        "column": 1
+      }
+    },
+    {
+      "name": "stepPortFixture",
+      "description": "Build the reviewed-effect fake independently from operation persistence.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 120,
+        "column": 1
+      }
+    },
+    {
+      "name": "planFixture",
+      "description": "Build one complete executable plan containing a single reversible local file step.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 136,
+        "column": 1
+      }
+    },
+    {
+      "name": "stepFixture",
+      "description": "Build one local file step whose postcondition can be observed after an interrupted process.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 175,
+        "column": 1
+      }
+    },
+    {
+      "name": "completedJournalFixture",
+      "description": "Build a completed operation journal for duplicate invocation behavior.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 188,
+        "column": 1
+      }
+    },
+    {
+      "name": "startedJournalFixture",
+      "description": "Build a journal representing a process lost after the reviewed effect began.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 203,
+        "column": 1
+      }
+    },
+    {
+      "name": "lockIdentity",
+      "description": "Build one lock identity tied to a durable operation and reviewed plan.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 222,
+        "column": 1
+      }
+    },
+    {
+      "name": "statusFixture",
+      "description": "Build status evidence used only by new-operation saved-plan revalidation.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 234,
+        "column": 1
+      }
+    },
+    {
+      "name": "resumeAfterAcquisitionAsync",
+      "description": "Advance another writer deterministically after the snapshot read but before lock acquisition completes.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "line": 259,
         "column": 1
       }
     },
@@ -12007,7 +12022,7 @@
       "description": "Classify cancellation, prerequisite and project-precondition journal state failures.",
       "sourceLocation": {
         "filePath": "src/features/apply/domain/createApplyBlocker.ts",
-        "line": 67,
+        "line": 72,
         "column": 1
       }
     },
@@ -12016,7 +12031,7 @@
       "description": "Classify ambiguous effects, output mismatches and failed automatic rollback.",
       "sourceLocation": {
         "filePath": "src/features/apply/domain/createApplyBlocker.ts",
-        "line": 106,
+        "line": 111,
         "column": 1
       }
     },
@@ -12025,7 +12040,7 @@
       "description": "Preserve one known adapter failure after any permitted reversible-local rollback.",
       "sourceLocation": {
         "filePath": "src/features/apply/domain/createApplyBlocker.ts",
-        "line": 147,
+        "line": 152,
         "column": 1
       }
     },
@@ -12034,7 +12049,16 @@
       "description": "Build the common step-scoped blocker representation.",
       "sourceLocation": {
         "filePath": "src/features/apply/domain/createApplyBlocker.ts",
-        "line": 158,
+        "line": 163,
+        "column": 1
+      }
+    },
+    {
+      "name": "planIncompleteBlocker",
+      "description": "Reject starting or resuming a plan that never passed planning completeness gates.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/createApplyBlocker.ts",
+        "line": 180,
         "column": 1
       }
     },
@@ -12224,6 +12248,60 @@
       "sourceLocation": {
         "filePath": "src/features/apply/domain/transitionApplyJournal.ts",
         "line": 40,
+        "column": 1
+      }
+    },
+    {
+      "name": "validateResumeJournal",
+      "description": "Validate journal identity and executor compatibility without treating applied changes as staleness.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/validateResumeJournal.ts",
+        "line": 6,
+        "column": 1
+      }
+    },
+    {
+      "name": "executorMatches",
+      "description": "Compare every executor field frozen into the reviewed plan.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/validateResumeJournal.ts",
+        "line": 31,
+        "column": 1
+      }
+    },
+    {
+      "name": "journalIdentityBlocker",
+      "description": "Explain a durable journal whose project/operation identity differs from the resume request.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/validateResumeJournal.ts",
+        "line": 43,
+        "column": 1
+      }
+    },
+    {
+      "name": "journalPlanChangedBlocker",
+      "description": "Reject a durable plan replaced between the preliminary journal read and acquiring its writer lock.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/validateResumeJournal.ts",
+        "line": 57,
+        "column": 1
+      }
+    },
+    {
+      "name": "executorIncompatibleBlocker",
+      "description": "Reject resume under a host/runtime that differs from the reviewed plan executor identity.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/validateResumeJournal.ts",
+        "line": 71,
+        "column": 1
+      }
+    },
+    {
+      "name": "executorKey",
+      "description": "Render one stable executor identity for recovery blocker evidence.",
+      "sourceLocation": {
+        "filePath": "src/features/apply/domain/validateResumeJournal.ts",
+        "line": 86,
         "column": 1
       }
     },
@@ -18281,27 +18359,12 @@
       },
       {
         "fromPath": "src/features/apply/application/applyAsync.test.ts",
-        "toPath": "src/types/apply.ts",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromPath": "src/features/apply/application/applyAsync.test.ts",
-        "toPath": "src/types/plan.ts",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromPath": "src/features/apply/application/applyAsync.test.ts",
-        "toPath": "src/types/status.ts",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromPath": "src/features/apply/application/applyAsync.test.ts",
-        "toPath": "src/features/apply/domain/createApplyJournal.ts",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromPath": "src/features/apply/application/applyAsync.test.ts",
         "toPath": "src/features/apply/application/applyAsync.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.test.ts",
+        "toPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
         "sourcePath": "src/features/apply/application/applyAsync.test.ts"
       },
       {
@@ -18326,7 +18389,17 @@
       },
       {
         "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/features/apply/domain/createApplyBlocker.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
         "toPath": "src/features/apply/domain/createApplyJournal.ts",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/applyAsync.ts",
+        "toPath": "src/features/apply/domain/validateResumeJournal.ts",
         "sourcePath": "src/features/apply/application/applyAsync.ts"
       },
       {
@@ -18503,6 +18576,41 @@
         "fromPath": "src/features/apply/application/persistApplyJournalAsync.ts",
         "toPath": "src/features/apply/domain/transitionApplyJournal.ts",
         "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toPath": "src/features/apply/domain/createApplyJournal.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toPath": "src/features/apply/application/applyAsync.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
       },
       {
         "fromPath": "src/features/apply/application/runApplyStepsAsync.ts",
@@ -18693,6 +18801,21 @@
         "fromPath": "src/features/apply/domain/transitionApplyJournal.ts",
         "toPath": "src/types/apply.ts",
         "sourcePath": "src/features/apply/domain/transitionApplyJournal.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/validateResumeJournal.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/validateResumeJournal.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromPath": "src/features/apply/domain/validateResumeJournal.ts",
+        "toPath": "src/features/apply/domain/createApplyBlocker.ts",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
       },
       {
         "fromPath": "src/features/apply/utils/applySnapshotPath.ts",
@@ -20100,6 +20223,31 @@
         "sourcePath": "src/features/apply/adapters/outbound/rollbackNodeFileStepAsync.ts"
       },
       {
+        "fromPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "toPath": "src/types/apply.ts",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "toPath": "src/types/plan.ts",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "toPath": "src/features/apply/domain/createApplyJournal.ts",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromPath": "src/features/apply/application/fixtures/createApplyFixture.test.ts",
+        "toPath": "src/features/apply/application/applyAsync.ts",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
         "fromPath": "src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts",
         "toPath": "src/types/plan.ts",
         "sourcePath": "src/features/plan/adapters/outbound/applyStagedPlanTargetsAsync.ts"
@@ -21107,8 +21255,8 @@
       },
       {
         "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
-        "toSymbol": "portsFixture",
-        "callExpression": "portsFixture",
+        "toSymbol": "createApplyFixture",
+        "callExpression": "createApplyFixture",
         "sourcePath": "src/features/apply/application/applyAsync.test.ts"
       },
       {
@@ -21119,98 +21267,14 @@
       },
       {
         "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
-        "toSymbol": "planFixture",
-        "callExpression": "planFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
         "toSymbol": "expect",
         "callExpression": "expect",
         "sourcePath": "src/features/apply/application/applyAsync.test.ts"
       },
       {
         "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
-        "toSymbol": "lockIdentity",
-        "callExpression": "lockIdentity",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
-        "toSymbol": "completedJournalFixture",
-        "callExpression": "completedJournalFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "src/features/apply/application/applyAsync.test.ts",
-        "toSymbol": "startedJournalFixture",
-        "callExpression": "startedJournalFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "portsFixture",
-        "toSymbol": "initialFixtureState",
-        "callExpression": "initialFixtureState",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "portsFixture",
-        "toSymbol": "lockPortFixture",
-        "callExpression": "lockPortFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "portsFixture",
-        "toSymbol": "journalPortFixture",
-        "callExpression": "journalPortFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "inspectStatusAsync",
-        "toSymbol": "statusFixture",
-        "callExpression": "statusFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "portsFixture",
-        "toSymbol": "stepPortFixture",
-        "callExpression": "stepPortFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "initialFixtureState",
-        "toSymbol": "lockIdentity",
-        "callExpression": "lockIdentity",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "planFixture",
-        "toSymbol": "stepFixture",
-        "callExpression": "stepFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "completedJournalFixture",
-        "toSymbol": "createApplyJournal",
-        "callExpression": "createApplyJournal",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "completedJournalFixture",
-        "toSymbol": "planFixture",
-        "callExpression": "planFixture",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "startedJournalFixture",
-        "toSymbol": "createApplyJournal",
-        "callExpression": "createApplyJournal",
-        "sourcePath": "src/features/apply/application/applyAsync.test.ts"
-      },
-      {
-        "fromSymbol": "startedJournalFixture",
-        "toSymbol": "planFixture",
-        "callExpression": "planFixture",
+        "toSymbol": "createLockIdentity",
+        "callExpression": "fixture.createLockIdentity",
         "sourcePath": "src/features/apply/application/applyAsync.test.ts"
       },
       {
@@ -21233,8 +21297,8 @@
       },
       {
         "fromSymbol": "startApplyAsync",
-        "toSymbol": "planIncompleteBlocker",
-        "callExpression": "planIncompleteBlocker",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
         "sourcePath": "src/features/apply/application/applyAsync.ts"
       },
       {
@@ -21395,26 +21459,74 @@
       },
       {
         "fromSymbol": "resumeUnderLockAsync",
-        "toSymbol": "persistApplyJournalAsync",
-        "callExpression": "persistApplyJournalAsync",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "resumeUnderLockAsync",
-        "toSymbol": "outcomeResult",
-        "callExpression": "outcomeResult",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "resumeUnderLockAsync",
-        "toSymbol": "runApplyStepsAsync",
-        "callExpression": "runApplyStepsAsync",
+        "toSymbol": "resumeAuthoritativeJournalAsync",
+        "callExpression": "resumeAuthoritativeJournalAsync",
         "sourcePath": "src/features/apply/application/applyAsync.ts"
       },
       {
         "fromSymbol": "resumeUnderLockAsync",
         "toSymbol": "releaseAsync",
         "callExpression": "ports.lock.releaseAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "readAsync",
+        "callExpression": "ports.journal.readAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "blockedResult",
+        "callExpression": "blockedResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "operationNotFoundBlocker",
+        "callExpression": "operationNotFoundBlocker",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "validateResumeJournal",
+        "callExpression": "validateResumeJournal",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "current",
+        "callExpression": "ports.executor.current",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "completedDuplicateResult",
+        "callExpression": "completedDuplicateResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "applyPermissionBlockers",
+        "callExpression": "applyPermissionBlockers",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "persistApplyJournalAsync",
+        "callExpression": "persistApplyJournalAsync",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "outcomeResult",
+        "callExpression": "outcomeResult",
+        "sourcePath": "src/features/apply/application/applyAsync.ts"
+      },
+      {
+        "fromSymbol": "resumeAuthoritativeJournalAsync",
+        "toSymbol": "runApplyStepsAsync",
+        "callExpression": "runApplyStepsAsync",
         "sourcePath": "src/features/apply/application/applyAsync.ts"
       },
       {
@@ -21427,36 +21539,6 @@
         "fromSymbol": "acquireLockAsync",
         "toSymbol": "recoverStaleAsync",
         "callExpression": "ports.lock.recoverStaleAsync",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "validateResumeJournal",
-        "toSymbol": "journalIdentityBlocker",
-        "callExpression": "journalIdentityBlocker",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "validateResumeJournal",
-        "toSymbol": "planIncompleteBlocker",
-        "callExpression": "planIncompleteBlocker",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "validateResumeJournal",
-        "toSymbol": "executorMatches",
-        "callExpression": "executorMatches",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "validateResumeJournal",
-        "toSymbol": "executorIncompatibleBlocker",
-        "callExpression": "executorIncompatibleBlocker",
-        "sourcePath": "src/features/apply/application/applyAsync.ts"
-      },
-      {
-        "fromSymbol": "executorIncompatibleBlocker",
-        "toSymbol": "executorKey",
-        "callExpression": "executorKey",
         "sourcePath": "src/features/apply/application/applyAsync.ts"
       },
       {
@@ -21928,6 +22010,84 @@
         "sourcePath": "src/features/apply/application/persistApplyJournalAsync.ts"
       },
       {
+        "fromSymbol": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toSymbol": "createApplyFixture",
+        "callExpression": "createApplyFixture",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toSymbol": "resumeAfterAcquisitionAsync",
+        "callExpression": "fixture.resumeAfterAcquisitionAsync",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAdmission.test.ts",
+        "toSymbol": "change",
+        "callExpression": "change",
+        "sourcePath": "src/features/apply/application/resumeApplyAdmission.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "createApplyFixture",
+        "callExpression": "createApplyFixture",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "resumeAfterAcquisitionAsync",
+        "callExpression": "fixture.resumeAfterAcquisitionAsync",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "applyAsync",
+        "callExpression": "applyAsync",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "createApplyJournal",
+        "callExpression": "createApplyJournal",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "src/features/apply/application/resumeApplyAsync.test.ts",
+        "toSymbol": "createLockIdentity",
+        "callExpression": "fixture.createLockIdentity",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
+        "fromSymbol": "recoverStaleAsync",
+        "toSymbol": "recoverStaleAsync",
+        "callExpression": "fixture.ports.lock.recoverStaleAsync",
+        "sourcePath": "src/features/apply/application/resumeApplyAsync.test.ts"
+      },
+      {
         "fromSymbol": "runApplyStepsAsync",
         "toSymbol": "runNextStepAsync",
         "callExpression": "runNextStepAsync",
@@ -22247,6 +22407,12 @@
       },
       {
         "fromSymbol": "createApplyBlocker",
+        "toSymbol": "planIncompleteBlocker",
+        "callExpression": "planIncompleteBlocker",
+        "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
+      },
+      {
+        "fromSymbol": "createApplyBlocker",
         "toSymbol": "createStateBlocker",
         "callExpression": "createStateBlocker",
         "sourcePath": "src/features/apply/domain/createApplyBlocker.ts"
@@ -22394,6 +22560,42 @@
         "toSymbol": "transitionStep",
         "callExpression": "transitionStep",
         "sourcePath": "src/features/apply/domain/transitionApplyJournal.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "journalPlanChangedBlocker",
+        "callExpression": "journalPlanChangedBlocker",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "journalIdentityBlocker",
+        "callExpression": "journalIdentityBlocker",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "createApplyBlocker",
+        "callExpression": "createApplyBlocker",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "executorMatches",
+        "callExpression": "executorMatches",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromSymbol": "validateResumeJournal",
+        "toSymbol": "executorIncompatibleBlocker",
+        "callExpression": "executorIncompatibleBlocker",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
+      },
+      {
+        "fromSymbol": "executorIncompatibleBlocker",
+        "toSymbol": "executorKey",
+        "callExpression": "executorKey",
+        "sourcePath": "src/features/apply/domain/validateResumeJournal.ts"
       },
       {
         "fromSymbol": "applySnapshotPath",
@@ -26852,6 +27054,126 @@
         "toSymbol": "restoreApplyStepSnapshotAsync",
         "callExpression": "restoreApplyStepSnapshotAsync",
         "sourcePath": "src/features/apply/adapters/outbound/rollbackNodeFileStepAsync.ts"
+      },
+      {
+        "fromSymbol": "createApplyFixture",
+        "toSymbol": "portsFixture",
+        "callExpression": "portsFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "createApplyFixture",
+        "toSymbol": "planFixture",
+        "callExpression": "planFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "createApplyFixture",
+        "toSymbol": "stepFixture",
+        "callExpression": "stepFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "createApplyFixture",
+        "toSymbol": "startedJournalFixture",
+        "callExpression": "startedJournalFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "createApplyFixture",
+        "toSymbol": "completedJournalFixture",
+        "callExpression": "completedJournalFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "resumeAfterAcquisitionAsync",
+        "toSymbol": "resumeAfterAcquisitionAsync",
+        "callExpression": "resumeAfterAcquisitionAsync",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "portsFixture",
+        "toSymbol": "initialFixtureState",
+        "callExpression": "initialFixtureState",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "portsFixture",
+        "toSymbol": "lockPortFixture",
+        "callExpression": "lockPortFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "portsFixture",
+        "toSymbol": "journalPortFixture",
+        "callExpression": "journalPortFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "inspectStatusAsync",
+        "toSymbol": "statusFixture",
+        "callExpression": "statusFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "portsFixture",
+        "toSymbol": "stepPortFixture",
+        "callExpression": "stepPortFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "initialFixtureState",
+        "toSymbol": "lockIdentity",
+        "callExpression": "lockIdentity",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "planFixture",
+        "toSymbol": "stepFixture",
+        "callExpression": "stepFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "completedJournalFixture",
+        "toSymbol": "createApplyJournal",
+        "callExpression": "createApplyJournal",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "completedJournalFixture",
+        "toSymbol": "planFixture",
+        "callExpression": "planFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "startedJournalFixture",
+        "toSymbol": "createApplyJournal",
+        "callExpression": "createApplyJournal",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "startedJournalFixture",
+        "toSymbol": "planFixture",
+        "callExpression": "planFixture",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "acquireAsync",
+        "toSymbol": "acquireAsync",
+        "callExpression": "fixture.ports.lock.acquireAsync",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "acquireAsync",
+        "toSymbol": "advanceWriter",
+        "callExpression": "advanceWriter",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
+      },
+      {
+        "fromSymbol": "resumeAfterAcquisitionAsync",
+        "toSymbol": "applyAsync",
+        "callExpression": "applyAsync",
+        "sourcePath": "src/features/apply/application/fixtures/createApplyFixture.test.ts"
       },
       {
         "fromSymbol": "applyStagedPlanTargetsAsync",
