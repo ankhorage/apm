@@ -7,7 +7,8 @@ export function buildPackageManagerPlanCommands(
 ): readonly ApmPackageManagerPlanCommand[] {
   const direct = request.targets.filter(({ direct }) => direct);
   const transitive = request.targets.filter(({ direct }) => !direct);
-  const base = direct.length === 0 ? [] : [baseResolutionCommand(request.manager)];
+  const needsBaseResolution = direct.length > 0 || request.lockfilePath === undefined;
+  const base = needsBaseResolution ? [baseResolutionCommand(request.manager)] : [];
   return [
     ...base,
     ...transitive.map((target) =>
