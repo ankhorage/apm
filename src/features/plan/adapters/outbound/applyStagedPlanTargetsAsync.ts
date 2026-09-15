@@ -7,22 +7,16 @@ import { applyEdits, modify } from 'jsonc-parser';
 import type { ApmPlanDependencyTarget, ApmPlanResolutionRequest } from '../../../../types/plan.js';
 import type { ApmPlanStage } from '../../../../types/plan-staging.js';
 
-/*** Apply reviewed direct ranges in staging and freeze the exact manifest content expected from the resolver. */
+/*** Freeze reviewed manifest expectations, then pin direct resolver input to exact target versions. */
 export async function applyStagedPlanTargetsAsync(
   request: ApmPlanResolutionRequest,
   stage: ApmPlanStage,
 ): Promise<ReadonlyMap<string, string>> {
   const byManifest = groupDirectTargets(request.targets);
-  await Promise.all(
-    [...byManifest.entries()].map(async ([ownerPath, targets]) => {
-      const relativePath = stagedManifestPath(request, ownerPath);
-      const manifestPath = resolvePathWithinRoot(stage.rootPath, relativePath);
-      const content = await readFile(manifestPath, 'utf8');
-      const updated = targets.reduce(applyTargetRange, content);
-      await writeFile(manifestPath, updated, 'utf8');
-    }),
-  );
-  return readManifestExpectationsAsync(stage);
+  await updateTargetManifestsAsync(request, stage, byManifest, applyTargetRange);
+  const expectations = await readManifestExpectationsAsync(stage);
+  await updateTargetManifestsAsync(request, stage, byManifest, applyTargetVersion);
+  return expectations;
 }
 
 /*** Group direct targets by owning package manifest while leaving transitive targets lock-only. */
@@ -37,19 +31,51 @@ function groupDirectTargets(
   }, new Map());
 }
 
-/*** Apply one selected dependency range using the declaration section already owned by status evidence. */
+/*** Apply one immutable target transform to every affected staged owner manifest. */
+async function updateTargetManifestsAsync(
+  request: ApmPlanResolutionRequest,
+  stage: ApmPlanStage,
+  byManifest: ReadonlyMap<string, readonly ApmPlanDependencyTarget[]>,
+  update: (content: string, target: ApmPlanDependencyTarget) => string,
+): Promise<void> {
+  await Promise.all(
+    [...byManifest.entries()].map(async ([ownerPath, targets]) => {
+      const relativePath = stagedManifestPath(request, ownerPath);
+      const manifestPath = resolvePathWithinRoot(stage.rootPath, relativePath);
+      const content = await readFile(manifestPath, 'utf8');
+      const updated = targets.reduce(update, content);
+      await writeFile(manifestPath, updated, 'utf8');
+    }),
+  );
+}
+
+/*** Apply one reviewed dependency range to the staged manifest expectation. */
 function applyTargetRange(content: string, target: ApmPlanDependencyTarget): string {
+  return applyTargetValue(content, target, target.targetRange);
+}
+
+/*** Pin one direct dependency to the reviewed exact target only inside disposable resolver staging. */
+function applyTargetVersion(content: string, target: ApmPlanDependencyTarget): string {
+  return applyTargetValue(content, target, target.targetVersion);
+}
+
+/*** Apply one dependency value using the declaration section already owned by status evidence. */
+function applyTargetValue(
+  content: string,
+  target: ApmPlanDependencyTarget,
+  value: string | undefined,
+): string {
   const section = dependencySection(target.kind);
-  if (section === undefined || target.targetRange === undefined) return content;
+  if (section === undefined || value === undefined) return content;
   return applyEdits(
     content,
-    modify(content, [section, target.name], target.targetRange, {
+    modify(content, [section, target.name], value, {
       formattingOptions: formattingOptions(content),
     }),
   );
 }
 
-/*** Read every staged manifest after APM edits so native resolvers cannot add hidden dependencies. */
+/*** Read every reviewed staged manifest before exact solver-only constraints are applied. */
 async function readManifestExpectationsAsync(
   stage: ApmPlanStage,
 ): Promise<ReadonlyMap<string, string>> {
