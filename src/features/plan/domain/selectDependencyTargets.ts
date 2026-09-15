@@ -178,13 +178,15 @@ function targetConflictBlocker(
   };
 }
 
-/*** Locate the locked source kind for a status dependency instance. */
+/*** Locate manager-native locked source evidence for one install-root-qualified status dependency. */
 function lockedSource(
   status: ApmStatusResult,
   dependency: ApmStatusDependency,
 ): ApmLockedPackageEvidence['source'] | undefined {
+  const nativePackageId = dependency.declaration?.resolvedPackageId;
+  if (nativePackageId === undefined) return undefined;
   const root = status.installRoots.find((candidate) => candidate.id === dependency.installRootId);
-  return root?.lockedPackages.find((pkg) => pkg.id === dependency.packageId)?.source;
+  return root?.lockedPackages.find((pkg) => pkg.id === nativePackageId)?.source;
 }
 
 /*** Build an explicit selector cardinality blocker. */
