@@ -166,6 +166,7 @@ graph LR
   module_src_features_verify_adapters_outbound_createNodeVerifyStepPort_ts["src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts"]
   module_src_features_verify_application_verifyAsync_ts["src/features/verify/application/verifyAsync.ts"]
   module_src_features_verify_composition_verifyProjectAsync_ts["src/features/verify/composition/verifyProjectAsync.ts"]
+  module_src_nodeApm_test_ts["src/nodeApm.test.ts"]
   module_src_nodeApm_ts["src/nodeApm.ts"]
   module_src_types_apply_project_ts["src/types/apply-project.ts"]
   module_src_types_apply_runtime_ts["src/types/apply-runtime.ts"]
@@ -797,6 +798,9 @@ graph LR
   export_createNativePlanResolutionPort["createNativePlanResolutionPort"]
   module_src_features_plan_adapters_outbound_createNativePlanResolutionPort_ts --> export_createNativePlanResolutionPort
   export_createNativePlanResolutionPort -.-> export_ApmPlanResolutionPort
+  export_createNodeApplyLockPort["createNodeApplyLockPort"]
+  module_src_features_apply_adapters_outbound_createNodeApplyLockPort_ts --> export_createNodeApplyLockPort
+  export_createNodeApplyLockPort -.-> export_ApmApplyLockPort
   export_createNpmRegistryAvailabilityPort["createNpmRegistryAvailabilityPort"]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --> export_createNpmRegistryAvailabilityPort
   export_createNpmRegistryAvailabilityPort -.-> export_ApmRegistryAvailabilityOptions

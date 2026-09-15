@@ -1670,6 +1670,12 @@
               </button>
             </li>
             <li>
+              <button class="nav-button" type="button" data-target="src/nodeApm.test.ts">
+                src/nodeApm.test.ts
+                <small>1 function</small>
+              </button>
+            </li>
+            <li>
               <button
                 class="nav-button"
                 type="button"
@@ -1723,9 +1729,9 @@
           <section class="panel">
             <h2>Package overview</h2>
             <div class="summary">
-              <div><strong>190</strong><span class="muted">public exports</span></div>
+              <div><strong>191</strong><span class="muted">public exports</span></div>
               <div><strong>0</strong><span class="muted">components</span></div>
-              <div><strong>194</strong><span class="muted">modules</span></div>
+              <div><strong>195</strong><span class="muted">modules</span></div>
               <div><strong>3</strong><span class="muted">entrypoints</span></div>
             </div>
             <h3>Entrypoints</h3>
@@ -1738,16 +1744,10 @@
 
           <section class="panel">
             <h2>Modules</h2>
-            <article
-              class="item"
-              data-search="examples/basic-usage/status.ts dist/apm.d.ts dist/nodeApm.d.ts"
-            >
+            <article class="item" data-search="examples/basic-usage/status.ts">
               <h3>examples/basic-usage/status.ts</h3>
               <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
-                <code>dist/nodeApm.d.ts</code>
-              </p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article class="item" data-search="package.json">
@@ -3475,12 +3475,12 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/application/updateExtensionExecution.test.ts dist/types/public.d.ts src/features/update-protocol/application/executeMigrationExtensionAsync.ts src/features/update-protocol/application/planMigrationExtensionAsync.ts"
+              data-search="src/features/update-protocol/application/updateExtensionExecution.test.ts src/features/update-protocol/application/executeMigrationExtensionAsync.ts src/features/update-protocol/application/planMigrationExtensionAsync.ts"
             >
               <h3>src/features/update-protocol/application/updateExtensionExecution.test.ts</h3>
               <p class="muted">Referenced module</p>
               <p>
-                <strong>Dependencies:</strong> <code>dist/types/public.d.ts</code>,
+                <strong>Dependencies:</strong>
                 <code
                   >src/features/update-protocol/application/executeMigrationExtensionAsync.ts</code
                 >,
@@ -3667,14 +3667,11 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/resolveMigrationPath.test.ts dist/apm.d.ts dist/types/public.d.ts"
+              data-search="src/features/update-protocol/domain/resolveMigrationPath.test.ts"
             >
               <h3>src/features/update-protocol/domain/resolveMigrationPath.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
-                <code>dist/types/public.d.ts</code>
-              </p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3783,11 +3780,11 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts dist/apm.d.ts"
+              data-search="src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts"
             >
               <h3>src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p><strong>Dependencies:</strong> <code>dist/apm.d.ts</code></p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3834,14 +3831,11 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/validateUpdateDescriptor.test.ts dist/apm.d.ts dist/types/public.d.ts"
+              data-search="src/features/update-protocol/domain/validateUpdateDescriptor.test.ts"
             >
               <h3>src/features/update-protocol/domain/validateUpdateDescriptor.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
-                <code>dist/types/public.d.ts</code>
-              </p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3867,14 +3861,11 @@
             </article>
             <article
               class="item"
-              data-search="src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts dist/apm.d.ts dist/types/public.d.ts"
+              data-search="src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts"
             >
               <h3>src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts</h3>
               <p class="muted">Referenced module</p>
-              <p>
-                <strong>Dependencies:</strong> <code>dist/apm.d.ts</code>,
-                <code>dist/types/public.d.ts</code>
-              </p>
+              <p><strong>Dependencies:</strong> <span class="empty">None</span></p>
               <p><strong>Exports:</strong> <span class="empty">None</span></p>
             </article>
             <article
@@ -3987,9 +3978,15 @@
               </p>
               <p><strong>Exports:</strong> <code>verifyProjectAsync</code></p>
             </article>
+            <article class="item" data-search="src/nodeApm.test.ts src/nodeApm.ts">
+              <h3>src/nodeApm.test.ts</h3>
+              <p class="muted">Referenced module</p>
+              <p><strong>Dependencies:</strong> <code>src/nodeApm.ts</code></p>
+              <p><strong>Exports:</strong> <span class="empty">None</span></p>
+            </article>
             <article
               class="item"
-              data-search="src/nodeApm.ts APM_PLAN_SUPPORT APM_STATUS_SUPPORT ApmApplyBlocker ApmApplyBlockerCode ApmApplyCancellationPort ApmApplyClockPort ApmApplyExecutorIdentityPort ApmApplyFailure ApmApplyInput ApmApplyJournal ApmApplyJournalPort ApmApplyJournalStatus ApmApplyLockAcquireResult ApmApplyLockIdentity ApmApplyLockPort ApmApplyOperationIdPort ApmApplyPermissions ApmApplyPlanValidationPort ApmApplyPorts ApmApplyProgressEvent ApmApplyProgressPort ApmApplyProjectOptions ApmApplyResult ApmApplyResultStatus ApmApplyStatusPort ApmApplyStepExecutionResult ApmApplyStepJournal ApmApplyStepObservation ApmApplyStepPort ApmApplyStepState ApmAvailabilityEvidence ApmAvailabilityRequest ApmCompatibilityConstraint ApmCompletedMigrationEvidence ApmDependencyDeclaration ApmDependencyInventory ApmDependencyKind ApmExtensionArtifactIdentity ApmExtensionArtifactIdentityRequest ApmExtensionArtifactIdentityResolution ApmExtensionEvidence ApmExtensionExecutionContext ApmExtensionInvocationResult ApmExtensionObservation ApmExtensionProjectReadPort ApmExtensionProjectWritePort ApmExtensionVerificationResult ApmInstallationState ApmInstalledPackageEvidence ApmInstallRootInventory ApmJsonValue ApmLockedDependencyEdge ApmLockedPackageEvidence ApmLockfileEvidence ApmMigrationArtifactRole ApmMigrationDescriptor ApmMigrationExecutionInput ApmMigrationExecutionInvocation ApmMigrationExecutionResult ApmMigrationHandler ApmMigrationImplementation ApmMigrationPathInput ApmMigrationPathResult ApmMigrationPlanInput ApmMigrationPlanInvocation ApmMigrationPlanResult ApmMigrationPrerequisite ApmMigrationRecoveryDescriptor ApmMigrationSideEffect ApmMigrationSource ApmMigrationState ApmMigrationTarget ApmMigrationVerificationInput ApmMigrationVerificationRequirement ApmOtaEligibilityEffect ApmPackageAvailabilityEvidence ApmPackageManagerEvidence ApmPackageManagerName ApmPackageUpdateMetadata ApmPackageUpdateMetadataValidationResult ApmPlanArtifactIdentity ApmPlanBlocker ApmPlanBlockerCode ApmPlanBlockerScope ApmPlanDependencyTarget ApmPlanDependencyUpdateMode ApmPlanDigestPort ApmPlanExecutorIdentity ApmPlanFileChange ApmPlanInput ApmPlanInputFingerprint ApmPlanPackageSelection ApmPlanPackageSelector ApmPlanPolicy ApmPlanPolicyInput ApmPlanPorts ApmPlanProjectInput ApmPlanProjectOptions ApmPlanProtocolPort ApmPlanProtocolRequest ApmPlanProtocolResult ApmPlanResolutionEffects ApmPlanResolutionPort ApmPlanResolutionRequest ApmPlanResolutionResult ApmPlanResolvedPackage ApmPlanResult ApmPlanStep ApmPlanStepExecution ApmPlanTargetSelection ApmPlanTargetSelectionResult ApmPlanValidationCheck ApmProjectFileSnapshot ApmProjectionDescriptor ApmProjectionHandler ApmProjectionInput ApmProjectionInspectionResult ApmProjectionMaterializeInput ApmProjectionPlanResult ApmProjectionState ApmProjectMutation ApmProjectScope ApmProjectStatusPort ApmRegistryAvailabilityOptions ApmRegistryFetch ApmRegistryRequestOptions ApmReleaseEffect ApmReleaseRequirementEffect ApmReleaseRequirementEffectKind ApmStatusAvailabilityMode ApmStatusAvailabilityPort ApmStatusCurrency ApmStatusDependency ApmStatusDependencyInventoryPort ApmStatusDiagnostic ApmStatusDiagnosticScope ApmStatusExtensionEvidencePort ApmStatusFinding ApmStatusFindingCode ApmStatusHostPackage ApmStatusHostPackageResult ApmStatusInput ApmStatusLanguage ApmStatusPorts ApmStatusProjectInspectionPort ApmStatusProjectOptions ApmStatusProjectSummary ApmStatusResult ApmSupportedSourceHistory ApmUnsupportedSourceHistory ApmUpdateDescriptor ApmUpdateDescriptorSchemaVersion ApmUpdateDescriptorValidationInput ApmUpdateDescriptorValidationResult ApmUpdateExtension ApmUpdateHistoryDescriptor ApmUpdateOwnerIdentity ApmUpdateProtocolBlocker ApmUpdateProtocolBlockerCode ApmUpdateProtocolVersion ApmVerifyCheckKind ApmVerifyCheckResult ApmVerifyCheckStatus ApmVerifyInput ApmVerifyJournalPort ApmVerifyPorts ApmVerifyProjectOptions ApmVerifyResult ApmVerifyStatusPort ApmVerifyStepPort applyAsync applyProjectAsync createNativePlanResolutionPort createNpmRegistryAvailabilityPort createSha256PlanDigestPort inspectDependencyInventoryAsync planAsync planProjectAsync resolveMigrationPath resolveNpmExtensionArtifactIdentityAsync statusAsync statusProjectAsync validatePackageUpdateMetadata validateSavedPlanAsync validateUpdateDescriptor validateUpdateExtensionBinding validateUpdateExtensionCapabilities verifyAsync verifyProjectAsync"
+              data-search="src/nodeApm.ts APM_PLAN_SUPPORT APM_STATUS_SUPPORT ApmApplyBlocker ApmApplyBlockerCode ApmApplyCancellationPort ApmApplyClockPort ApmApplyExecutorIdentityPort ApmApplyFailure ApmApplyInput ApmApplyJournal ApmApplyJournalPort ApmApplyJournalStatus ApmApplyLockAcquireResult ApmApplyLockIdentity ApmApplyLockPort ApmApplyOperationIdPort ApmApplyPermissions ApmApplyPlanValidationPort ApmApplyPorts ApmApplyProgressEvent ApmApplyProgressPort ApmApplyProjectOptions ApmApplyResult ApmApplyResultStatus ApmApplyStatusPort ApmApplyStepExecutionResult ApmApplyStepJournal ApmApplyStepObservation ApmApplyStepPort ApmApplyStepState ApmAvailabilityEvidence ApmAvailabilityRequest ApmCompatibilityConstraint ApmCompletedMigrationEvidence ApmDependencyDeclaration ApmDependencyInventory ApmDependencyKind ApmExtensionArtifactIdentity ApmExtensionArtifactIdentityRequest ApmExtensionArtifactIdentityResolution ApmExtensionEvidence ApmExtensionExecutionContext ApmExtensionInvocationResult ApmExtensionObservation ApmExtensionProjectReadPort ApmExtensionProjectWritePort ApmExtensionVerificationResult ApmInstallationState ApmInstalledPackageEvidence ApmInstallRootInventory ApmJsonValue ApmLockedDependencyEdge ApmLockedPackageEvidence ApmLockfileEvidence ApmMigrationArtifactRole ApmMigrationDescriptor ApmMigrationExecutionInput ApmMigrationExecutionInvocation ApmMigrationExecutionResult ApmMigrationHandler ApmMigrationImplementation ApmMigrationPathInput ApmMigrationPathResult ApmMigrationPlanInput ApmMigrationPlanInvocation ApmMigrationPlanResult ApmMigrationPrerequisite ApmMigrationRecoveryDescriptor ApmMigrationSideEffect ApmMigrationSource ApmMigrationState ApmMigrationTarget ApmMigrationVerificationInput ApmMigrationVerificationRequirement ApmOtaEligibilityEffect ApmPackageAvailabilityEvidence ApmPackageManagerEvidence ApmPackageManagerName ApmPackageUpdateMetadata ApmPackageUpdateMetadataValidationResult ApmPlanArtifactIdentity ApmPlanBlocker ApmPlanBlockerCode ApmPlanBlockerScope ApmPlanDependencyTarget ApmPlanDependencyUpdateMode ApmPlanDigestPort ApmPlanExecutorIdentity ApmPlanFileChange ApmPlanInput ApmPlanInputFingerprint ApmPlanPackageSelection ApmPlanPackageSelector ApmPlanPolicy ApmPlanPolicyInput ApmPlanPorts ApmPlanProjectInput ApmPlanProjectOptions ApmPlanProtocolPort ApmPlanProtocolRequest ApmPlanProtocolResult ApmPlanResolutionEffects ApmPlanResolutionPort ApmPlanResolutionRequest ApmPlanResolutionResult ApmPlanResolvedPackage ApmPlanResult ApmPlanStep ApmPlanStepExecution ApmPlanTargetSelection ApmPlanTargetSelectionResult ApmPlanValidationCheck ApmProjectFileSnapshot ApmProjectionDescriptor ApmProjectionHandler ApmProjectionInput ApmProjectionInspectionResult ApmProjectionMaterializeInput ApmProjectionPlanResult ApmProjectionState ApmProjectMutation ApmProjectScope ApmProjectStatusPort ApmRegistryAvailabilityOptions ApmRegistryFetch ApmRegistryRequestOptions ApmReleaseEffect ApmReleaseRequirementEffect ApmReleaseRequirementEffectKind ApmStatusAvailabilityMode ApmStatusAvailabilityPort ApmStatusCurrency ApmStatusDependency ApmStatusDependencyInventoryPort ApmStatusDiagnostic ApmStatusDiagnosticScope ApmStatusExtensionEvidencePort ApmStatusFinding ApmStatusFindingCode ApmStatusHostPackage ApmStatusHostPackageResult ApmStatusInput ApmStatusLanguage ApmStatusPorts ApmStatusProjectInspectionPort ApmStatusProjectOptions ApmStatusProjectSummary ApmStatusResult ApmSupportedSourceHistory ApmUnsupportedSourceHistory ApmUpdateDescriptor ApmUpdateDescriptorSchemaVersion ApmUpdateDescriptorValidationInput ApmUpdateDescriptorValidationResult ApmUpdateExtension ApmUpdateHistoryDescriptor ApmUpdateOwnerIdentity ApmUpdateProtocolBlocker ApmUpdateProtocolBlockerCode ApmUpdateProtocolVersion ApmVerifyCheckKind ApmVerifyCheckResult ApmVerifyCheckStatus ApmVerifyInput ApmVerifyJournalPort ApmVerifyPorts ApmVerifyProjectOptions ApmVerifyResult ApmVerifyStatusPort ApmVerifyStepPort applyAsync applyProjectAsync createNativePlanResolutionPort createNodeApplyLockPort createNpmRegistryAvailabilityPort createSha256PlanDigestPort inspectDependencyInventoryAsync planAsync planProjectAsync resolveMigrationPath resolveNpmExtensionArtifactIdentityAsync statusAsync statusProjectAsync validatePackageUpdateMetadata validateSavedPlanAsync validateUpdateDescriptor validateUpdateExtensionBinding validateUpdateExtensionCapabilities verifyAsync verifyProjectAsync"
             >
               <h3>src/nodeApm.ts</h3>
               <p class="muted">Configured entrypoint</p>
@@ -4089,6 +4086,7 @@
                 <code>ApmVerifyResult</code>, <code>ApmVerifyStatusPort</code>,
                 <code>ApmVerifyStepPort</code>, <code>applyAsync</code>,
                 <code>applyProjectAsync</code>, <code>createNativePlanResolutionPort</code>,
+                <code>createNodeApplyLockPort</code>,
                 <code>createNpmRegistryAvailabilityPort</code>,
                 <code>createSha256PlanDigestPort</code>,
                 <code>inspectDependencyInventoryAsync</code>, <code>planAsync</code>,
@@ -4628,6 +4626,37 @@
                     </tbody>
                   </table>
                   <p><strong>Returns:</strong> <code>AnkhRuntimeCommandProvider</code></p>
+                </div>
+              </article>
+            </section>
+            <section>
+              <h3>src/features/apply/adapters/outbound/createNodeApplyLockPort.ts</h3>
+              <article
+                class="item"
+                id="symbol-createnodeapplylockport"
+                data-search="createNodeApplyLockPort function src/features/apply/adapters/outbound/createNodeApplyLockPort.ts Create the Node project-writer lock adapter with conservative same-host stale recovery. ApmApplyLockPort () =&gt; ApmApplyLockPort"
+              >
+                <h4>createNodeApplyLockPort</h4>
+                <p class="muted">
+                  function •
+                  <code>src/features/apply/adapters/outbound/createNodeApplyLockPort.ts:19:1</code>
+                </p>
+                <p>
+                  Create the Node project-writer lock adapter with conservative same-host stale
+                  recovery.
+                </p>
+                <p><strong>Export paths:</strong> <code>src/nodeApm.ts</code></p>
+                <div>
+                  <strong>Related symbols:</strong>
+                  <ul class="chips">
+                    <li class="chip">ApmApplyLockPort</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5>Signature</h5>
+                  <pre>() =&gt; ApmApplyLockPort</pre>
+
+                  <p><strong>Returns:</strong> <code>ApmApplyLockPort</code></p>
                 </div>
               </article>
             </section>
@@ -14990,8 +15019,6 @@
                 entrypoint_src_nodeApm_ts
                 module_examples_basic_usage_status_ts[&quot;examples/basic-usage/status.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_examples_basic_usage_status_ts
-                module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-                module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
                 module_package_json[&quot;package.json&quot;] package__ankhorage_apm -.-&gt;
                 module_package_json module_paradox_config_ts[&quot;paradox.config.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_paradox_config_ts
@@ -16098,8 +16125,6 @@
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
-                --&gt; module_dist_types_public_d_ts
-                module_src_features_update_protocol_application_updateExtensionExecution_test_ts
                 --&gt;
                 module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
@@ -16221,10 +16246,6 @@
                 module_src_features_update_protocol_domain_resolveMigrationPath_test_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_resolveMigrationPath_test_ts
-                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
-                module_dist_apm_d_ts
-                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
-                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts
@@ -16303,8 +16324,6 @@
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
-                module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
-                --&gt; module_dist_apm_d_ts
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts
@@ -16335,10 +16354,6 @@
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts
-                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
-                module_dist_apm_d_ts
-                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
-                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts
@@ -16365,10 +16380,6 @@
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-                --&gt; module_dist_apm_d_ts
-                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-                --&gt; module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.ts&quot;]
                 package__ankhorage_apm -.-&gt;
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts
@@ -16442,7 +16453,9 @@
                 module_src_types_verify_ts
                 module_src_features_verify_composition_verifyProjectAsync_ts --&gt;
                 module_src_utils_inspectProjectStatusAsync_ts
-                module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
+                module_src_nodeApm_test_ts[&quot;src/nodeApm.test.ts&quot;] package__ankhorage_apm
+                -.-&gt; module_src_nodeApm_test_ts module_src_nodeApm_test_ts --&gt;
+                module_src_nodeApm_ts module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
                 module_src_types_apply_project_ts[&quot;src/types/apply-project.ts&quot;]
                 package__ankhorage_apm -.-&gt; module_src_types_apply_project_ts
                 module_src_types_apply_project_ts --&gt; module_src_types_apply_ts
@@ -16544,8 +16557,6 @@ graph TD
   package__ankhorage_apm --&gt; entrypoint_src_nodeApm_ts
   module_examples_basic_usage_status_ts[&quot;examples/basic-usage/status.ts&quot;]
   package__ankhorage_apm -.-&gt; module_examples_basic_usage_status_ts
-  module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-  module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
   module_package_json[&quot;package.json&quot;]
   package__ankhorage_apm -.-&gt; module_package_json
   module_paradox_config_ts[&quot;paradox.config.ts&quot;]
@@ -17193,7 +17204,6 @@ graph TD
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_types_update_extension_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts[&quot;src/features/update-protocol/application/updateExtensionExecution.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_application_updateExtensionExecution_test_ts
-  module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
   module_src_features_update_protocol_domain_isApmCompatibilityConstraint_ts[&quot;src/features/update-protocol/domain/isApmCompatibilityConstraint.ts&quot;]
@@ -17262,8 +17272,6 @@ graph TD
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_test_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_resolveMigrationPath_test_ts
-  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts[&quot;src/features/update-protocol/domain/resolveMigrationPath.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_resolveMigrationPath_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
@@ -17307,7 +17315,6 @@ graph TD
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
-  module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts --&gt; module_dist_apm_d_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts[&quot;src/features/update-protocol/domain/validatePackageUpdateMetadata.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
@@ -17325,8 +17332,6 @@ graph TD
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts
-  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts[&quot;src/features/update-protocol/domain/validateUpdateDescriptor.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateDescriptor_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
@@ -17341,8 +17346,6 @@ graph TD
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts[&quot;src/features/update-protocol/domain/validateUpdateExtensionBinding.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_features_update_protocol_domain_isApmUpdateExtension_ts
@@ -17385,6 +17388,9 @@ graph TD
   module_src_features_verify_composition_verifyProjectAsync_ts --&gt; module_src_types_verify_project_ts
   module_src_features_verify_composition_verifyProjectAsync_ts --&gt; module_src_types_verify_ts
   module_src_features_verify_composition_verifyProjectAsync_ts --&gt; module_src_utils_inspectProjectStatusAsync_ts
+  module_src_nodeApm_test_ts[&quot;src/nodeApm.test.ts&quot;]
+  package__ankhorage_apm -.-&gt; module_src_nodeApm_test_ts
+  module_src_nodeApm_test_ts --&gt; module_src_nodeApm_ts
   module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
   module_src_types_apply_project_ts[&quot;src/types/apply-project.ts&quot;]
   package__ankhorage_apm -.-&gt; module_src_types_apply_project_ts
@@ -17648,6 +17654,7 @@ graph TD
                 module_src_features_verify_adapters_outbound_createNodeVerifyStepPort_ts[&quot;src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts&quot;]
                 module_src_features_verify_application_verifyAsync_ts[&quot;src/features/verify/application/verifyAsync.ts&quot;]
                 module_src_features_verify_composition_verifyProjectAsync_ts[&quot;src/features/verify/composition/verifyProjectAsync.ts&quot;]
+                module_src_nodeApm_test_ts[&quot;src/nodeApm.test.ts&quot;]
                 module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
                 module_src_types_apply_project_ts[&quot;src/types/apply-project.ts&quot;]
                 module_src_types_apply_runtime_ts[&quot;src/types/apply-runtime.ts&quot;]
@@ -17675,8 +17682,6 @@ graph TD
                 module_src_utils_packageInstanceId_ts[&quot;src/utils/packageInstanceId.ts&quot;]
                 module_src_utils_readRegistryConfigAsync_ts[&quot;src/utils/readRegistryConfigAsync.ts&quot;]
                 module_src_utils_runPackageManagerCommandAsync_ts[&quot;src/utils/runPackageManagerCommandAsync.ts&quot;]
-                module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-                module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
                 module_src_cli_commands_apply_ts --&gt;
                 module_src_features_apply_composition_applyProjectAsync_ts
                 module_src_cli_commands_apply_ts --&gt;
@@ -18413,8 +18418,6 @@ graph TD
                 module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
                 --&gt; module_src_types_update_extension_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
-                --&gt; module_dist_types_public_d_ts
-                module_src_features_update_protocol_application_updateExtensionExecution_test_ts
                 --&gt;
                 module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
                 module_src_features_update_protocol_application_updateExtensionExecution_test_ts
@@ -18488,10 +18491,6 @@ graph TD
                 --&gt; module_src_types_update_protocol_ts
                 module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts
                 --&gt; module_src_types_update_validation_ts
-                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
-                module_dist_apm_d_ts
-                module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt;
-                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt;
                 module_src_features_update_protocol_utils_createProtocolBlocker_ts
                 module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt;
@@ -18546,8 +18545,6 @@ graph TD
                 module_src_types_update_protocol_ts
                 module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt;
                 module_src_types_update_validation_ts
-                module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
-                --&gt; module_dist_apm_d_ts
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt;
                 module_src_features_update_protocol_utils_createProtocolBlocker_ts
                 module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt;
@@ -18566,10 +18563,6 @@ graph TD
                 module_src_types_update_protocol_ts
                 module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt;
                 module_src_types_update_validation_ts
-                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
-                module_dist_apm_d_ts
-                module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt;
-                module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt;
                 module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt;
@@ -18590,10 +18583,6 @@ graph TD
                 module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts
                 module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt;
                 module_src_types_update_validation_ts
-                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-                --&gt; module_dist_apm_d_ts
-                module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-                --&gt; module_dist_types_public_d_ts
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt;
                 module_src_features_update_protocol_domain_isApmUpdateExtension_ts
                 module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt;
@@ -18639,8 +18628,9 @@ graph TD
                 module_src_features_verify_composition_verifyProjectAsync_ts --&gt;
                 module_src_types_verify_ts
                 module_src_features_verify_composition_verifyProjectAsync_ts --&gt;
-                module_src_utils_inspectProjectStatusAsync_ts module_src_types_apply_project_ts
-                --&gt; module_src_types_apply_ts module_src_types_apply_project_ts --&gt;
+                module_src_utils_inspectProjectStatusAsync_ts module_src_nodeApm_test_ts --&gt;
+                module_src_nodeApm_ts module_src_types_apply_project_ts --&gt;
+                module_src_types_apply_ts module_src_types_apply_project_ts --&gt;
                 module_src_types_status_project_ts module_src_types_apply_runtime_ts --&gt;
                 module_src_types_apply_ts module_src_types_apply_runtime_ts --&gt;
                 module_src_types_status_ts module_src_types_apply_ts --&gt; module_src_types_plan_ts
@@ -18845,6 +18835,7 @@ graph LR
   module_src_features_verify_adapters_outbound_createNodeVerifyStepPort_ts[&quot;src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts&quot;]
   module_src_features_verify_application_verifyAsync_ts[&quot;src/features/verify/application/verifyAsync.ts&quot;]
   module_src_features_verify_composition_verifyProjectAsync_ts[&quot;src/features/verify/composition/verifyProjectAsync.ts&quot;]
+  module_src_nodeApm_test_ts[&quot;src/nodeApm.test.ts&quot;]
   module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
   module_src_types_apply_project_ts[&quot;src/types/apply-project.ts&quot;]
   module_src_types_apply_runtime_ts[&quot;src/types/apply-runtime.ts&quot;]
@@ -18872,8 +18863,6 @@ graph LR
   module_src_utils_packageInstanceId_ts[&quot;src/utils/packageInstanceId.ts&quot;]
   module_src_utils_readRegistryConfigAsync_ts[&quot;src/utils/readRegistryConfigAsync.ts&quot;]
   module_src_utils_runPackageManagerCommandAsync_ts[&quot;src/utils/runPackageManagerCommandAsync.ts&quot;]
-  module_examples_basic_usage_status_ts --&gt; module_dist_apm_d_ts
-  module_examples_basic_usage_status_ts --&gt; module_dist_nodeApm_d_ts
   module_src_cli_commands_apply_ts --&gt; module_src_features_apply_composition_applyProjectAsync_ts
   module_src_cli_commands_apply_ts --&gt; module_src_features_plan_domain_parsePlanResult_ts
   module_src_cli_commands_apply_ts --&gt; module_src_types_apply_ts
@@ -19269,7 +19258,6 @@ graph LR
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_features_update_protocol_domain_validateMigrationPlanResult_ts
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --&gt; module_src_types_update_extension_ts
-  module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --&gt; module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
   module_src_features_update_protocol_domain_isApmCompatibilityConstraint_ts --&gt; module_src_types_update_protocol_ts
@@ -19306,8 +19294,6 @@ graph LR
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_extension_ts
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --&gt; module_src_types_update_validation_ts
-  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --&gt; module_src_types_update_validation_ts
@@ -19335,7 +19321,6 @@ graph LR
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_features_update_protocol_utils_migrationIdentity_ts
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --&gt; module_src_types_update_validation_ts
-  module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts --&gt; module_dist_apm_d_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --&gt; module_src_types_update_validation_ts
@@ -19345,8 +19330,6 @@ graph LR
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_types_update_protocol_ts
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --&gt; module_src_types_update_validation_ts
-  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_validateCompatibilityConstraints_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_domain_validateHistoryDescriptor_ts
@@ -19357,8 +19340,6 @@ graph LR
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_features_update_protocol_utils_isProtocolPackageSubpath_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --&gt; module_src_types_update_validation_ts
-  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --&gt; module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_features_update_protocol_domain_isApmUpdateExtension_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_features_update_protocol_utils_createProtocolBlocker_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --&gt; module_src_types_update_extension_ts
@@ -19383,6 +19364,7 @@ graph LR
   module_src_features_verify_composition_verifyProjectAsync_ts --&gt; module_src_types_verify_project_ts
   module_src_features_verify_composition_verifyProjectAsync_ts --&gt; module_src_types_verify_ts
   module_src_features_verify_composition_verifyProjectAsync_ts --&gt; module_src_utils_inspectProjectStatusAsync_ts
+  module_src_nodeApm_test_ts --&gt; module_src_nodeApm_ts
   module_src_types_apply_project_ts --&gt; module_src_types_apply_ts
   module_src_types_apply_project_ts --&gt; module_src_types_status_project_ts
   module_src_types_apply_runtime_ts --&gt; module_src_types_apply_ts
@@ -19590,6 +19572,7 @@ graph LR
                 module_src_features_verify_adapters_outbound_createNodeVerifyStepPort_ts[&quot;src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts&quot;]
                 module_src_features_verify_application_verifyAsync_ts[&quot;src/features/verify/application/verifyAsync.ts&quot;]
                 module_src_features_verify_composition_verifyProjectAsync_ts[&quot;src/features/verify/composition/verifyProjectAsync.ts&quot;]
+                module_src_nodeApm_test_ts[&quot;src/nodeApm.test.ts&quot;]
                 module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
                 module_src_types_apply_project_ts[&quot;src/types/apply-project.ts&quot;]
                 module_src_types_apply_runtime_ts[&quot;src/types/apply-runtime.ts&quot;]
@@ -20199,6 +20182,10 @@ graph LR
                 module_src_features_plan_adapters_outbound_createNativePlanResolutionPort_ts --&gt;
                 export_createNativePlanResolutionPort export_createNativePlanResolutionPort -.-&gt;
                 export_ApmPlanResolutionPort
+                export_createNodeApplyLockPort[&quot;createNodeApplyLockPort&quot;]
+                module_src_features_apply_adapters_outbound_createNodeApplyLockPort_ts --&gt;
+                export_createNodeApplyLockPort export_createNodeApplyLockPort -.-&gt;
+                export_ApmApplyLockPort
                 export_createNpmRegistryAvailabilityPort[&quot;createNpmRegistryAvailabilityPort&quot;]
                 module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts
                 --&gt; export_createNpmRegistryAvailabilityPort
@@ -20452,6 +20439,7 @@ graph LR
   module_src_features_verify_adapters_outbound_createNodeVerifyStepPort_ts[&quot;src/features/verify/adapters/outbound/createNodeVerifyStepPort.ts&quot;]
   module_src_features_verify_application_verifyAsync_ts[&quot;src/features/verify/application/verifyAsync.ts&quot;]
   module_src_features_verify_composition_verifyProjectAsync_ts[&quot;src/features/verify/composition/verifyProjectAsync.ts&quot;]
+  module_src_nodeApm_test_ts[&quot;src/nodeApm.test.ts&quot;]
   module_src_nodeApm_ts[&quot;src/nodeApm.ts&quot;]
   module_src_types_apply_project_ts[&quot;src/types/apply-project.ts&quot;]
   module_src_types_apply_runtime_ts[&quot;src/types/apply-runtime.ts&quot;]
@@ -21083,6 +21071,9 @@ graph LR
   export_createNativePlanResolutionPort[&quot;createNativePlanResolutionPort&quot;]
   module_src_features_plan_adapters_outbound_createNativePlanResolutionPort_ts --&gt; export_createNativePlanResolutionPort
   export_createNativePlanResolutionPort -.-&gt; export_ApmPlanResolutionPort
+  export_createNodeApplyLockPort[&quot;createNodeApplyLockPort&quot;]
+  module_src_features_apply_adapters_outbound_createNodeApplyLockPort_ts --&gt; export_createNodeApplyLockPort
+  export_createNodeApplyLockPort -.-&gt; export_ApmApplyLockPort
   export_createNpmRegistryAvailabilityPort[&quot;createNpmRegistryAvailabilityPort&quot;]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts --&gt; export_createNpmRegistryAvailabilityPort
   export_createNpmRegistryAvailabilityPort -.-&gt; export_ApmRegistryAvailabilityOptions
@@ -31627,6 +31618,19 @@ sequenceDiagram
                 Compose durable Node journal/status/postcondition adapters behind the shared
                 headless verify use case.
               </p>
+            </article>
+          </section>
+        </section>
+        <section id="view-src-nodeapm-test-ts" class="view" data-view="src/nodeApm.test.ts" hidden>
+          <section class="panel">
+            <h2>src/nodeApm.test.ts</h2>
+            <article
+              class="item"
+              data-search="acquireAsync src/nodeApm.test.ts Acquire the public Node writer lock with one concise fixture identity."
+            >
+              <h3>acquireAsync</h3>
+              <p class="muted"><code>src/nodeApm.test.ts:53:1</code></p>
+              <p>Acquire the public Node writer lock with one concise fixture identity.</p>
             </article>
           </section>
         </section>

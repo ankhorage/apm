@@ -2402,6 +2402,19 @@ Create the Node native package-manager resolution adapter used by headless proje
 - `() => ApmPlanResolutionPort`
   - returns: `ApmPlanResolutionPort`
 
+## createNodeApplyLockPort
+
+Kind: `function`
+Module: `src/features/apply/adapters/outbound/createNodeApplyLockPort.ts`
+Source: `src/features/apply/adapters/outbound/createNodeApplyLockPort.ts:19:1`
+
+Create the Node project-writer lock adapter with conservative same-host stale recovery.
+
+### Signatures
+
+- `() => ApmApplyLockPort`
+  - returns: `ApmApplyLockPort`
+
 ## createNpmRegistryAvailabilityPort
 
 Kind: `function`

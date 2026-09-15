@@ -7537,6 +7537,31 @@
     "structuredRows": []
   },
   {
+    "name": "createNodeApplyLockPort",
+    "description": "Create the Node project-writer lock adapter with conservative same-host stale recovery.",
+    "isReadme": false,
+    "examples": [],
+    "kind": "function",
+    "modulePath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts",
+    "sourceLocation": {
+      "filePath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts",
+      "line": 19,
+      "column": 1
+    },
+    "exportPaths": ["src/nodeApm.ts"],
+    "relatedSymbols": ["ApmApplyLockPort"],
+    "signatures": [
+      {
+        "label": "() => ApmApplyLockPort",
+        "parameters": [],
+        "returnType": "ApmApplyLockPort",
+        "returnDescription": null
+      }
+    ],
+    "members": [],
+    "structuredRows": []
+  },
+  {
     "name": "createNpmRegistryAvailabilityPort",
     "description": "Create a bounded npm-compatible registry adapter with redacted config and process-local TTL cache.",
     "isReadme": false,
