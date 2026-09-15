@@ -21,7 +21,7 @@ export function buildPlanResolutionRequests(
   }>(
     (result, root) => {
       const rootTargets = targets.filter(({ installRootId }) => installRootId === root.id);
-      if (rootTargets.length === 0 && !needsInstallRepair(status, policy, root.id)) return result;
+      if (rootTargets.length === 0 && !needsInstallRepair(status, policy, root)) return result;
       const request = resolutionRequest(status, root, rootTargets);
       return request === undefined
         ? {
@@ -54,20 +54,19 @@ function resolutionRequest(
   };
 }
 
-/*** Detect missing installations that can be repaired without changing dependency policy. */
+/*** Detect missing installations or lockfiles that can be repaired without changing dependency policy. */
 function needsInstallRepair(
   status: ApmStatusResult,
   policy: ApmPlanPolicy,
-  installRootId: string,
+  root: ApmInstallRootInventory,
 ): boolean {
-  return (
-    policy.repairInstallations &&
-    status.dependencies.some(
-      (dependency) =>
-        dependency.installRootId === installRootId &&
-        !dependency.declaration?.kind.includes('optional') &&
-        dependency.installed.state === 'absent',
-    )
+  if (!policy.repairInstallations) return false;
+  if (root.lockfile.state === 'missing' && root.declarations.length > 0) return true;
+  return status.dependencies.some(
+    (dependency) =>
+      dependency.installRootId === root.id &&
+      !dependency.declaration?.kind.includes('optional') &&
+      dependency.installed.state === 'absent',
   );
 }
 
