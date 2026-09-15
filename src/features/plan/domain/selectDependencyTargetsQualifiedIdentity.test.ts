@@ -1,7 +1,11 @@
 import { expect, test } from 'bun:test';
 
 import type { ApmPlanPolicy } from '../../../types/plan.js';
-import type { ApmInstallRootInventory, ApmStatusDependency, ApmStatusResult } from '../../../types/status.js';
+import type {
+  ApmInstallRootInventory,
+  ApmStatusDependency,
+  ApmStatusResult,
+} from '../../../types/status.js';
 import { selectDependencyTargets } from './selectDependencyTargets.js';
 
 const SAFE_POLICY: ApmPlanPolicy = {
@@ -13,8 +17,11 @@ const SAFE_POLICY: ApmPlanPolicy = {
 };
 
 test('safe planning resolves qualified status ids through manager-native declaration identity', () => {
-  const dependency = dependencyFixture('root-a', 'registry');
-  const result = selectDependencyTargets(statusFixture([dependency], [rootFixture(dependency, 'registry')]), SAFE_POLICY);
+  const dependency = dependencyFixture('root-a');
+  const result = selectDependencyTargets(
+    statusFixture([dependency], [rootFixture(dependency, 'registry')]),
+    SAFE_POLICY,
+  );
 
   expect(result.blockers).toEqual([]);
   expect(result.targets).toEqual([
@@ -36,8 +43,8 @@ test('safe planning resolves qualified status ids through manager-native declara
 });
 
 test('safe planning keeps native identities scoped to their own install root', () => {
-  const registryDependency = dependencyFixture('root-a', 'registry');
-  const fileDependency = dependencyFixture('root-b', 'file');
+  const registryDependency = dependencyFixture('root-a');
+  const fileDependency = dependencyFixture('root-b');
   const result = selectDependencyTargets(
     statusFixture(
       [registryDependency, fileDependency],
@@ -47,7 +54,9 @@ test('safe planning keeps native identities scoped to their own install root', (
   );
 
   expect(result.blockers).toEqual([]);
-  expect(result.targets.map(({ installRootId, packageId }) => ({ installRootId, packageId }))).toEqual([
+  expect(
+    result.targets.map(({ installRootId, packageId }) => ({ installRootId, packageId })),
+  ).toEqual([
     {
       installRootId: 'root-a',
       packageId: 'root-a::node_modules/example-package',
@@ -56,10 +65,7 @@ test('safe planning keeps native identities scoped to their own install root', (
 });
 
 /*** Build one production-shaped qualified direct dependency around a manager-native lock identity. */
-function dependencyFixture(
-  installRootId: string,
-  source: ApmInstallRootInventory['lockedPackages'][number]['source'],
-): ApmStatusDependency {
+function dependencyFixture(installRootId: string): ApmStatusDependency {
   const nativePackageId = 'node_modules/example-package';
   const packageId = `${installRootId}::${nativePackageId}`;
   return {
@@ -89,7 +95,7 @@ function dependencyFixture(
       compatibleVersion: '1.2.0',
     },
     dependencyPaths: [[packageId]],
-    findings: source === 'registry' ? [] : [],
+    findings: [],
   };
 }
 
