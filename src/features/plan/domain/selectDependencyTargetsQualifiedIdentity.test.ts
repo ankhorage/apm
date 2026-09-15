@@ -105,7 +105,8 @@ function rootFixture(
   source: ApmInstallRootInventory['lockedPackages'][number]['source'],
 ): ApmInstallRootInventory {
   const nativePackageId = dependency.declaration?.resolvedPackageId;
-  if (nativePackageId === undefined) throw new Error('Fixture requires direct resolution evidence.');
+  if (nativePackageId === undefined)
+    throw new Error('Fixture requires direct resolution evidence.');
   return {
     id: dependency.installRootId,
     rootPath: `/project/${dependency.installRootId}`,
