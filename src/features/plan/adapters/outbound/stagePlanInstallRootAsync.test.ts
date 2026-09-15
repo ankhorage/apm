@@ -8,9 +8,10 @@ import { expect, test } from 'bun:test';
 import type { ApmPlanResolutionRequest } from '../../../../types/plan.js';
 import { applyStagedPlanTargetsAsync } from './applyStagedPlanTargetsAsync.js';
 import { collectStagedPlanFileChangesAsync } from './collectStagedPlanFileChangesAsync.js';
+import { restoreStagedPlanManifestExpectationsAsync } from './restoreStagedPlanManifestExpectationsAsync.js';
 import { stagePlanInstallRootAsync } from './stagePlanInstallRootAsync.js';
 
-test('planning staging copies package-manager evidence only and leaves source project bytes unchanged', async () => {
+test('planning staging pins exact resolver targets while preserving reviewed manifest output', async () => {
   const project = await createProjectFixtureAsync();
   const originalManifest = await readFile(path.join(project, 'package.json'), 'utf8');
   const originalSource = await readFile(path.join(project, 'src', 'danger.ts'), 'utf8');
@@ -22,6 +23,12 @@ test('planning staging copies package-manager evidence only and leaves source pr
     expect(await pathExists(path.join(stage.rootPath, 'src', 'danger.ts'))).toBe(false);
 
     const expectations = await applyStagedPlanTargetsAsync(requestFixture(project), stage);
+    expect(await readFile(path.join(stage.rootPath, 'package.json'), 'utf8')).toContain(
+      '"example-package": "1.2.0"',
+    );
+    expect(expectations.get('package.json')).toContain('"example-package": "^1.2.0"');
+
+    await restoreStagedPlanManifestExpectationsAsync(stage, expectations);
     const changes = await collectStagedPlanFileChangesAsync(
       requestFixture(project),
       stage,
@@ -45,6 +52,7 @@ test('native resolver manifest changes beyond reviewed APM ranges are blockers',
 
   try {
     const expectations = await applyStagedPlanTargetsAsync(requestFixture(project), stage);
+    await restoreStagedPlanManifestExpectationsAsync(stage, expectations);
     const manifestPath = path.join(stage.rootPath, 'package.json');
     const reviewed = await readFile(manifestPath, 'utf8');
     await writeFile(

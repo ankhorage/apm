@@ -46,7 +46,7 @@ test('transitive native resolution remains a lock operation instead of adding a 
   expect(buildPackageManagerPlanCommands(requestFixture('yarn', false))).toEqual([
     {
       executable: 'yarn',
-      args: ['up', 'example-package@1.2.0', '-R', '--mode=update-lockfile'],
+      args: ['up', 'example-package@1.2.0', '-R'],
     },
   ]);
 });
