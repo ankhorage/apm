@@ -8,8 +8,6 @@ graph TD
   package__ankhorage_apm --> entrypoint_src_nodeApm_ts
   module_examples_basic_usage_status_ts["examples/basic-usage/status.ts"]
   package__ankhorage_apm -.-> module_examples_basic_usage_status_ts
-  module_examples_basic_usage_status_ts --> module_dist_apm_d_ts
-  module_examples_basic_usage_status_ts --> module_dist_nodeApm_d_ts
   module_package_json["package.json"]
   package__ankhorage_apm -.-> module_package_json
   module_paradox_config_ts["paradox.config.ts"]
@@ -657,7 +655,6 @@ graph TD
   module_src_features_update_protocol_application_planMigrationExtensionAsync_ts --> module_src_types_update_extension_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts["src/features/update-protocol/application/updateExtensionExecution.test.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_application_updateExtensionExecution_test_ts
-  module_src_features_update_protocol_application_updateExtensionExecution_test_ts --> module_dist_types_public_d_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --> module_src_features_update_protocol_application_executeMigrationExtensionAsync_ts
   module_src_features_update_protocol_application_updateExtensionExecution_test_ts --> module_src_features_update_protocol_application_planMigrationExtensionAsync_ts
   module_src_features_update_protocol_domain_isApmCompatibilityConstraint_ts["src/features/update-protocol/domain/isApmCompatibilityConstraint.ts"]
@@ -726,8 +723,6 @@ graph TD
   module_src_features_update_protocol_domain_resolveMigrationExtensionHandler_ts --> module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_test_ts["src/features/update-protocol/domain/resolveMigrationPath.test.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_resolveMigrationPath_test_ts
-  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --> module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_resolveMigrationPath_test_ts --> module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts["src/features/update-protocol/domain/resolveMigrationPath.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_resolveMigrationPath_ts
   module_src_features_update_protocol_domain_resolveMigrationPath_ts --> module_src_features_update_protocol_utils_createProtocolBlocker_ts
@@ -771,7 +766,6 @@ graph TD
   module_src_features_update_protocol_domain_validateMigrationPrerequisites_ts --> module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts["src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts
-  module_src_features_update_protocol_domain_validatePackageUpdateMetadata_test_ts --> module_dist_apm_d_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts["src/features/update-protocol/domain/validatePackageUpdateMetadata.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts
   module_src_features_update_protocol_domain_validatePackageUpdateMetadata_ts --> module_src_features_update_protocol_utils_createProtocolBlocker_ts
@@ -789,8 +783,6 @@ graph TD
   module_src_features_update_protocol_domain_validateReleaseEffects_ts --> module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts["src/features/update-protocol/domain/validateUpdateDescriptor.test.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts
-  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --> module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_validateUpdateDescriptor_test_ts --> module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts["src/features/update-protocol/domain/validateUpdateDescriptor.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_validateUpdateDescriptor_ts
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --> module_src_features_update_protocol_domain_parseUpdateDescriptor_ts
@@ -805,8 +797,6 @@ graph TD
   module_src_features_update_protocol_domain_validateUpdateDescriptor_ts --> module_src_types_update_validation_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts["src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts
-  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --> module_dist_apm_d_ts
-  module_src_features_update_protocol_domain_validateUpdateExtensionBinding_test_ts --> module_dist_types_public_d_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts["src/features/update-protocol/domain/validateUpdateExtensionBinding.ts"]
   package__ankhorage_apm -.-> module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts
   module_src_features_update_protocol_domain_validateUpdateExtensionBinding_ts --> module_src_features_update_protocol_domain_isApmUpdateExtension_ts
@@ -849,6 +839,9 @@ graph TD
   module_src_features_verify_composition_verifyProjectAsync_ts --> module_src_types_verify_project_ts
   module_src_features_verify_composition_verifyProjectAsync_ts --> module_src_types_verify_ts
   module_src_features_verify_composition_verifyProjectAsync_ts --> module_src_utils_inspectProjectStatusAsync_ts
+  module_src_nodeApm_test_ts["src/nodeApm.test.ts"]
+  package__ankhorage_apm -.-> module_src_nodeApm_test_ts
+  module_src_nodeApm_test_ts --> module_src_nodeApm_ts
   module_src_nodeApm_ts["src/nodeApm.ts"]
   module_src_types_apply_project_ts["src/types/apply-project.ts"]
   package__ankhorage_apm -.-> module_src_types_apply_project_ts

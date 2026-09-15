@@ -95,13 +95,13 @@ Source: `src/types/apply.ts:118:1`
 
 ### Members
 
-| Name       | Kind     | Type                                                                                                             | Required | Description |
-| ---------- | -------- | ---------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| code       | property | `ApmApplyBlockerCode`                                                                                            | yes      |             |
-| evidence   | property | `readonly string[]`                                                                                              | yes      |             |
-| nextAction | property | `string`                                                                                                         | no       |             |
-| reason     | property | `string`                                                                                                         | yes      |             |
-| scope      | property | `{ readonly kind: "project" \| "operation" \| "step" \| "host"; readonly id?: string; readonly path?: string; }` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| code | property | `ApmApplyBlockerCode` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
+| scope | property | `{ readonly kind: "project" \| "operation" \| "step" \| "host"; readonly id?: string; readonly path?: string; }` | yes |  |
 
 ## ApmApplyBlockerCode
 
@@ -117,9 +117,9 @@ Source: `src/types/apply.ts:205:1`
 
 ### Members
 
-| Name                         | Kind     | Type                                        | Required | Description |
-| ---------------------------- | -------- | ------------------------------------------- | -------- | ----------- |
-| isCancellationRequestedAsync | property | `(operationId: string) => Promise<boolean>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| isCancellationRequestedAsync | property | `(operationId: string) => Promise<boolean>` | yes |  |
 
 ## ApmApplyClockPort
 
@@ -129,9 +129,9 @@ Source: `src/types/apply.ts:130:1`
 
 ### Members
 
-| Name   | Kind     | Type           | Required | Description |
-| ------ | -------- | -------------- | -------- | ----------- |
-| nowIso | property | `() => string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| nowIso | property | `() => string` | yes |  |
 
 ## ApmApplyExecutorIdentityPort
 
@@ -141,9 +141,9 @@ Source: `src/types/apply.ts:175:1`
 
 ### Members
 
-| Name    | Kind     | Type                            | Required | Description |
-| ------- | -------- | ------------------------------- | -------- | ----------- |
-| current | property | `() => ApmPlanExecutorIdentity` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| current | property | `() => ApmPlanExecutorIdentity` | yes |  |
 
 ## ApmApplyFailure
 
@@ -153,12 +153,12 @@ Source: `src/types/apply.ts:41:1`
 
 ### Members
 
-| Name       | Kind     | Type                | Required | Description |
-| ---------- | -------- | ------------------- | -------- | ----------- |
-| code       | property | `string`            | yes      |             |
-| evidence   | property | `readonly string[]` | yes      |             |
-| nextAction | property | `string`            | no       |             |
-| reason     | property | `string`            | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| code | property | `string` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
 
 ## ApmApplyInput
 
@@ -174,18 +174,18 @@ Source: `src/types/apply.ts:57:1`
 
 ### Members
 
-| Name          | Kind     | Type                             | Required | Description |
-| ------------- | -------- | -------------------------------- | -------- | ----------- |
-| createdAt     | property | `string`                         | yes      |             |
-| failure       | property | `ApmApplyFailure`                | no       |             |
-| operationId   | property | `string`                         | yes      |             |
-| permissions   | property | `ApmApplyPermissions`            | yes      |             |
-| plan          | property | `ApmPlanResult`                  | yes      |             |
-| rootPath      | property | `string`                         | yes      |             |
-| schemaVersion | property | `1`                              | yes      |             |
-| status        | property | `ApmApplyJournalStatus`          | yes      |             |
-| steps         | property | `readonly ApmApplyStepJournal[]` | yes      |             |
-| updatedAt     | property | `string`                         | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| createdAt | property | `string` | yes |  |
+| failure | property | `ApmApplyFailure` | no |  |
+| operationId | property | `string` | yes |  |
+| permissions | property | `ApmApplyPermissions` | yes |  |
+| plan | property | `ApmPlanResult` | yes |  |
+| rootPath | property | `string` | yes |  |
+| schemaVersion | property | `1` | yes |  |
+| status | property | `ApmApplyJournalStatus` | yes |  |
+| steps | property | `readonly ApmApplyStepJournal[]` | yes |  |
+| updatedAt | property | `string` | yes |  |
 
 ## ApmApplyJournalPort
 
@@ -195,11 +195,11 @@ Source: `src/types/apply.ts:154:1`
 
 ### Members
 
-| Name        | Kind     | Type                                                                               | Required | Description |
-| ----------- | -------- | ---------------------------------------------------------------------------------- | -------- | ----------- |
-| createAsync | property | `(journal: ApmApplyJournal) => Promise<void>`                                      | yes      |             |
-| readAsync   | property | `(rootPath: string, operationId: string) => Promise<ApmApplyJournal \| undefined>` | yes      |             |
-| writeAsync  | property | `(journal: ApmApplyJournal) => Promise<void>`                                      | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| createAsync | property | `(journal: ApmApplyJournal) => Promise<void>` | yes |  |
+| readAsync | property | `(rootPath: string, operationId: string) => Promise<ApmApplyJournal \| undefined>` | yes |  |
+| writeAsync | property | `(journal: ApmApplyJournal) => Promise<void>` | yes |  |
 
 ## ApmApplyJournalStatus
 
@@ -221,14 +221,14 @@ Source: `src/types/apply.ts:70:1`
 
 ### Members
 
-| Name          | Kind     | Type     | Required | Description |
-| ------------- | -------- | -------- | -------- | ----------- |
-| acquiredAt    | property | `string` | yes      |             |
-| hostname      | property | `string` | yes      |             |
-| operationId   | property | `string` | yes      |             |
-| pid           | property | `number` | yes      |             |
-| planId        | property | `string` | yes      |             |
-| schemaVersion | property | `1`      | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| acquiredAt | property | `string` | yes |  |
+| hostname | property | `string` | yes |  |
+| operationId | property | `string` | yes |  |
+| pid | property | `number` | yes |  |
+| planId | property | `string` | yes |  |
+| schemaVersion | property | `1` | yes |  |
 
 ## ApmApplyLockPort
 
@@ -238,11 +238,11 @@ Source: `src/types/apply.ts:138:1`
 
 ### Members
 
-| Name              | Kind     | Type                                                                                                                                                                         | Required | Description |
-| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| acquireAsync      | property | `(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly resume: boolean; }) => Promise<ApmApplyLockAcquireResult>`             | yes      |             |
-| recoverStaleAsync | property | `(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly stale: ApmApplyLockIdentity; }) => Promise<ApmApplyLockAcquireResult>` | yes      |             |
-| releaseAsync      | property | `(rootPath: string, operationId: string) => Promise<void>`                                                                                                                   | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| acquireAsync | property | `(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly resume: boolean; }) => Promise<ApmApplyLockAcquireResult>` | yes |  |
+| recoverStaleAsync | property | `(input: { readonly rootPath: string; readonly operationId: string; readonly planId: string; readonly stale: ApmApplyLockIdentity; }) => Promise<ApmApplyLockAcquireResult>` | yes |  |
+| releaseAsync | property | `(rootPath: string, operationId: string) => Promise<void>` | yes |  |
 
 ## ApmApplyOperationIdPort
 
@@ -252,9 +252,9 @@ Source: `src/types/apply.ts:134:1`
 
 ### Members
 
-| Name              | Kind     | Type           | Required | Description |
-| ----------------- | -------- | -------------- | -------- | ----------- |
-| createOperationId | property | `() => string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| createOperationId | property | `() => string` | yes |  |
 
 ## ApmApplyPermissions
 
@@ -264,11 +264,11 @@ Source: `src/types/apply.ts:9:1`
 
 ### Members
 
-| Name             | Kind     | Type      | Required | Description |
-| ---------------- | -------- | --------- | -------- | ----------- |
-| externalEffects  | property | `boolean` | yes      |             |
-| lifecycleScripts | property | `boolean` | yes      |             |
-| ownerCode        | property | `boolean` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| externalEffects | property | `boolean` | yes |  |
+| lifecycleScripts | property | `boolean` | yes |  |
+| ownerCode | property | `boolean` | yes |  |
 
 ## ApmApplyPlanValidationPort
 
@@ -278,9 +278,9 @@ Source: `src/types/apply.ts:167:1`
 
 ### Members
 
-| Name          | Kind     | Type                                                                                                                                                             | Required | Description |
-| ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| validateAsync | property | `(input: { readonly plan: ApmPlanResult; readonly status: ApmStatusResult; readonly executor: ApmPlanExecutorIdentity; }) => Promise<readonly ApmPlanBlocker[]>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| validateAsync | property | `(input: { readonly plan: ApmPlanResult; readonly status: ApmStatusResult; readonly executor: ApmPlanExecutorIdentity; }) => Promise<readonly ApmPlanBlocker[]>` | yes |  |
 
 ## ApmApplyPorts
 
@@ -290,18 +290,18 @@ Source: `src/types/apply.ts:209:1`
 
 ### Members
 
-| Name           | Kind     | Type                           | Required | Description |
-| -------------- | -------- | ------------------------------ | -------- | ----------- |
-| cancellation   | property | `ApmApplyCancellationPort`     | no       |             |
-| clock          | property | `ApmApplyClockPort`            | yes      |             |
-| executor       | property | `ApmApplyExecutorIdentityPort` | yes      |             |
-| journal        | property | `ApmApplyJournalPort`          | yes      |             |
-| lock           | property | `ApmApplyLockPort`             | yes      |             |
-| operationId    | property | `ApmApplyOperationIdPort`      | yes      |             |
-| planValidation | property | `ApmApplyPlanValidationPort`   | yes      |             |
-| progress       | property | `ApmApplyProgressPort`         | no       |             |
-| status         | property | `ApmApplyStatusPort`           | yes      |             |
-| step           | property | `ApmApplyStepPort`             | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| cancellation | property | `ApmApplyCancellationPort` | no |  |
+| clock | property | `ApmApplyClockPort` | yes |  |
+| executor | property | `ApmApplyExecutorIdentityPort` | yes |  |
+| journal | property | `ApmApplyJournalPort` | yes |  |
+| lock | property | `ApmApplyLockPort` | yes |  |
+| operationId | property | `ApmApplyOperationIdPort` | yes |  |
+| planValidation | property | `ApmApplyPlanValidationPort` | yes |  |
+| progress | property | `ApmApplyProgressPort` | no |  |
+| status | property | `ApmApplyStatusPort` | yes |  |
+| step | property | `ApmApplyStepPort` | yes |  |
 
 ## ApmApplyProgressEvent
 
@@ -311,12 +311,12 @@ Source: `src/types/apply.ts:194:1`
 
 ### Members
 
-| Name        | Kind     | Type                                                                                                                                                            | Required | Description |
-| ----------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| message     | property | `string`                                                                                                                                                        | yes      |             |
-| operationId | property | `string`                                                                                                                                                        | yes      |             |
-| state       | property | `"pending" \| "intended" \| "effect-started" \| "effect-observed" \| "committed" \| "failed" \| "cancelled" \| "recovery-required" \| "running" \| "completed"` | yes      |             |
-| stepId      | property | `string`                                                                                                                                                        | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| message | property | `string` | yes |  |
+| operationId | property | `string` | yes |  |
+| state | property | `"pending" \| "intended" \| "effect-started" \| "effect-observed" \| "committed" \| "failed" \| "cancelled" \| "recovery-required" \| "running" \| "completed"` | yes |  |
+| stepId | property | `string` | no |  |
 
 ## ApmApplyProgressPort
 
@@ -326,9 +326,9 @@ Source: `src/types/apply.ts:201:1`
 
 ### Members
 
-| Name         | Kind     | Type                                              | Required | Description |
-| ------------ | -------- | ------------------------------------------------- | -------- | ----------- |
-| publishAsync | property | `(event: ApmApplyProgressEvent) => Promise<void>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| publishAsync | property | `(event: ApmApplyProgressEvent) => Promise<void>` | yes |  |
 
 ## ApmApplyProjectOptions
 
@@ -338,12 +338,12 @@ Source: `src/types/apply-project.ts:4:1`
 
 ### Members
 
-| Name         | Kind     | Type                       | Required | Description |
-| ------------ | -------- | -------------------------- | -------- | ----------- |
-| cancellation | property | `ApmApplyCancellationPort` | no       |             |
-| ownerStep    | property | `ApmApplyStepPort`         | no       |             |
-| progress     | property | `ApmApplyProgressPort`     | no       |             |
-| status       | property | `ApmProjectStatusPort`     | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| cancellation | property | `ApmApplyCancellationPort` | no |  |
+| ownerStep | property | `ApmApplyStepPort` | no |  |
+| progress | property | `ApmApplyProgressPort` | no |  |
+| status | property | `ApmProjectStatusPort` | no |  |
 
 ## ApmApplyResult
 
@@ -353,18 +353,18 @@ Source: `src/types/apply.ts:225:1`
 
 ### Members
 
-| Name          | Kind     | Type                             | Required | Description |
-| ------------- | -------- | -------------------------------- | -------- | ----------- |
-| blockers      | property | `readonly ApmApplyBlocker[]`     | yes      |             |
-| complete      | property | `boolean`                        | yes      |             |
-| diagnostics   | property | `readonly ApmStatusDiagnostic[]` | yes      |             |
-| journal       | property | `ApmApplyJournal`                | no       |             |
-| operation     | property | `"apply"`                        | yes      |             |
-| operationId   | property | `string`                         | yes      |             |
-| planId        | property | `string`                         | no       |             |
-| rootPath      | property | `string`                         | yes      |             |
-| schemaVersion | property | `1`                              | yes      |             |
-| status        | property | `ApmApplyResultStatus`           | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| blockers | property | `readonly ApmApplyBlocker[]` | yes |  |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| journal | property | `ApmApplyJournal` | no |  |
+| operation | property | `"apply"` | yes |  |
+| operationId | property | `string` | yes |  |
+| planId | property | `string` | no |  |
+| rootPath | property | `string` | yes |  |
+| schemaVersion | property | `1` | yes |  |
+| status | property | `ApmApplyResultStatus` | yes |  |
 
 ## ApmApplyResultStatus
 
@@ -380,9 +380,9 @@ Source: `src/types/apply.ts:163:1`
 
 ### Members
 
-| Name               | Kind     | Type                                             | Required | Description |
-| ------------------ | -------- | ------------------------------------------------ | -------- | ----------- |
-| inspectStatusAsync | property | `(rootPath: string) => Promise<ApmStatusResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inspectStatusAsync | property | `(rootPath: string) => Promise<ApmStatusResult>` | yes |  |
 
 ## ApmApplyStepExecutionResult
 
@@ -392,12 +392,12 @@ Source: `src/types/apply.ts:96:1`
 
 ### Members
 
-| Name        | Kind     | Type                                   | Required | Description |
-| ----------- | -------- | -------------------------------------- | -------- | ----------- |
-| diagnostics | property | `readonly ApmStatusDiagnostic[]`       | yes      |             |
-| evidence    | property | `readonly string[]`                    | yes      |             |
-| failure     | property | `ApmApplyFailure`                      | no       |             |
-| state       | property | `"unknown" \| "failed" \| "completed"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| failure | property | `ApmApplyFailure` | no |  |
+| state | property | `"unknown" \| "failed" \| "completed"` | yes |  |
 
 ## ApmApplyStepJournal
 
@@ -407,14 +407,14 @@ Source: `src/types/apply.ts:48:1`
 
 ### Members
 
-| Name      | Kind     | Type                | Required | Description |
-| --------- | -------- | ------------------- | -------- | ----------- |
-| attempts  | property | `number`            | yes      |             |
-| evidence  | property | `readonly string[]` | yes      |             |
-| failure   | property | `ApmApplyFailure`   | no       |             |
-| state     | property | `ApmApplyStepState` | yes      |             |
-| stepId    | property | `string`            | yes      |             |
-| updatedAt | property | `string`            | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| attempts | property | `number` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| failure | property | `ApmApplyFailure` | no |  |
+| state | property | `ApmApplyStepState` | yes |  |
+| stepId | property | `string` | yes |  |
+| updatedAt | property | `string` | yes |  |
 
 ## ApmApplyStepObservation
 
@@ -424,11 +424,11 @@ Source: `src/types/apply.ts:90:1`
 
 ### Members
 
-| Name     | Kind     | Type                                                  | Required | Description |
-| -------- | -------- | ----------------------------------------------------- | -------- | ----------- |
-| evidence | property | `readonly string[]`                                   | yes      |             |
-| reason   | property | `string`                                              | no       |             |
-| state    | property | `"unknown" \| "pending" \| "conflict" \| "satisfied"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| reason | property | `string` | no |  |
+| state | property | `"unknown" \| "pending" \| "conflict" \| "satisfied"` | yes |  |
 
 ## ApmApplyStepPort
 
@@ -438,11 +438,11 @@ Source: `src/types/apply.ts:179:1`
 
 ### Members
 
-| Name          | Kind     | Type                                                                                                                  | Required | Description |
-| ------------- | -------- | --------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| executeAsync  | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>` | yes      |             |
-| observeAsync  | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepObservation>`     | yes      |             |
-| rollbackAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| executeAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>` | yes |  |
+| observeAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepObservation>` | yes |  |
+| rollbackAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly step: ApmPlanStep; }) => Promise<ApmApplyStepExecutionResult>` | yes |  |
 
 ## ApmApplyStepState
 
@@ -458,11 +458,11 @@ Source: `src/types/status.ts:182:1`
 
 ### Members
 
-| Name        | Kind     | Type                                        | Required | Description |
-| ----------- | -------- | ------------------------------------------- | -------- | ----------- |
-| complete    | property | `boolean`                                   | yes      |             |
-| diagnostics | property | `readonly ApmStatusDiagnostic[]`            | yes      |             |
-| packages    | property | `readonly ApmPackageAvailabilityEvidence[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| packages | property | `readonly ApmPackageAvailabilityEvidence[]` | yes |  |
 
 ## ApmAvailabilityRequest
 
@@ -472,14 +472,14 @@ Source: `src/types/status.ts:162:1`
 
 ### Members
 
-| Name           | Kind     | Type                                                        | Required | Description |
-| -------------- | -------- | ----------------------------------------------------------- | -------- | ----------- |
-| currentVersion | property | `string`                                                    | no       |             |
-| declaredRange  | property | `string`                                                    | no       |             |
-| name           | property | `string`                                                    | yes      |             |
-| packageId      | property | `string`                                                    | yes      |             |
-| role           | property | `"application" \| "host"`                                   | yes      |             |
-| source         | property | `"registry" \| "workspace" \| "file" \| "git" \| "unknown"` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| currentVersion | property | `string` | no |  |
+| declaredRange | property | `string` | no |  |
+| name | property | `string` | yes |  |
+| packageId | property | `string` | yes |  |
+| role | property | `"application" \| "host"` | yes |  |
+| source | property | `"registry" \| "workspace" \| "file" \| "git" \| "unknown"` | no |  |
 
 ## ApmCompatibilityConstraint
 
@@ -489,12 +489,12 @@ Source: `src/types/update-protocol.ts:41:1`
 
 ### Members
 
-| Name   | Kind     | Type                                           | Required | Description |
-| ------ | -------- | ---------------------------------------------- | -------- | ----------- |
-| kind   | property | `"host" \| "package" \| "node" \| "framework"` | yes      |             |
-| name   | property | `string`                                       | yes      |             |
-| range  | property | `string`                                       | yes      |             |
-| reason | property | `string`                                       | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| kind | property | `"host" \| "package" \| "node" \| "framework"` | yes |  |
+| name | property | `string` | yes |  |
+| range | property | `string` | yes |  |
+| reason | property | `string` | no |  |
 
 ## ApmCompletedMigrationEvidence
 
@@ -504,10 +504,10 @@ Source: `src/types/update-validation.ts:79:1`
 
 ### Members
 
-| Name     | Kind     | Type     | Required | Description |
-| -------- | -------- | -------- | -------- | ----------- |
-| checksum | property | `string` | yes      |             |
-| id       | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| checksum | property | `string` | yes |  |
+| id | property | `string` | yes |  |
 
 ## ApmDependencyDeclaration
 
@@ -517,13 +517,13 @@ Source: `src/types/status.ts:86:1`
 
 ### Members
 
-| Name              | Kind     | Type                | Required | Description |
-| ----------------- | -------- | ------------------- | -------- | ----------- |
-| kind              | property | `ApmDependencyKind` | yes      |             |
-| name              | property | `string`            | yes      |             |
-| ownerPath         | property | `string`            | yes      |             |
-| range             | property | `string`            | yes      |             |
-| resolvedPackageId | property | `string`            | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| kind | property | `ApmDependencyKind` | yes |  |
+| name | property | `string` | yes |  |
+| ownerPath | property | `string` | yes |  |
+| range | property | `string` | yes |  |
+| resolvedPackageId | property | `string` | no |  |
 
 ## ApmDependencyInventory
 
@@ -533,11 +533,11 @@ Source: `src/types/status.ts:150:1`
 
 ### Members
 
-| Name        | Kind     | Type                                 | Required | Description |
-| ----------- | -------- | ------------------------------------ | -------- | ----------- |
-| complete    | property | `boolean`                            | yes      |             |
-| diagnostics | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| roots       | property | `readonly ApmInstallRootInventory[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| roots | property | `readonly ApmInstallRootInventory[]` | yes |  |
 
 ## ApmDependencyKind
 
@@ -553,13 +553,13 @@ Source: `src/types/update-extension.ts:11:1`
 
 ### Members
 
-| Name             | Kind     | Type                       | Required | Description |
-| ---------------- | -------- | -------------------------- | -------- | ----------- |
-| descriptorDigest | property | `string`                   | yes      |             |
-| integrity        | property | `string`                   | yes      |             |
-| packageName      | property | `string`                   | yes      |             |
-| role             | property | `ApmMigrationArtifactRole` | yes      |             |
-| version          | property | `string`                   | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| descriptorDigest | property | `string` | yes |  |
+| integrity | property | `string` | yes |  |
+| packageName | property | `string` | yes |  |
+| role | property | `ApmMigrationArtifactRole` | yes |  |
+| version | property | `string` | yes |  |
 
 ## ApmExtensionArtifactIdentityRequest
 
@@ -569,13 +569,13 @@ Source: `src/types/extension-artifact.ts:4:1`
 
 ### Members
 
-| Name             | Kind     | Type                       | Required | Description |
-| ---------------- | -------- | -------------------------- | -------- | ----------- |
-| descriptorDigest | property | `string`                   | yes      |             |
-| packageName      | property | `string`                   | yes      |             |
-| role             | property | `ApmMigrationArtifactRole` | yes      |             |
-| rootPath         | property | `string`                   | yes      |             |
-| version          | property | `string`                   | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| descriptorDigest | property | `string` | yes |  |
+| packageName | property | `string` | yes |  |
+| role | property | `ApmMigrationArtifactRole` | yes |  |
+| rootPath | property | `string` | yes |  |
+| version | property | `string` | yes |  |
 
 ## ApmExtensionArtifactIdentityResolution
 
@@ -591,12 +591,12 @@ Source: `src/types/status.ts:206:1`
 
 ### Members
 
-| Name         | Kind     | Type                                 | Required | Description |
-| ------------ | -------- | ------------------------------------ | -------- | ----------- |
-| complete     | property | `boolean`                            | yes      |             |
-| diagnostics  | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| observations | property | `readonly ApmExtensionObservation[]` | yes      |             |
-| state        | property | `"available" \| "unavailable"`       | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| observations | property | `readonly ApmExtensionObservation[]` | yes |  |
+| state | property | `"available" \| "unavailable"` | yes |  |
 
 ## ApmExtensionExecutionContext
 
@@ -606,12 +606,12 @@ Source: `src/types/update-extension.ts:19:1`
 
 ### Members
 
-| Name          | Kind     | Type                           | Required | Description |
-| ------------- | -------- | ------------------------------ | -------- | ----------- |
-| artifact      | property | `ApmExtensionArtifactIdentity` | yes      |             |
-| owner         | property | `string`                       | yes      |             |
-| sourceVersion | property | `string`                       | yes      |             |
-| targetVersion | property | `string`                       | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| artifact | property | `ApmExtensionArtifactIdentity` | yes |  |
+| owner | property | `string` | yes |  |
+| sourceVersion | property | `string` | yes |  |
+| targetVersion | property | `string` | yes |  |
 
 ## ApmExtensionInvocationResult
 
@@ -627,15 +627,15 @@ Source: `src/types/status.ts:196:1`
 
 ### Members
 
-| Name       | Kind     | Type                 | Required | Description |
-| ---------- | -------- | -------------------- | -------- | ----------- |
-| evidence   | property | `readonly string[]`  | yes      |             |
-| migration  | property | `ApmMigrationState`  | yes      |             |
-| nextAction | property | `string`             | no       |             |
-| owner      | property | `string`             | no       |             |
-| packageId  | property | `string`             | no       |             |
-| projection | property | `ApmProjectionState` | yes      |             |
-| reason     | property | `string`             | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| migration | property | `ApmMigrationState` | yes |  |
+| nextAction | property | `string` | no |  |
+| owner | property | `string` | no |  |
+| packageId | property | `string` | no |  |
+| projection | property | `ApmProjectionState` | yes |  |
+| reason | property | `string` | no |  |
 
 ## ApmExtensionProjectReadPort
 
@@ -645,10 +645,10 @@ Source: `src/types/update-extension.ts:34:1`
 
 ### Members
 
-| Name           | Kind     | Type                                                                     | Required | Description |
-| -------------- | -------- | ------------------------------------------------------------------------ | -------- | ----------- |
-| listFilesAsync | property | `(scope: ApmProjectScope) => Promise<readonly ApmProjectFileSnapshot[]>` | yes      |             |
-| readFileAsync  | property | `(path: string) => Promise<ApmProjectFileSnapshot>`                      | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| listFilesAsync | property | `(scope: ApmProjectScope) => Promise<readonly ApmProjectFileSnapshot[]>` | yes |  |
+| readFileAsync | property | `(path: string) => Promise<ApmProjectFileSnapshot>` | yes |  |
 
 ## ApmExtensionProjectWritePort
 
@@ -658,9 +658,9 @@ Source: `src/types/update-extension.ts:77:1`
 
 ### Members
 
-| Name                       | Kind     | Type                                    | Required | Description |
-| -------------------------- | -------- | --------------------------------------- | -------- | ----------- |
-| applyReviewedMutationAsync | property | `(mutationId: string) => Promise<void>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| applyReviewedMutationAsync | property | `(mutationId: string) => Promise<void>` | yes |  |
 
 ## ApmExtensionVerificationResult
 
@@ -670,11 +670,11 @@ Source: `src/types/update-extension.ts:81:1`
 
 ### Members
 
-| Name     | Kind     | Type                | Required | Description |
-| -------- | -------- | ------------------- | -------- | ----------- |
-| evidence | property | `readonly string[]` | yes      |             |
-| reason   | property | `string`            | no       |             |
-| valid    | property | `boolean`           | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| reason | property | `string` | no |  |
+| valid | property | `boolean` | yes |  |
 
 ## ApmInstallationState
 
@@ -690,14 +690,14 @@ Source: `src/types/status.ts:111:1`
 
 ### Members
 
-| Name      | Kind     | Type                                                                                       | Required | Description |
-| --------- | -------- | ------------------------------------------------------------------------------------------ | -------- | ----------- |
-| location  | property | `string`                                                                                   | no       |             |
-| packageId | property | `string`                                                                                   | yes      |             |
-| reason    | property | `string`                                                                                   | no       |             |
-| source    | property | `"unknown" \| "node-modules" \| "pnpm-store" \| "yarn-state" \| "pnp-data" \| "bun-store"` | yes      |             |
-| state     | property | `ApmInstallationState`                                                                     | yes      |             |
-| version   | property | `string`                                                                                   | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| location | property | `string` | no |  |
+| packageId | property | `string` | yes |  |
+| reason | property | `string` | no |  |
+| source | property | `"unknown" \| "node-modules" \| "pnpm-store" \| "yarn-state" \| "pnp-data" \| "bun-store"` | yes |  |
+| state | property | `ApmInstallationState` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmInstallRootInventory
 
@@ -707,19 +707,19 @@ Source: `src/types/status.ts:136:1`
 
 ### Members
 
-| Name              | Kind     | Type                                     | Required | Description |
-| ----------------- | -------- | ---------------------------------------- | -------- | ----------- |
-| complete          | property | `boolean`                                | yes      |             |
-| declarations      | property | `readonly ApmDependencyDeclaration[]`    | yes      |             |
-| diagnostics       | property | `readonly ApmStatusDiagnostic[]`         | yes      |             |
-| id                | property | `string`                                 | yes      |             |
-| installedPackages | property | `readonly ApmInstalledPackageEvidence[]` | yes      |             |
-| linker            | property | `string`                                 | no       |             |
-| lockedPackages    | property | `readonly ApmLockedPackageEvidence[]`    | yes      |             |
-| lockfile          | property | `ApmLockfileEvidence`                    | yes      |             |
-| manager           | property | `ApmPackageManagerEvidence`              | yes      |             |
-| packagePaths      | property | `readonly string[]`                      | yes      |             |
-| rootPath          | property | `string`                                 | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| complete | property | `boolean` | yes |  |
+| declarations | property | `readonly ApmDependencyDeclaration[]` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| id | property | `string` | yes |  |
+| installedPackages | property | `readonly ApmInstalledPackageEvidence[]` | yes |  |
+| linker | property | `string` | no |  |
+| lockedPackages | property | `readonly ApmLockedPackageEvidence[]` | yes |  |
+| lockfile | property | `ApmLockfileEvidence` | yes |  |
+| manager | property | `ApmPackageManagerEvidence` | yes |  |
+| packagePaths | property | `readonly string[]` | yes |  |
+| rootPath | property | `string` | yes |  |
 
 ## ApmJsonValue
 
@@ -735,11 +735,11 @@ Source: `src/types/status.ts:94:1`
 
 ### Members
 
-| Name      | Kind     | Type     | Required | Description |
-| --------- | -------- | -------- | -------- | ----------- |
-| name      | property | `string` | yes      |             |
-| packageId | property | `string` | no       |             |
-| requested | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| name | property | `string` | yes |  |
+| packageId | property | `string` | no |  |
+| requested | property | `string` | yes |  |
 
 ## ApmLockedPackageEvidence
 
@@ -749,16 +749,16 @@ Source: `src/types/status.ts:100:1`
 
 ### Members
 
-| Name         | Kind     | Type                                                        | Required | Description |
-| ------------ | -------- | ----------------------------------------------------------- | -------- | ----------- |
-| dependencies | property | `readonly ApmLockedDependencyEdge[]`                        | yes      |             |
-| id           | property | `string`                                                    | yes      |             |
-| location     | property | `string`                                                    | no       |             |
-| name         | property | `string`                                                    | yes      |             |
-| optional     | property | `boolean`                                                   | yes      |             |
-| peerContext  | property | `string`                                                    | no       |             |
-| source       | property | `"registry" \| "workspace" \| "file" \| "git" \| "unknown"` | yes      |             |
-| version      | property | `string`                                                    | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| dependencies | property | `readonly ApmLockedDependencyEdge[]` | yes |  |
+| id | property | `string` | yes |  |
+| location | property | `string` | no |  |
+| name | property | `string` | yes |  |
+| optional | property | `boolean` | yes |  |
+| peerContext | property | `string` | no |  |
+| source | property | `"registry" \| "workspace" \| "file" \| "git" \| "unknown"` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmLockfileEvidence
 
@@ -768,13 +768,13 @@ Source: `src/types/status.ts:128:1`
 
 ### Members
 
-| Name     | Kind     | Type                                                      | Required | Description |
-| -------- | -------- | --------------------------------------------------------- | -------- | ----------- |
-| evidence | property | `readonly string[]`                                       | yes      |             |
-| format   | property | `string`                                                  | no       |             |
-| path     | property | `string`                                                  | no       |             |
-| state    | property | `"supported" \| "unsupported" \| "missing" \| "conflict"` | yes      |             |
-| version  | property | `string`                                                  | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| format | property | `string` | no |  |
+| path | property | `string` | no |  |
+| state | property | `"supported" \| "unsupported" \| "missing" \| "conflict"` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmMigrationArtifactRole
 
@@ -790,19 +790,19 @@ Source: `src/types/update-protocol.ts:101:1`
 
 ### Members
 
-| Name           | Kind     | Type                                             | Required | Description |
-| -------------- | -------- | ------------------------------------------------ | -------- | ----------- |
-| affectedScopes | property | `readonly ApmProjectScope[]`                     | yes      |             |
-| checksum       | property | `string`                                         | yes      |             |
-| from           | property | `ApmMigrationSource`                             | yes      |             |
-| id             | property | `string`                                         | yes      |             |
-| implementation | property | `ApmMigrationImplementation`                     | yes      |             |
-| phase          | property | `"pre-install" \| "post-install"`                | yes      |             |
-| prerequisites  | property | `readonly ApmMigrationPrerequisite[]`            | yes      |             |
-| recovery       | property | `ApmMigrationRecoveryDescriptor`                 | yes      |             |
-| sideEffects    | property | `readonly ApmMigrationSideEffect[]`              | yes      |             |
-| to             | property | `ApmMigrationTarget`                             | yes      |             |
-| verification   | property | `readonly ApmMigrationVerificationRequirement[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| affectedScopes | property | `readonly ApmProjectScope[]` | yes |  |
+| checksum | property | `string` | yes |  |
+| from | property | `ApmMigrationSource` | yes |  |
+| id | property | `string` | yes |  |
+| implementation | property | `ApmMigrationImplementation` | yes |  |
+| phase | property | `"pre-install" \| "post-install"` | yes |  |
+| prerequisites | property | `readonly ApmMigrationPrerequisite[]` | yes |  |
+| recovery | property | `ApmMigrationRecoveryDescriptor` | yes |  |
+| sideEffects | property | `readonly ApmMigrationSideEffect[]` | yes |  |
+| to | property | `ApmMigrationTarget` | yes |  |
+| verification | property | `readonly ApmMigrationVerificationRequirement[]` | yes |  |
 
 ## ApmMigrationExecutionInput
 
@@ -812,12 +812,12 @@ Source: `src/types/update-extension.ts:106:1`
 
 ### Members
 
-| Name       | Kind     | Type                                                         | Required | Description |
-| ---------- | -------- | ------------------------------------------------------------ | -------- | ----------- |
-| context    | property | `ApmExtensionExecutionContext`                               | yes      |             |
-| descriptor | property | `ApmMigrationDescriptor`                                     | yes      |             |
-| plan       | property | `ApmMigrationPlanResult`                                     | yes      |             |
-| project    | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| descriptor | property | `ApmMigrationDescriptor` | yes |  |
+| plan | property | `ApmMigrationPlanResult` | yes |  |
+| project | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes |  |
 
 ## ApmMigrationExecutionInvocation
 
@@ -827,13 +827,13 @@ Source: `src/types/update-extension.ts:148:1`
 
 ### Members
 
-| Name      | Kind     | Type                                                         | Required | Description |
-| --------- | -------- | ------------------------------------------------------------ | -------- | ----------- |
-| context   | property | `ApmExtensionExecutionContext`                               | yes      |             |
-| extension | property | `unknown`                                                    | yes      |             |
-| migration | property | `ApmMigrationDescriptor`                                     | yes      |             |
-| plan      | property | `ApmMigrationPlanResult`                                     | yes      |             |
-| project   | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| extension | property | `unknown` | yes |  |
+| migration | property | `ApmMigrationDescriptor` | yes |  |
+| plan | property | `ApmMigrationPlanResult` | yes |  |
+| project | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes |  |
 
 ## ApmMigrationExecutionResult
 
@@ -843,11 +843,11 @@ Source: `src/types/update-extension.ts:94:1`
 
 ### Members
 
-| Name               | Kind     | Type                | Required | Description |
-| ------------------ | -------- | ------------------- | -------- | ----------- |
-| appliedMutationIds | property | `readonly string[]` | yes      |             |
-| evidence           | property | `readonly string[]` | yes      |             |
-| migrationId        | property | `string`            | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| appliedMutationIds | property | `readonly string[]` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| migrationId | property | `string` | yes |  |
 
 ## ApmMigrationHandler
 
@@ -857,12 +857,12 @@ Source: `src/types/update-extension.ts:120:1`
 
 ### Members
 
-| Name         | Kind     | Type                                                                                | Required | Description |
-| ------------ | -------- | ----------------------------------------------------------------------------------- | -------- | ----------- |
-| executeAsync | property | `(input: ApmMigrationExecutionInput) => Promise<ApmMigrationExecutionResult>`       | yes      |             |
-| id           | property | `string`                                                                            | yes      |             |
-| planAsync    | property | `(input: ApmMigrationPlanInput) => Promise<ApmMigrationPlanResult>`                 | yes      |             |
-| verifyAsync  | property | `(input: ApmMigrationVerificationInput) => Promise<ApmExtensionVerificationResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| executeAsync | property | `(input: ApmMigrationExecutionInput) => Promise<ApmMigrationExecutionResult>` | yes |  |
+| id | property | `string` | yes |  |
+| planAsync | property | `(input: ApmMigrationPlanInput) => Promise<ApmMigrationPlanResult>` | yes |  |
+| verifyAsync | property | `(input: ApmMigrationVerificationInput) => Promise<ApmExtensionVerificationResult>` | yes |  |
 
 ## ApmMigrationImplementation
 
@@ -872,10 +872,10 @@ Source: `src/types/update-protocol.ts:60:1`
 
 ### Members
 
-| Name     | Kind     | Type                       | Required | Description |
-| -------- | -------- | -------------------------- | -------- | ----------- |
-| artifact | property | `ApmMigrationArtifactRole` | yes      |             |
-| version  | property | `string`                   | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| artifact | property | `ApmMigrationArtifactRole` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmMigrationPathInput
 
@@ -885,13 +885,13 @@ Source: `src/types/update-validation.ts:84:1`
 
 ### Members
 
-| Name                | Kind     | Type                                       | Required | Description |
-| ------------------- | -------- | ------------------------------------------ | -------- | ----------- |
-| completedMigrations | property | `readonly ApmCompletedMigrationEvidence[]` | no       |             |
-| descriptor          | property | `ApmUpdateDescriptor`                      | yes      |             |
-| sourceStateRevision | property | `string`                                   | no       |             |
-| sourceVersion       | property | `string`                                   | yes      |             |
-| targetVersion       | property | `string`                                   | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| completedMigrations | property | `readonly ApmCompletedMigrationEvidence[]` | no |  |
+| descriptor | property | `ApmUpdateDescriptor` | yes |  |
+| sourceStateRevision | property | `string` | no |  |
+| sourceVersion | property | `string` | yes |  |
+| targetVersion | property | `string` | yes |  |
 
 ## ApmMigrationPathResult
 
@@ -901,12 +901,12 @@ Source: `src/types/update-validation.ts:92:1`
 
 ### Members
 
-| Name                | Kind     | Type                                  | Required | Description |
-| ------------------- | -------- | ------------------------------------- | -------- | ----------- |
-| blockers            | property | `readonly ApmUpdateProtocolBlocker[]` | yes      |             |
-| migrations          | property | `readonly ApmMigrationDescriptor[]`   | yes      |             |
-| noMigrationRequired | property | `boolean`                             | yes      |             |
-| supported           | property | `boolean`                             | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| blockers | property | `readonly ApmUpdateProtocolBlocker[]` | yes |  |
+| migrations | property | `readonly ApmMigrationDescriptor[]` | yes |  |
+| noMigrationRequired | property | `boolean` | yes |  |
+| supported | property | `boolean` | yes |  |
 
 ## ApmMigrationPlanInput
 
@@ -916,11 +916,11 @@ Source: `src/types/update-extension.ts:100:1`
 
 ### Members
 
-| Name       | Kind     | Type                           | Required | Description |
-| ---------- | -------- | ------------------------------ | -------- | ----------- |
-| context    | property | `ApmExtensionExecutionContext` | yes      |             |
-| descriptor | property | `ApmMigrationDescriptor`       | yes      |             |
-| project    | property | `ApmExtensionProjectReadPort`  | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| descriptor | property | `ApmMigrationDescriptor` | yes |  |
+| project | property | `ApmExtensionProjectReadPort` | yes |  |
 
 ## ApmMigrationPlanInvocation
 
@@ -930,12 +930,12 @@ Source: `src/types/update-extension.ts:141:1`
 
 ### Members
 
-| Name      | Kind     | Type                           | Required | Description |
-| --------- | -------- | ------------------------------ | -------- | ----------- |
-| context   | property | `ApmExtensionExecutionContext` | yes      |             |
-| extension | property | `unknown`                      | yes      |             |
-| migration | property | `ApmMigrationDescriptor`       | yes      |             |
-| project   | property | `ApmExtensionProjectReadPort`  | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| extension | property | `unknown` | yes |  |
+| migration | property | `ApmMigrationDescriptor` | yes |  |
+| project | property | `ApmExtensionProjectReadPort` | yes |  |
 
 ## ApmMigrationPlanResult
 
@@ -945,12 +945,12 @@ Source: `src/types/update-extension.ts:87:1`
 
 ### Members
 
-| Name             | Kind     | Type                            | Required | Description |
-| ---------------- | -------- | ------------------------------- | -------- | ----------- |
-| evidence         | property | `readonly string[]`             | yes      |             |
-| inputFingerprint | property | `string`                        | yes      |             |
-| migrationId      | property | `string`                        | yes      |             |
-| mutations        | property | `readonly ApmProjectMutation[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| inputFingerprint | property | `string` | yes |  |
+| migrationId | property | `string` | yes |  |
+| mutations | property | `readonly ApmProjectMutation[]` | yes |  |
 
 ## ApmMigrationPrerequisite
 
@@ -960,10 +960,10 @@ Source: `src/types/update-protocol.ts:65:1`
 
 ### Members
 
-| Name        | Kind     | Type     | Required | Description |
-| ----------- | -------- | -------- | -------- | ----------- |
-| migrationId | property | `string` | yes      |             |
-| owner       | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| migrationId | property | `string` | yes |  |
+| owner | property | `string` | yes |  |
 
 ## ApmMigrationRecoveryDescriptor
 
@@ -973,12 +973,12 @@ Source: `src/types/update-protocol.ts:94:1`
 
 ### Members
 
-| Name               | Kind     | Type      | Required | Description |
-| ------------------ | -------- | --------- | -------- | ----------- |
-| idempotent         | property | `boolean` | yes      |             |
-| restartable        | property | `boolean` | yes      |             |
-| reverseMigrationId | property | `string`  | no       |             |
-| reversible         | property | `boolean` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| idempotent | property | `boolean` | yes |  |
+| restartable | property | `boolean` | yes |  |
+| reverseMigrationId | property | `string` | no |  |
+| reversible | property | `boolean` | yes |  |
 
 ## ApmMigrationSideEffect
 
@@ -994,10 +994,10 @@ Source: `src/types/update-protocol.ts:48:1`
 
 ### Members
 
-| Name          | Kind     | Type     | Required | Description |
-| ------------- | -------- | -------- | -------- | ----------- |
-| packageRange  | property | `string` | yes      |             |
-| stateRevision | property | `string` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| packageRange | property | `string` | yes |  |
+| stateRevision | property | `string` | no |  |
 
 ## ApmMigrationState
 
@@ -1013,10 +1013,10 @@ Source: `src/types/update-protocol.ts:53:1`
 
 ### Members
 
-| Name           | Kind     | Type     | Required | Description |
-| -------------- | -------- | -------- | -------- | ----------- |
-| packageVersion | property | `string` | yes      |             |
-| stateRevision  | property | `string` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| packageVersion | property | `string` | yes |  |
+| stateRevision | property | `string` | no |  |
 
 ## ApmMigrationVerificationInput
 
@@ -1026,12 +1026,12 @@ Source: `src/types/update-extension.ts:113:1`
 
 ### Members
 
-| Name       | Kind     | Type                           | Required | Description |
-| ---------- | -------- | ------------------------------ | -------- | ----------- |
-| context    | property | `ApmExtensionExecutionContext` | yes      |             |
-| descriptor | property | `ApmMigrationDescriptor`       | yes      |             |
-| plan       | property | `ApmMigrationPlanResult`       | yes      |             |
-| project    | property | `ApmExtensionProjectReadPort`  | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| descriptor | property | `ApmMigrationDescriptor` | yes |  |
+| plan | property | `ApmMigrationPlanResult` | yes |  |
+| project | property | `ApmExtensionProjectReadPort` | yes |  |
 
 ## ApmMigrationVerificationRequirement
 
@@ -1041,11 +1041,11 @@ Source: `src/types/update-protocol.ts:88:1`
 
 ### Members
 
-| Name        | Kind     | Type                      | Required | Description |
-| ----------- | -------- | ------------------------- | -------- | ----------- |
-| description | property | `string`                  | yes      |             |
-| key         | property | `string`                  | no       |             |
-| kind        | property | `"manual" \| "extension"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| description | property | `string` | yes |  |
+| key | property | `string` | no |  |
+| kind | property | `"manual" \| "extension"` | yes |  |
 
 ## ApmOtaEligibilityEffect
 
@@ -1055,12 +1055,12 @@ Source: `src/types/update-protocol.ts:132:1`
 
 ### Members
 
-| Name        | Kind     | Type                                        | Required | Description |
-| ----------- | -------- | ------------------------------------------- | -------- | ----------- |
-| eligibility | property | `"unknown" \| "eligible" \| "not-eligible"` | yes      |             |
-| evidence    | property | `readonly string[]`                         | yes      |             |
-| kind        | property | `"ota-eligibility"`                         | yes      |             |
-| reason      | property | `string`                                    | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| eligibility | property | `"unknown" \| "eligible" \| "not-eligible"` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| kind | property | `"ota-eligibility"` | yes |  |
+| reason | property | `string` | yes |  |
 
 ## ApmPackageAvailabilityEvidence
 
@@ -1070,16 +1070,16 @@ Source: `src/types/status.ts:171:1`
 
 ### Members
 
-| Name              | Kind     | Type                                       | Required | Description |
-| ----------------- | -------- | ------------------------------------------ | -------- | ----------- |
-| checkedAt         | property | `string`                                   | no       |             |
-| compatibleVersion | property | `string`                                   | no       |             |
-| latestVersion     | property | `string`                                   | no       |             |
-| name              | property | `string`                                   | yes      |             |
-| packageId         | property | `string`                                   | yes      |             |
-| reason            | property | `string`                                   | no       |             |
-| registry          | property | `string`                                   | no       |             |
-| state             | property | `"unknown" \| "not-applicable" \| "known"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| checkedAt | property | `string` | no |  |
+| compatibleVersion | property | `string` | no |  |
+| latestVersion | property | `string` | no |  |
+| name | property | `string` | yes |  |
+| packageId | property | `string` | yes |  |
+| reason | property | `string` | no |  |
+| registry | property | `string` | no |  |
+| state | property | `"unknown" \| "not-applicable" \| "known"` | yes |  |
 
 ## ApmPackageManagerEvidence
 
@@ -1089,12 +1089,12 @@ Source: `src/types/status.ts:121:1`
 
 ### Members
 
-| Name    | Kind     | Type                                                          | Required | Description |
-| ------- | -------- | ------------------------------------------------------------- | -------- | ----------- |
-| name    | property | `ApmPackageManagerName`                                       | no       |             |
-| source  | property | `"package-manager-field" \| "lockfile" \| "project-detector"` | no       |             |
-| state   | property | `"unknown" \| "conflict" \| "selected"`                       | yes      |             |
-| version | property | `string`                                                      | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| name | property | `ApmPackageManagerName` | no |  |
+| source | property | `"package-manager-field" \| "lockfile" \| "project-detector"` | no |  |
+| state | property | `"unknown" \| "conflict" \| "selected"` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmPackageManagerName
 
@@ -1110,10 +1110,10 @@ Source: `src/types/update-protocol.ts:13:1`
 
 ### Members
 
-| Name            | Kind     | Type     | Required | Description |
-| --------------- | -------- | -------- | -------- | ----------- |
-| descriptor      | property | `string` | yes      |             |
-| protocolVersion | property | `1`      | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| descriptor | property | `string` | yes |  |
+| protocolVersion | property | `1` | yes |  |
 
 ## ApmPackageUpdateMetadataValidationResult
 
@@ -1123,11 +1123,11 @@ Source: `src/types/update-validation.ts:57:1`
 
 ### Members
 
-| Name     | Kind     | Type                                  | Required | Description |
-| -------- | -------- | ------------------------------------- | -------- | ----------- |
-| blockers | property | `readonly ApmUpdateProtocolBlocker[]` | yes      |             |
-| metadata | property | `ApmPackageUpdateMetadata`            | no       |             |
-| valid    | property | `boolean`                             | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| blockers | property | `readonly ApmUpdateProtocolBlocker[]` | yes |  |
+| metadata | property | `ApmPackageUpdateMetadata` | no |  |
+| valid | property | `boolean` | yes |  |
 
 ## ApmPlanArtifactIdentity
 
@@ -1137,14 +1137,14 @@ Source: `src/types/plan.ts:122:1`
 
 ### Members
 
-| Name        | Kind     | Type                                           | Required | Description |
-| ----------- | -------- | ---------------------------------------------- | -------- | ----------- |
-| id          | property | `string`                                       | yes      |             |
-| integrity   | property | `string`                                       | no       |             |
-| packageName | property | `string`                                       | yes      |             |
-| resolved    | property | `string`                                       | no       |             |
-| source      | property | `"registry" \| "workspace" \| "file" \| "git"` | yes      |             |
-| version     | property | `string`                                       | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| id | property | `string` | yes |  |
+| integrity | property | `string` | no |  |
+| packageName | property | `string` | yes |  |
+| resolved | property | `string` | no |  |
+| source | property | `"registry" \| "workspace" \| "file" \| "git"` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmPlanBlocker
 
@@ -1154,13 +1154,13 @@ Source: `src/types/plan.ts:85:1`
 
 ### Members
 
-| Name       | Kind     | Type                                         | Required | Description |
-| ---------- | -------- | -------------------------------------------- | -------- | ----------- |
-| code       | property | `ApmPlanBlockerCode \| `protocol.${string}`` | yes      |             |
-| evidence   | property | `readonly string[]`                          | yes      |             |
-| nextAction | property | `string`                                     | no       |             |
-| reason     | property | `string`                                     | yes      |             |
-| scope      | property | `ApmPlanBlockerScope`                        | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| code | property | `ApmPlanBlockerCode \| `protocol.${string}`` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
+| scope | property | `ApmPlanBlockerScope` | yes |  |
 
 ## ApmPlanBlockerCode
 
@@ -1176,11 +1176,11 @@ Source: `src/types/plan.ts:79:1`
 
 ### Members
 
-| Name | Kind     | Type                                                                                | Required | Description |
-| ---- | -------- | ----------------------------------------------------------------------------------- | -------- | ----------- |
-| id   | property | `string`                                                                            | no       |             |
-| kind | property | `"host" \| "project" \| "install-root" \| "package" \| "projection" \| "migration"` | yes      |             |
-| path | property | `string`                                                                            | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| id | property | `string` | no |  |
+| kind | property | `"host" \| "project" \| "install-root" \| "package" \| "projection" \| "migration"` | yes |  |
+| path | property | `string` | no |  |
 
 ## ApmPlanDependencyTarget
 
@@ -1190,20 +1190,20 @@ Source: `src/types/plan.ts:93:1`
 
 ### Members
 
-| Name           | Kind     | Type                                                                       | Required | Description |
-| -------------- | -------- | -------------------------------------------------------------------------- | -------- | ----------- |
-| currentRange   | property | `string`                                                                   | no       |             |
-| currentVersion | property | `string`                                                                   | no       |             |
-| direct         | property | `boolean`                                                                  | yes      |             |
-| installRootId  | property | `string`                                                                   | yes      |             |
-| kind           | property | `"dependency" \| "development" \| "optional" \| "peer" \| "peer-optional"` | no       |             |
-| name           | property | `string`                                                                   | yes      |             |
-| ownerPath      | property | `string`                                                                   | no       |             |
-| packageId      | property | `string`                                                                   | yes      |             |
-| reason         | property | `string`                                                                   | yes      |             |
-| source         | property | `"compatible" \| "latest" \| "exact"`                                      | yes      |             |
-| targetRange    | property | `string`                                                                   | no       |             |
-| targetVersion  | property | `string`                                                                   | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| currentRange | property | `string` | no |  |
+| currentVersion | property | `string` | no |  |
+| direct | property | `boolean` | yes |  |
+| installRootId | property | `string` | yes |  |
+| kind | property | `"dependency" \| "development" \| "optional" \| "peer" \| "peer-optional"` | no |  |
+| name | property | `string` | yes |  |
+| ownerPath | property | `string` | no |  |
+| packageId | property | `string` | yes |  |
+| reason | property | `string` | yes |  |
+| source | property | `"compatible" \| "latest" \| "exact"` | yes |  |
+| targetRange | property | `string` | no |  |
+| targetVersion | property | `string` | yes |  |
 
 ## ApmPlanDependencyUpdateMode
 
@@ -1219,9 +1219,9 @@ Source: `src/types/plan.ts:198:1`
 
 ### Members
 
-| Name        | Kind     | Type                                 | Required | Description |
-| ----------- | -------- | ------------------------------------ | -------- | ----------- |
-| digestAsync | property | `(value: string) => Promise<string>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| digestAsync | property | `(value: string) => Promise<string>` | yes |  |
 
 ## ApmPlanExecutorIdentity
 
@@ -1231,11 +1231,11 @@ Source: `src/types/plan.ts:180:1`
 
 ### Members
 
-| Name           | Kind     | Type                             | Required | Description |
-| -------------- | -------- | -------------------------------- | -------- | ----------- |
-| apmVersion     | property | `string`                         | yes      |             |
-| runtime        | property | `"node" \| "browser" \| "other"` | yes      |             |
-| runtimeVersion | property | `string`                         | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| apmVersion | property | `string` | yes |  |
+| runtime | property | `"node" \| "browser" \| "other"` | yes |  |
+| runtimeVersion | property | `string` | no |  |
 
 ## ApmPlanFileChange
 
@@ -1245,14 +1245,14 @@ Source: `src/types/plan.ts:113:1`
 
 ### Members
 
-| Name          | Kind     | Type                               | Required | Description |
-| ------------- | -------- | ---------------------------------- | -------- | ----------- |
-| afterContent  | property | `string`                           | no       |             |
-| afterDigest   | property | `string`                           | no       |             |
-| beforeContent | property | `string`                           | no       |             |
-| beforeDigest  | property | `string`                           | no       |             |
-| kind          | property | `"create" \| "update" \| "delete"` | yes      |             |
-| path          | property | `string`                           | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| afterContent | property | `string` | no |  |
+| afterDigest | property | `string` | no |  |
+| beforeContent | property | `string` | no |  |
+| beforeDigest | property | `string` | no |  |
+| kind | property | `"create" \| "update" \| "delete"` | yes |  |
+| path | property | `string` | yes |  |
 
 ## ApmPlanInput
 
@@ -1262,11 +1262,11 @@ Source: `src/types/plan.ts:186:1`
 
 ### Members
 
-| Name     | Kind     | Type                      | Required | Description |
-| -------- | -------- | ------------------------- | -------- | ----------- |
-| executor | property | `ApmPlanExecutorIdentity` | yes      |             |
-| policy   | property | `ApmPlanPolicyInput`      | no       |             |
-| status   | property | `ApmStatusResult`         | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| executor | property | `ApmPlanExecutorIdentity` | yes |  |
+| policy | property | `ApmPlanPolicyInput` | no |  |
+| status | property | `ApmStatusResult` | yes |  |
 
 ## ApmPlanInputFingerprint
 
@@ -1276,11 +1276,11 @@ Source: `src/types/plan.ts:202:1`
 
 ### Members
 
-| Name                  | Kind     | Type                | Required | Description |
-| --------------------- | -------- | ------------------- | -------- | ----------- |
-| availabilityCheckedAt | property | `readonly string[]` | yes      |             |
-| statusSchemaVersion   | property | `number`            | yes      |             |
-| value                 | property | `string`            | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| availabilityCheckedAt | property | `readonly string[]` | yes |  |
+| statusSchemaVersion | property | `number` | yes |  |
+| value | property | `string` | yes |  |
 
 ## ApmPlanPackageSelection
 
@@ -1290,10 +1290,10 @@ Source: `src/types/plan.ts:36:1`
 
 ### Members
 
-| Name     | Kind     | Type                     | Required | Description |
-| -------- | -------- | ------------------------ | -------- | ----------- |
-| selector | property | `ApmPlanPackageSelector` | yes      |             |
-| target   | property | `ApmPlanTargetSelection` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| selector | property | `ApmPlanPackageSelector` | yes |  |
+| target | property | `ApmPlanTargetSelection` | yes |  |
 
 ## ApmPlanPackageSelector
 
@@ -1303,12 +1303,12 @@ Source: `src/types/plan.ts:14:1`
 
 ### Members
 
-| Name          | Kind     | Type     | Required | Description |
-| ------------- | -------- | -------- | -------- | ----------- |
-| installRootId | property | `string` | no       |             |
-| name          | property | `string` | yes      |             |
-| ownerPath     | property | `string` | no       |             |
-| packageId     | property | `string` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| installRootId | property | `string` | no |  |
+| name | property | `string` | yes |  |
+| ownerPath | property | `string` | no |  |
+| packageId | property | `string` | no |  |
 
 ## ApmPlanPolicy
 
@@ -1318,13 +1318,13 @@ Source: `src/types/plan.ts:49:1`
 
 ### Members
 
-| Name                   | Kind     | Type                                 | Required | Description |
-| ---------------------- | -------- | ------------------------------------ | -------- | ----------- |
-| dependencyUpdates      | property | `ApmPlanDependencyUpdateMode`        | yes      |             |
-| maxGeneratorIterations | property | `number`                             | yes      |             |
-| repairInstallations    | property | `boolean`                            | yes      |             |
-| repairProjections      | property | `boolean`                            | yes      |             |
-| selections             | property | `readonly ApmPlanPackageSelection[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| dependencyUpdates | property | `ApmPlanDependencyUpdateMode` | yes |  |
+| maxGeneratorIterations | property | `number` | yes |  |
+| repairInstallations | property | `boolean` | yes |  |
+| repairProjections | property | `boolean` | yes |  |
+| selections | property | `readonly ApmPlanPackageSelection[]` | yes |  |
 
 ## ApmPlanPolicyInput
 
@@ -1334,13 +1334,13 @@ Source: `src/types/plan.ts:41:1`
 
 ### Members
 
-| Name                   | Kind     | Type                                 | Required | Description |
-| ---------------------- | -------- | ------------------------------------ | -------- | ----------- |
-| dependencyUpdates      | property | `ApmPlanDependencyUpdateMode`        | no       |             |
-| maxGeneratorIterations | property | `number`                             | no       |             |
-| repairInstallations    | property | `boolean`                            | no       |             |
-| repairProjections      | property | `boolean`                            | no       |             |
-| selections             | property | `readonly ApmPlanPackageSelection[]` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| dependencyUpdates | property | `ApmPlanDependencyUpdateMode` | no |  |
+| maxGeneratorIterations | property | `number` | no |  |
+| repairInstallations | property | `boolean` | no |  |
+| repairProjections | property | `boolean` | no |  |
+| selections | property | `readonly ApmPlanPackageSelection[]` | no |  |
 
 ## ApmPlanPorts
 
@@ -1350,11 +1350,11 @@ Source: `src/types/plan.ts:255:1`
 
 ### Members
 
-| Name       | Kind     | Type                    | Required | Description |
-| ---------- | -------- | ----------------------- | -------- | ----------- |
-| digest     | property | `ApmPlanDigestPort`     | yes      |             |
-| protocol   | property | `ApmPlanProtocolPort`   | no       |             |
-| resolution | property | `ApmPlanResolutionPort` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| digest | property | `ApmPlanDigestPort` | yes |  |
+| protocol | property | `ApmPlanProtocolPort` | no |  |
+| resolution | property | `ApmPlanResolutionPort` | yes |  |
 
 ## ApmPlanProjectInput
 
@@ -1364,11 +1364,11 @@ Source: `src/types/plan.ts:192:1`
 
 ### Members
 
-| Name         | Kind     | Type                        | Required | Description |
-| ------------ | -------- | --------------------------- | -------- | ----------- |
-| availability | property | `ApmStatusAvailabilityMode` | no       |             |
-| policy       | property | `ApmPlanPolicyInput`        | no       |             |
-| rootPath     | property | `string`                    | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| availability | property | `ApmStatusAvailabilityMode` | no |  |
+| policy | property | `ApmPlanPolicyInput` | no |  |
+| rootPath | property | `string` | yes |  |
 
 ## ApmPlanProjectOptions
 
@@ -1378,10 +1378,10 @@ Source: `src/types/plan.ts:250:1`
 
 ### Members
 
-| Name     | Kind     | Type                   | Required | Description |
-| -------- | -------- | ---------------------- | -------- | ----------- |
-| protocol | property | `ApmPlanProtocolPort`  | no       |             |
-| status   | property | `ApmProjectStatusPort` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| protocol | property | `ApmPlanProtocolPort` | no |  |
+| status | property | `ApmProjectStatusPort` | no |  |
 
 ## ApmPlanProtocolPort
 
@@ -1391,9 +1391,9 @@ Source: `src/types/plan.ts:246:1`
 
 ### Members
 
-| Name              | Kind     | Type                                                                | Required | Description |
-| ----------------- | -------- | ------------------------------------------------------------------- | -------- | ----------- |
-| planProtocolAsync | property | `(input: ApmPlanProtocolRequest) => Promise<ApmPlanProtocolResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| planProtocolAsync | property | `(input: ApmPlanProtocolRequest) => Promise<ApmPlanProtocolResult>` | yes |  |
 
 ## ApmPlanProtocolRequest
 
@@ -1403,13 +1403,13 @@ Source: `src/types/plan.ts:226:1`
 
 ### Members
 
-| Name             | Kind     | Type                                 | Required | Description |
-| ---------------- | -------- | ------------------------------------ | -------- | ----------- |
-| inputFingerprint | property | `ApmPlanInputFingerprint`            | yes      |             |
-| policy           | property | `ApmPlanPolicy`                      | yes      |             |
-| resolutions      | property | `readonly ApmPlanResolutionResult[]` | yes      |             |
-| status           | property | `ApmStatusResult`                    | yes      |             |
-| targets          | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inputFingerprint | property | `ApmPlanInputFingerprint` | yes |  |
+| policy | property | `ApmPlanPolicy` | yes |  |
+| resolutions | property | `readonly ApmPlanResolutionResult[]` | yes |  |
+| status | property | `ApmStatusResult` | yes |  |
+| targets | property | `readonly ApmPlanDependencyTarget[]` | yes |  |
 
 ## ApmPlanProtocolResult
 
@@ -1419,17 +1419,17 @@ Source: `src/types/plan.ts:234:1`
 
 ### Members
 
-| Name               | Kind     | Type                                 | Required | Description |
-| ------------------ | -------- | ------------------------------------ | -------- | ----------- |
-| artifacts          | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
-| blockers           | property | `readonly ApmPlanBlocker[]`          | yes      |             |
-| complete           | property | `boolean`                            | yes      |             |
-| diagnostics        | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| effects            | property | `readonly ApmReleaseEffect[]`        | yes      |             |
-| files              | property | `readonly ApmPlanFileChange[]`       | yes      |             |
-| findings           | property | `readonly ApmStatusFinding[]`        | yes      |             |
-| requiredSelections | property | `readonly ApmPlanPackageSelection[]` | yes      |             |
-| steps              | property | `readonly ApmPlanStep[]`             | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| artifacts | property | `readonly ApmPlanArtifactIdentity[]` | yes |  |
+| blockers | property | `readonly ApmPlanBlocker[]` | yes |  |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| effects | property | `readonly ApmReleaseEffect[]` | yes |  |
+| files | property | `readonly ApmPlanFileChange[]` | yes |  |
+| findings | property | `readonly ApmStatusFinding[]` | yes |  |
+| requiredSelections | property | `readonly ApmPlanPackageSelection[]` | yes |  |
+| steps | property | `readonly ApmPlanStep[]` | yes |  |
 
 ## ApmPlanResolutionEffects
 
@@ -1439,12 +1439,12 @@ Source: `src/types/plan.ts:154:1`
 
 ### Members
 
-| Name             | Kind     | Type                              | Required | Description |
-| ---------------- | -------- | --------------------------------- | -------- | ----------- |
-| cache            | property | `"manager-default" \| "isolated"` | yes      |             |
-| lifecycleScripts | property | `false`                           | yes      |             |
-| network          | property | `"offline" \| "allowed"`          | yes      |             |
-| projectWrites    | property | `false`                           | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| cache | property | `"manager-default" \| "isolated"` | yes |  |
+| lifecycleScripts | property | `false` | yes |  |
+| network | property | `"offline" \| "allowed"` | yes |  |
+| projectWrites | property | `false` | yes |  |
 
 ## ApmPlanResolutionPort
 
@@ -1454,9 +1454,9 @@ Source: `src/types/plan.ts:176:1`
 
 ### Members
 
-| Name         | Kind     | Type                                                                    | Required | Description |
-| ------------ | -------- | ----------------------------------------------------------------------- | -------- | ----------- |
-| resolveAsync | property | `(input: ApmPlanResolutionRequest) => Promise<ApmPlanResolutionResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| resolveAsync | property | `(input: ApmPlanResolutionRequest) => Promise<ApmPlanResolutionResult>` | yes |  |
 
 ## ApmPlanResolutionRequest
 
@@ -1466,17 +1466,17 @@ Source: `src/types/plan.ts:142:1`
 
 ### Members
 
-| Name            | Kind     | Type                                 | Required | Description |
-| --------------- | -------- | ------------------------------------ | -------- | ----------- |
-| installRootId   | property | `string`                             | yes      |             |
-| installRootPath | property | `string`                             | yes      |             |
-| linker          | property | `string`                             | no       |             |
-| lockfilePath    | property | `string`                             | no       |             |
-| manager         | property | `ApmPackageManagerName`              | yes      |             |
-| managerVersion  | property | `string`                             | no       |             |
-| packagePaths    | property | `readonly string[]`                  | yes      |             |
-| rootPath        | property | `string`                             | yes      |             |
-| targets         | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| installRootId | property | `string` | yes |  |
+| installRootPath | property | `string` | yes |  |
+| linker | property | `string` | no |  |
+| lockfilePath | property | `string` | no |  |
+| manager | property | `ApmPackageManagerName` | yes |  |
+| managerVersion | property | `string` | no |  |
+| packagePaths | property | `readonly string[]` | yes |  |
+| rootPath | property | `string` | yes |  |
+| targets | property | `readonly ApmPlanDependencyTarget[]` | yes |  |
 
 ## ApmPlanResolutionResult
 
@@ -1486,20 +1486,20 @@ Source: `src/types/plan.ts:161:1`
 
 ### Members
 
-| Name            | Kind     | Type                                 | Required | Description |
-| --------------- | -------- | ------------------------------------ | -------- | ----------- |
-| artifacts       | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
-| blockers        | property | `readonly ApmPlanBlocker[]`          | yes      |             |
-| complete        | property | `boolean`                            | yes      |             |
-| diagnostics     | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| effects         | property | `ApmPlanResolutionEffects`           | yes      |             |
-| files           | property | `readonly ApmPlanFileChange[]`       | yes      |             |
-| installRootId   | property | `string`                             | yes      |             |
-| installRootPath | property | `string`                             | yes      |             |
-| linker          | property | `string`                             | no       |             |
-| manager         | property | `ApmPackageManagerName`              | yes      |             |
-| managerVersion  | property | `string`                             | no       |             |
-| packages        | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| artifacts | property | `readonly ApmPlanArtifactIdentity[]` | yes |  |
+| blockers | property | `readonly ApmPlanBlocker[]` | yes |  |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| effects | property | `ApmPlanResolutionEffects` | yes |  |
+| files | property | `readonly ApmPlanFileChange[]` | yes |  |
+| installRootId | property | `string` | yes |  |
+| installRootPath | property | `string` | yes |  |
+| linker | property | `string` | no |  |
+| manager | property | `ApmPackageManagerName` | yes |  |
+| managerVersion | property | `string` | no |  |
+| packages | property | `readonly ApmPlanResolvedPackage[]` | yes |  |
 
 ## ApmPlanResolvedPackage
 
@@ -1509,16 +1509,16 @@ Source: `src/types/plan.ts:131:1`
 
 ### Members
 
-| Name         | Kind     | Type                                           | Required | Description |
-| ------------ | -------- | ---------------------------------------------- | -------- | ----------- |
-| dependencies | property | `readonly string[]`                            | yes      |             |
-| direct       | property | `boolean`                                      | yes      |             |
-| id           | property | `string`                                       | yes      |             |
-| integrity    | property | `string`                                       | no       |             |
-| name         | property | `string`                                       | yes      |             |
-| peerContext  | property | `string`                                       | no       |             |
-| source       | property | `"registry" \| "workspace" \| "file" \| "git"` | yes      |             |
-| version      | property | `string`                                       | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| dependencies | property | `readonly string[]` | yes |  |
+| direct | property | `boolean` | yes |  |
+| id | property | `string` | yes |  |
+| integrity | property | `string` | no |  |
+| name | property | `string` | yes |  |
+| peerContext | property | `string` | no |  |
+| source | property | `"registry" \| "workspace" \| "file" \| "git"` | yes |  |
+| version | property | `string` | no |  |
 
 ## ApmPlanResult
 
@@ -1528,25 +1528,25 @@ Source: `src/types/plan.ts:261:1`
 
 ### Members
 
-| Name             | Kind     | Type                                 | Required | Description |
-| ---------------- | -------- | ------------------------------------ | -------- | ----------- |
-| artifacts        | property | `readonly ApmPlanArtifactIdentity[]` | yes      |             |
-| blockers         | property | `readonly ApmPlanBlocker[]`          | yes      |             |
-| complete         | property | `boolean`                            | yes      |             |
-| diagnostics      | property | `readonly ApmStatusDiagnostic[]`     | yes      |             |
-| effects          | property | `readonly ApmReleaseEffect[]`        | yes      |             |
-| executor         | property | `ApmPlanExecutorIdentity`            | yes      |             |
-| files            | property | `readonly ApmPlanFileChange[]`       | yes      |             |
-| findings         | property | `readonly ApmStatusFinding[]`        | yes      |             |
-| id               | property | `string`                             | yes      |             |
-| inputFingerprint | property | `ApmPlanInputFingerprint`            | yes      |             |
-| operation        | property | `"plan"`                             | yes      |             |
-| packages         | property | `readonly ApmPlanResolvedPackage[]`  | yes      |             |
-| policy           | property | `ApmPlanPolicy`                      | yes      |             |
-| rootPath         | property | `string`                             | yes      |             |
-| schemaVersion    | property | `2`                                  | yes      |             |
-| steps            | property | `readonly ApmPlanStep[]`             | yes      |             |
-| targets          | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| artifacts | property | `readonly ApmPlanArtifactIdentity[]` | yes |  |
+| blockers | property | `readonly ApmPlanBlocker[]` | yes |  |
+| complete | property | `boolean` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| effects | property | `readonly ApmReleaseEffect[]` | yes |  |
+| executor | property | `ApmPlanExecutorIdentity` | yes |  |
+| files | property | `readonly ApmPlanFileChange[]` | yes |  |
+| findings | property | `readonly ApmStatusFinding[]` | yes |  |
+| id | property | `string` | yes |  |
+| inputFingerprint | property | `ApmPlanInputFingerprint` | yes |  |
+| operation | property | `"plan"` | yes |  |
+| packages | property | `readonly ApmPlanResolvedPackage[]` | yes |  |
+| policy | property | `ApmPlanPolicy` | yes |  |
+| rootPath | property | `string` | yes |  |
+| schemaVersion | property | `2` | yes |  |
+| steps | property | `readonly ApmPlanStep[]` | yes |  |
+| targets | property | `readonly ApmPlanDependencyTarget[]` | yes |  |
 
 ## ApmPlanStep
 
@@ -1556,16 +1556,16 @@ Source: `src/types/plan.ts:208:1`
 
 ### Members
 
-| Name          | Kind     | Type                                                                                                              | Required | Description |
-| ------------- | -------- | ----------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| evidence      | property | `readonly string[]`                                                                                               | yes      |             |
-| execution     | property | `ApmPlanStepExecution`                                                                                            | yes      |             |
-| id            | property | `string`                                                                                                          | yes      |             |
-| installRootId | property | `string`                                                                                                          | no       |             |
-| kind          | property | `"projection" \| "migration" \| "dependency-files" \| "install" \| "validation" \| "host-restart" \| "follow-up"` | yes      |             |
-| owner         | property | `string`                                                                                                          | no       |             |
-| prerequisites | property | `readonly string[]`                                                                                               | yes      |             |
-| reason        | property | `string`                                                                                                          | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| execution | property | `ApmPlanStepExecution` | yes |  |
+| id | property | `string` | yes |  |
+| installRootId | property | `string` | no |  |
+| kind | property | `"projection" \| "migration" \| "dependency-files" \| "install" \| "validation" \| "host-restart" \| "follow-up"` | yes |  |
+| owner | property | `string` | no |  |
+| prerequisites | property | `readonly string[]` | yes |  |
+| reason | property | `string` | yes |  |
 
 ## ApmPlanStepExecution
 
@@ -1587,10 +1587,10 @@ Source: `src/types/plan.ts:108:1`
 
 ### Members
 
-| Name     | Kind     | Type                                 | Required | Description |
-| -------- | -------- | ------------------------------------ | -------- | ----------- |
-| blockers | property | `readonly ApmPlanBlocker[]`          | yes      |             |
-| targets  | property | `readonly ApmPlanDependencyTarget[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| blockers | property | `readonly ApmPlanBlocker[]` | yes |  |
+| targets | property | `readonly ApmPlanDependencyTarget[]` | yes |  |
 
 ## ApmPlanValidationCheck
 
@@ -1606,13 +1606,13 @@ Source: `src/types/update-extension.ts:26:1`
 
 ### Members
 
-| Name     | Kind     | Type                 | Required | Description |
-| -------- | -------- | -------------------- | -------- | ----------- |
-| content  | property | `string`             | no       |             |
-| digest   | property | `string`             | no       |             |
-| encoding | property | `"utf8" \| "base64"` | no       |             |
-| exists   | property | `boolean`            | yes      |             |
-| path     | property | `string`             | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| content | property | `string` | no |  |
+| digest | property | `string` | no |  |
+| encoding | property | `"utf8" \| "base64"` | no |  |
+| exists | property | `boolean` | yes |  |
+| path | property | `string` | yes |  |
 
 ## ApmProjectionDescriptor
 
@@ -1622,12 +1622,12 @@ Source: `src/types/update-protocol.ts:115:1`
 
 ### Members
 
-| Name              | Kind     | Type                         | Required | Description |
-| ----------------- | -------- | ---------------------------- | -------- | ----------- |
-| claims            | property | `readonly ApmProjectScope[]` | yes      |             |
-| id                | property | `string`                     | yes      |             |
-| reason            | property | `string`                     | no       |             |
-| requiresExtension | property | `boolean`                    | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| claims | property | `readonly ApmProjectScope[]` | yes |  |
+| id | property | `string` | yes |  |
+| reason | property | `string` | no |  |
+| requiresExtension | property | `boolean` | yes |  |
 
 ## ApmProjectionHandler
 
@@ -1637,13 +1637,13 @@ Source: `src/types/update-extension.ts:184:1`
 
 ### Members
 
-| Name             | Kind     | Type                                                                                | Required | Description |
-| ---------------- | -------- | ----------------------------------------------------------------------------------- | -------- | ----------- |
-| id               | property | `string`                                                                            | yes      |             |
-| inspectAsync     | property | `(input: ApmProjectionInput) => Promise<ApmProjectionInspectionResult>`             | yes      |             |
-| materializeAsync | property | `(input: ApmProjectionMaterializeInput) => Promise<void>`                           | yes      |             |
-| planAsync        | property | `(input: ApmProjectionInput) => Promise<ApmProjectionPlanResult>`                   | yes      |             |
-| verifyAsync      | property | `(input: ApmProjectionMaterializeInput) => Promise<ApmExtensionVerificationResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| id | property | `string` | yes |  |
+| inspectAsync | property | `(input: ApmProjectionInput) => Promise<ApmProjectionInspectionResult>` | yes |  |
+| materializeAsync | property | `(input: ApmProjectionMaterializeInput) => Promise<void>` | yes |  |
+| planAsync | property | `(input: ApmProjectionInput) => Promise<ApmProjectionPlanResult>` | yes |  |
+| verifyAsync | property | `(input: ApmProjectionMaterializeInput) => Promise<ApmExtensionVerificationResult>` | yes |  |
 
 ## ApmProjectionInput
 
@@ -1653,11 +1653,11 @@ Source: `src/types/update-extension.ts:173:1`
 
 ### Members
 
-| Name       | Kind     | Type                           | Required | Description |
-| ---------- | -------- | ------------------------------ | -------- | ----------- |
-| context    | property | `ApmExtensionExecutionContext` | yes      |             |
-| descriptor | property | `ApmProjectionDescriptor`      | yes      |             |
-| project    | property | `ApmExtensionProjectReadPort`  | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| descriptor | property | `ApmProjectionDescriptor` | yes |  |
+| project | property | `ApmExtensionProjectReadPort` | yes |  |
 
 ## ApmProjectionInspectionResult
 
@@ -1667,14 +1667,14 @@ Source: `src/types/update-extension.ts:156:1`
 
 ### Members
 
-| Name                 | Kind     | Type                                | Required | Description |
-| -------------------- | -------- | ----------------------------------- | -------- | ----------- |
-| evidence             | property | `readonly string[]`                 | yes      |             |
-| generatorFingerprint | property | `string`                            | yes      |             |
-| inputFingerprint     | property | `string`                            | yes      |             |
-| projectionId         | property | `string`                            | yes      |             |
-| reason               | property | `string`                            | no       |             |
-| state                | property | `"unknown" \| "current" \| "stale"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| generatorFingerprint | property | `string` | yes |  |
+| inputFingerprint | property | `string` | yes |  |
+| projectionId | property | `string` | yes |  |
+| reason | property | `string` | no |  |
+| state | property | `"unknown" \| "current" \| "stale"` | yes |  |
 
 ## ApmProjectionMaterializeInput
 
@@ -1684,12 +1684,12 @@ Source: `src/types/update-extension.ts:179:1`
 
 ### Members
 
-| Name       | Kind     | Type                                                         | Required | Description |
-| ---------- | -------- | ------------------------------------------------------------ | -------- | ----------- |
-| context    | property | `ApmExtensionExecutionContext`                               | yes      |             |
-| descriptor | property | `ApmProjectionDescriptor`                                    | yes      |             |
-| plan       | property | `ApmProjectionPlanResult`                                    | yes      |             |
-| project    | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| context | property | `ApmExtensionExecutionContext` | yes |  |
+| descriptor | property | `ApmProjectionDescriptor` | yes |  |
+| plan | property | `ApmProjectionPlanResult` | yes |  |
+| project | property | `ApmExtensionProjectReadPort & ApmExtensionProjectWritePort` | yes |  |
 
 ## ApmProjectionPlanResult
 
@@ -1699,13 +1699,13 @@ Source: `src/types/update-extension.ts:165:1`
 
 ### Members
 
-| Name                 | Kind     | Type                            | Required | Description |
-| -------------------- | -------- | ------------------------------- | -------- | ----------- |
-| evidence             | property | `readonly string[]`             | yes      |             |
-| generatorFingerprint | property | `string`                        | yes      |             |
-| inputFingerprint     | property | `string`                        | yes      |             |
-| mutations            | property | `readonly ApmProjectMutation[]` | yes      |             |
-| projectionId         | property | `string`                        | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| generatorFingerprint | property | `string` | yes |  |
+| inputFingerprint | property | `string` | yes |  |
+| mutations | property | `readonly ApmProjectMutation[]` | yes |  |
+| projectionId | property | `string` | yes |  |
 
 ## ApmProjectionState
 
@@ -1735,9 +1735,9 @@ Reusable project-status boundary shared by planning, apply validation, and verif
 
 ### Members
 
-| Name               | Kind     | Type                                                  | Required | Description |
-| ------------------ | -------- | ----------------------------------------------------- | -------- | ----------- |
-| inspectStatusAsync | property | `(input: ApmStatusInput) => Promise<ApmStatusResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inspectStatusAsync | property | `(input: ApmStatusInput) => Promise<ApmStatusResult>` | yes |  |
 
 ## ApmRegistryAvailabilityOptions
 
@@ -1747,14 +1747,14 @@ Source: `src/types/registry.ts:12:1`
 
 ### Members
 
-| Name        | Kind     | Type                                            | Required | Description |
-| ----------- | -------- | ----------------------------------------------- | -------- | ----------- |
-| cacheTtlMs  | property | `number`                                        | no       |             |
-| env         | property | `Readonly<Record<string, string \| undefined>>` | no       |             |
-| fetchFn     | property | `ApmRegistryFetch`                              | no       |             |
-| home        | property | `string`                                        | no       |             |
-| maxRequests | property | `number`                                        | no       |             |
-| now         | property | `() => number`                                  | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| cacheTtlMs | property | `number` | no |  |
+| env | property | `Readonly<Record<string, string \| undefined>>` | no |  |
+| fetchFn | property | `ApmRegistryFetch` | no |  |
+| home | property | `string` | no |  |
+| maxRequests | property | `number` | no |  |
+| now | property | `() => number` | no |  |
 
 ## ApmRegistryFetch
 
@@ -1770,11 +1770,11 @@ Source: `src/types/registry.ts:6:1`
 
 ### Members
 
-| Name    | Kind     | Type                                            | Required | Description |
-| ------- | -------- | ----------------------------------------------- | -------- | ----------- |
-| env     | property | `Readonly<Record<string, string \| undefined>>` | no       |             |
-| fetchFn | property | `ApmRegistryFetch`                              | no       |             |
-| home    | property | `string`                                        | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| env | property | `Readonly<Record<string, string \| undefined>>` | no |  |
+| fetchFn | property | `ApmRegistryFetch` | no |  |
+| home | property | `string` | no |  |
 
 ## ApmReleaseEffect
 
@@ -1790,12 +1790,12 @@ Source: `src/types/update-protocol.ts:125:1`
 
 ### Members
 
-| Name        | Kind     | Type                                        | Required | Description |
-| ----------- | -------- | ------------------------------------------- | -------- | ----------- |
-| evidence    | property | `readonly string[]`                         | yes      |             |
-| kind        | property | `ApmReleaseRequirementEffectKind`           | yes      |             |
-| reason      | property | `string`                                    | yes      |             |
-| requirement | property | `"unknown" \| "required" \| "not-required"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| kind | property | `ApmReleaseRequirementEffectKind` | yes |  |
+| reason | property | `string` | yes |  |
+| requirement | property | `"unknown" \| "required" \| "not-required"` | yes |  |
 
 ## ApmReleaseRequirementEffectKind
 
@@ -1817,9 +1817,9 @@ Source: `src/types/status.ts:188:1`
 
 ### Members
 
-| Name                   | Kind     | Type                                                                                                                                                                          | Required | Description |
-| ---------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| queryAvailabilityAsync | property | `(input: { readonly rootPath: string; readonly mode: ApmStatusAvailabilityMode; readonly packages: readonly ApmAvailabilityRequest[]; }) => Promise<ApmAvailabilityEvidence>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| queryAvailabilityAsync | property | `(input: { readonly rootPath: string; readonly mode: ApmStatusAvailabilityMode; readonly packages: readonly ApmAvailabilityRequest[]; }) => Promise<ApmAvailabilityEvidence>` | yes |  |
 
 ## ApmStatusCurrency
 
@@ -1835,18 +1835,18 @@ Source: `src/types/status.ts:227:1`
 
 ### Members
 
-| Name            | Kind     | Type                             | Required | Description |
-| --------------- | -------- | -------------------------------- | -------- | ----------- |
-| availability    | property | `ApmPackageAvailabilityEvidence` | yes      |             |
-| declaration     | property | `ApmDependencyDeclaration`       | no       |             |
-| dependencyPaths | property | `readonly (readonly string[])[]` | yes      |             |
-| direct          | property | `boolean`                        | yes      |             |
-| findings        | property | `readonly ApmStatusFinding[]`    | yes      |             |
-| installed       | property | `ApmInstalledPackageEvidence`    | yes      |             |
-| installRootId   | property | `string`                         | yes      |             |
-| lockedVersion   | property | `string`                         | no       |             |
-| name            | property | `string`                         | yes      |             |
-| packageId       | property | `string`                         | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| availability | property | `ApmPackageAvailabilityEvidence` | yes |  |
+| declaration | property | `ApmDependencyDeclaration` | no |  |
+| dependencyPaths | property | `readonly (readonly string[])[]` | yes |  |
+| direct | property | `boolean` | yes |  |
+| findings | property | `readonly ApmStatusFinding[]` | yes |  |
+| installed | property | `ApmInstalledPackageEvidence` | yes |  |
+| installRootId | property | `string` | yes |  |
+| lockedVersion | property | `string` | no |  |
+| name | property | `string` | yes |  |
+| packageId | property | `string` | yes |  |
 
 ## ApmStatusDependencyInventoryPort
 
@@ -1856,9 +1856,9 @@ Source: `src/types/status.ts:156:1`
 
 ### Members
 
-| Name                            | Kind     | Type                                                                                      | Required | Description |
-| ------------------------------- | -------- | ----------------------------------------------------------------------------------------- | -------- | ----------- |
-| inspectDependencyInventoryAsync | property | `(input: { readonly inspection: ProjectInspection; }) => Promise<ApmDependencyInventory>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inspectDependencyInventoryAsync | property | `(input: { readonly inspection: ProjectInspection; }) => Promise<ApmDependencyInventory>` | yes |  |
 
 ## ApmStatusDiagnostic
 
@@ -1868,14 +1868,14 @@ Source: `src/types/status.ts:50:1`
 
 ### Members
 
-| Name       | Kind     | Type                             | Required | Description |
-| ---------- | -------- | -------------------------------- | -------- | ----------- |
-| code       | property | `string`                         | yes      |             |
-| evidence   | property | `readonly string[]`              | yes      |             |
-| nextAction | property | `string`                         | no       |             |
-| reason     | property | `string`                         | yes      |             |
-| scope      | property | `ApmStatusDiagnosticScope`       | yes      |             |
-| severity   | property | `"info" \| "warning" \| "error"` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| code | property | `string` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
+| scope | property | `ApmStatusDiagnosticScope` | yes |  |
+| severity | property | `"info" \| "warning" \| "error"` | yes |  |
 
 ## ApmStatusDiagnosticScope
 
@@ -1885,11 +1885,11 @@ Source: `src/types/status.ts:43:1`
 
 ### Members
 
-| Name | Kind     | Type                                                                                              | Required | Description |
-| ---- | -------- | ------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| id   | property | `string`                                                                                          | no       |             |
-| kind | property | `"host" \| "registry" \| "project" \| "install-root" \| "package" \| "projection" \| "migration"` | yes      |             |
-| path | property | `string`                                                                                          | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| id | property | `string` | no |  |
+| kind | property | `"host" \| "registry" \| "project" \| "install-root" \| "package" \| "projection" \| "migration"` | yes |  |
+| path | property | `string` | no |  |
 
 ## ApmStatusExtensionEvidencePort
 
@@ -1899,9 +1899,9 @@ Source: `src/types/status.ts:213:1`
 
 ### Members
 
-| Name                          | Kind     | Type                                                                                                                   | Required | Description |
-| ----------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| inspectExtensionEvidenceAsync | property | `(input: { readonly rootPath: string; readonly inventory: ApmDependencyInventory; }) => Promise<ApmExtensionEvidence>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inspectExtensionEvidenceAsync | property | `(input: { readonly rootPath: string; readonly inventory: ApmDependencyInventory; }) => Promise<ApmExtensionEvidence>` | yes |  |
 
 ## ApmStatusFinding
 
@@ -1911,13 +1911,13 @@ Source: `src/types/status.ts:59:1`
 
 ### Members
 
-| Name       | Kind     | Type                       | Required | Description |
-| ---------- | -------- | -------------------------- | -------- | ----------- |
-| code       | property | `ApmStatusFindingCode`     | yes      |             |
-| evidence   | property | `readonly string[]`        | yes      |             |
-| nextAction | property | `string`                   | no       |             |
-| reason     | property | `string`                   | yes      |             |
-| scope      | property | `ApmStatusDiagnosticScope` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| code | property | `ApmStatusFindingCode` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
+| scope | property | `ApmStatusDiagnosticScope` | yes |  |
 
 ## ApmStatusFindingCode
 
@@ -1933,12 +1933,12 @@ Source: `src/types/status.ts:36:1`
 
 ### Members
 
-| Name          | Kind     | Type     | Required | Description |
-| ------------- | -------- | -------- | -------- | ----------- |
-| declaredRange | property | `string` | no       |             |
-| id            | property | `string` | yes      |             |
-| name          | property | `string` | yes      |             |
-| version       | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| declaredRange | property | `string` | no |  |
+| id | property | `string` | yes |  |
+| name | property | `string` | yes |  |
+| version | property | `string` | yes |  |
 
 ## ApmStatusHostPackageResult
 
@@ -1948,14 +1948,14 @@ Source: `src/types/status.ts:240:1`
 
 ### Members
 
-| Name          | Kind     | Type                             | Required | Description |
-| ------------- | -------- | -------------------------------- | -------- | ----------- |
-| availability  | property | `ApmPackageAvailabilityEvidence` | yes      |             |
-| declaredRange | property | `string`                         | no       |             |
-| findings      | property | `readonly ApmStatusFinding[]`    | yes      |             |
-| id            | property | `string`                         | yes      |             |
-| name          | property | `string`                         | yes      |             |
-| version       | property | `string`                         | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| availability | property | `ApmPackageAvailabilityEvidence` | yes |  |
+| declaredRange | property | `string` | no |  |
+| findings | property | `readonly ApmStatusFinding[]` | yes |  |
+| id | property | `string` | yes |  |
+| name | property | `string` | yes |  |
+| version | property | `string` | yes |  |
 
 ## ApmStatusInput
 
@@ -1965,11 +1965,11 @@ Source: `src/types/status.ts:30:1`
 
 ### Members
 
-| Name         | Kind     | Type                              | Required | Description |
-| ------------ | -------- | --------------------------------- | -------- | ----------- |
-| availability | property | `ApmStatusAvailabilityMode`       | no       |             |
-| hostPackages | property | `readonly ApmStatusHostPackage[]` | no       |             |
-| rootPath     | property | `string`                          | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| availability | property | `ApmStatusAvailabilityMode` | no |  |
+| hostPackages | property | `readonly ApmStatusHostPackage[]` | no |  |
+| rootPath | property | `string` | yes |  |
 
 ## ApmStatusLanguage
 
@@ -1979,11 +1979,11 @@ Source: `src/types/status.ts:67:1`
 
 ### Members
 
-| Name        | Kind     | Type                | Required | Description |
-| ----------- | -------- | ------------------- | -------- | ----------- |
-| id          | property | `string`            | yes      |             |
-| score       | property | `number`            | yes      |             |
-| sourceRoots | property | `readonly string[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| id | property | `string` | yes |  |
+| score | property | `number` | yes |  |
+| sourceRoots | property | `readonly string[]` | yes |  |
 
 ## ApmStatusPorts
 
@@ -1993,12 +1993,12 @@ Source: `src/types/status.ts:220:1`
 
 ### Members
 
-| Name                | Kind     | Type                               | Required | Description |
-| ------------------- | -------- | ---------------------------------- | -------- | ----------- |
-| availability        | property | `ApmStatusAvailabilityPort`        | yes      |             |
-| dependencyInventory | property | `ApmStatusDependencyInventoryPort` | yes      |             |
-| extensions          | property | `ApmStatusExtensionEvidencePort`   | no       |             |
-| projectInspection   | property | `ApmStatusProjectInspectionPort`   | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| availability | property | `ApmStatusAvailabilityPort` | yes |  |
+| dependencyInventory | property | `ApmStatusDependencyInventoryPort` | yes |  |
+| extensions | property | `ApmStatusExtensionEvidencePort` | no |  |
+| projectInspection | property | `ApmStatusProjectInspectionPort` | yes |  |
 
 ## ApmStatusProjectInspectionPort
 
@@ -2008,9 +2008,9 @@ Source: `src/types/status.ts:82:1`
 
 ### Members
 
-| Name                | Kind     | Type                                               | Required | Description |
-| ------------------- | -------- | -------------------------------------------------- | -------- | ----------- |
-| inspectProjectAsync | property | `(rootPath: string) => Promise<ProjectInspection>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inspectProjectAsync | property | `(rootPath: string) => Promise<ProjectInspection>` | yes |  |
 
 ## ApmStatusProjectOptions
 
@@ -2022,9 +2022,9 @@ Optional owner-specific status evidence composed around the default Node status 
 
 ### Members
 
-| Name       | Kind     | Type                             | Required | Description |
-| ---------- | -------- | -------------------------------- | -------- | ----------- |
-| extensions | property | `ApmStatusExtensionEvidencePort` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| extensions | property | `ApmStatusExtensionEvidencePort` | no |  |
 
 ## ApmStatusProjectSummary
 
@@ -2034,14 +2034,14 @@ Source: `src/types/status.ts:73:1`
 
 ### Members
 
-| Name            | Kind     | Type                           | Required | Description |
-| --------------- | -------- | ------------------------------ | -------- | ----------- |
-| buildTools      | property | `readonly string[]`            | yes      |             |
-| languages       | property | `readonly ApmStatusLanguage[]` | yes      |             |
-| packageCount    | property | `number`                       | yes      |             |
-| packageManagers | property | `readonly string[]`            | yes      |             |
-| traits          | property | `readonly string[]`            | yes      |             |
-| workspaceCount  | property | `number`                       | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| buildTools | property | `readonly string[]` | yes |  |
+| languages | property | `readonly ApmStatusLanguage[]` | yes |  |
+| packageCount | property | `number` | yes |  |
+| packageManagers | property | `readonly string[]` | yes |  |
+| traits | property | `readonly string[]` | yes |  |
+| workspaceCount | property | `number` | yes |  |
 
 ## ApmStatusResult
 
@@ -2051,20 +2051,20 @@ Source: `src/types/status.ts:245:1`
 
 ### Members
 
-| Name          | Kind     | Type                                    | Required | Description |
-| ------------- | -------- | --------------------------------------- | -------- | ----------- |
-| complete      | property | `boolean`                               | yes      |             |
-| currency      | property | `ApmStatusCurrency`                     | yes      |             |
-| dependencies  | property | `readonly ApmStatusDependency[]`        | yes      |             |
-| diagnostics   | property | `readonly ApmStatusDiagnostic[]`        | yes      |             |
-| extensions    | property | `ApmExtensionEvidence`                  | yes      |             |
-| findings      | property | `readonly ApmStatusFinding[]`           | yes      |             |
-| hosts         | property | `readonly ApmStatusHostPackageResult[]` | yes      |             |
-| installRoots  | property | `readonly ApmInstallRootInventory[]`    | yes      |             |
-| operation     | property | `"status"`                              | yes      |             |
-| project       | property | `ApmStatusProjectSummary`               | yes      |             |
-| rootPath      | property | `string`                                | yes      |             |
-| schemaVersion | property | `2`                                     | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| complete | property | `boolean` | yes |  |
+| currency | property | `ApmStatusCurrency` | yes |  |
+| dependencies | property | `readonly ApmStatusDependency[]` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| extensions | property | `ApmExtensionEvidence` | yes |  |
+| findings | property | `readonly ApmStatusFinding[]` | yes |  |
+| hosts | property | `readonly ApmStatusHostPackageResult[]` | yes |  |
+| installRoots | property | `readonly ApmInstallRootInventory[]` | yes |  |
+| operation | property | `"status"` | yes |  |
+| project | property | `ApmStatusProjectSummary` | yes |  |
+| rootPath | property | `string` | yes |  |
+| schemaVersion | property | `2` | yes |  |
 
 ## ApmSupportedSourceHistory
 
@@ -2074,11 +2074,11 @@ Source: `src/types/update-protocol.ts:23:1`
 
 ### Members
 
-| Name          | Kind     | Type                            | Required | Description |
-| ------------- | -------- | ------------------------------- | -------- | ----------- |
-| mode          | property | `"automatic" \| "no-migration"` | yes      |             |
-| sourceRange   | property | `string`                        | yes      |             |
-| stateRevision | property | `string`                        | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| mode | property | `"automatic" \| "no-migration"` | yes |  |
+| sourceRange | property | `string` | yes |  |
+| stateRevision | property | `string` | no |  |
 
 ## ApmUnsupportedSourceHistory
 
@@ -2088,11 +2088,11 @@ Source: `src/types/update-protocol.ts:29:1`
 
 ### Members
 
-| Name        | Kind     | Type     | Required | Description |
-| ----------- | -------- | -------- | -------- | ----------- |
-| nextAction  | property | `string` | no       |             |
-| reason      | property | `string` | yes      |             |
-| sourceRange | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
+| sourceRange | property | `string` | yes |  |
 
 ## ApmUpdateDescriptor
 
@@ -2102,17 +2102,17 @@ Source: `src/types/update-protocol.ts:141:1`
 
 ### Members
 
-| Name            | Kind     | Type                                    | Required | Description |
-| --------------- | -------- | --------------------------------------- | -------- | ----------- |
-| compatibility   | property | `readonly ApmCompatibilityConstraint[]` | yes      |             |
-| effects         | property | `readonly ApmReleaseEffect[]`           | yes      |             |
-| extension       | property | `{ readonly export: string; }`          | no       |             |
-| history         | property | `ApmUpdateHistoryDescriptor`            | yes      |             |
-| migrations      | property | `readonly ApmMigrationDescriptor[]`     | yes      |             |
-| owner           | property | `ApmUpdateOwnerIdentity`                | yes      |             |
-| projections     | property | `readonly ApmProjectionDescriptor[]`    | yes      |             |
-| protocolVersion | property | `1`                                     | yes      |             |
-| schemaVersion   | property | `1`                                     | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| compatibility | property | `readonly ApmCompatibilityConstraint[]` | yes |  |
+| effects | property | `readonly ApmReleaseEffect[]` | yes |  |
+| extension | property | `{ readonly export: string; }` | no |  |
+| history | property | `ApmUpdateHistoryDescriptor` | yes |  |
+| migrations | property | `readonly ApmMigrationDescriptor[]` | yes |  |
+| owner | property | `ApmUpdateOwnerIdentity` | yes |  |
+| projections | property | `readonly ApmProjectionDescriptor[]` | yes |  |
+| protocolVersion | property | `1` | yes |  |
+| schemaVersion | property | `1` | yes |  |
 
 ## ApmUpdateDescriptorSchemaVersion
 
@@ -2128,12 +2128,12 @@ Source: `src/types/update-validation.ts:63:1`
 
 ### Members
 
-| Name                | Kind     | Type                                                   | Required | Description |
-| ------------------- | -------- | ------------------------------------------------------ | -------- | ----------- |
-| descriptor          | property | `unknown`                                              | yes      |             |
-| expectedOwner       | property | `{ readonly name: string; readonly version: string; }` | no       |             |
-| previousDescriptors | property | `readonly ApmUpdateDescriptor[]`                       | no       |             |
-| relatedDescriptors  | property | `readonly ApmUpdateDescriptor[]`                       | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| descriptor | property | `unknown` | yes |  |
+| expectedOwner | property | `{ readonly name: string; readonly version: string; }` | no |  |
+| previousDescriptors | property | `readonly ApmUpdateDescriptor[]` | no |  |
+| relatedDescriptors | property | `readonly ApmUpdateDescriptor[]` | no |  |
 
 ## ApmUpdateDescriptorValidationResult
 
@@ -2143,11 +2143,11 @@ Source: `src/types/update-validation.ts:73:1`
 
 ### Members
 
-| Name       | Kind     | Type                                  | Required | Description |
-| ---------- | -------- | ------------------------------------- | -------- | ----------- |
-| blockers   | property | `readonly ApmUpdateProtocolBlocker[]` | yes      |             |
-| descriptor | property | `ApmUpdateDescriptor`                 | no       |             |
-| valid      | property | `boolean`                             | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| blockers | property | `readonly ApmUpdateProtocolBlocker[]` | yes |  |
+| descriptor | property | `ApmUpdateDescriptor` | no |  |
+| valid | property | `boolean` | yes |  |
 
 ## ApmUpdateExtension
 
@@ -2157,12 +2157,12 @@ Source: `src/types/update-extension.ts:194:1`
 
 ### Members
 
-| Name             | Kind     | Type                              | Required | Description |
-| ---------------- | -------- | --------------------------------- | -------- | ----------- |
-| descriptorDigest | property | `string`                          | yes      |             |
-| migrations       | property | `readonly ApmMigrationHandler[]`  | yes      |             |
-| projections      | property | `readonly ApmProjectionHandler[]` | yes      |             |
-| protocolVersion  | property | `1`                               | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| descriptorDigest | property | `string` | yes |  |
+| migrations | property | `readonly ApmMigrationHandler[]` | yes |  |
+| projections | property | `readonly ApmProjectionHandler[]` | yes |  |
+| protocolVersion | property | `1` | yes |  |
 
 ## ApmUpdateHistoryDescriptor
 
@@ -2172,11 +2172,11 @@ Source: `src/types/update-protocol.ts:35:1`
 
 ### Members
 
-| Name        | Kind     | Type                                     | Required | Description |
-| ----------- | -------- | ---------------------------------------- | -------- | ----------- |
-| downgrade   | property | `"unsupported" \| "manual"`              | yes      |             |
-| supported   | property | `readonly ApmSupportedSourceHistory[]`   | yes      |             |
-| unsupported | property | `readonly ApmUnsupportedSourceHistory[]` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| downgrade | property | `"unsupported" \| "manual"` | yes |  |
+| supported | property | `readonly ApmSupportedSourceHistory[]` | yes |  |
+| unsupported | property | `readonly ApmUnsupportedSourceHistory[]` | yes |  |
 
 ## ApmUpdateOwnerIdentity
 
@@ -2186,10 +2186,10 @@ Source: `src/types/update-protocol.ts:18:1`
 
 ### Members
 
-| Name    | Kind     | Type     | Required | Description |
-| ------- | -------- | -------- | -------- | ----------- |
-| name    | property | `string` | yes      |             |
-| version | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| name | property | `string` | yes |  |
+| version | property | `string` | yes |  |
 
 ## ApmUpdateProtocolBlocker
 
@@ -2199,13 +2199,13 @@ Source: `src/types/update-validation.ts:39:1`
 
 ### Members
 
-| Name       | Kind     | Type                                                                                                                                                  | Required | Description |
-| ---------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| code       | property | `ApmUpdateProtocolBlockerCode`                                                                                                                        | yes      |             |
-| evidence   | property | `readonly string[]`                                                                                                                                   | yes      |             |
-| nextAction | property | `string`                                                                                                                                              | no       |             |
-| reason     | property | `string`                                                                                                                                              | yes      |             |
-| scope      | property | `{ readonly kind: "package-metadata" \| "descriptor" \| "history" \| "migration" \| "projection" \| "extension" \| "effect"; readonly id?: string; }` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| code | property | `ApmUpdateProtocolBlockerCode` | yes |  |
+| evidence | property | `readonly string[]` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | yes |  |
+| scope | property | `{ readonly kind: "package-metadata" \| "descriptor" \| "history" \| "migration" \| "projection" \| "extension" \| "effect"; readonly id?: string; }` | yes |  |
 
 ## ApmUpdateProtocolBlockerCode
 
@@ -2233,14 +2233,14 @@ Source: `src/types/verify.ts:16:1`
 
 ### Members
 
-| Name       | Kind     | Type                   | Required | Description |
-| ---------- | -------- | ---------------------- | -------- | ----------- |
-| evidence   | property | `readonly string[]`    | yes      |             |
-| id         | property | `string`               | yes      |             |
-| kind       | property | `ApmVerifyCheckKind`   | yes      |             |
-| nextAction | property | `string`               | no       |             |
-| reason     | property | `string`               | no       |             |
-| status     | property | `ApmVerifyCheckStatus` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| evidence | property | `readonly string[]` | yes |  |
+| id | property | `string` | yes |  |
+| kind | property | `ApmVerifyCheckKind` | yes |  |
+| nextAction | property | `string` | no |  |
+| reason | property | `string` | no |  |
+| status | property | `ApmVerifyCheckStatus` | yes |  |
 
 ## ApmVerifyCheckStatus
 
@@ -2256,10 +2256,10 @@ Source: `src/types/verify.ts:6:1`
 
 ### Members
 
-| Name        | Kind     | Type     | Required | Description |
-| ----------- | -------- | -------- | -------- | ----------- |
-| operationId | property | `string` | yes      |             |
-| rootPath    | property | `string` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| operationId | property | `string` | yes |  |
+| rootPath | property | `string` | yes |  |
 
 ## ApmVerifyJournalPort
 
@@ -2269,9 +2269,9 @@ Source: `src/types/verify.ts:25:1`
 
 ### Members
 
-| Name      | Kind     | Type                                                                               | Required | Description |
-| --------- | -------- | ---------------------------------------------------------------------------------- | -------- | ----------- |
-| readAsync | property | `(rootPath: string, operationId: string) => Promise<ApmApplyJournal \| undefined>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| readAsync | property | `(rootPath: string, operationId: string) => Promise<ApmApplyJournal \| undefined>` | yes |  |
 
 ## ApmVerifyPorts
 
@@ -2281,11 +2281,11 @@ Source: `src/types/verify.ts:45:1`
 
 ### Members
 
-| Name    | Kind     | Type                   | Required | Description |
-| ------- | -------- | ---------------------- | -------- | ----------- |
-| journal | property | `ApmVerifyJournalPort` | yes      |             |
-| status  | property | `ApmVerifyStatusPort`  | yes      |             |
-| step    | property | `ApmVerifyStepPort`    | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| journal | property | `ApmVerifyJournalPort` | yes |  |
+| status | property | `ApmVerifyStatusPort` | yes |  |
+| step | property | `ApmVerifyStepPort` | yes |  |
 
 ## ApmVerifyProjectOptions
 
@@ -2295,10 +2295,10 @@ Source: `src/types/verify-project.ts:4:1`
 
 ### Members
 
-| Name      | Kind     | Type                   | Required | Description |
-| --------- | -------- | ---------------------- | -------- | ----------- |
-| ownerStep | property | `ApmVerifyStepPort`    | no       |             |
-| status    | property | `ApmProjectStatusPort` | no       |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| ownerStep | property | `ApmVerifyStepPort` | no |  |
+| status | property | `ApmProjectStatusPort` | no |  |
 
 ## ApmVerifyResult
 
@@ -2308,18 +2308,18 @@ Source: `src/types/verify.ts:51:1`
 
 ### Members
 
-| Name          | Kind     | Type                              | Required | Description |
-| ------------- | -------- | --------------------------------- | -------- | ----------- |
-| checks        | property | `readonly ApmVerifyCheckResult[]` | yes      |             |
-| diagnostics   | property | `readonly ApmStatusDiagnostic[]`  | yes      |             |
-| findings      | property | `readonly ApmStatusFinding[]`     | yes      |             |
-| followUp      | property | `readonly ApmReleaseEffect[]`     | yes      |             |
-| operation     | property | `"verify"`                        | yes      |             |
-| operationId   | property | `string`                          | yes      |             |
-| planId        | property | `string`                          | no       |             |
-| rootPath      | property | `string`                          | yes      |             |
-| schemaVersion | property | `1`                               | yes      |             |
-| verified      | property | `boolean`                         | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| checks | property | `readonly ApmVerifyCheckResult[]` | yes |  |
+| diagnostics | property | `readonly ApmStatusDiagnostic[]` | yes |  |
+| findings | property | `readonly ApmStatusFinding[]` | yes |  |
+| followUp | property | `readonly ApmReleaseEffect[]` | yes |  |
+| operation | property | `"verify"` | yes |  |
+| operationId | property | `string` | yes |  |
+| planId | property | `string` | no |  |
+| rootPath | property | `string` | yes |  |
+| schemaVersion | property | `1` | yes |  |
+| verified | property | `boolean` | yes |  |
 
 ## ApmVerifyStatusPort
 
@@ -2329,9 +2329,9 @@ Source: `src/types/verify.ts:32:1`
 
 ### Members
 
-| Name               | Kind     | Type                                             | Required | Description |
-| ------------------ | -------- | ------------------------------------------------ | -------- | ----------- |
-| inspectStatusAsync | property | `(rootPath: string) => Promise<ApmStatusResult>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| inspectStatusAsync | property | `(rootPath: string) => Promise<ApmStatusResult>` | yes |  |
 
 ## ApmVerifyStepPort
 
@@ -2341,9 +2341,9 @@ Source: `src/types/verify.ts:36:1`
 
 ### Members
 
-| Name        | Kind     | Type                                                                                                                                                                                      | Required | Description |
-| ----------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
-| verifyAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes      |             |
+| Name | Kind | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| verifyAsync | property | `(input: { readonly journal: ApmApplyJournal; readonly plan: ApmPlanResult; readonly step: ApmPlanStep; readonly status: ApmStatusResult; }) => Promise<readonly ApmVerifyCheckResult[]>` | yes |  |
 
 ## applyAsync
 
@@ -2401,6 +2401,19 @@ Create the Node native package-manager resolution adapter used by headless proje
 
 - `() => ApmPlanResolutionPort`
   - returns: `ApmPlanResolutionPort`
+
+## createNodeApplyLockPort
+
+Kind: `function`
+Module: `src/features/apply/adapters/outbound/createNodeApplyLockPort.ts`
+Source: `src/features/apply/adapters/outbound/createNodeApplyLockPort.ts:19:1`
+
+Create the Node project-writer lock adapter with conservative same-host stale recovery.
+
+### Signatures
+
+- `() => ApmApplyLockPort`
+  - returns: `ApmApplyLockPort`
 
 ## createNpmRegistryAvailabilityPort
 
