@@ -14,8 +14,10 @@ import type {
 import { runPackageManagerCommandAsync } from '../../../../utils/runPackageManagerCommandAsync.js';
 import { applyStagedPlanTargetsAsync } from './applyStagedPlanTargetsAsync.js';
 import { buildPackageManagerPlanCommands } from './buildPackageManagerPlanCommands.js';
+import { buildPackageManagerPlanReconciliationCommand } from './buildPackageManagerPlanReconciliationCommand.js';
 import { collectStagedPlanFileChangesAsync } from './collectStagedPlanFileChangesAsync.js';
 import { inspectStagedPlanInventoryAsync } from './inspectStagedPlanInventoryAsync.js';
+import { restoreStagedPlanManifestExpectationsAsync } from './restoreStagedPlanManifestExpectationsAsync.js';
 import { stagePlanInstallRootAsync } from './stagePlanInstallRootAsync.js';
 import { toPlanCommandFailureBlocker } from './toPlanCommandFailureBlocker.js';
 import { toPlanResolutionGraph } from './toPlanResolutionGraph.js';
@@ -55,10 +57,11 @@ async function resolveStagedPlanAsync(
     ]);
   }
   const failed = await runCommandsAsync(buildPackageManagerPlanCommands(request), stage.rootPath);
-  if (failed !== undefined) {
-    return failedResolution(request, [
-      toPlanCommandFailureBlocker(request, failed.command, failed.result),
-    ]);
+  if (failed !== undefined) return commandFailureResolution(request, failed);
+  await restoreStagedPlanManifestExpectationsAsync(stage, manifestExpectations);
+  const reconciliationFailure = await reconcileReviewedManifestsAsync(request, stage.rootPath);
+  if (reconciliationFailure !== undefined) {
+    return commandFailureResolution(request, reconciliationFailure);
   }
   const root = await inspectStagedPlanInventoryAsync(request, stage);
   if (root === undefined) return failedResolution(request, [stagedInventoryBlocker(request)]);
@@ -90,6 +93,15 @@ interface FailedCommand {
   readonly result: ApmPlanCommandResult;
 }
 
+/*** Reconcile lockfile metadata with reviewed manifests after exact temporary solver constraints. */
+async function reconcileReviewedManifestsAsync(
+  request: ApmPlanResolutionRequest,
+  cwd: string,
+): Promise<FailedCommand | undefined> {
+  if (!request.targets.some(({ direct }) => direct)) return undefined;
+  return runCommandsAsync([buildPackageManagerPlanReconciliationCommand(request.manager)], cwd);
+}
+
 /*** Execute native resolver commands sequentially and return the first command failure with identity intact. */
 async function runCommandsAsync(
   commands: readonly ApmPackageManagerPlanCommand[],
@@ -100,6 +112,16 @@ async function runCommandsAsync(
   const result = await runPackageManagerCommandAsync(command, cwd, { lifecycleScripts: false });
   if (result.exitCode !== 0) return { command, result };
   return runCommandsAsync(remaining, cwd);
+}
+
+/*** Convert one failed native command into a bounded incomplete resolution. */
+function commandFailureResolution(
+  request: ApmPlanResolutionRequest,
+  failed: FailedCommand,
+): ApmPlanResolutionResult {
+  return failedResolution(request, [
+    toPlanCommandFailureBlocker(request, failed.command, failed.result),
+  ]);
 }
 
 /*** Build the manager-version command as stable non-secret blocker evidence. */
