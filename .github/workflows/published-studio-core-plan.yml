@@ -1,0 +1,128 @@
+name: Published Studio core plan
+
+on:
+  push:
+    branches: [test/18-published-studio-core-plan]
+    paths: [.github/workflows/published-studio-core-plan.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  published-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OWNER_VERSION: '2.6.1'
+      APM_VERSION: '0.8.0'
+      STUDIO_ARTIFACT_INTEGRITY: sha512-fiTXRJgavMSN9pDHJODRLFySOjjm+kVpn2xSsyjd5jj3ZmJWUI2LWL43cZLZYlzPDN4Qj/uSSPBky88kjRS2gA==
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ankhorage/studio
+          ref: 315e000519bd5200693996217a4d4dbcaac36f58
+          sparse-checkout: scripts/apm-published-core-proof.ts
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify actual npm artifacts before consumer installation
+        run: |
+          mkdir -p "$RUNNER_TEMP/published-proof/consumer" "$RUNNER_TEMP/published-proof/evidence" "$RUNNER_TEMP/published-proof/archive"
+          npm view "@ankhorage/studio@${OWNER_VERSION}" dist --json > "$RUNNER_TEMP/published-proof/evidence/studio-dist.json"
+          npm view "@ankhorage/apm@${APM_VERSION}" dist --json > "$RUNNER_TEMP/published-proof/evidence/apm-dist.json"
+          npm pack "@ankhorage/studio@${OWNER_VERSION}" --ignore-scripts --json --pack-destination "$RUNNER_TEMP/published-proof/archive" > "$RUNNER_TEMP/published-proof/evidence/studio-pack.json"
+          npm pack "@ankhorage/apm@${APM_VERSION}" --ignore-scripts --json --pack-destination "$RUNNER_TEMP/published-proof/archive" > "$RUNNER_TEMP/published-proof/evidence/apm-pack.json"
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {createHash} from 'node:crypto';
+          import {readFile,writeFile} from 'node:fs/promises';
+          const root=process.env.RUNNER_TEMP+'/published-proof';
+          for (const [name,version] of [['studio',process.env.OWNER_VERSION],['apm',process.env.APM_VERSION]]) {
+            const dist=JSON.parse(await readFile(root+'/evidence/'+name+'-dist.json','utf8'));
+            const [packed]=JSON.parse(await readFile(root+'/evidence/'+name+'-pack.json','utf8'));
+            assert.equal(packed.name,'@ankhorage/'+name);
+            assert.equal(packed.version,version);
+            assert.equal(packed.filename,'ankhorage-'+name+'-'+version+'.tgz');
+            const actual='sha512-'+createHash('sha512').update(await readFile(root+'/archive/'+packed.filename)).digest('base64');
+            assert.equal(actual,dist.integrity);
+            if(name==='studio') assert.equal(actual,process.env.STUDIO_ARTIFACT_INTEGRITY);
+          }
+          await writeFile(root+'/consumer/package.json',JSON.stringify({name:'published-studio-apm-core-plan',private:true,type:'module',dependencies:{'@ankhorage/studio':process.env.OWNER_VERSION,'@ankhorage/apm':process.env.APM_VERSION}}));
+          const source=await readFile('scripts/apm-published-core-proof.ts','utf8');
+          const needle='status: { inspectStatusAsync: (request) => statusProjectAsync(request, { extensions }) }';
+          assert.ok(source.includes(needle));
+          const instrumented=source.replace(needle,`status: { inspectStatusAsync: async (request) => {
+            const status = await statusProjectAsync(request, { extensions });
+            await writeFile(resolve(process.env.EVIDENCE_ROOT, 'status.json'), JSON.stringify(status, null, 2));
+            return status;
+          } }`).replace('  assert.equal(\n    result.complete,', `  await writeFile(resolve(process.env.EVIDENCE_ROOT, 'apm-plan.json'), JSON.stringify(result, null, 2));
+            assert.equal(\n    result.complete,`).replace('JSON.stringify({ blockers: result.blockers, diagnostics: result.diagnostics })','JSON.stringify({ blockers: result.blockers.map(({code})=>code), diagnostics: [...new Set(result.diagnostics.map(({code})=>code))] })');
+          await writeFile(root+'/consumer/verify-core.ts',instrumented);
+          JS
+      - name: Install the real registry-only owner graph outside checkouts
+        run: |
+          cd "$RUNNER_TEMP/published-proof/consumer"
+          export BUN_INSTALL_CACHE_DIR="$RUNNER_TEMP/published-proof/cache"
+          bun install --ignore-scripts
+          node verify-core.ts prime
+          bun install --ignore-scripts
+          bun install --frozen-lockfile --ignore-scripts
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFile,realpath,writeFile} from 'node:fs/promises';
+          import {createHash} from 'node:crypto';
+          const info=[];
+          for(const [name,version,subpath] of [['apm',process.env.APM_VERSION,'node'],['studio',process.env.OWNER_VERSION,'apm']]) {
+            const entry=import.meta.resolve('@ankhorage/'+name+'/'+subpath);
+            const root=new URL('../',entry);
+            const resolved=await realpath(root);
+            assert.ok(!resolved.startsWith(process.env.GITHUB_WORKSPACE));
+            const manifest=JSON.parse(await readFile(new URL('package.json',root),'utf8'));
+            assert.equal(manifest.version,version);
+            info.push({name:manifest.name,version:manifest.version,entry,digest:createHash('sha256').update(await readFile(new URL(entry))).digest('hex')});
+          }
+          await writeFile(process.env.RUNNER_TEMP+'/published-proof/evidence/installed-public-entries.json',JSON.stringify(info,null,2));
+          JS
+      - name: Plan observed owner drift with the published APM Node use case
+        run: |
+          cd "$RUNNER_TEMP/published-proof/consumer"
+          export EVIDENCE_ROOT="$RUNNER_TEMP/published-proof/evidence"
+          node verify-core.ts plan > "$EVIDENCE_ROOT/proof.json"
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFile} from 'node:fs/promises';
+          const root=process.env.EVIDENCE_ROOT;
+          const status=JSON.parse(await readFile(root+'/status.json','utf8'));
+          const plan=JSON.parse(await readFile(root+'/apm-plan.json','utf8'));
+          assert.equal(status.complete,true);
+          assert.deepEqual(status.diagnostics,[]);
+          assert.equal(plan.complete,true);
+          assert.deepEqual(plan.blockers,[]);
+          assert.ok(status.installRoots[0].lockedPackages.length>64);
+          console.log(JSON.stringify({statusComplete:status.complete,instances:status.installRoots[0].lockedPackages.length,planComplete:plan.complete,blockers:plan.blockers,steps:plan.steps.map(({id,kind})=>({id,kind}))}));
+          JS
+          echo 'Published APM 0.8.0 and Studio 2.6.1 passed the actual registry-only Bun graph core-plan proof.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Scope: status and owner policy projection planning. Dashboard/default host composition and apply/recovery remain separate acceptance requirements.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve inspected package graph and runtime versions
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/published-proof/evidence"
+          for file in package.json bun.lock; do
+            if test -f "$RUNNER_TEMP/published-proof/consumer/$file"; then
+              cp "$RUNNER_TEMP/published-proof/consumer/$file" "$RUNNER_TEMP/published-proof/evidence/"
+            fi
+          done
+          node --version > "$RUNNER_TEMP/published-proof/evidence/node-version.txt"
+          bun --version > "$RUNNER_TEMP/published-proof/evidence/bun-version.txt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: published-apm-studio-core-plan-proof
+          path: ${{ runner.temp }}/published-proof/evidence/
+          retention-days: 30
+          if-no-files-found: error
