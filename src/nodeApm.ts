@@ -12,6 +12,7 @@ export {
   validateUpdateExtensionCapabilities,
   verifyAsync,
 } from './apm.js';
+export { createNodeApplyLockPort } from './features/apply/adapters/outbound/createNodeApplyLockPort.js';
 export { applyProjectAsync } from './features/apply/composition/applyProjectAsync.js';
 export { createNativePlanResolutionPort } from './features/plan/adapters/outbound/createNativePlanResolutionPort.js';
 export { createSha256PlanDigestPort } from './features/plan/adapters/outbound/createSha256PlanDigestPort.js';
