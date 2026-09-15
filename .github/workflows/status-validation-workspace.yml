@@ -1,0 +1,37 @@
+name: APM status workspace
+
+on:
+  push:
+    branches: [fix/18-complete-bun-status]
+    paths: [.github/workflows/status-validation-workspace.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Prepare frozen APM validation inputs
+        run: |
+          bun install --frozen-lockfile --ignore-scripts
+          mkdir -p "$RUNNER_TEMP/status-workspace"
+          git bundle create "$RUNNER_TEMP/status-workspace/repository.bundle" HEAD refs/remotes/origin/main
+          tar -czf "$RUNNER_TEMP/status-workspace/dependencies.tgz" node_modules
+          cp package.json bun.lock "$RUNNER_TEMP/status-workspace/"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apm-status-workspace
+          path: ${{ runner.temp }}/status-workspace/
+          retention-days: 1
+          compression-level: 0
