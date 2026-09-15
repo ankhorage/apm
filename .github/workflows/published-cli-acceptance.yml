@@ -1,0 +1,52 @@
+name: Published CLI acceptance
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  published-cli:
+    name: ${{ matrix.manager }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        manager:
+          - npm
+          - pnpm
+          - yarn
+          - bun
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install repository dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Setup pnpm
+        if: matrix.manager == 'pnpm'
+        run: npm install --global pnpm@10
+
+      - name: Setup Yarn
+        if: matrix.manager == 'yarn'
+        run: |
+          corepack enable
+          corepack prepare yarn@4.9.2 --activate
+
+      - name: Run published CLI lifecycle
+        run: bun scripts/published-cli-acceptance.ts ${{ matrix.manager }}
