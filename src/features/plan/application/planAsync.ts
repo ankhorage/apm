@@ -111,7 +111,10 @@ async function resolveDependencyIterationAsync(
   policy: ReturnType<typeof normalizePlanPolicy>,
   ports: ApmPlanPorts,
 ): Promise<DependencyIterationEvidence> {
-  const statusBlockers = input.status.complete ? [] : [incompleteStatusBlocker(input)];
+  const statusBlockers =
+    input.status.complete || canBootstrapMissingLockfiles(input.status)
+      ? []
+      : [incompleteStatusBlocker(input)];
   const selected = selectDependencyTargets(input.status, policy);
   const requests = buildPlanResolutionRequests(input.status, policy, selected.targets);
   const preliminaryBlockers = [...statusBlockers, ...selected.blockers, ...requests.blockers];
@@ -258,6 +261,31 @@ function planEffects(
         },
       ]
     : effects;
+}
+
+/*** Admit only selected roots whose sole incomplete evidence is an intentionally missing lockfile. */
+function canBootstrapMissingLockfiles(status: ApmPlanInput['status']): boolean {
+  const incompleteRoots = status.installRoots.filter(({ complete }) => !complete);
+  if (incompleteRoots.length === 0 || !status.extensions.complete) return false;
+  const incompleteRootIds = new Set(incompleteRoots.map(({ id }) => id));
+  const rootsAreBootstrapEligible = incompleteRoots.every(
+    (root) =>
+      root.manager.state === 'selected' &&
+      root.manager.name !== undefined &&
+      root.lockfile.state === 'missing' &&
+      root.diagnostics.length === 1 &&
+      root.diagnostics[0]?.code === 'status.lockfile.missing',
+  );
+  const diagnosticsAreOnlyMissingLocks =
+    status.diagnostics.length === incompleteRoots.length &&
+    status.diagnostics.every(
+      ({ code, scope }) =>
+        code === 'status.lockfile.missing' &&
+        scope.kind === 'install-root' &&
+        scope.id !== undefined &&
+        incompleteRootIds.has(scope.id),
+    );
+  return rootsAreBootstrapEligible && diagnosticsAreOnlyMissingLocks;
 }
 
 /*** Explain why incomplete status evidence cannot produce a complete executable plan. */
