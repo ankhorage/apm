@@ -40,14 +40,16 @@ jobs:
           node-version: '24'
       - name: Apply reviewed APM status changes
         run: |
-          test "$(git rev-parse HEAD^)" = 1f8771e62abb676e433dbf094ab773e1536797f8
+          test "$(git rev-parse HEAD^)" = 33534a201e471061763545f1b6e6daf59b98ff35
           cp .owner-proof-input/scripts/apm-published-core-proof.ts "$RUNNER_TEMP/verify-core.ts"
           rm -rf .owner-proof-input
           cat .github/apm-status-part1.bz2 .github/apm-status-part2.bz2 | bzip2 -dc > "$RUNNER_TEMP/status.patch"
           echo "28cc922da2897152cfda07b0ee1b7e9b9953f86f9bf63df77479bde0032b2483  $RUNNER_TEMP/status.patch" | sha256sum -c -
           git apply --check "$RUNNER_TEMP/status.patch"
           git apply --index "$RUNNER_TEMP/status.patch"
-          git rm .github/apm-status-part1.bz2 .github/apm-status-part2.bz2
+          git apply --check .github/apm-status-tarball.patch
+          git apply --index .github/apm-status-tarball.patch
+          git rm .github/apm-status-part1.bz2 .github/apm-status-part2.bz2 .github/apm-status-tarball.patch
           rm .github/workflows/status-validation-workspace.yml
       - name: Validate source and regenerate owned documentation
         run: |

@@ -1,0 +1,76 @@
+diff --git a/src/features/status/adapters/outbound/bunPlacement.test.ts b/src/features/status/adapters/outbound/bunPlacement.test.ts
+index eb6ff6e..02ba187 100644
+--- a/src/features/status/adapters/outbound/bunPlacement.test.ts
++++ b/src/features/status/adapters/outbound/bunPlacement.test.ts
+@@ -223,3 +223,30 @@ test('keeps multiple isolated Bun peer variants unknown without guessing an inst
+     expect(result.roots[0]?.installedPackages[0]?.state).toBe('unknown');
+   });
+ });
++
++test('retains local Bun tarball identity and its compact dependency tuple without reading the archive', async () => {
++  await withFixtureAsync(async (root) => {
++    await writeFixtureAsync(root, {
++      dep: [
++        'dep@/nonexistent/owner+candidate.tgz',
++        { dependencies: { leaf: '^2.0.0' } },
++        'sha512-fixture',
++      ],
++      leaf: ['leaf@1.0.0', '', {}],
++      'dep/leaf': ['leaf@2.0.0', '', {}],
++    });
++    await installAsync(root, 'node_modules/dep', 'dep', '3.0.0');
++    await installAsync(root, 'node_modules/leaf', 'leaf', '1.0.0');
++    await installAsync(root, 'node_modules/dep/node_modules/leaf', 'leaf', '2.0.0');
++    const result = await inspectAsync(root);
++    const owner = result.roots[0]?.lockedPackages.find(({ id }) => id === 'bun:dep');
++    expect(result.complete).toBe(true);
++    expect(owner?.source).toBe('file');
++    expect(owner?.version).toBeUndefined();
++    expect(owner?.peerContext).toBeUndefined();
++    expect(owner?.dependencies[0]?.packageId).toBe('bun:dep/leaf');
++    expect(
++      result.roots[0]?.installedPackages.find(({ packageId }) => packageId === 'bun:dep')?.version,
++    ).toBe('3.0.0');
++  });
++});
+diff --git a/src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts b/src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts
+index f3613f6..d15d235 100644
+--- a/src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts
++++ b/src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts
+@@ -131,7 +131,7 @@ function readBunPackage(
+   const identity = parseBunLocator(value[0]);
+   const names = parseBunPackagePath(key);
+   if (identity === undefined || names === undefined) return undefined;
+-  const metadata = isRecord(value[2]) ? value[2] : {};
++  const metadata = isRecord(value[1]) ? value[1] : isRecord(value[2]) ? value[2] : {};
+   const dependencies = [
+     ...readStringMap(metadata.dependencies),
+     ...readStringMap(metadata.optionalDependencies),
+@@ -158,9 +158,9 @@ function parseBunLocator(locator: string): BunIdentity | undefined {
+   if (match === null) return undefined;
+   const [, name, raw] = match;
+   if (name === undefined || raw === undefined) return undefined;
+-  const peerIndex = raw.startsWith('git+') ? -1 : raw.indexOf('+');
++  const source = bunSource(raw);
++  const peerIndex = source === 'registry' ? raw.indexOf('+') : -1;
+   const versionOrSource = peerIndex < 0 ? raw : raw.slice(0, peerIndex);
+-  const source = bunSource(versionOrSource);
+   if (source === 'registry' && valid(versionOrSource) === null) return undefined;
+   return {
+     name,
+@@ -173,7 +173,14 @@ function parseBunLocator(locator: string): BunIdentity | undefined {
+ /*** Classify Bun locator sources before semantic-version handling. */
+ function bunSource(value: string): ApmLockedPackageEvidence['source'] {
+   if (value.startsWith('workspace:')) return 'workspace';
+-  if (value.startsWith('file:')) return 'file';
++  if (
++    value.startsWith('file:') ||
++    value.startsWith('./') ||
++    value.startsWith('../') ||
++    path.posix.isAbsolute(value) ||
++    path.win32.isAbsolute(value)
++  )
++    return 'file';
+   if (value.startsWith('git+') || value.startsWith('github:')) return 'git';
+   return 'registry';
+ }
