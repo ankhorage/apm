@@ -1,0 +1,5 @@
+sequenceDiagram
+  participant participant_createNpmRegistryAvailabilityPort as createNpmRegistryAvailabilityPort
+  participant participant_validateRegistryLimits as validateRegistryLimits
+  participant_createNpmRegistryAvailabilityPort->>participant_validateRegistryLimits: validateRegistryLimits()
+  participant_validateRegistryLimits-->>participant_createNpmRegistryAvailabilityPort: return

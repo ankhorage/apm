@@ -3,7 +3,7 @@
 
 # @ankhorage/apm
 
-![license: MIT](././paradox/badges/license.svg) ![npm: v0.6.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
+![license: MIT](././paradox/badges/license.svg) ![npm: v0.7.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
 
 Headless project update analysis, planning, execution, recovery, and verification.
 
@@ -16,6 +16,7 @@ Headless project update analysis, planning, execution, recovery, and verificatio
 - [Module relationships](././paradox/diagrams/module-relationships.mmd)
 - [Export graph](././paradox/diagrams/export-graph.mmd)
 - [apm sequence](././paradox/diagrams/sequences/apm.mmd)
+- [createNpmRegistryAvailabilityPort sequence](././paradox/diagrams/sequences/create-npm-registry-availability-port.mmd)
 - [inspectDependencyInventoryAsync sequence](././paradox/diagrams/sequences/inspect-dependency-inventory-async.mmd)
 - [validatePackageUpdateMetadata sequence](././paradox/diagrams/sequences/validate-package-update-metadata.mmd)
 - [validateUpdateExtensionCapabilities sequence](././paradox/diagrams/sequences/validate-update-extension-capabilities.mmd)
@@ -98,11 +99,16 @@ PnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm lin
 but are not claimed as complete inventory modes in this release.
 
 Bun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are
-inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.
+inspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed
+identity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.
 
 Registry availability uses npm-compatible registries selected from project/user npmrc and
 environment overrides. Credentials are used only at the HTTP edge and are never returned in
-reports. Offline cache misses and registry/auth/network failures make availability unknown.
+reports. Lookups deduplicate registry names, retain each instance's declared constraint, and run
+in batches of at most eight requests (configurable 1–64), with a default budget of 4096 names.
+Hosts can pass a configured registry availability port to `statusProjectAsync`; exceeding an
+explicit budget leaves uncached packages unknown rather than truncating them from the report.
+Offline cache misses and registry/auth/network failures make availability unknown.
 
 `status` and `plan` are read-only project operations. Status reads manifests, lockfiles,
 installation metadata and registry data. Plan performs package-manager-native resolution only in
@@ -111,7 +117,7 @@ operation executes project lifecycle hooks or migrations. `apply` and `verify` r
 roadmap operations.
 
 Module: `src/features/status/constants/support.ts`
-Source: `src/features/status/constants/support.ts:47:14`
+Source: `src/features/status/constants/support.ts:52:14`
 
 </details>
 

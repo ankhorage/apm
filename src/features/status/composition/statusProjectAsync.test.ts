@@ -53,3 +53,33 @@ test('inspects an ordinary JavaScript project without config or lifecycle execut
     await rm(rootPath, { recursive: true, force: true });
   }
 });
+
+test('uses an explicitly supplied host availability adapter without changing incomplete evidence', async () => {
+  const rootPath = await mkdtemp(path.join(tmpdir(), 'apm-host-registry-'));
+  const calls: string[] = [];
+  try {
+    await writeFile(
+      path.join(rootPath, 'package.json'),
+      JSON.stringify({ name: 'fixture', packageManager: 'npm@12.0.2' }),
+    );
+    await writeFile(
+      path.join(rootPath, 'package-lock.json'),
+      JSON.stringify({ lockfileVersion: 3, packages: { '': { name: 'fixture' } } }),
+    );
+    const result = await statusProjectAsync(
+      { rootPath, hostPackages: [], availability: 'offline' },
+      {
+        availability: {
+          queryAvailabilityAsync: (input) => {
+            calls.push(input.rootPath);
+            return Promise.resolve({ complete: false, packages: [], diagnostics: [] });
+          },
+        },
+      },
+    );
+    expect(calls).toEqual([rootPath]);
+    expect(result.complete).toBe(false);
+  } finally {
+    await rm(rootPath, { recursive: true, force: true });
+  }
+});

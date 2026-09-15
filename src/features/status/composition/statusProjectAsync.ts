@@ -22,7 +22,7 @@ export async function statusProjectAsync(
     {
       projectInspection: { inspectProjectAsync },
       dependencyInventory: { inspectDependencyInventoryAsync },
-      availability: registryAvailabilityPort,
+      availability: options.availability ?? registryAvailabilityPort,
       ...(options.extensions === undefined ? {} : { extensions: options.extensions }),
     },
   );
