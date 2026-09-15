@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.3
+
+### Patch Changes
+
+- cfd2edf: Resolve reviewed direct dependency targets exactly in disposable native staging while preserving the reviewed manifest range.
+
 ## 0.8.2
 
 ### Patch Changes
