@@ -23,7 +23,14 @@ export async function inspectBunInstallationAsync(
   const installedPackages = isolated
     ? await inspectIsolatedAsync(input, packages, isolatedStore)
     : await inspectHoistedAsync(input, packages);
-  const complete = installedPackages.every((item) => item.state !== 'unknown');
+  const mismatched = installedPackages.filter((item) => {
+    const locked = packages.find((pkg) => pkg.id === item.packageId);
+    return (
+      item.state === 'present' && locked?.version !== undefined && item.version !== locked.version
+    );
+  });
+  const complete =
+    installedPackages.every((item) => item.state !== 'unknown') && mismatched.length === 0;
   return {
     linker: isolated ? 'isolated' : 'hoisted',
     installedPackages,
@@ -35,8 +42,14 @@ export async function inspectBunInstallationAsync(
             code: 'status.install.bun.instance-unknown',
             severity: 'warning',
             scope: { kind: 'install-root', id: input.root.id },
-            evidence: [isolated ? 'node_modules/.bun' : 'node_modules'],
-            reason: 'At least one Bun lock instance could not be mapped to installed package data.',
+            evidence: [
+              isolated ? 'node_modules/.bun' : 'node_modules',
+              ...mismatched.map(
+                (item) => `${item.packageId}: installed ${item.version ?? 'unknown'}`,
+              ),
+            ],
+            reason:
+              'At least one Bun lock instance is unknown or differs from its installed package data.',
           },
         ],
   };
@@ -89,23 +102,26 @@ function inspectIsolatedPackageAsync(
   });
 }
 
-/*** Inspect hoisted Bun package names only when a lock instance is unambiguous by name. */
+/*** Read each hoisted instance at the exact placement represented by its Bun lock key. */
 async function inspectHoistedAsync(
   input: ApmManagerInspectionInput,
   packages: readonly ApmLockedPackageEvidence[],
 ): Promise<readonly ApmInstalledPackageEvidence[]> {
-  const counts = new Map<string, number>();
-  for (const pkg of packages) counts.set(pkg.name, (counts.get(pkg.name) ?? 0) + 1);
   return Promise.all(
     packages.map((pkg) =>
-      counts.get(pkg.name) === 1
-        ? readDirectLinkAsync(input, pkg)
-        : Promise.resolve({
+      pkg.location === undefined
+        ? Promise.resolve({
             packageId: pkg.id,
             state: 'unknown' as const,
             source: 'node-modules' as const,
-            reason:
-              'Hoisted node_modules cannot identify which duplicate Bun lock instance occupies this name.',
+            reason: 'Bun lock instance has no validated physical placement.',
+          })
+        : readInstalledPackageVersionAsync({
+            packageId: pkg.id,
+            packagePath: path.join(input.root.rootPath, pkg.location),
+            source: 'node-modules',
+            serializedLocation: pkg.location,
+            expectedName: pkg.name,
           }),
     ),
   );

@@ -41,7 +41,7 @@ never assumed OTA-safe; without package/platform evidence APM records OTA eligib
 
 Kind: `value`
 Module: `src/features/status/constants/support.ts`
-Source: `src/features/status/constants/support.ts:47:14`
+Source: `src/features/status/constants/support.ts:52:14`
 
 Publish the exact read-only status matrix proven by the evidence adapters.
 
@@ -75,11 +75,16 @@ PnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm lin
 but are not claimed as complete inventory modes in this release.
 
 Bun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are
-inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.
+inspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed
+identity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.
 
 Registry availability uses npm-compatible registries selected from project/user npmrc and
 environment overrides. Credentials are used only at the HTTP edge and are never returned in
-reports. Offline cache misses and registry/auth/network failures make availability unknown.
+reports. Lookups deduplicate registry names, retain each instance's declared constraint, and run
+in batches of at most eight requests (configurable 1–64), with a default budget of 4096 names.
+Hosts can pass a configured registry availability port to `statusProjectAsync`; exceeding an
+explicit budget leaves uncached packages unknown rather than truncating them from the report.
+Offline cache misses and registry/auth/network failures make availability unknown.
 
 `status` and `plan` are read-only project operations. Status reads manifests, lockfiles,
 installation metadata and registry data. Plan performs package-manager-native resolution only in
@@ -1729,7 +1734,7 @@ Source: `src/types/update-protocol.ts:70:1`
 
 Kind: `type`
 Module: `src/types/status-project.ts`
-Source: `src/types/status-project.ts:4:1`
+Source: `src/types/status-project.ts:9:1`
 
 Reusable project-status boundary shared by planning, apply validation, and verification composition.
 
@@ -1750,6 +1755,7 @@ Source: `src/types/registry.ts:12:1`
 | Name        | Kind     | Type                                            | Required | Description |
 | ----------- | -------- | ----------------------------------------------- | -------- | ----------- |
 | cacheTtlMs  | property | `number`                                        | no       |             |
+| concurrency | property | `number`                                        | no       |             |
 | env         | property | `Readonly<Record<string, string \| undefined>>` | no       |             |
 | fetchFn     | property | `ApmRegistryFetch`                              | no       |             |
 | home        | property | `string`                                        | no       |             |
@@ -2016,15 +2022,16 @@ Source: `src/types/status.ts:82:1`
 
 Kind: `type`
 Module: `src/types/status-project.ts`
-Source: `src/types/status-project.ts:9:1`
+Source: `src/types/status-project.ts:14:1`
 
 Optional owner-specific status evidence composed around the default Node status adapters.
 
 ### Members
 
-| Name       | Kind     | Type                             | Required | Description |
-| ---------- | -------- | -------------------------------- | -------- | ----------- |
-| extensions | property | `ApmStatusExtensionEvidencePort` | no       |             |
+| Name         | Kind     | Type                             | Required | Description |
+| ------------ | -------- | -------------------------------- | -------- | ----------- |
+| availability | property | `ApmStatusAvailabilityPort`      | no       |             |
+| extensions   | property | `ApmStatusExtensionEvidencePort` | no       |             |
 
 ## ApmStatusProjectSummary
 
@@ -2419,7 +2426,7 @@ Create the Node project-writer lock adapter with conservative same-host stale re
 
 Kind: `function`
 Module: `src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts`
-Source: `src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:19:1`
+Source: `src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts:21:1`
 
 Create a bounded npm-compatible registry adapter with redacted config and process-local TTL cache.
 

@@ -89,6 +89,7 @@ graph LR
   module_src_features_plan_domain_selectDependencyTargets_test_ts["src/features/plan/domain/selectDependencyTargets.test.ts"]
   module_src_features_plan_domain_selectDependencyTargets_ts["src/features/plan/domain/selectDependencyTargets.ts"]
   module_src_features_plan_domain_validateSavedPlanAsync_ts["src/features/plan/domain/validateSavedPlanAsync.ts"]
+  module_src_features_status_adapters_outbound_bunPlacement_test_ts["src/features/status/adapters/outbound/bunPlacement.test.ts"]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_test_ts["src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.test.ts"]
   module_src_features_status_adapters_outbound_createNpmRegistryAvailabilityPort_ts["src/features/status/adapters/outbound/createNpmRegistryAvailabilityPort.ts"]
   module_src_features_status_adapters_outbound_discoverInstallRootsAsync_ts["src/features/status/adapters/outbound/discoverInstallRootsAsync.ts"]
@@ -102,7 +103,7 @@ graph LR
   module_src_features_status_adapters_outbound_inspectYarnInstallationAsync_ts["src/features/status/adapters/outbound/inspectYarnInstallationAsync.ts"]
   module_src_features_status_adapters_outbound_inspectYarnRootAsync_ts["src/features/status/adapters/outbound/inspectYarnRootAsync.ts"]
   module_src_features_status_adapters_outbound_parseYarnLockEvidence_ts["src/features/status/adapters/outbound/parseYarnLockEvidence.ts"]
-  module_src_features_status_adapters_outbound_queryRegistryPackageAsync_ts["src/features/status/adapters/outbound/queryRegistryPackageAsync.ts"]
+  module_src_features_status_adapters_outbound_queryRegistryPackageGroupAsync_ts["src/features/status/adapters/outbound/queryRegistryPackageGroupAsync.ts"]
   module_src_features_status_adapters_outbound_readBunLockEvidenceAsync_ts["src/features/status/adapters/outbound/readBunLockEvidenceAsync.ts"]
   module_src_features_status_adapters_outbound_readPackageManifestAsync_ts["src/features/status/adapters/outbound/readPackageManifestAsync.ts"]
   module_src_features_status_adapters_outbound_readPnpmLockEvidenceAsync_ts["src/features/status/adapters/outbound/readPnpmLockEvidenceAsync.ts"]
@@ -120,6 +121,7 @@ graph LR
   module_src_features_status_domain_evaluateExtensionFindings_ts["src/features/status/domain/evaluateExtensionFindings.ts"]
   module_src_features_status_domain_evaluateHostStatus_ts["src/features/status/domain/evaluateHostStatus.ts"]
   module_src_features_status_domain_evaluateStatus_ts["src/features/status/domain/evaluateStatus.ts"]
+  module_src_features_status_domain_parseBunPackagePath_ts["src/features/status/domain/parseBunPackagePath.ts"]
   module_src_features_status_utils_declarationResolutionKey_ts["src/features/status/utils/declarationResolutionKey.ts"]
   module_src_features_status_utils_readInstalledPackageVersionAsync_ts["src/features/status/utils/readInstalledPackageVersionAsync.ts"]
   module_src_features_update_protocol_adapters_outbound_resolveNpmExtensionArtifactIdentityAsync_test_ts["src/features/update-protocol/adapters/outbound/resolveNpmExtensionArtifactIdentityAsync.test.ts"]
@@ -693,6 +695,7 @@ graph LR
   module_src_types_status_ts --> export_ApmStatusProjectInspectionPort
   export_ApmStatusProjectOptions["ApmStatusProjectOptions"]
   module_src_types_status_project_ts --> export_ApmStatusProjectOptions
+  export_ApmStatusProjectOptions -.-> export_ApmStatusAvailabilityPort
   export_ApmStatusProjectOptions -.-> export_ApmStatusExtensionEvidencePort
   export_ApmStatusProjectSummary["ApmStatusProjectSummary"]
   module_src_types_status_ts --> export_ApmStatusProjectSummary

@@ -31,11 +31,16 @@
  * but are not claimed as complete inventory modes in this release.
  *
  * Bun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are
- * inspected as data. Binary `bun.lockb` and unknown lock versions are inspection-only.
+ * inspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed
+ * identity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.
  *
  * Registry availability uses npm-compatible registries selected from project/user npmrc and
  * environment overrides. Credentials are used only at the HTTP edge and are never returned in
- * reports. Offline cache misses and registry/auth/network failures make availability unknown.
+ * reports. Lookups deduplicate registry names, retain each instance's declared constraint, and run
+ * in batches of at most eight requests (configurable 1–64), with a default budget of 4096 names.
+ * Hosts can pass a configured registry availability port to `statusProjectAsync`; exceeding an
+ * explicit budget leaves uncached packages unknown rather than truncating them from the report.
+ * Offline cache misses and registry/auth/network failures make availability unknown.
  *
  * `status` and `plan` are read-only project operations. Status reads manifests, lockfiles,
  * installation metadata and registry data. Plan performs package-manager-native resolution only in

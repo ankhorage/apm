@@ -7,32 +7,14 @@ import { isRecord } from '@ankhorage/utility/object';
 import type { ApmInstalledPackageEvidence } from '../../../types/status.js';
 
 /*** Read one installed package manifest without loading or executing the package. */
-export async function readInstalledPackageVersionAsync(input: {
-  readonly packageId: string;
-  readonly packagePath: string;
-  readonly source: ApmInstalledPackageEvidence['source'];
-  readonly serializedLocation: string;
-}): Promise<ApmInstalledPackageEvidence> {
+export async function readInstalledPackageVersionAsync(
+  input: InstalledPackageInput,
+): Promise<ApmInstalledPackageEvidence> {
   try {
     const parsed = JSON.parse(
       await readFile(path.join(input.packagePath, 'package.json'), 'utf8'),
     ) as unknown;
-    if (!isRecord(parsed) || typeof parsed.version !== 'string') {
-      return {
-        packageId: input.packageId,
-        state: 'unknown',
-        source: input.source,
-        location: input.serializedLocation,
-        reason: 'Installed package.json does not expose a string version.',
-      };
-    }
-    return {
-      packageId: input.packageId,
-      state: 'present',
-      source: input.source,
-      version: parsed.version,
-      location: input.serializedLocation,
-    };
+    return toInstalledPackageEvidence(input, parsed);
   } catch (error) {
     if (isMissingPathError(error)) {
       return {
@@ -52,4 +34,40 @@ export async function readInstalledPackageVersionAsync(input: {
         error instanceof Error ? error.message : 'Installed package evidence could not be read.',
     };
   }
+}
+
+interface InstalledPackageInput {
+  readonly packageId: string;
+  readonly expectedName?: string;
+  readonly packagePath: string;
+  readonly source: ApmInstalledPackageEvidence['source'];
+  readonly serializedLocation: string;
+}
+
+/*** Validate the data-only installed manifest before recording identity and version evidence. */
+function toInstalledPackageEvidence(
+  input: InstalledPackageInput,
+  parsed: unknown,
+): ApmInstalledPackageEvidence {
+  if (
+    !isRecord(parsed) ||
+    typeof parsed.version !== 'string' ||
+    (input.expectedName !== undefined && parsed.name !== input.expectedName)
+  ) {
+    return {
+      packageId: input.packageId,
+      state: 'unknown',
+      source: input.source,
+      location: input.serializedLocation,
+      reason:
+        'Installed package.json does not expose a string version or the expected package identity.',
+    };
+  }
+  return {
+    packageId: input.packageId,
+    state: 'present',
+    source: input.source,
+    version: parsed.version,
+    location: input.serializedLocation,
+  };
 }
