@@ -9,7 +9,7 @@ import { promisify } from 'node:util';
 import { isRecord, readOwnProperty } from '@ankhorage/utility/object';
 
 const execFileAsync = promisify(execFile);
-const APM_VERSION = '0.8.1';
+const APM_VERSION = '0.8.2';
 const ANKH_VERSION = '0.8.13';
 const DEPENDENCY_NAME = 'semver';
 const INITIAL_DEPENDENCY_VERSION = '7.7.1';
@@ -19,7 +19,9 @@ const COMMAND_TIMEOUT_MS = 300_000;
 type PackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun';
 
 const manager = parseManager(process.argv[2]);
-const fixtureRoot = await mkdtemp(path.join(tmpdir(), `ankhorage-apm-published-${manager}-`));
+const fixtureRoot = await mkdtemp(
+  path.join(tmpdir(), `ankhorage-apm-published-${manager}-`),
+);
 
 try {
   const managerVersion = await managerVersionAsync(manager, fixtureRoot);
@@ -215,7 +217,11 @@ async function installProjectAsync(
   packageManager: PackageManagerName,
 ): Promise<void> {
   if (packageManager === 'npm') {
-    await runCommandAsync('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund'], projectRoot);
+    await runCommandAsync(
+      'npm',
+      ['install', '--ignore-scripts', '--no-audit', '--no-fund'],
+      projectRoot,
+    );
     return;
   }
   if (packageManager === 'pnpm') {
@@ -234,7 +240,10 @@ async function installProjectAsync(
 /*** Read the physical installed version produced by the reviewed apply operation. */
 async function installedDependencyVersionAsync(projectRoot: string): Promise<string> {
   const value: unknown = JSON.parse(
-    await readFile(path.join(projectRoot, 'node_modules', DEPENDENCY_NAME, 'package.json'), 'utf8'),
+    await readFile(
+      path.join(projectRoot, 'node_modules', DEPENDENCY_NAME, 'package.json'),
+      'utf8',
+    ),
   );
   if (!isRecord(value)) throw new Error('Installed dependency manifest is not an object.');
   return readRequiredString(value, 'version');
@@ -247,7 +256,10 @@ async function assertPublishedVersionAsync(
   expectedVersion: string,
 ): Promise<void> {
   const value: unknown = JSON.parse(
-    await readFile(path.join(toolRoot, 'node_modules', ...packageName.split('/'), 'package.json'), 'utf8'),
+    await readFile(
+      path.join(toolRoot, 'node_modules', ...packageName.split('/'), 'package.json'),
+      'utf8',
+    ),
   );
   if (!isRecord(value)) throw new Error(`Invalid installed package metadata for ${packageName}.`);
   assert.equal(readOwnProperty(value, 'version'), expectedVersion);
@@ -290,7 +302,9 @@ async function runCommandAsync(
 }
 
 /*** Find the one reviewed direct dependency update target in a structured APM plan. */
-function findDependencyTarget(plan: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> {
+function findDependencyTarget(
+  plan: Readonly<Record<string, unknown>>,
+): Readonly<Record<string, unknown>> {
   const targets = readArray(plan, 'targets').filter(
     (target) => isRecord(target) && readOwnProperty(target, 'name') === DEPENDENCY_NAME,
   );
