@@ -4,11 +4,13 @@ import type {
   ApmApplyStepExecutionResult,
   ApmApplyStepObservation,
 } from '../../../types/apply.js';
-import type { ApmPlanStep } from '../../../types/plan.js';
+import type { ApmPlanResult, ApmPlanStep } from '../../../types/plan.js';
 
 /*** Build stable machine-readable apply blockers from one explicit execution/recovery condition. */
 export function createApplyBlocker(input: CreateApplyBlockerInput): ApmApplyBlocker {
   switch (input.kind) {
+    case 'plan-incomplete':
+      return planIncompleteBlocker(input.plan);
     case 'cancelled':
     case 'prerequisite-incomplete':
     case 'precondition-changed':
@@ -22,7 +24,10 @@ export function createApplyBlocker(input: CreateApplyBlockerInput): ApmApplyBloc
 }
 
 type CreateApplyBlockerInput =
-  ApplyStateBlockerInput | ApplyRecoveryBlockerInput | ApplyFailedInput;
+  | ApplyStateBlockerInput
+  | ApplyRecoveryBlockerInput
+  | ApplyFailedInput
+  | { readonly kind: 'plan-incomplete'; readonly plan: ApmPlanResult };
 
 type ApplyStateBlockerInput =
   | { readonly kind: 'cancelled'; readonly step: ApmPlanStep }
@@ -168,5 +173,16 @@ function stepBlocker(
     evidence,
     reason,
     ...(nextAction === undefined ? {} : { nextAction }),
+  };
+}
+
+/*** Reject starting or resuming a plan that never passed planning completeness gates. */
+function planIncompleteBlocker(plan: ApmPlanResult): ApmApplyBlocker {
+  return {
+    code: 'apply.plan-incomplete',
+    scope: { kind: 'project', path: plan.rootPath },
+    evidence: plan.blockers.map(({ code }) => code),
+    reason: 'Only complete reviewed plans can be applied.',
+    nextAction: 'Resolve plan blockers and create a new complete plan before applying.',
   };
 }

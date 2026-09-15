@@ -7,13 +7,11 @@ import type {
   ApmApplyResult,
 } from '../../../types/apply.js';
 import type { ApmApplyRunOutcome } from '../../../types/apply-runtime.js';
-import type {
-  ApmPlanBlocker,
-  ApmPlanExecutorIdentity,
-  ApmPlanResult,
-} from '../../../types/plan.js';
+import type { ApmPlanBlocker } from '../../../types/plan.js';
 import { applyPermissionBlockers } from '../domain/applyPermissionBlockers.js';
+import { createApplyBlocker } from '../domain/createApplyBlocker.js';
 import { createApplyJournal } from '../domain/createApplyJournal.js';
+import { validateResumeJournal } from '../domain/validateResumeJournal.js';
 import { persistApplyJournalAsync } from './persistApplyJournalAsync.js';
 import { runApplyStepsAsync } from './runApplyStepsAsync.js';
 
@@ -32,7 +30,9 @@ async function startApplyAsync(
 ): Promise<ApmApplyResult> {
   const operationId = ports.operationId.createOperationId();
   const preliminary = [
-    ...(input.plan.complete ? [] : [planIncompleteBlocker(input.plan)]),
+    ...(input.plan.complete
+      ? []
+      : [createApplyBlocker({ kind: 'plan-incomplete', plan: input.plan })]),
     ...applyPermissionBlockers(input.plan, input.permissions),
   ];
   if (preliminary.length > 0) {
@@ -129,19 +129,49 @@ async function resumeUnderLockAsync(
     );
   }
   try {
-    const resumed = await persistApplyJournalAsync(
-      {
-        kind: 'operation',
-        journal: { ...journal, permissions: input.permissions },
-        state: 'running',
-        clearFailure: true,
-      },
-      ports,
-    );
-    return outcomeResult(await runApplyStepsAsync(resumed, ports));
+    return await resumeAuthoritativeJournalAsync(input, journal.plan.id, ports);
   } finally {
     await ports.lock.releaseAsync(input.rootPath, input.operationId);
   }
+}
+
+/*** Resume only the authoritative durable state read and revalidated while holding the writer lock. */
+async function resumeAuthoritativeJournalAsync(
+  input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
+  lockedPlanId: string,
+  ports: ApmApplyPorts,
+): Promise<ApmApplyResult> {
+  const journal = await ports.journal.readAsync(input.rootPath, input.operationId);
+  if (journal === undefined) {
+    return blockedResult(input.operationId, input.rootPath, lockedPlanId, [
+      operationNotFoundBlocker(input),
+    ]);
+  }
+  const blockers = validateResumeJournal(input, journal, ports.executor.current(), lockedPlanId);
+  if (blockers.length > 0) {
+    return blockedResult(input.operationId, input.rootPath, lockedPlanId, blockers, journal);
+  }
+  if (journal.status === 'completed') return completedDuplicateResult(journal);
+  const permissionBlockers = applyPermissionBlockers(journal.plan, input.permissions);
+  if (permissionBlockers.length > 0) {
+    return blockedResult(
+      input.operationId,
+      input.rootPath,
+      lockedPlanId,
+      permissionBlockers,
+      journal,
+    );
+  }
+  const resumed = await persistApplyJournalAsync(
+    {
+      kind: 'operation',
+      journal: { ...journal, permissions: input.permissions },
+      state: 'running',
+      clearFailure: true,
+    },
+    ports,
+  );
+  return outcomeResult(await runApplyStepsAsync(resumed, ports));
 }
 
 /*** Acquire a lock and allow stale-lock recovery only for an explicit resume of the same operation. */
@@ -161,35 +191,6 @@ async function acquireLockAsync(
     planId,
     stale: acquired.lock,
   });
-}
-
-/*** Validate journal identity and executor compatibility without treating applied changes as staleness. */
-function validateResumeJournal(
-  input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
-  journal: ApmApplyJournal,
-  executor: ApmPlanExecutorIdentity,
-): readonly ApmApplyBlocker[] {
-  return [
-    ...(journal.operationId === input.operationId && journal.rootPath === input.rootPath
-      ? []
-      : [journalIdentityBlocker(input, journal)]),
-    ...(journal.plan.complete ? [] : [planIncompleteBlocker(journal.plan)]),
-    ...(executorMatches(journal.plan.executor, executor)
-      ? []
-      : [executorIncompatibleBlocker(journal.plan.executor, executor)]),
-  ];
-}
-
-/*** Compare every executor field frozen into the reviewed plan. */
-function executorMatches(
-  planned: ApmPlanExecutorIdentity,
-  current: ApmPlanExecutorIdentity,
-): boolean {
-  return (
-    planned.apmVersion === current.apmVersion &&
-    planned.runtime === current.runtime &&
-    planned.runtimeVersion === current.runtimeVersion
-  );
 }
 
 /*** Convert a completed run-state outcome to the stable public apply result. */
@@ -258,17 +259,6 @@ function toApplyValidationBlocker(blocker: ApmPlanBlocker): ApmApplyBlocker {
   };
 }
 
-/*** Reject starting or resuming a plan that never passed planning completeness gates. */
-function planIncompleteBlocker(plan: ApmPlanResult): ApmApplyBlocker {
-  return {
-    code: 'apply.plan-incomplete',
-    scope: { kind: 'project', path: plan.rootPath },
-    evidence: plan.blockers.map(({ code }) => code),
-    reason: 'Only complete reviewed plans can be applied.',
-    nextAction: 'Resolve plan blockers and create a new complete plan before applying.',
-  };
-}
-
 /*** Reject a live, mismatched or unprovably stale writer lock. */
 function lockBlocker(
   lock: Exclude<ApmApplyLockAcquireResult, { readonly state: 'acquired' }>,
@@ -295,38 +285,4 @@ function operationNotFoundBlocker(
     evidence: [input.operationId],
     reason: 'No durable APM operation journal exists for this resume request.',
   };
-}
-
-/*** Explain a durable journal whose project/operation identity differs from the resume request. */
-function journalIdentityBlocker(
-  input: Extract<ApmApplyInput, { readonly mode: 'resume' }>,
-  journal: ApmApplyJournal,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.journal-invalid',
-    scope: { kind: 'operation', id: input.operationId, path: input.rootPath },
-    evidence: [journal.operationId, journal.rootPath],
-    reason: 'Durable operation journal identity does not match the requested project operation.',
-    nextAction: 'Use the journal from the matching project root and operation ID.',
-  };
-}
-
-/*** Reject resume under a host/runtime that differs from the reviewed plan executor identity. */
-function executorIncompatibleBlocker(
-  planned: ApmPlanExecutorIdentity,
-  current: ApmPlanExecutorIdentity,
-): ApmApplyBlocker {
-  return {
-    code: 'apply.executor-incompatible',
-    scope: { kind: 'host', id: 'apm' },
-    evidence: [executorKey(planned), executorKey(current)],
-    reason:
-      'Current APM/runtime executor does not match the executor frozen into the operation plan.',
-    nextAction: 'Use the reviewed executor or create a new plan with the current executor.',
-  };
-}
-
-/*** Render one stable executor identity for recovery blocker evidence. */
-function executorKey(executor: ApmPlanExecutorIdentity): string {
-  return [executor.apmVersion, executor.runtime, executor.runtimeVersion ?? ''].join('\0');
 }
