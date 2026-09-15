@@ -18761,6 +18761,15 @@
       }
     },
     {
+      "name": "acquireAsync",
+      "description": "Acquire the public Node writer lock with one concise fixture identity.",
+      "sourceLocation": {
+        "filePath": "src/nodeApm.test.ts",
+        "line": 53,
+        "column": 1
+      }
+    },
+    {
       "name": "createRegistryPackageRequest",
       "description": "Build one npm-compatible package metadata request using shared scoped-registry and credential rules.",
       "sourceLocation": {
@@ -21953,7 +21962,7 @@
       {
         "fromSymbol": "src/nodeApm.test.ts",
         "toSymbol": "acquireAsync",
-        "callExpression": "firstWriter.acquireAsync",
+        "callExpression": "acquireAsync",
         "sourcePath": "src/nodeApm.test.ts"
       },
       {
@@ -21964,20 +21973,8 @@
       },
       {
         "fromSymbol": "src/nodeApm.test.ts",
-        "toSymbol": "acquireAsync",
-        "callExpression": "secondWriter.acquireAsync",
-        "sourcePath": "src/nodeApm.test.ts"
-      },
-      {
-        "fromSymbol": "src/nodeApm.test.ts",
         "toSymbol": "releaseAsync",
         "callExpression": "secondWriter.releaseAsync",
-        "sourcePath": "src/nodeApm.test.ts"
-      },
-      {
-        "fromSymbol": "src/nodeApm.test.ts",
-        "toSymbol": "acquireAsync",
-        "callExpression": "observer.acquireAsync",
         "sourcePath": "src/nodeApm.test.ts"
       },
       {
@@ -21996,6 +21993,12 @@
         "fromSymbol": "src/nodeApm.test.ts",
         "toSymbol": "rm",
         "callExpression": "rm",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "acquireAsync",
+        "toSymbol": "acquireAsync",
+        "callExpression": "port.acquireAsync",
         "sourcePath": "src/nodeApm.test.ts"
       },
       {
