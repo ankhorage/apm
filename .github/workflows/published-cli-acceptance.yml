@@ -48,8 +48,5 @@ jobs:
           corepack enable
           corepack prepare yarn@4.9.2 --activate
 
-      - name: Record package-manager version
-        run: ${{ matrix.manager }} --version
-
       - name: Run published CLI lifecycle
         run: bun scripts/published-cli-acceptance.ts ${{ matrix.manager }}
