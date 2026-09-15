@@ -6,6 +6,8 @@ import { expect, test } from 'bun:test';
 
 import { createNodeApplyLockPort } from './nodeApm.js';
 
+type NodeApplyLockPort = ReturnType<typeof createNodeApplyLockPort>;
+
 test('public Node facade serializes cooperative project writers through the APM apply lock', async () => {
   const rootPath = await mkdtemp(path.join(tmpdir(), 'apm-cooperative-lock-test-'));
   const firstWriter = createNodeApplyLockPort();
@@ -13,49 +15,29 @@ test('public Node facade serializes cooperative project writers through the APM 
   const observer = createNodeApplyLockPort();
 
   try {
-    const firstAcquire = await firstWriter.acquireAsync({
-      rootPath,
-      operationId: 'studio-writer-1',
-      planId: 'studio-host-write-1',
-      resume: false,
-    });
+    const firstAcquire = await acquireAsync(firstWriter, rootPath, 'studio-writer-1', 'host-1');
     expect(firstAcquire.state).toBe('acquired');
 
-    const competingAcquire = await secondWriter.acquireAsync({
-      rootPath,
-      operationId: 'apm-apply-1',
-      planId: 'apm-plan-1',
-      resume: false,
-    });
+    const competingAcquire = await acquireAsync(secondWriter, rootPath, 'apm-apply-1', 'plan-1');
     expect(competingAcquire.state).toBe('conflict');
     expect(competingAcquire.lock.operationId).toBe('studio-writer-1');
 
     await secondWriter.releaseAsync(rootPath, 'studio-writer-1');
-    const stillLocked = await observer.acquireAsync({
-      rootPath,
-      operationId: 'observer-1',
-      planId: 'observer-plan-1',
-      resume: false,
-    });
+    const stillLocked = await acquireAsync(observer, rootPath, 'observer-1', 'observer-plan-1');
     expect(stillLocked.state).toBe('conflict');
     expect(stillLocked.lock.operationId).toBe('studio-writer-1');
 
     await firstWriter.releaseAsync(rootPath, 'studio-writer-1');
-    const successorAcquire = await secondWriter.acquireAsync({
-      rootPath,
-      operationId: 'apm-apply-1',
-      planId: 'apm-plan-1',
-      resume: false,
-    });
+    const successorAcquire = await acquireAsync(secondWriter, rootPath, 'apm-apply-1', 'plan-1');
     expect(successorAcquire.state).toBe('acquired');
 
     await firstWriter.releaseAsync(rootPath, 'studio-writer-1');
-    const successorStillLocked = await observer.acquireAsync({
+    const successorStillLocked = await acquireAsync(
+      observer,
       rootPath,
-      operationId: 'observer-2',
-      planId: 'observer-plan-2',
-      resume: false,
-    });
+      'observer-2',
+      'observer-plan-2',
+    );
     expect(successorStillLocked.state).toBe('conflict');
     expect(successorStillLocked.lock.operationId).toBe('apm-apply-1');
   } finally {
@@ -66,3 +48,13 @@ test('public Node facade serializes cooperative project writers through the APM 
     await rm(rootPath, { recursive: true, force: true });
   }
 });
+
+/*** Acquire the public Node writer lock with one concise fixture identity. */
+function acquireAsync(
+  port: NodeApplyLockPort,
+  rootPath: string,
+  operationId: string,
+  planId: string,
+) {
+  return port.acquireAsync({ rootPath, operationId, planId, resume: false });
+}
