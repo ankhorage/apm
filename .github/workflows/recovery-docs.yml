@@ -1,0 +1,63 @@
+name: Recovery documentation validation
+
+on:
+  push:
+    branches: [fix/17-revalidate-recovery-journal]
+    paths: [.github/workflows/recovery-docs.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Regenerate and validate the final tree
+        run: |
+          set -euo pipefail
+          mv .github/workflows/recovery-docs.yml "$RUNNER_TEMP/recovery-docs.yml"
+          bun install --frozen-lockfile --ignore-scripts
+          bun run docs
+          bun run format
+          git diff --exit-code -- src .changeset
+          bun run build
+          bun run check-types
+          bun run lint
+          bun run knip:check
+          bun run changeset:status
+          bun run format:check
+          bun run test
+          bunx @ankhorage/ankh doctor validate .
+          mkdir -p "$RUNNER_TEMP/recovery-candidate"
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/recovery-candidate"
+          mv "$RUNNER_TEMP/recovery-docs.yml" .github/workflows/recovery-docs.yml
+      - name: Commit generated documentation only
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- README.md paradox
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs: regenerate recovery journal validation inventory'
+            current=$(git ls-remote origin refs/heads/fix/17-revalidate-recovery-journal | cut -f1)
+            test "$current" = "$GITHUB_SHA"
+            git push origin HEAD:refs/heads/fix/17-revalidate-recovery-journal
+          fi
+          git bundle create "$RUNNER_TEMP/recovery-candidate/repository.bundle" HEAD refs/remotes/origin/main
+      - uses: actions/upload-artifact@v4
+        with:
+          name: recovery-validated-candidate
+          path: ${{ runner.temp }}/recovery-candidate/
+          retention-days: 1
+          compression-level: 0
