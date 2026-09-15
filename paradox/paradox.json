@@ -14,7 +14,7 @@
     {
       "id": "npm",
       "label": "npm",
-      "value": "v0.5.0",
+      "value": "v0.6.0",
       "color": "cb3837"
     },
     {
@@ -79,7 +79,7 @@
     {
       "path": "examples/basic-usage/status.ts",
       "isEntrypoint": false,
-      "dependencies": ["dist/apm.d.ts", "dist/nodeApm.d.ts"],
+      "dependencies": [],
       "exports": []
     },
     {
@@ -1414,7 +1414,6 @@
       "path": "src/features/update-protocol/application/updateExtensionExecution.test.ts",
       "isEntrypoint": false,
       "dependencies": [
-        "dist/types/public.d.ts",
         "src/features/update-protocol/application/executeMigrationExtensionAsync.ts",
         "src/features/update-protocol/application/planMigrationExtensionAsync.ts"
       ],
@@ -1545,7 +1544,7 @@
     {
       "path": "src/features/update-protocol/domain/resolveMigrationPath.test.ts",
       "isEntrypoint": false,
-      "dependencies": ["dist/apm.d.ts", "dist/types/public.d.ts"],
+      "dependencies": [],
       "exports": []
     },
     {
@@ -1627,7 +1626,7 @@
     {
       "path": "src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts",
       "isEntrypoint": false,
-      "dependencies": ["dist/apm.d.ts"],
+      "dependencies": [],
       "exports": []
     },
     {
@@ -1663,7 +1662,7 @@
     {
       "path": "src/features/update-protocol/domain/validateUpdateDescriptor.test.ts",
       "isEntrypoint": false,
-      "dependencies": ["dist/apm.d.ts", "dist/types/public.d.ts"],
+      "dependencies": [],
       "exports": []
     },
     {
@@ -1686,7 +1685,7 @@
     {
       "path": "src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts",
       "isEntrypoint": false,
-      "dependencies": ["dist/apm.d.ts", "dist/types/public.d.ts"],
+      "dependencies": [],
       "exports": []
     },
     {
@@ -1766,6 +1765,12 @@
         "src/utils/inspectProjectStatusAsync.ts"
       ],
       "exports": ["verifyProjectAsync"]
+    },
+    {
+      "path": "src/nodeApm.test.ts",
+      "isEntrypoint": false,
+      "dependencies": ["src/nodeApm.ts"],
+      "exports": []
     },
     {
       "path": "src/nodeApm.ts",
@@ -1945,6 +1950,7 @@
         "applyAsync",
         "applyProjectAsync",
         "createNativePlanResolutionPort",
+        "createNodeApplyLockPort",
         "createNpmRegistryAvailabilityPort",
         "createSha256PlanDigestPort",
         "inspectDependencyInventoryAsync",
@@ -10027,6 +10033,31 @@
       "structuredRows": []
     },
     {
+      "name": "createNodeApplyLockPort",
+      "description": "Create the Node project-writer lock adapter with conservative same-host stale recovery.",
+      "isReadme": false,
+      "examples": [],
+      "kind": "function",
+      "modulePath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts",
+      "sourceLocation": {
+        "filePath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts",
+        "line": 19,
+        "column": 1
+      },
+      "exportPaths": ["src/nodeApm.ts"],
+      "relatedSymbols": ["ApmApplyLockPort"],
+      "signatures": [
+        {
+          "label": "() => ApmApplyLockPort",
+          "parameters": [],
+          "returnType": "ApmApplyLockPort",
+          "returnDescription": null
+        }
+      ],
+      "members": [],
+      "structuredRows": []
+    },
+    {
       "name": "createNpmRegistryAvailabilityPort",
       "description": "Create a bounded npm-compatible registry adapter with redacted config and process-local TTL cache.",
       "isReadme": false,
@@ -17462,6 +17493,15 @@
       }
     },
     {
+      "name": "acquireAsync",
+      "description": "Acquire the public Node writer lock with one concise fixture identity.",
+      "sourceLocation": {
+        "filePath": "src/nodeApm.test.ts",
+        "line": 53,
+        "column": 1
+      }
+    },
+    {
       "name": "createRegistryPackageRequest",
       "description": "Build one npm-compatible package metadata request using shared scoped-registry and credential rules.",
       "sourceLocation": {
@@ -17618,6 +17658,14 @@
       "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
       "symbolName": "createNativePlanResolutionPort",
       "description": "Create the Node native package-manager resolution adapter used by headless project planning.",
+      "isReadme": false
+    },
+    {
+      "kind": "export",
+      "name": "createNodeApplyLockPort",
+      "sourcePath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts",
+      "symbolName": "createNodeApplyLockPort",
+      "description": "Create the Node project-writer lock adapter with conservative same-host stale recovery.",
       "isReadme": false
     },
     {
@@ -17817,8 +17865,18 @@
         "sourcePath": "src/apm.ts"
       },
       {
+        "fromPath": "src/nodeApm.test.ts",
+        "toPath": "src/nodeApm.ts",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
         "fromPath": "src/nodeApm.ts",
         "toPath": "src/apm.ts",
+        "sourcePath": "src/nodeApm.ts"
+      },
+      {
+        "fromPath": "src/nodeApm.ts",
+        "toPath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts",
         "sourcePath": "src/nodeApm.ts"
       },
       {
@@ -17870,16 +17928,6 @@
         "fromPath": "src/nodeApm.ts",
         "toPath": "src/types/public.ts",
         "sourcePath": "src/nodeApm.ts"
-      },
-      {
-        "fromPath": "examples/basic-usage/status.ts",
-        "toPath": "dist/apm.d.ts",
-        "sourcePath": "examples/basic-usage/status.ts"
-      },
-      {
-        "fromPath": "examples/basic-usage/status.ts",
-        "toPath": "dist/nodeApm.d.ts",
-        "sourcePath": "examples/basic-usage/status.ts"
       },
       {
         "fromPath": "src/cli/createCliProvider.test.ts",
@@ -19258,11 +19306,6 @@
       },
       {
         "fromPath": "src/features/update-protocol/application/updateExtensionExecution.test.ts",
-        "toPath": "dist/types/public.d.ts",
-        "sourcePath": "src/features/update-protocol/application/updateExtensionExecution.test.ts"
-      },
-      {
-        "fromPath": "src/features/update-protocol/application/updateExtensionExecution.test.ts",
         "toPath": "src/features/update-protocol/application/executeMigrationExtensionAsync.ts",
         "sourcePath": "src/features/update-protocol/application/updateExtensionExecution.test.ts"
       },
@@ -19442,16 +19485,6 @@
         "sourcePath": "src/features/update-protocol/domain/resolveMigrationExtensionHandler.ts"
       },
       {
-        "fromPath": "src/features/update-protocol/domain/resolveMigrationPath.test.ts",
-        "toPath": "dist/apm.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/resolveMigrationPath.test.ts"
-      },
-      {
-        "fromPath": "src/features/update-protocol/domain/resolveMigrationPath.test.ts",
-        "toPath": "dist/types/public.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/resolveMigrationPath.test.ts"
-      },
-      {
         "fromPath": "src/features/update-protocol/domain/resolveMigrationPath.ts",
         "toPath": "src/types/update-protocol.ts",
         "sourcePath": "src/features/update-protocol/domain/resolveMigrationPath.ts"
@@ -19587,11 +19620,6 @@
         "sourcePath": "src/features/update-protocol/domain/validateMigrationPrerequisites.ts"
       },
       {
-        "fromPath": "src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts",
-        "toPath": "dist/apm.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/validatePackageUpdateMetadata.test.ts"
-      },
-      {
         "fromPath": "src/features/update-protocol/domain/validatePackageUpdateMetadata.ts",
         "toPath": "src/types/update-validation.ts",
         "sourcePath": "src/features/update-protocol/domain/validatePackageUpdateMetadata.ts"
@@ -19635,16 +19663,6 @@
         "fromPath": "src/features/update-protocol/domain/validateReleaseEffects.ts",
         "toPath": "src/features/update-protocol/utils/createProtocolBlocker.ts",
         "sourcePath": "src/features/update-protocol/domain/validateReleaseEffects.ts"
-      },
-      {
-        "fromPath": "src/features/update-protocol/domain/validateUpdateDescriptor.test.ts",
-        "toPath": "dist/apm.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/validateUpdateDescriptor.test.ts"
-      },
-      {
-        "fromPath": "src/features/update-protocol/domain/validateUpdateDescriptor.test.ts",
-        "toPath": "dist/types/public.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/validateUpdateDescriptor.test.ts"
       },
       {
         "fromPath": "src/features/update-protocol/domain/validateUpdateDescriptor.ts",
@@ -19695,16 +19713,6 @@
         "fromPath": "src/features/update-protocol/domain/validateUpdateDescriptor.ts",
         "toPath": "src/features/update-protocol/domain/validateReleaseEffects.ts",
         "sourcePath": "src/features/update-protocol/domain/validateUpdateDescriptor.ts"
-      },
-      {
-        "fromPath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts",
-        "toPath": "dist/apm.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts"
-      },
-      {
-        "fromPath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts",
-        "toPath": "dist/types/public.d.ts",
-        "sourcePath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.test.ts"
       },
       {
         "fromPath": "src/features/update-protocol/domain/validateUpdateExtensionBinding.ts",
@@ -20658,6 +20666,72 @@
         "toSymbol": "defineParadoxConfig",
         "callExpression": "defineParadoxConfig",
         "sourcePath": "paradox.config.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "mkdtemp",
+        "callExpression": "mkdtemp",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "tmpdir",
+        "callExpression": "tmpdir",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "createNodeApplyLockPort",
+        "callExpression": "createNodeApplyLockPort",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "acquireAsync",
+        "callExpression": "acquireAsync",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "releaseAsync",
+        "callExpression": "secondWriter.releaseAsync",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "releaseAsync",
+        "callExpression": "firstWriter.releaseAsync",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "releaseAsync",
+        "callExpression": "observer.releaseAsync",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "src/nodeApm.test.ts",
+        "toSymbol": "rm",
+        "callExpression": "rm",
+        "sourcePath": "src/nodeApm.test.ts"
+      },
+      {
+        "fromSymbol": "acquireAsync",
+        "toSymbol": "acquireAsync",
+        "callExpression": "port.acquireAsync",
+        "sourcePath": "src/nodeApm.test.ts"
       },
       {
         "fromSymbol": "examples/basic-usage/status.ts",
@@ -24515,18 +24589,6 @@
         "fromSymbol": "src/features/update-protocol/application/updateExtensionExecution.test.ts",
         "toSymbol": "rogueHandler",
         "callExpression": "rogueHandler",
-        "sourcePath": "src/features/update-protocol/application/updateExtensionExecution.test.ts"
-      },
-      {
-        "fromSymbol": "planAsync",
-        "toSymbol": "readFileAsync",
-        "callExpression": "input.project.readFileAsync",
-        "sourcePath": "src/features/update-protocol/application/updateExtensionExecution.test.ts"
-      },
-      {
-        "fromSymbol": "executeAsync",
-        "toSymbol": "applyReviewedMutationAsync",
-        "callExpression": "input.project.applyReviewedMutationAsync",
         "sourcePath": "src/features/update-protocol/application/updateExtensionExecution.test.ts"
       },
       {
@@ -30387,6 +30449,11 @@
         "fromSymbol": "ApmVerifyProjectOptions",
         "toType": "ApmVerifyStepPort",
         "sourcePath": "src/types/verify-project.ts"
+      },
+      {
+        "fromSymbol": "createNodeApplyLockPort",
+        "toType": "ApmApplyLockPort",
+        "sourcePath": "src/features/apply/adapters/outbound/createNodeApplyLockPort.ts"
       },
       {
         "fromSymbol": "applyProjectAsync",

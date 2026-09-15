@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.7.0
+
+### Minor Changes
+
+- 522993d: Expose the canonical Node project-writer lock adapter so trusted hosts can serialize their mutations with APM apply operations.
+
 ## 0.6.0
 
 ### Minor Changes
