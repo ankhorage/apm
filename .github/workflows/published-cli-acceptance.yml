@@ -38,6 +38,13 @@ jobs:
       - name: Install repository dependencies
         run: bun install --frozen-lockfile
 
+      - name: Show canonical formatter diff
+        if: matrix.manager == 'npm'
+        run: |
+          bunx ankhorage-prettier scripts/published-cli-acceptance.ts --write
+          git diff -- scripts/published-cli-acceptance.ts
+          exit 1
+
       - name: Setup pnpm
         if: matrix.manager == 'pnpm'
         run: npm install --global pnpm@10
