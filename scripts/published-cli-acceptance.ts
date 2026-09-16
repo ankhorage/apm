@@ -19,9 +19,7 @@ const COMMAND_TIMEOUT_MS = 300_000;
 type PackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun';
 
 const manager = parseManager(process.argv[2]);
-const fixtureRoot = await mkdtemp(
-  path.join(tmpdir(), `ankhorage-apm-published-${manager}-`),
-);
+const fixtureRoot = await mkdtemp(path.join(tmpdir(), `ankhorage-apm-published-${manager}-`));
 
 try {
   const managerVersion = await managerVersionAsync(manager, fixtureRoot);
