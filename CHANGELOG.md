@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.5
+
+### Patch Changes
+
+- 4e5ddfa: Treat Bun lock entries excluded by current OS or CPU constraints as validly absent install evidence.
+
 ## 0.8.4
 
 ### Patch Changes
