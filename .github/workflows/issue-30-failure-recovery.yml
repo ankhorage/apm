@@ -1,0 +1,63 @@
+name: Issue 30 failure recovery
+
+on:
+  push:
+    branches:
+      - test/7-failure-recovery
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: test/7-failure-recovery
+          fetch-depth: 0
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Normalize source formatting
+        run: |
+          bun run lint:fix
+          bun run format
+      - name: Run focused failure and recovery acceptance
+        run: |
+          bun test src/features/status/composition/failureRecoveryStatusAcceptance.test.ts
+          bun test src/features/apply/application/applyInstallFailure.test.ts
+          bun test src/features/apply/application/failureRecoveryAcceptance.test.ts
+          bun test src/features/apply/application/interruptedRecoveryAcceptance.test.ts
+          bun test src/features/apply/application/applyOwnerFailureRecovery.test.ts
+          bun test src/features/apply/application/resumeApplyAdmission.test.ts
+          bun test src/features/apply/application/resumeApplyAsync.test.ts
+      - name: Run canonical repository gates
+        run: |
+          bun run build
+          bun run check-types
+          bun run lint
+          bun run format:check
+          bun run knip:check
+          bun run test
+          bun run changeset:status
+      - name: Commit normalized acceptance and remove helper
+        run: |
+          git config user.name "Fabio Gartenmann"
+          git config user.email "137318798+artiphishle@users.noreply.github.com"
+          git add src
+          if ! git diff --cached --quiet; then
+            git commit -m "style: format failure recovery acceptance"
+          fi
+          git rm .github/workflows/issue-30-failure-recovery.yml
+          git commit -m "chore: remove issue 30 validation workflow"
+          git push origin HEAD:test/7-failure-recovery
