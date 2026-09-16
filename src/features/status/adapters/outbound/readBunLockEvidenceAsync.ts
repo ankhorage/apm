@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import process from 'node:process';
 
 import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
@@ -146,7 +147,7 @@ function readBunPackage(
     name: identity.name,
     ...(identity.version === undefined ? {} : { version: identity.version }),
     source: identity.source,
-    optional: false,
+    optional: isBunPackageOptionalOnCurrentHost(metadata),
     ...(identity.peerContext === undefined ? {} : { peerContext: identity.peerContext }),
     dependencies,
   };
@@ -230,6 +231,32 @@ function readStringMap(value: unknown): readonly [string, string][] {
   return Object.entries(value).flatMap(([name, entryValue]) =>
     typeof entryValue === 'string' ? [[name, entryValue] as [string, string]] : [],
   );
+}
+
+/*** Mark Bun packages optional only when explicit metadata allows absence on the current host. */
+function isBunPackageOptionalOnCurrentHost(metadata: Readonly<Record<string, unknown>>): boolean {
+  return (
+    metadata.optional === true ||
+    constraintExcludesCurrentHost(metadata.os, process.platform) ||
+    constraintExcludesCurrentHost(metadata.cpu, process.arch)
+  );
+}
+
+/*** Evaluate npm-style positive/negative Bun platform constraints without executing package code. */
+function constraintExcludesCurrentHost(value: unknown, current: string): boolean {
+  const constraints =
+    typeof value === 'string'
+      ? [value]
+      : Array.isArray(value) && value.every((item) => typeof item === 'string')
+        ? value
+        : [];
+  if (constraints.length === 0) return false;
+  const excluded = constraints
+    .filter((item) => item.startsWith('!'))
+    .map((item) => item.slice(1));
+  if (excluded.includes(current) || excluded.includes('*')) return true;
+  const allowed = constraints.filter((item) => !item.startsWith('!') && item !== '*');
+  return allowed.length > 0 && !allowed.includes(current);
 }
 
 /*** List direct package declarations used for Bun lock resolution. */
