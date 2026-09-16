@@ -6,6 +6,8 @@ import type {
   ApmPlanDigestPort,
   ApmPlanProtocolPort,
   ApmPlanResolutionPort,
+  ApmPlanResolutionRequest,
+  ApmPlanResolutionResult,
 } from '../../../types/plan.js';
 import type { ApmStatusDependency, ApmStatusResult } from '../../../types/status.js';
 import type { ApmReleaseEffect } from '../../../types/update-protocol.js';
@@ -100,57 +102,65 @@ function planInput() {
 
 /*** Return deterministic source and lock changes for the reviewed dependency target. */
 function resolutionPort(): ApmPlanResolutionPort {
+  return { resolveAsync: (request) => Promise.resolve(resolutionResult(request)) };
+}
+
+/*** Build exact reviewed package-manager resolution evidence for the selected runtime update. */
+function resolutionResult(request: ApmPlanResolutionRequest): ApmPlanResolutionResult {
   return {
-    resolveAsync: (request) =>
-      Promise.resolve({
-        installRootId: request.installRootId,
-        installRootPath: request.installRootPath,
-        complete: true,
-        manager: request.manager,
-        files: [
-          {
-            path: 'package.json',
-            kind: 'update',
-            beforeDigest: 'manifest-v1',
-            afterDigest: 'manifest-v2',
-            beforeContent: '{"dependencies":{"@fixture/runtime":"^1.0.0"}}',
-            afterContent: '{"dependencies":{"@fixture/runtime":"^2.0.0"}}',
-          },
-          {
-            path: 'package-lock.json',
-            kind: 'update',
-            beforeDigest: 'lock-v1',
-            afterDigest: 'lock-v2',
-          },
-        ],
-        packages: [
-          {
-            id: 'root::node_modules/@fixture/runtime',
-            name: '@fixture/runtime',
-            version: '2.0.0',
-            direct: true,
-            source: 'registry',
-            dependencies: [],
-          },
-        ],
-        artifacts: [
-          {
-            id: 'root::node_modules/@fixture/runtime',
-            packageName: '@fixture/runtime',
-            version: '2.0.0',
-            source: 'registry',
-            integrity: 'sha512-runtime-v2',
-          },
-        ],
-        effects: {
-          projectWrites: false,
-          lifecycleScripts: false,
-          network: 'allowed',
-          cache: 'manager-default',
-        },
-        blockers: [],
-        diagnostics: [],
-      }),
+    installRootId: request.installRootId,
+    installRootPath: request.installRootPath,
+    complete: true,
+    manager: request.manager,
+    files: [
+      {
+        path: 'package.json',
+        kind: 'update',
+        beforeDigest: 'manifest-v1',
+        afterDigest: 'manifest-v2',
+        beforeContent: '{"dependencies":{"@fixture/runtime":"^1.0.0"}}',
+        afterContent: '{"dependencies":{"@fixture/runtime":"^2.0.0"}}',
+      },
+      {
+        path: 'package-lock.json',
+        kind: 'update',
+        beforeDigest: 'lock-v1',
+        afterDigest: 'lock-v2',
+      },
+    ],
+    packages: [resolvedPackage()],
+    artifacts: [resolvedArtifact()],
+    effects: {
+      projectWrites: false,
+      lifecycleScripts: false,
+      network: 'allowed',
+      cache: 'manager-default',
+    },
+    blockers: [],
+    diagnostics: [],
+  };
+}
+
+/*** Build the exact resolved runtime package. */
+function resolvedPackage(): ApmPlanResolutionResult['packages'][number] {
+  return {
+    id: 'root::node_modules/@fixture/runtime',
+    name: '@fixture/runtime',
+    version: '2.0.0',
+    direct: true,
+    source: 'registry',
+    dependencies: [],
+  };
+}
+
+/*** Build the immutable target artifact identity. */
+function resolvedArtifact(): ApmPlanResolutionResult['artifacts'][number] {
+  return {
+    id: 'root::node_modules/@fixture/runtime',
+    packageName: '@fixture/runtime',
+    version: '2.0.0',
+    source: 'registry',
+    integrity: 'sha512-runtime-v2',
   };
 }
 
@@ -202,45 +212,55 @@ function statusFixture(): ApmStatusResult {
       packageCount: 1,
       workspaceCount: 0,
     },
-    installRoots: [
-      {
-        id: 'root',
-        rootPath: '/project',
-        packagePaths: ['/project'],
-        manager: {
-          state: 'selected',
-          name: 'npm',
-          version: '11.0.0',
-          source: 'package-manager-field',
-        },
-        lockfile: {
-          state: 'supported',
-          path: '/project/package-lock.json',
-          format: 'npm-package-lock',
-          version: '3',
-          evidence: ['package-lock.json'],
-        },
-        declarations: dependency.declaration === undefined ? [] : [dependency.declaration],
-        lockedPackages: [
-          {
-            id: dependency.packageId,
-            name: dependency.name,
-            version: '1.0.0',
-            source: 'registry',
-            optional: false,
-            dependencies: [],
-          },
-        ],
-        installedPackages: [dependency.installed],
-        complete: true,
-        diagnostics: [],
-      },
-    ],
+    installRoots: [installRootFixture(dependency)],
     dependencies: [dependency],
     hosts: [],
     extensions: { state: 'available', complete: true, observations: [], diagnostics: [] },
     findings: [],
     diagnostics: [],
+  };
+}
+
+/*** Build the selected npm install root containing the runtime dependency. */
+function installRootFixture(
+  dependency: ApmStatusDependency,
+): ApmStatusResult['installRoots'][number] {
+  return {
+    id: 'root',
+    rootPath: '/project',
+    packagePaths: ['/project'],
+    manager: {
+      state: 'selected',
+      name: 'npm',
+      version: '11.0.0',
+      source: 'package-manager-field',
+    },
+    lockfile: {
+      state: 'supported',
+      path: '/project/package-lock.json',
+      format: 'npm-package-lock',
+      version: '3',
+      evidence: ['package-lock.json'],
+    },
+    declarations: dependency.declaration === undefined ? [] : [dependency.declaration],
+    lockedPackages: [lockedPackageFixture(dependency)],
+    installedPackages: [dependency.installed],
+    complete: true,
+    diagnostics: [],
+  };
+}
+
+/*** Build the locked v1 runtime package evidence. */
+function lockedPackageFixture(
+  dependency: ApmStatusDependency,
+): ApmStatusResult['installRoots'][number]['lockedPackages'][number] {
+  return {
+    id: dependency.packageId,
+    name: dependency.name,
+    version: '1.0.0',
+    source: 'registry',
+    optional: false,
+    dependencies: [],
   };
 }
 
