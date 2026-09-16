@@ -239,10 +239,7 @@ async function installProjectAsync(
 /*** Read the physical installed version produced by the reviewed apply operation. */
 async function installedDependencyVersionAsync(projectRoot: string): Promise<string> {
   const value: unknown = JSON.parse(
-    await readFile(
-      path.join(projectRoot, 'node_modules', DEPENDENCY_NAME, 'package.json'),
-      'utf8',
-    ),
+    await readFile(path.join(projectRoot, 'node_modules', DEPENDENCY_NAME, 'package.json'), 'utf8'),
   );
   if (!isRecord(value)) throw new Error('Installed dependency manifest is not an object.');
   return readRequiredString(value, 'version');
