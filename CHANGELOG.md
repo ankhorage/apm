@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.4
+
+### Patch Changes
+
+- 5a3a09a: Exclude the Yarn install-root workspace importer from materialized dependency package evidence while retaining it for direct dependency resolution.
+
 ## 0.8.3
 
 ### Patch Changes
