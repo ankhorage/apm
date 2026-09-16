@@ -4,10 +4,11 @@ import path from 'node:path';
 
 import { expect, test } from 'bun:test';
 
-import type { ApmApplyJournal, ApmApplyPorts } from '../../../types/apply.js';
+import type { ApmApplyPorts } from '../../../types/apply.js';
 import type { ApmPlanResult } from '../../../types/plan.js';
 import type { ApmStatusResult } from '../../../types/status.js';
 import { createSha256PlanDigestPort } from '../../plan/adapters/outbound/createSha256PlanDigestPort.js';
+import { createNodeApplyJournalPort } from '../adapters/outbound/createNodeApplyJournalPort.js';
 import { createNodeApplyStepPort } from '../adapters/outbound/createNodeApplyStepPort.js';
 import { createApplyJournal } from '../domain/createApplyJournal.js';
 import { runApplyStepsAsync } from './runApplyStepsAsync.js';
@@ -21,44 +22,37 @@ test('failed frozen install preserves unrelated files and leaves durable failure
     await writeFile(path.join(rootPath, 'package.json'), JSON.stringify({ name: 'fixture' }));
     await writeFile(unrelatedPath, 'keep-me');
     const plan = installPlan(rootPath);
-    const state = { journal: createApplyJournal(plan, PERMISSIONS, 'install-failure', now()) };
-    const outcome = await runApplyStepsAsync(state.journal, applyPorts(state));
+    const journal = createApplyJournal(plan, PERMISSIONS, 'install-failure', now());
+    const journalPort = createNodeApplyJournalPort();
+    await journalPort.createAsync(journal);
+
+    const outcome = await runApplyStepsAsync(journal, applyPorts(rootPath, journalPort));
+    const persisted = await journalPort.readAsync(rootPath, journal.operationId);
 
     expect(outcome.status).toBe('failed');
     expect(outcome.journal.status).toBe('failed');
     expect(outcome.journal.failure?.code).toBe('apply.install-failed');
+    expect(persisted?.status).toBe('failed');
+    expect(persisted?.failure?.code).toBe('apply.install-failed');
+    expect(persisted?.steps[0]).toMatchObject({ state: 'failed', attempts: 1 });
     expect(await readFile(unrelatedPath, 'utf8')).toBe('keep-me');
   } finally {
     await rm(rootPath, { recursive: true, force: true });
   }
 });
 
-interface InstallFailureState {
-  journal: ApmApplyJournal;
-}
-
-/*** Compose real Node install execution with in-memory journal persistence. */
-function applyPorts(state: InstallFailureState): ApmApplyPorts {
+/*** Compose real Node install execution with project-local durable journal persistence. */
+function applyPorts(rootPath: string, journal: ApmApplyPorts['journal']): ApmApplyPorts {
   return {
     clock: { nowIso: now },
     operationId: { createOperationId: () => 'unused' },
     lock: inertLockPort(),
-    journal: {
-      createAsync: (journal) => updateJournal(state, journal),
-      readAsync: () => Promise.resolve(state.journal),
-      writeAsync: (journal) => updateJournal(state, journal),
-    },
-    status: { inspectStatusAsync: (rootPath) => Promise.resolve(statusFixture(rootPath)) },
+    journal,
+    status: { inspectStatusAsync: () => Promise.resolve(statusFixture(rootPath)) },
     planValidation: { validateAsync: () => Promise.resolve([]) },
-    executor: { current: () => installPlan(state.journal.rootPath).executor },
+    executor: { current: () => installPlan(rootPath).executor },
     step: createNodeApplyStepPort({ digest: createSha256PlanDigestPort() }),
   };
-}
-
-/*** Persist one in-memory journal update. */
-function updateJournal(state: InstallFailureState, journal: ApmApplyJournal): Promise<void> {
-  state.journal = journal;
-  return Promise.resolve();
 }
 
 /*** Build one frozen npm install that must fail because the fixture has no package-lock. */
