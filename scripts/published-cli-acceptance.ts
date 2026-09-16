@@ -9,7 +9,7 @@ import { promisify } from 'node:util';
 import { isRecord, readOwnProperty } from '@ankhorage/utility/object';
 
 const execFileAsync = promisify(execFile);
-const APM_VERSION = '0.8.2';
+const APM_VERSION = '0.8.3';
 const ANKH_VERSION = '0.8.13';
 const DEPENDENCY_NAME = 'semver';
 const INITIAL_DEPENDENCY_VERSION = '7.7.1';
@@ -230,6 +230,7 @@ async function installProjectAsync(
   }
   if (packageManager === 'yarn') {
     await runCommandAsync('yarn', ['install', '--mode=skip-build'], projectRoot, {
+      YARN_ENABLE_HARDENED_MODE: 'false',
       YARN_ENABLE_SCRIPTS: 'false',
     });
     return;
