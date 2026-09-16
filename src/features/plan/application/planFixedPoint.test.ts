@@ -20,7 +20,7 @@ const UI_SELECTION = exactSelection('@framework/ui');
 const CORE_SELECTION = exactSelection('@framework/core');
 const EXTRA_SELECTION = exactSelection('@framework/extra');
 
-test('owner-required coupled framework dependency converges through native re-resolution', async () => {
+test('owner-required coupled peer/framework range migration converges through native re-resolution', async () => {
   const resolutionCalls: string[][] = [];
   const plan = await planAsync(planInput(4), {
     digest: DIGEST,
@@ -31,6 +31,18 @@ test('owner-required coupled framework dependency converges through native re-re
   expect(plan.complete).toBe(true);
   expect(resolutionCalls).toEqual([['@framework/ui'], ['@framework/core', '@framework/ui']]);
   expect(plan.targets.map(({ name }) => name)).toEqual(['@framework/core', '@framework/ui']);
+  expect(plan.targets.find(({ name }) => name === '@framework/ui')).toMatchObject({
+    kind: 'dependency',
+    currentRange: '^1.0.0',
+    targetRange: '^2.0.0',
+    targetVersion: '2.0.0',
+  });
+  expect(plan.targets.find(({ name }) => name === '@framework/core')).toMatchObject({
+    kind: 'peer',
+    currentRange: '^1.0.0',
+    targetRange: '^2.0.0',
+    targetVersion: '2.0.0',
+  });
   expect(plan.blockers).toEqual([]);
 });
 
@@ -170,7 +182,7 @@ function exactSelection(name: string): ApmPlanPackageSelection {
 function statusFixture(): ApmStatusResult {
   const dependencies = [
     dependencyFixture('@framework/ui'),
-    dependencyFixture('@framework/core'),
+    dependencyFixture('@framework/core', 'peer'),
     dependencyFixture('@framework/extra'),
   ];
   return {
@@ -197,7 +209,10 @@ function statusFixture(): ApmStatusResult {
 }
 
 /*** Build one direct registry dependency whose explicit v2 target is available. */
-function dependencyFixture(name: string): ApmStatusDependency {
+function dependencyFixture(
+  name: string,
+  kind: 'dependency' | 'peer' = 'dependency',
+): ApmStatusDependency {
   const packageId = `${name}@1.0.0`;
   return {
     packageId,
@@ -208,7 +223,7 @@ function dependencyFixture(name: string): ApmStatusDependency {
       ownerPath: 'package.json',
       name,
       range: '^1.0.0',
-      kind: 'dependency',
+      kind,
       resolvedPackageId: packageId,
     },
     lockedVersion: '1.0.0',
