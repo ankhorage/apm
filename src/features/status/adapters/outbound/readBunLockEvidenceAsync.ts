@@ -66,7 +66,7 @@ interface BunIdentity {
   readonly source: ApmLockedPackageEvidence['source'];
 }
 
-/*** Parse Bun text-lock JSONC into a supported v2 shape without executing package code. */
+/*** Parse Bun text-lock JSONC into a supported v2 shape without executing Bun. */
 async function parseBunTextLockAsync(rootPath: string): Promise<ParsedBunTextLock> {
   const errors: ParseError[] = [];
   const raw = parseJsonc(await readFile(path.join(rootPath, 'bun.lock'), 'utf8'), errors, {
@@ -251,9 +251,7 @@ function constraintExcludesCurrentHost(value: unknown, current: string): boolean
         ? value
         : [];
   if (constraints.length === 0) return false;
-  const excluded = constraints
-    .filter((item) => item.startsWith('!'))
-    .map((item) => item.slice(1));
+  const excluded = constraints.filter((item) => item.startsWith('!')).map((item) => item.slice(1));
   if (excluded.includes(current) || excluded.includes('*')) return true;
   const allowed = constraints.filter((item) => !item.startsWith('!') && item !== '*');
   return allowed.length > 0 && !allowed.includes(current);
