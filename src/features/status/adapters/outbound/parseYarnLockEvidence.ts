@@ -20,7 +20,9 @@ export function parseYarnLockEvidence(input: {
   const lockedPackages = entries.flatMap(([key, value]) => {
     if (!isRecord(value)) return [];
     const identity = readYarnIdentity(key, value);
-    return identity === undefined ? [] : [toLockedYarnPackage(key, value, identity, entries)];
+    return identity === undefined || isInstallRootWorkspace(identity)
+      ? []
+      : [toLockedYarnPackage(key, value, identity, entries)];
   });
   return {
     lockfile: {
@@ -41,6 +43,7 @@ interface YarnIdentity {
   readonly name: string;
   readonly version?: string;
   readonly source: ApmLockedPackageEvidence['source'];
+  readonly location?: string;
 }
 
 /*** Read package identity from Yarn's resolution field without interpreting executable PnP data. */
@@ -59,11 +62,18 @@ function readYarnIdentity(key: string, value: Record<string, unknown>): YarnIden
       : protocolValue.startsWith('git+') || protocolValue.startsWith('github:')
         ? 'git'
         : 'registry';
+  const location = source === 'workspace' ? protocolValue.slice('workspace:'.length) : undefined;
   return {
     name,
     ...(typeof value.version === 'string' ? { version: value.version } : {}),
     source,
+    ...(location === undefined ? {} : { location }),
   };
+}
+
+/*** Exclude the install-root importer from dependency packages while retaining raw lock evidence. */
+function isInstallRootWorkspace(identity: YarnIdentity): boolean {
+  return identity.source === 'workspace' && identity.location === '.';
 }
 
 /*** Locate the protocol separator after either an unscoped or scoped Yarn package name. */
@@ -94,6 +104,7 @@ function toLockedYarnPackage(
     ...(identity.version === undefined ? {} : { version: identity.version }),
     source: identity.source,
     optional: false,
+    ...(identity.location === undefined ? {} : { location: identity.location }),
     dependencies,
   };
 }
