@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.6
+
+### Patch Changes
+
+- 7a0fb88: Preserve Bun optional dependency path semantics so frozen-install verification requires packages reached by mandatory paths while allowing optional-only subtrees to remain absent.
+
 ## 0.8.5
 
 ### Patch Changes
