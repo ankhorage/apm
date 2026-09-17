@@ -1,6 +1,5 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import process from 'node:process';
 
 import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
@@ -12,7 +11,9 @@ import type {
   ApmManagerLockEvidence,
 } from '../../../../types/status-inventory.js';
 import { parseBunPackagePath } from '../../domain/parseBunPackagePath.js';
-import { declarationResolutionKey } from '../../utils/declarationResolutionKey.js';
+import { isBunPackageOptionalOnCurrentHost } from './isBunPackageOptionalOnCurrentHost.js';
+import { readBunDirectResolutions } from './readBunDirectResolutions.js';
+import { resolveBunRequiredPackageIds } from './resolveBunRequiredPackageIds.js';
 
 /*** Read Bun text-lock v2 dependency graph evidence without invoking Bun. */
 export async function readBunLockEvidenceAsync(
@@ -96,7 +97,7 @@ function toBunLockEvidence(
   });
   const basePackages = parsedPackages.map(({ evidence }) => evidence);
   const directResolutions = readBunDirectResolutions(input, basePackages);
-  const requiredPackageIds = resolveRequiredPackageIds(input, parsedPackages, directResolutions);
+  const requiredPackageIds = resolveBunRequiredPackageIds(input, parsedPackages, directResolutions);
   const lockedPackages = parsedPackages.map(({ evidence }) => ({
     ...evidence,
     optional: evidence.optional || !requiredPackageIds.has(evidence.id),
@@ -185,47 +186,18 @@ function dependencyEdges(
   }));
 }
 
-/*** Resolve all package identities reached by at least one mandatory manifest/dependency path. */
-function resolveRequiredPackageIds(
-  input: ApmManagerInspectionInput,
-  packages: readonly ParsedBunPackage[],
-  resolutions: ReadonlyMap<string, string>,
-): ReadonlySet<string> {
-  const seeds = input.root.manifests.flatMap((manifest) =>
-    requiredDeclarationNames(manifest).flatMap((name) => {
-      const packageId = resolutions.get(declarationResolutionKey(manifest.manifestPath, name));
-      return packageId === undefined ? [] : [packageId];
-    }),
+/*** Follow the nearest Bun placement, preserving nested/scoped instances instead of selecting by name. */
+function resolveBunPackageId(
+  from: readonly string[],
+  name: string,
+  packages: Readonly<Record<string, unknown>>,
+): string | undefined {
+  if (parseBunPackagePath(name)?.length !== 1) return undefined;
+  const candidates = Array.from({ length: from.length + 1 }, (_, index) =>
+    [...from.slice(0, from.length - index), name].join('/'),
   );
-  const byId = new Map(packages.map((pkg) => [pkg.evidence.id, pkg]));
-  return expandRequiredPackageIds(new Set(seeds), byId);
-}
-
-/*** Expand mandatory reachability without traversing packages that may themselves be absent. */
-function expandRequiredPackageIds(
-  required: ReadonlySet<string>,
-  packages: ReadonlyMap<string, ParsedBunPackage>,
-): ReadonlySet<string> {
-  const next = new Set([
-    ...required,
-    ...[...required].flatMap((packageId) => {
-      const pkg = packages.get(packageId);
-      return pkg === undefined || pkg.evidence.optional ? [] : pkg.requiredDependencyIds;
-    }),
-  ]);
-  return next.size === required.size ? required : expandRequiredPackageIds(next, packages);
-}
-
-/*** List direct declarations that require materialization rather than merely allowing it. */
-function requiredDeclarationNames(
-  manifest: ApmManagerInspectionInput['root']['manifests'][number],
-): readonly string[] {
-  const optionalNames = new Set(Object.keys(manifest.optionalDependencies));
-  return [
-    ...Object.keys(manifest.dependencies).filter((name) => !optionalNames.has(name)),
-    ...Object.keys(manifest.devDependencies).filter((name) => !optionalNames.has(name)),
-    ...Object.keys(manifest.peerDependencies).filter((name) => !manifest.optionalPeers.has(name)),
-  ];
+  const selected = candidates.find((candidate) => Object.hasOwn(packages, candidate));
+  return selected === undefined ? undefined : `bun:${selected}`;
 }
 
 /*** Parse Bun's package locator while retaining peer-variant data when present. */
@@ -261,87 +233,12 @@ function bunSource(value: string): ApmLockedPackageEvidence['source'] {
   return 'registry';
 }
 
-/*** Resolve direct declarations from their root/workspace placement, never by a global version guess. */
-function readBunDirectResolutions(
-  input: ApmManagerInspectionInput,
-  packages: readonly ApmLockedPackageEvidence[],
-): ReadonlyMap<string, string> {
-  const placements = Object.fromEntries(packages.map((pkg) => [pkg.id.slice(4), pkg]));
-  return new Map(
-    input.root.manifests.flatMap((manifest) => {
-      const names =
-        manifest.packageRoot === input.root.rootPath
-          ? []
-          : manifest.name === undefined
-            ? undefined
-            : parseBunPackagePath(manifest.name);
-      if (names === undefined) return [];
-      return declarationPairs(manifest).flatMap(([name]) => {
-        const resolved = resolveBunPackageId(names, name, placements);
-        return resolved === undefined
-          ? []
-          : [[declarationResolutionKey(manifest.manifestPath, name), resolved] as const];
-      });
-    }),
-  );
-}
-
-/*** Follow the nearest Bun placement, preserving nested/scoped instances instead of selecting by name. */
-function resolveBunPackageId(
-  from: readonly string[],
-  name: string,
-  packages: Readonly<Record<string, unknown>>,
-): string | undefined {
-  if (parseBunPackagePath(name)?.length !== 1) return undefined;
-  const candidates = Array.from({ length: from.length + 1 }, (_, index) =>
-    [...from.slice(0, from.length - index), name].join('/'),
-  );
-  const selected = candidates.find((candidate) => Object.hasOwn(packages, candidate));
-  return selected === undefined ? undefined : `bun:${selected}`;
-}
-
 /*** Read string-valued dependency metadata from a Bun lock tuple. */
 function readStringMap(value: unknown): readonly [string, string][] {
   if (!isRecord(value)) return [];
   return Object.entries(value).flatMap(([name, entryValue]) =>
     typeof entryValue === 'string' ? [[name, entryValue] as [string, string]] : [],
   );
-}
-
-/*** Mark Bun packages optional when explicit package metadata allows absence on the current host. */
-function isBunPackageOptionalOnCurrentHost(metadata: Readonly<Record<string, unknown>>): boolean {
-  return (
-    metadata.optional === true ||
-    constraintExcludesCurrentHost(metadata.os, process.platform) ||
-    constraintExcludesCurrentHost(metadata.cpu, process.arch)
-  );
-}
-
-/*** Evaluate npm-style positive/negative Bun platform constraints without executing package code. */
-function constraintExcludesCurrentHost(value: unknown, current: string): boolean {
-  const constraints =
-    typeof value === 'string'
-      ? [value]
-      : Array.isArray(value) && value.every((item) => typeof item === 'string')
-        ? value
-        : [];
-  if (constraints.length === 0) return false;
-  const excluded = constraints.filter((item) => item.startsWith('!')).map((item) => item.slice(1));
-  if (excluded.includes(current) || excluded.includes('*')) return true;
-  const allowed = constraints.filter((item) => !item.startsWith('!') && item !== '*');
-  return allowed.length > 0 && !allowed.includes(current);
-}
-
-/*** List direct package declarations used for Bun lock resolution. */
-function declarationPairs(
-  manifest: ApmManagerInspectionInput['root']['manifests'][number],
-): readonly [string, string][] {
-  return [
-    ...Object.entries(manifest.dependencies),
-    ...Object.entries(manifest.devDependencies),
-    ...Object.entries(manifest.optionalDependencies),
-    ...Object.entries(manifest.peerDependencies),
-  ];
 }
 
 /*** Avoid adding undefined packageId properties under exact optional property semantics. */
