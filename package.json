@@ -13,12 +13,13 @@
     "url": "https://github.com/ankhorage/apm/issues"
   },
   "keywords": [
-    "package-manager",
+    "ankhorage",
+    "cli",
     "dependencies",
-    "updates",
     "migrations",
+    "package-manager",
     "typescript",
-    "cli"
+    "updates"
   ],
   "sideEffects": false,
   "files": [
