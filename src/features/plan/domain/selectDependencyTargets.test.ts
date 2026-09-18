@@ -50,6 +50,31 @@ test('explicit latest major targets use an exact range when no range policy is s
   });
 });
 
+test('explicit targets resolve manager-native source behind global status identity', () => {
+  const dependency = dependencyFixture({
+    packageId: 'root::bun:example-package',
+    resolvedPackageId: 'bun:example-package',
+  });
+  const result = selectDependencyTargets(statusFixture([dependency]), {
+    ...SELECTED_POLICY,
+    selections: [
+      {
+        selector: { name: 'example-package', packageId: dependency.packageId },
+        target: { kind: 'version', version: '2.0.0', manifestRange: '^2.0.0' },
+      },
+    ],
+  });
+
+  expect(result.blockers).toEqual([]);
+  expect(result.targets[0]).toMatchObject({
+    packageId: 'root::bun:example-package',
+    currentVersion: '1.0.0',
+    targetVersion: '2.0.0',
+    targetRange: '^2.0.0',
+    source: 'exact',
+  });
+});
+
 test('exact downgrades require explicit downgrade opt-in', () => {
   const result = selectDependencyTargets(statusFixture(), {
     ...SELECTED_POLICY,
@@ -111,6 +136,7 @@ test('explicit transitive targets remain lock-only and do not gain a direct decl
 interface DependencyFixtureOptions {
   readonly packageId?: string;
   readonly ownerPath?: string;
+  readonly resolvedPackageId?: string;
 }
 
 /*** Build one deterministic status fixture from dependency evidence. */
@@ -179,7 +205,7 @@ function lockedPackageFixture(
   dependency: ApmStatusDependency,
 ): ApmInstallRootInventory['lockedPackages'][number] {
   return {
-    id: dependency.packageId,
+    id: dependency.declaration?.resolvedPackageId ?? dependency.packageId,
     name: dependency.name,
     ...(dependency.lockedVersion === undefined ? {} : { version: dependency.lockedVersion }),
     source: 'registry',
@@ -192,6 +218,7 @@ function lockedPackageFixture(
 function dependencyFixture(options: DependencyFixtureOptions = {}): ApmStatusDependency {
   const packageId = options.packageId ?? 'example-package@1.0.0';
   const ownerPath = options.ownerPath ?? 'package.json';
+  const resolvedPackageId = options.resolvedPackageId ?? packageId;
   return {
     packageId,
     installRootId: 'root',
@@ -202,7 +229,7 @@ function dependencyFixture(options: DependencyFixtureOptions = {}): ApmStatusDep
       name: 'example-package',
       range: '^1.0.0',
       kind: 'dependency',
-      resolvedPackageId: packageId,
+      resolvedPackageId,
     },
     lockedVersion: '1.0.0',
     installed: {
