@@ -127,7 +127,11 @@ function toBunLockEvidence(
 
 /*** Narrow parsed JSONC to the text-lock versions APM understands. */
 function isSupportedBunLock(value: unknown): value is BunLock {
-  return (\n    isRecord(value) &&\n    (value.lockfileVersion === 1 || value.lockfileVersion === 2) &&\n    isRecord(value.packages)\n  );
+  return (
+    isRecord(value) &&
+    (value.lockfileVersion === 1 || value.lockfileVersion === 2) &&
+    isRecord(value.packages)
+  );
 }
 
 /*** Serialize the Bun config version without falling back to Object stringification. */
