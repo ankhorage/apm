@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.8
+
+### Patch Changes
+
+- d521b1c: Resolve explicit dependency target sources through their manager-native lock identities instead of serialized global status IDs.
+
 ## 0.8.7
 
 ### Patch Changes
