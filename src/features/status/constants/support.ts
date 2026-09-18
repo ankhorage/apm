@@ -30,7 +30,7 @@
  * PnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected
  * but are not claimed as complete inventory modes in this release.
  *
- * Bun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are
+ * Bun: text `bun.lock` v1 and v2 are parsed. Bun's isolated `.bun` store and ordinary node_modules links are
  * inspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed
  * identity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.
  *
@@ -55,7 +55,7 @@ export const APM_STATUS_SUPPORT = {
     npm: { lockfileVersions: [2, 3], linker: 'node-modules' },
     pnpm: { lockfileVersions: ['9.0'], linker: 'virtual-store' },
     yarn: { lockfileVersions: [8], linkers: ['pnp', 'node-modules'] },
-    bun: { lockfileVersions: [2], linkers: ['isolated', 'hoisted'] },
+    bun: { lockfileVersions: [1, 2], linkers: ['isolated', 'hoisted'] },
   },
   registry: { protocol: 'npm-compatible', offlineCache: true },
   operations: {

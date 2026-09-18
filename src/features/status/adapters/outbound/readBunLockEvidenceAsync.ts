@@ -15,7 +15,7 @@ import { isBunPackageOptionalOnCurrentHost } from './isBunPackageOptionalOnCurre
 import { readBunDirectResolutions } from './readBunDirectResolutions.js';
 import { resolveBunRequiredPackageIds } from './resolveBunRequiredPackageIds.js';
 
-/*** Read Bun text-lock v2 dependency graph evidence without invoking Bun. */
+/*** Read Bun text-lock v1/v2 dependency graph evidence without invoking Bun. */
 export async function readBunLockEvidenceAsync(
   input: ApmManagerInspectionInput,
 ): Promise<ApmManagerLockEvidence> {
@@ -40,7 +40,7 @@ export async function readBunLockEvidenceAsync(
     return unsupportedBun(
       input.root.id,
       textCandidate.path,
-      'APM status supports valid Bun text lock version 2 only.',
+      'APM status supports valid Bun text lock versions 1 and 2 only.',
       parsed.raw,
       parsed.parseErrorCount,
     );
@@ -49,7 +49,7 @@ export async function readBunLockEvidenceAsync(
 }
 
 interface BunLock {
-  readonly lockfileVersion: 2;
+  readonly lockfileVersion: 1 | 2;
   readonly configVersion?: unknown;
   readonly packages: Record<string, unknown>;
 }
@@ -72,7 +72,7 @@ interface ParsedBunPackage {
   readonly requiredDependencyIds: readonly string[];
 }
 
-/*** Parse Bun text-lock JSONC into a supported v2 shape without executing Bun. */
+/*** Parse Bun text-lock JSONC into a supported v1/v2 shape without executing Bun. */
 async function parseBunTextLockAsync(rootPath: string): Promise<ParsedBunTextLock> {
   const errors: ParseError[] = [];
   const raw = parseJsonc(await readFile(path.join(rootPath, 'bun.lock'), 'utf8'), errors, {
@@ -107,7 +107,7 @@ function toBunLockEvidence(
       state: 'supported',
       path: lockPath,
       format: 'bun-text-lock',
-      version: '2',
+      version: String(lock.lockfileVersion),
       evidence: [lockPath, `configVersion ${serializeConfigVersion(lock.configVersion)}`],
     },
     lockedPackages,
@@ -125,9 +125,9 @@ function toBunLockEvidence(
   };
 }
 
-/*** Narrow parsed JSONC to the text-lock v2 shape APM understands. */
+/*** Narrow parsed JSONC to the text-lock versions APM understands. */
 function isSupportedBunLock(value: unknown): value is BunLock {
-  return isRecord(value) && value.lockfileVersion === 2 && isRecord(value.packages);
+  return (\n    isRecord(value) &&\n    (value.lockfileVersion === 1 || value.lockfileVersion === 2) &&\n    isRecord(value.packages)\n  );
 }
 
 /*** Serialize the Bun config version without falling back to Object stringification. */
@@ -276,7 +276,7 @@ function unsupportedBun(
         scope: { kind: 'install-root', id: rootId, path: lockPath },
         evidence: [lockPath],
         reason,
-        nextAction: 'Generate Bun text lock v2 before relying on full status.',
+        nextAction: 'Generate Bun text lock v1 or v2 before relying on full status.',
       },
     ],
   };
