@@ -65,8 +65,7 @@ function needsInstallRepair(
     status.dependencies.some(
       (dependency) =>
         dependency.installRootId === installRootId &&
-        !dependency.declaration?.kind.includes('optional') &&
-        dependency.installed.state === 'absent',
+        dependency.findings.some(({ code }) => code === 'install-absent'),
     )
   );
 }
