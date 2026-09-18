@@ -137,13 +137,24 @@ function versionPolicyBlockers(
   ];
 }
 
-/*** Locate the locked source kind for a status dependency instance. */
+/*** Locate the manager-native locked source behind one serialized status dependency identity. */
 function lockedSource(
   status: ApmStatusResult,
   dependency: ApmStatusDependency,
 ): ApmLockedPackageEvidence['source'] | undefined {
   const root = status.installRoots.find((candidate) => candidate.id === dependency.installRootId);
-  return root?.lockedPackages.find((pkg) => pkg.id === dependency.packageId)?.source;
+  if (root === undefined) return undefined;
+  const packageId =
+    dependency.declaration?.resolvedPackageId ??
+    resolveManagerPackageId(dependency.installRootId, dependency.packageId);
+  if (packageId === undefined) return undefined;
+  return root.lockedPackages.find((pkg) => pkg.id === packageId)?.source;
+}
+
+/*** Recover a manager-native package id from APM's stable install-root-qualified status id. */
+function resolveManagerPackageId(installRootId: string, packageId: string): string | undefined {
+  const prefix = `${installRootId}::`;
+  return packageId.startsWith(prefix) ? packageId.slice(prefix.length) : undefined;
 }
 
 /*** Block explicit updates for dependency sources whose native update semantics are not yet planned. */
