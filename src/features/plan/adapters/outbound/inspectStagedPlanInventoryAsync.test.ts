@@ -11,10 +11,10 @@ test('re-inspects supported Bun text lock versions as complete staged plan graph
   await Promise.all(
     ([1, 2] as const).map((lockfileVersion) =>
       withBunStageAsync(lockfileVersion, async (rootPath) => {
-        const result = await inspectStagedPlanInventoryAsync(
-          requestFixture(rootPath),
-          { rootPath, files: [] },
-        );
+        const result = await inspectStagedPlanInventoryAsync(requestFixture(rootPath), {
+          rootPath,
+          files: [],
+        });
 
         expect(result?.complete).toBe(true);
         expect(result?.manager.name).toBe('bun');
