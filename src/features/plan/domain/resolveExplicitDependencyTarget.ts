@@ -146,15 +146,22 @@ function lockedSource(
   if (root === undefined) return undefined;
   const packageId =
     dependency.declaration?.resolvedPackageId ??
-    resolveManagerPackageId(dependency.installRootId, dependency.packageId);
+    resolveManagerPackageId(root.lockedPackages, dependency.installRootId, dependency.packageId);
   if (packageId === undefined) return undefined;
   return root.lockedPackages.find((pkg) => pkg.id === packageId)?.source;
 }
 
-/*** Recover a manager-native package id from APM's stable install-root-qualified status id. */
-function resolveManagerPackageId(installRootId: string, packageId: string): string | undefined {
+/*** Resolve exact manager-native identity from either native or install-root-qualified status ids. */
+function resolveManagerPackageId(
+  lockedPackages: readonly ApmLockedPackageEvidence[],
+  installRootId: string,
+  packageId: string,
+): string | undefined {
+  if (lockedPackages.some((pkg) => pkg.id === packageId)) return packageId;
   const prefix = `${installRootId}::`;
-  return packageId.startsWith(prefix) ? packageId.slice(prefix.length) : undefined;
+  if (!packageId.startsWith(prefix)) return undefined;
+  const nativePackageId = packageId.slice(prefix.length);
+  return lockedPackages.some((pkg) => pkg.id === nativePackageId) ? nativePackageId : undefined;
 }
 
 /*** Block explicit updates for dependency sources whose native update semantics are not yet planned. */
