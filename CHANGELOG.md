@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.7
+
+### Patch Changes
+
+- a3f1735: Accept Bun text `bun.lock` versions 1 and 2 during status and staged plan reinspection so native Bun 1.4.2 resolution output remains plannable.
+
 ## 0.8.6
 
 ### Patch Changes
