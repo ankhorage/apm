@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.10
+
+### Patch Changes
+
+- 5cd7d4a: Update Ankhorage dependencies: `@ankhorage/utility`.
+
 ## 0.8.9
 
 ### Patch Changes
