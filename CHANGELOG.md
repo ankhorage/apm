@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.9
+
+### Patch Changes
+
+- 51f1543: Do not plan installation repair for intentionally absent optional transitive packages.
+
 ## 0.8.8
 
 ### Patch Changes
