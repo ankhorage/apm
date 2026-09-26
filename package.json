@@ -106,7 +106,7 @@
     "@ankhorage/devtools": "^1.21.3",
     "@ankhorage/paradox": "^0.1.26",
     "@types/bun": "^1.4.1",
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.3",
     "@types/semver": "^7.8.0",
     "typescript": "~6.0.3"
   },
