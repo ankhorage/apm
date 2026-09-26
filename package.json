@@ -58,7 +58,7 @@
     "node": ">=24"
   },
   "peerDependencies": {
-    "@ankhorage/ankh": "^0.8.13"
+    "@ankhorage/ankh": "^0.10.4"
   },
   "peerDependenciesMeta": {
     "@ankhorage/ankh": {
@@ -102,8 +102,8 @@
     "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "@ankhorage/ankh": "^0.8.13",
-    "@ankhorage/devtools": "^1.14.8",
+    "@ankhorage/ankh": "^0.10.4",
+    "@ankhorage/devtools": "^1.21.3",
     "@ankhorage/paradox": "^0.1.26",
     "@types/bun": "^1.4.1",
     "@types/node": "^26.5.1",
