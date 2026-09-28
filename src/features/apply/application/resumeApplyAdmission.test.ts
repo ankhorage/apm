@@ -1,7 +1,7 @@
 import { expect, test } from 'bun:test';
 
 import type { ApmApplyJournal } from '../../../types/apply.js';
-import { createApplyFixture } from './fixtures/createApplyFixture.test.js';
+import { createApplyFixture } from './createApplyFixture.test.js';
 
 test('resume blocks when the durable journal disappears before the lock is acquired', async () => {
   const fixture = createApplyFixture();
