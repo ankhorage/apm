@@ -1,7 +1,7 @@
 import { expect, test } from 'bun:test';
 
 import { applyAsync } from './applyAsync.js';
-import { createApplyFixture } from './fixtures/createApplyFixture.test.js';
+import { createApplyFixture } from './createApplyFixture.test.js';
 
 test('stale plan blocks before creating a journal or executing project effects', async () => {
   const fixture = createApplyFixture();
