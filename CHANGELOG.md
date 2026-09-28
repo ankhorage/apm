@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.11
+
+### Patch Changes
+
+- 0e4db71: Update dependencies from Renovate pull request #68.
+
 ## 0.8.10
 
 ### Patch Changes
