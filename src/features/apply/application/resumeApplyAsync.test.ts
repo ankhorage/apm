@@ -4,7 +4,7 @@ import type { ApmApplyJournal, ApmApplyPorts } from '../../../types/apply.js';
 import type { ApmPlanStep } from '../../../types/plan.js';
 import { createApplyJournal } from '../domain/createApplyJournal.js';
 import { applyAsync } from './applyAsync.js';
-import { createApplyFixture } from './fixtures/createApplyFixture.test.js';
+import { createApplyFixture } from './createApplyFixture.test.js';
 
 test('resume preserves a completion committed between the first read and lock acquisition', async () => {
   const fixture = createApplyFixture();

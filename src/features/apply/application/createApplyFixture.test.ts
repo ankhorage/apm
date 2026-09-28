@@ -4,11 +4,11 @@ import type {
   ApmApplyPorts,
   ApmApplyStepExecutionResult,
   ApmApplyStepObservation,
-} from '../../../../types/apply.js';
-import type { ApmPlanResult, ApmPlanStep } from '../../../../types/plan.js';
-import type { ApmStatusResult } from '../../../../types/status.js';
-import { createApplyJournal } from '../../domain/createApplyJournal.js';
-import { applyAsync } from '../applyAsync.js';
+} from '../../../types/apply.js';
+import type { ApmPlanResult, ApmPlanStep } from '../../../types/plan.js';
+import type { ApmStatusResult } from '../../../types/status.js';
+import { createApplyJournal } from '../domain/createApplyJournal.js';
+import { applyAsync } from './applyAsync.js';
 
 /*** Provide independently owned fake ports and immutable reviewed states for apply/recovery behavior. */
 export function createApplyFixture() {
