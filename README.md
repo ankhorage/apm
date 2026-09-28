@@ -3,7 +3,7 @@
 
 # @ankhorage/apm
 
-![license: MIT](././paradox/badges/license.svg) ![npm: v0.8.0](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
+![license: MIT](././paradox/badges/license.svg) ![npm: v0.8.13](././paradox/badges/npm.svg) ![runtime: bun](././paradox/badges/runtime.svg) ![typescript: strict](././paradox/badges/typescript.svg) ![eslint: checked](././paradox/badges/eslint.svg) ![prettier: checked](././paradox/badges/prettier.svg) ![build: checked](././paradox/badges/build.svg) ![tests: checked](././paradox/badges/tests.svg) ![docs: paradox](././paradox/badges/docs.svg)
 
 Headless project update analysis, planning, execution, recovery, and verification.
 
@@ -98,7 +98,7 @@ Yarn: Berry lock metadata v8 is parsed. `nodeLinker: node-modules` uses `.yarn-s
 PnP map therefore remains incomplete by design. Yarn Classic and Yarn's pnpm linker are detected
 but are not claimed as complete inventory modes in this release.
 
-Bun: text `bun.lock` v2 is parsed. Bun's isolated `.bun` store and ordinary node_modules links are
+Bun: text `bun.lock` v1 and v2 are parsed. Bun's isolated `.bun` store and ordinary node_modules links are
 inspected as data. Hoisted lock-path keys retain nested and scoped package placements; installed
 identity/version mismatches remain explicit incomplete evidence. Binary `bun.lockb` and unknown lock versions are inspection-only.
 

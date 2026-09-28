@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.13
+
+### Patch Changes
+
+- dd40130: Update dependencies from Renovate pull request #71.
+
 ## 0.8.12
 
 ### Patch Changes
