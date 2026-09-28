@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.12
+
+### Patch Changes
+
+- d5efdf5: Remove the status composition dependency cycle.
+
 ## 0.8.11
 
 ### Patch Changes
