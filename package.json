@@ -102,8 +102,8 @@
     "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "@ankhorage/ankh": "^0.10.24",
-    "@ankhorage/devtools": "^2.0.43",
+    "@ankhorage/ankh": "^0.10.25",
+    "@ankhorage/devtools": "^2.0.45",
     "@ankhorage/paradox": "^0.1.26",
     "@types/bun": "^1.4.2",
     "@types/node": "^26.6.3",
