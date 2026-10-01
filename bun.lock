@@ -12,7 +12,7 @@
         "yaml": "^2.9.1",
       },
       "devDependencies": {
-        "@ankhorage/ankh": "^0.10.18",
+        "@ankhorage/ankh": "^0.10.19",
         "@ankhorage/devtools": "^2.0.38",
         "@ankhorage/paradox": "^0.1.26",
         "@types/bun": "^1.4.2",
@@ -29,7 +29,7 @@
     },
   },
   "packages": {
-    "@ankhorage/ankh": ["@ankhorage/ankh@0.10.18", "", { "dependencies": { "@ankhorage/contracts": "^22.0.1", "yaml": "^2.9.1" }, "bin": { "ankh": "dist/bin.js" } }, "sha512-wC6hM8a5wU7Hol8akD9wLhPWPst6rcbI2VgyJq+HbxNVQNzsRR8A9eOmVciOB60hzdESyxUYLndQLv1/gK0WHg=="],
+    "@ankhorage/ankh": ["@ankhorage/ankh@0.10.19", "", { "dependencies": { "@ankhorage/contracts": "^22.0.1", "yaml": "^2.9.1" }, "bin": { "ankh": "dist/bin.js" } }, "sha512-clmZY1K2v1tkyQ0wdUy6c17xWX36daQ9ltWSYCBkP/sdZ7nfwSilB8I12VqcWqPDt62Onz/bXQmmJ4KOZzrRaw=="],
 
     "@ankhorage/apm": ["@ankhorage/apm@0.8.13", "", { "dependencies": { "@ankhorage/project-detector": "^0.1.0", "@ankhorage/utility": "^1.4.0", "jsonc-parser": "^3.3.1", "semver": "^7.8.5", "yaml": "^2.9.1" }, "peerDependencies": { "@ankhorage/ankh": "^0.10.4" }, "optionalPeers": ["@ankhorage/ankh"], "bin": { "apm": "dist/cli/runAsync.js" } }, "sha512-5ZzR2/ZYaoWaNux7ZY3gkDMI/NuxGHlnqt6lHY6cmy2ePvtv5g5YCwVsqXwYK3Dw8f+vJe6lLWJMt88oSrQX8Q=="],
 
