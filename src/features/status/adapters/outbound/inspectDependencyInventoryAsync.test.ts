@@ -241,6 +241,8 @@ function createInspection(
   return {
     rootPath,
     complete: true,
+    directories: [],
+    files: [...manifests],
     detection,
     packages: manifests.map((manifestPath) => ({
       rootPath:
