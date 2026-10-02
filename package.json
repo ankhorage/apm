@@ -95,8 +95,8 @@
     "version-packages": "ankhorage-changeset version"
   },
   "dependencies": {
-    "@ankhorage/project-detector": "^0.1.0",
-    "@ankhorage/utility": "^1.4.0",
+    "@ankhorage/project-detector": "^0.3.3",
+    "@ankhorage/utility": "^1.9.79",
     "jsonc-parser": "^3.3.1",
     "semver": "^7.8.5",
     "yaml": "^2.9.1"
@@ -104,7 +104,7 @@
   "devDependencies": {
     "@ankhorage/ankh": "^0.10.81",
     "@ankhorage/devtools": "^2.0.115",
-    "@ankhorage/paradox": "^0.1.26",
+    "@ankhorage/paradox": "^0.2.25",
     "@types/bun": "^1.4.2",
     "@types/node": "^26.6.4",
     "@types/semver": "^7.8.0",
