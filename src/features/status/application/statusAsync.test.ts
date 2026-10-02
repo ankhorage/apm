@@ -13,6 +13,8 @@ import { statusAsync } from './statusAsync.js';
 const inspection: ProjectInspection = {
   rootPath: '/fixture',
   complete: true,
+  directories: [],
+  files: ['package.json'],
   detection: {
     traits: new Set(['typescript', 'node']),
     languages: [{ id: 'typescript', score: 10, evidence: ['package.json'], sourceRoots: ['src'] }],
