@@ -1,17 +1,17 @@
 import { rm } from 'node:fs/promises';
 
 import type {
+  ApmPackageManagerPlanCommand,
+  ApmPlanCommandResult,
+  ApmPlanStage,
+} from '../../../../types/plan-staging.js';
+import type {
   ApmPlanBlocker,
   ApmPlanResolutionPort,
   ApmPlanResolutionRequest,
   ApmPlanResolutionResult,
 } from '../../../../types/plan.js';
 import type { ApmStatusDiagnostic } from '../../../../types/status.js';
-import type {
-  ApmPackageManagerPlanCommand,
-  ApmPlanCommandResult,
-  ApmPlanStage,
-} from '../../../../types/plan-staging.js';
 import { runPackageManagerCommandAsync } from '../../../../utils/runPackageManagerCommandAsync.js';
 import { applyStagedPlanTargetsAsync } from './applyStagedPlanTargetsAsync.js';
 import { buildPackageManagerPlanCommands } from './buildPackageManagerPlanCommands.js';
@@ -64,6 +64,16 @@ async function resolveStagedPlanAsync(
   if (reconciliationFailure !== undefined) {
     return commandFailureResolution(request, reconciliationFailure);
   }
+  return finalizeStagedResolutionAsync(request, stage, manifestExpectations, versionResult);
+}
+
+/*** Convert re-inspected staged graph evidence into the final reviewed native resolution. */
+async function finalizeStagedResolutionAsync(
+  request: ApmPlanResolutionRequest,
+  stage: ApmPlanStage,
+  manifestExpectations: ReadonlyMap<string, string>,
+  versionResult: ApmPlanCommandResult,
+): Promise<ApmPlanResolutionResult> {
   const inspection = await inspectStagedPlanInventoryAsync(request, stage);
   if (inspection.root === undefined) {
     return failedResolution(
