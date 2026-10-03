@@ -1,0 +1,71 @@
+name: Bun consumer plan acceptance
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  bun-consumer-plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout APM
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install and build APM
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+
+      - name: Checkout pinned Bun v2 consumer graph
+        uses: actions/checkout@v4
+        with:
+          repository: ankhorage/studio
+          ref: deeebb9ea58bf928f3518a85a63d2e0487ab97d5
+          path: .consumer/studio
+
+      - name: Install pinned consumer graph
+        run: bun install --cwd .consumer/studio/apps/studio --frozen-lockfile --ignore-scripts
+
+      - name: Plan pinned consumer with current APM
+        run: |
+          set +e
+          node dist/cli/runAsync.js plan .consumer/studio/apps/studio --json > "${RUNNER_TEMP}/apm-plan.json"
+          status=$?
+          set -e
+          node - "${RUNNER_TEMP}/apm-plan.json" <<'NODE'
+          const { readFileSync } = require('node:fs');
+          const source = readFileSync(process.argv[2], 'utf8');
+          const start = source.indexOf('{');
+          const end = source.lastIndexOf('}');
+          if (start < 0 || end < start) {
+            console.error(source);
+            process.exit(1);
+          }
+          const plan = JSON.parse(source.slice(start, end + 1));
+          console.log(JSON.stringify({
+            complete: plan.complete,
+            targets: plan.targets?.map(({ name, currentVersion, targetVersion }) => ({
+              name,
+              currentVersion,
+              targetVersion,
+            })),
+            blockers: plan.blockers,
+            diagnostics: plan.diagnostics,
+          }, null, 2));
+          if (!plan.complete) process.exit(2);
+          NODE
+          exit "$status"
