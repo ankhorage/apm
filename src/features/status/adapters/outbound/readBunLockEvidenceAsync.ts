@@ -129,12 +129,13 @@ function invalidBunPackageDiagnostic(
   value: unknown,
 ): ApmStatusDiagnostic {
   const rejection = describeInvalidBunPackage(key, value);
+  const keyEvidence = boundedInstanceKey(key);
   return {
     code: 'status.lockfile.bun.invalid-instance',
     severity: 'error',
     scope: { kind: 'install-root', id: rootId, path: lockPath },
-    evidence: [key, ...rejection.evidence],
-    reason: rejection.reason,
+    evidence: [keyEvidence, ...rejection.evidence],
+    reason: `${rejection.reason} Instance: ${keyEvidence}.`,
   };
 }
 
@@ -202,6 +203,12 @@ function describeInvalidBunLocator(locator: string): BunPackageRejection | undef
     };
   }
   return undefined;
+}
+
+/*** Bound Bun placement-key evidence for compact diagnostics and presentation surfaces. */
+function boundedInstanceKey(key: string): string {
+  const maximumLength = 160;
+  return key.length <= maximumLength ? key : `${key.slice(0, maximumLength)}…`;
 }
 
 /*** Bound Bun locator evidence so diagnostics remain actionable without unbounded lockfile output. */
