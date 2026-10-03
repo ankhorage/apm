@@ -119,9 +119,7 @@ test('classifies non-semver Bun registry locators', async () => {
     const result = await inspectAsync(root);
     expect(result.complete).toBe(false);
     const diagnostic = invalidInstanceDiagnostic(result);
-    expect(diagnostic?.reason).toContain(
-      'Bun registry locator contains a non-semver version.',
-    );
+    expect(diagnostic?.reason).toContain('Bun registry locator contains a non-semver version.');
     expect(diagnostic?.reason).toContain('Instance: dep.');
     expect(diagnostic?.evidence).toContain('registry-version:unsupported');
     expect(diagnostic?.evidence).toContain('locator:dep@not-semver');
@@ -134,9 +132,7 @@ test('classifies malformed Bun package tuples', async () => {
     const result = await inspectAsync(root);
     expect(result.complete).toBe(false);
     const diagnostic = invalidInstanceDiagnostic(result);
-    expect(diagnostic?.reason).toContain(
-      'Bun lock instance is not encoded as a package tuple.',
-    );
+    expect(diagnostic?.reason).toContain('Bun lock instance is not encoded as a package tuple.');
     expect(diagnostic?.reason).toContain('Instance: dep.');
     expect(diagnostic?.evidence).toContain('tuple:not-array');
   });
@@ -156,12 +152,8 @@ test('does not guess a nested package as an unresolved root dependency', async (
 });
 
 /*** Resolve the one invalid-instance diagnostic from a focused Bun lock fixture. */
-function invalidInstanceDiagnostic(
-  inventory: Awaited<ReturnType<typeof inspectAsync>>,
-) {
-  return inventory.diagnostics.find(
-    ({ code }) => code === 'status.lockfile.bun.invalid-instance',
-  );
+function invalidInstanceDiagnostic(inventory: Awaited<ReturnType<typeof inspectAsync>>) {
+  return inventory.diagnostics.find(({ code }) => code === 'status.lockfile.bun.invalid-instance');
 }
 
 /*** Exercise the Node inventory boundary with the published detector and a real isolated filesystem. */
