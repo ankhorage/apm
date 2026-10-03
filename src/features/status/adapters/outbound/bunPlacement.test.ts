@@ -103,12 +103,39 @@ test('rejects unsafe or malformed Bun lock placements without reading outside th
       await writeFixtureAsync(root, { [key]: ['dep@1.0.0', '', {}] });
       const result = await inspectAsync(root);
       expect(result.complete).toBe(false);
-      expect(
-        result.diagnostics.some(({ code }) => code === 'status.lockfile.bun.invalid-instance'),
-      ).toBe(true);
+      const diagnostic = result.diagnostics.find(
+        ({ code }) => code === 'status.lockfile.bun.invalid-instance',
+      );
+      expect(diagnostic?.reason).toContain(
+        'Bun lock instance placement key is unsafe or unsupported.',
+      );
+      expect(diagnostic?.reason).toContain(`Instance: ${key}.`);
+      expect(diagnostic?.evidence).toContain('placement:unsupported');
     }
     await writeFixtureAsync(root, { dep: ['dep@not-semver', '', {}] });
-    expect((await inspectAsync(root)).complete).toBe(false);
+    const invalidVersion = await inspectAsync(root);
+    expect(invalidVersion.complete).toBe(false);
+    const versionDiagnostic = invalidVersion.diagnostics.find(
+      ({ code }) => code === 'status.lockfile.bun.invalid-instance',
+    );
+    expect(versionDiagnostic?.reason).toContain(
+      'Bun registry locator contains a non-semver version.',
+    );
+    expect(versionDiagnostic?.reason).toContain('Instance: dep.');
+    expect(versionDiagnostic?.evidence).toContain('registry-version:unsupported');
+    expect(versionDiagnostic?.evidence).toContain('locator:dep@not-semver');
+
+    await writeFixtureAsync(root, { dep: { locator: 'dep@1.0.0' } });
+    const invalidTuple = await inspectAsync(root);
+    expect(invalidTuple.complete).toBe(false);
+    const tupleDiagnostic = invalidTuple.diagnostics.find(
+      ({ code }) => code === 'status.lockfile.bun.invalid-instance',
+    );
+    expect(tupleDiagnostic?.reason).toContain(
+      'Bun lock instance is not encoded as a package tuple.',
+    );
+    expect(tupleDiagnostic?.reason).toContain('Instance: dep.');
+    expect(tupleDiagnostic?.evidence).toContain('tuple:not-array');
   });
 });
 
