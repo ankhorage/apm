@@ -3,8 +3,6 @@ import path from 'node:path';
 
 import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
-import { valid } from 'semver';
-
 import type {
   ApmLockedPackageEvidence,
   ApmStatusDiagnostic,
@@ -13,8 +11,8 @@ import type {
   ApmManagerInspectionInput,
   ApmManagerLockEvidence,
 } from '../../../../types/status-inventory.js';
-import { parseBunPackagePath } from '../../domain/parseBunPackagePath.js';
 import { isBunPackageOptionalOnCurrentHost } from './isBunPackageOptionalOnCurrentHost.js';
+import { parseBunPackageIdentity } from './parseBunPackageIdentity.js';
 import { readBunDirectResolutions } from './readBunDirectResolutions.js';
 import { resolveBunRequiredPackageIds } from './resolveBunRequiredPackageIds.js';
 
@@ -61,13 +59,6 @@ interface ParsedBunTextLock {
   readonly lock?: BunLock;
   readonly raw: unknown;
   readonly parseErrorCount: number;
-}
-
-interface BunIdentity {
-  readonly name: string;
-  readonly version?: string;
-  readonly peerContext?: string;
-  readonly source: ApmLockedPackageEvidence['source'];
 }
 
 interface ParsedBunPackage {
@@ -131,95 +122,21 @@ function invalidBunPackageDiagnostic(
   key: string,
   value: unknown,
 ): ApmStatusDiagnostic {
-  const rejection = describeInvalidBunPackage(key, value);
-  const keyEvidence = boundedInstanceKey(key);
+  const parsed = parseBunPackageIdentity(key, value);
+  const rejection =
+    parsed.state === 'rejected'
+      ? parsed
+      : {
+          reason: `Bun lock instance could not be represented losslessly. Instance: ${key}.`,
+          evidence: [key, 'instance:unsupported'],
+        };
   return {
     code: 'status.lockfile.bun.invalid-instance',
     severity: 'error',
     scope: { kind: 'install-root', id: rootId, path: lockPath },
-    evidence: [keyEvidence, ...rejection.evidence],
-    reason: `${rejection.reason} Instance: ${keyEvidence}.`,
+    evidence: rejection.evidence,
+    reason: rejection.reason,
   };
-}
-
-interface BunPackageRejection {
-  readonly reason: string;
-  readonly evidence: readonly string[];
-}
-
-/*** Classify unsupported Bun tuple, locator, version or placement evidence without guessing identity. */
-function describeInvalidBunPackage(key: string, value: unknown): BunPackageRejection {
-  if (!Array.isArray(value)) {
-    return {
-      reason: 'Bun lock instance is not encoded as a package tuple.',
-      evidence: ['tuple:not-array'],
-    };
-  }
-  const [locator] = value;
-  if (typeof locator !== 'string') {
-    return {
-      reason: 'Bun lock instance tuple does not start with a string locator.',
-      evidence: [`locator-type:${typeof locator}`],
-    };
-  }
-  const locatorIssue = describeInvalidBunLocator(locator);
-  if (locatorIssue !== undefined) return locatorIssue;
-  if (parseBunPackagePath(key) === undefined) {
-    return {
-      reason: 'Bun lock instance placement key is unsafe or unsupported.',
-      evidence: ['placement:unsupported', boundedLocatorEvidence(locator)],
-    };
-  }
-  return {
-    reason: 'Bun lock instance could not be represented losslessly.',
-    evidence: ['instance:unsupported', boundedLocatorEvidence(locator)],
-  };
-}
-
-/*** Classify malformed or non-semver Bun locators while preserving bounded non-secret evidence. */
-function describeInvalidBunLocator(locator: string): BunPackageRejection | undefined {
-  const match = /^(@[^/]+\/[^@]+|[^@]+)@(.+)$/u.exec(locator);
-  if (match === null) {
-    return {
-      reason: 'Bun lock instance locator format is unsupported.',
-      evidence: ['locator:unsupported', boundedLocatorEvidence(locator)],
-    };
-  }
-  const [, name, raw] = match;
-  if (name === undefined || raw === undefined) {
-    return {
-      reason: 'Bun lock instance locator identity is incomplete.',
-      evidence: ['locator:incomplete'],
-    };
-  }
-  const source = bunSource(raw);
-  const peerIndex = source === 'registry' ? raw.indexOf('+') : -1;
-  const versionOrSource = peerIndex < 0 ? raw : raw.slice(0, peerIndex);
-  if (source === 'registry' && valid(versionOrSource) === null) {
-    return {
-      reason: 'Bun registry locator contains a non-semver version.',
-      evidence: [
-        'registry-version:unsupported',
-        `package:${name}`,
-        boundedLocatorEvidence(locator),
-      ],
-    };
-  }
-  return undefined;
-}
-
-/*** Bound Bun placement-key evidence for compact diagnostics and presentation surfaces. */
-function boundedInstanceKey(key: string): string {
-  const maximumLength = 160;
-  return key.length <= maximumLength ? key : `${key.slice(0, maximumLength)}…`;
-}
-
-/*** Bound Bun locator evidence so diagnostics remain actionable without unbounded lockfile output. */
-function boundedLocatorEvidence(locator: string): string {
-  const maximumLength = 160;
-  const bounded =
-    locator.length <= maximumLength ? locator : `${locator.slice(0, maximumLength)}…`;
-  return `locator:${bounded}`;
 }
 
 /*** Narrow parsed JSONC to the text-lock versions APM understands. */
@@ -242,10 +159,9 @@ function readBunPackage(
   value: unknown,
   packages: Record<string, unknown>,
 ): ParsedBunPackage | undefined {
-  if (!Array.isArray(value) || typeof value[0] !== 'string') return undefined;
-  const identity = parseBunLocator(value[0]);
-  const names = parseBunPackagePath(key);
-  if (identity === undefined || names === undefined) return undefined;
+  const parsedIdentity = parseBunPackageIdentity(key, value);
+  if (parsedIdentity.state === 'rejected') return undefined;
+  const { identity, names } = parsedIdentity;
   const metadata = isRecord(value[1]) ? value[1] : isRecord(value[2]) ? value[2] : {};
   const requiredDependencies = dependencyEdges(
     names,
@@ -299,39 +215,6 @@ function resolveBunPackageId(
   );
   const selected = candidates.find((candidate) => Object.hasOwn(packages, candidate));
   return selected === undefined ? undefined : `bun:${selected}`;
-}
-
-/*** Parse Bun's package locator while retaining peer-variant data when present. */
-function parseBunLocator(locator: string): BunIdentity | undefined {
-  const match = /^(@[^/]+\/[^@]+|[^@]+)@(.+)$/u.exec(locator);
-  if (match === null) return undefined;
-  const [, name, raw] = match;
-  if (name === undefined || raw === undefined) return undefined;
-  const source = bunSource(raw);
-  const peerIndex = source === 'registry' ? raw.indexOf('+') : -1;
-  const versionOrSource = peerIndex < 0 ? raw : raw.slice(0, peerIndex);
-  if (source === 'registry' && valid(versionOrSource) === null) return undefined;
-  return {
-    name,
-    ...(source === 'registry' ? { version: versionOrSource } : {}),
-    ...(peerIndex < 0 ? {} : { peerContext: raw.slice(peerIndex) }),
-    source,
-  };
-}
-
-/*** Classify Bun locator sources before semantic-version handling. */
-function bunSource(value: string): ApmLockedPackageEvidence['source'] {
-  if (value.startsWith('workspace:')) return 'workspace';
-  if (
-    value.startsWith('file:') ||
-    value.startsWith('./') ||
-    value.startsWith('../') ||
-    path.posix.isAbsolute(value) ||
-    path.win32.isAbsolute(value)
-  )
-    return 'file';
-  if (value.startsWith('git+') || value.startsWith('github:')) return 'git';
-  return 'registry';
 }
 
 /*** Read string-valued dependency metadata from a Bun lock tuple. */
