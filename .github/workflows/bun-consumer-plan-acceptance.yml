@@ -43,25 +43,27 @@ jobs:
       - name: Generate a real Studio-enabled Supabase app manifest
         run: |
           mkdir -p .consumer/generated-app
+          cat > .consumer/studio/.apm-generate-fixture.ts <<'BUN'
+          import { writeFileSync } from 'node:fs';
+          import { getPackageJson } from './src/host/orchestrator/templates.ts';
+
+          const pkg = getPackageJson({
+            name: 'apm-generated-app-fixture',
+            includeStudio: true,
+            authProvider: 'supabase',
+            storageProvider: 'supabase',
+            targets: { web: { enabled: true } },
+          });
+          writeFileSync(
+            '../generated-app/package.json',
+            `${JSON.stringify(pkg, null, 2)}\n`,
+            'utf8',
+          );
+          BUN
           (
             cd .consumer/studio
-            bun - <<'BUN'
-            import { writeFileSync } from 'node:fs';
-            import { getPackageJson } from './src/host/orchestrator/templates.ts';
-
-            const pkg = getPackageJson({
-              name: 'apm-generated-app-fixture',
-              includeStudio: true,
-              authProvider: 'supabase',
-              storageProvider: 'supabase',
-              targets: { web: { enabled: true } },
-            });
-            writeFileSync(
-              '../generated-app/package.json',
-              `${JSON.stringify(pkg, null, 2)}\n`,
-              'utf8',
-            );
-            BUN
+            bun .apm-generate-fixture.ts
+            rm .apm-generate-fixture.ts
           )
 
       - name: Materialize the generated-app direct dependency baseline
