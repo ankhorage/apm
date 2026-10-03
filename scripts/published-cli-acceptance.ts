@@ -9,8 +9,7 @@ import { promisify } from 'node:util';
 import { isRecord, readOwnProperty } from '@ankhorage/utility/object';
 
 const execFileAsync = promisify(execFile);
-const APM_VERSION = await resolveLatestPublishedVersionAsync('@ankhorage/apm');
-const ANKH_VERSION = await resolveLatestPublishedVersionAsync('@ankhorage/ankh');
+const APM_VERSION = await readCurrentPackageVersionAsync();
 const DEPENDENCY_NAME = 'semver';
 const INITIAL_DEPENDENCY_VERSION = '7.7.1';
 const DEPENDENCY_RANGE = '^7.7.1';
@@ -26,7 +25,7 @@ try {
   const toolRoot = path.join(fixtureRoot, 'tools');
   await installPublishedToolsAsync(toolRoot);
   await assertPublishedVersionAsync(toolRoot, '@ankhorage/apm', APM_VERSION);
-  await assertPublishedVersionAsync(toolRoot, '@ankhorage/ankh', ANKH_VERSION);
+  const ankhVersion = await installedToolPackageVersionAsync(toolRoot, '@ankhorage/ankh');
 
   const standaloneRoot = path.join(fixtureRoot, 'standalone');
   const ankhRoot = path.join(fixtureRoot, 'ankh');
@@ -69,7 +68,7 @@ try {
         manager,
         managerVersion,
         apmVersion: APM_VERSION,
-        ankhVersion: ANKH_VERSION,
+        ankhVersion,
         dependency: DEPENDENCY_NAME,
         from: INITIAL_DEPENDENCY_VERSION,
         to: standalone.targetVersion,
@@ -153,18 +152,25 @@ async function runJsonCommandAsync(
   return value;
 }
 
-/*** Resolve npm's current stable package version so published acceptance cannot silently drift behind production. */
-async function resolveLatestPublishedVersionAsync(packageName: string): Promise<string> {
-  const stdout = await runCommandAsync(
-    'npm',
-    ['view', packageName, 'version', '--json'],
-    process.cwd(),
-  );
-  const value: unknown = JSON.parse(stdout);
-  if (typeof value !== 'string' || !/^\d+\.\d+\.\d+$/u.test(value)) {
-    throw new Error(`Published version discovery returned no stable version for ${packageName}.`);
+/*** Read the package version under test; pull-request checkouts must reference an already published release. */
+async function readCurrentPackageVersionAsync(): Promise<string> {
+  const manifest = await readJsonObjectAsync(path.resolve('package.json'));
+  const version = readRequiredString(manifest, 'version');
+  if (!/^\d+\.\d+\.\d+$/u.test(version)) {
+    throw new Error('APM package.json version must be a stable semantic version.');
   }
-  return value;
+  return version;
+}
+
+/*** Read the exact installed version of one tool package from the external published consumer. */
+async function installedToolPackageVersionAsync(
+  toolRoot: string,
+  packageName: string,
+): Promise<string> {
+  const value = await readJsonObjectAsync(
+    path.join(toolRoot, 'node_modules', ...packageName.split('/'), 'package.json'),
+  );
+  return readRequiredString(value, 'version');
 }
 
 /*** Install the exact published APM and Ankh packages into an external consumer. */
@@ -176,7 +182,7 @@ async function installPublishedToolsAsync(toolRoot: string): Promise<void> {
     type: 'module',
     dependencies: {
       '@ankhorage/apm': APM_VERSION,
-      '@ankhorage/ankh': ANKH_VERSION,
+      '@ankhorage/ankh': 'latest',
     },
   });
   await runCommandAsync('bun', ['install', '--ignore-scripts'], toolRoot);
