@@ -70,7 +70,6 @@ function requestFixture(projectRoot: string): ApmPlanResolutionRequest {
   };
 }
 
-
 async function addSelfReferencingOverrideAsync(projectRoot: string): Promise<void> {
   const packagePath = path.join(projectRoot, 'package.json');
   const manifest: unknown = JSON.parse(await readFile(packagePath, 'utf8'));
