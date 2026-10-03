@@ -16,19 +16,27 @@ test('re-inspects supported Bun text lock versions as complete staged plan graph
           files: [],
         });
 
-        expect(result?.complete).toBe(true);
-        expect(result?.manager.name).toBe('bun');
-        expect(result?.lockfile.version).toBe(String(lockfileVersion));
+        expect(result.root?.complete).toBe(true);
+        expect(result.root?.manager.name).toBe('bun');
+        expect(result.root?.lockfile.version).toBe(String(lockfileVersion));
+        expect(result.diagnostics).toEqual([]);
       }),
     ),
   );
 });
 
-test('keeps unsupported Bun text lock versions incomplete during staged plan reinspection', async () => {
+test('keeps unsupported Bun text lock versions incomplete with actionable diagnostics', async () => {
   await withBunStageAsync(3, async (rootPath) => {
-    expect(
-      await inspectStagedPlanInventoryAsync(requestFixture(rootPath), { rootPath, files: [] }),
-    ).toBeUndefined();
+    const result = await inspectStagedPlanInventoryAsync(requestFixture(rootPath), {
+      rootPath,
+      files: [],
+    });
+
+    expect(result.root).toBeUndefined();
+    expect(result.diagnostics.map(({ code }) => code)).toContain('status.lockfile.bun.unsupported');
+    expect(result.diagnostics[0]?.nextAction).toBe(
+      'Generate Bun text lock v1 or v2 before relying on full status.',
+    );
   });
 });
 
