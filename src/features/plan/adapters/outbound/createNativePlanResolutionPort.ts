@@ -1,16 +1,16 @@
 import { rm } from 'node:fs/promises';
 
 import type {
-  ApmPackageManagerPlanCommand,
-  ApmPlanCommandResult,
-  ApmPlanStage,
-} from '../../../../types/plan-staging.js';
-import type {
   ApmPlanBlocker,
   ApmPlanResolutionPort,
   ApmPlanResolutionRequest,
   ApmPlanResolutionResult,
 } from '../../../../types/plan.js';
+import type {
+  ApmPackageManagerPlanCommand,
+  ApmPlanCommandResult,
+  ApmPlanStage,
+} from '../../../../types/plan-staging.js';
 import type { ApmStatusDiagnostic } from '../../../../types/status.js';
 import { runPackageManagerCommandAsync } from '../../../../utils/runPackageManagerCommandAsync.js';
 import { applyStagedPlanTargetsAsync } from './applyStagedPlanTargetsAsync.js';
