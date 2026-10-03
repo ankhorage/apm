@@ -37,41 +37,62 @@ jobs:
           ref: deeebb9ea58bf928f3518a85a63d2e0487ab97d5
           path: .consumer/studio
 
+      - name: Install pinned Studio generator dependencies
+        run: bun install --cwd .consumer/studio --frozen-lockfile --ignore-scripts
+
+      - name: Generate a real Studio-enabled Supabase app manifest
+        run: |
+          mkdir -p .consumer/generated-app
+          (
+            cd .consumer/studio
+            bun - <<'BUN'
+            import { writeFileSync } from 'node:fs';
+            import { getPackageJson } from './src/host/orchestrator/templates.ts';
+
+            const pkg = getPackageJson({
+              name: 'apm-generated-app-fixture',
+              includeStudio: true,
+              authProvider: 'supabase',
+              storageProvider: 'supabase',
+              targets: { web: { enabled: true } },
+            });
+            writeFileSync(
+              '../generated-app/package.json',
+              `${JSON.stringify(pkg, null, 2)}\n`,
+              'utf8',
+            );
+            BUN
+          )
+
       - name: Materialize the generated-app direct dependency baseline
         run: |
           node <<'NODE'
           const { readFileSync, writeFileSync } = require('node:fs');
-          const path = '.consumer/studio/apps/studio/package.json';
+          const path = '.consumer/generated-app/package.json';
           const pkg = JSON.parse(readFileSync(path, 'utf8'));
           Object.assign(pkg.dependencies, {
             '@ankhorage/contracts': '22.8.101',
             '@ankhorage/data-sources': '2.0.33',
             '@ankhorage/supabase-auth': '1.2.33',
-            '@ankhorage/supabase-storage': '0.2.108',
             '@ankhorage/utility': '1.9.84',
           });
-          pkg.overrides = {
-            ...(pkg.overrides ?? {}),
-            '@ankhorage/contracts': '$@ankhorage/contracts',
-          };
           Object.assign(pkg.devDependencies, {
             '@ankhorage/devtools': '2.1.9',
           });
           writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
           NODE
-          bun install --cwd .consumer/studio/apps/studio --ignore-scripts
+          bun install --cwd .consumer/generated-app --ignore-scripts
 
       - name: Restore reviewed manifest ranges without changing the installed lock graph
         run: |
           node <<'NODE'
           const { readFileSync, writeFileSync } = require('node:fs');
-          const path = '.consumer/studio/apps/studio/package.json';
+          const path = '.consumer/generated-app/package.json';
           const pkg = JSON.parse(readFileSync(path, 'utf8'));
           Object.assign(pkg.dependencies, {
             '@ankhorage/contracts': '^22.8.101',
             '@ankhorage/data-sources': '^2.0.33',
             '@ankhorage/supabase-auth': '^1.2.33',
-            '@ankhorage/supabase-storage': '^0.2.108',
             '@ankhorage/utility': '^1.9.84',
           });
           Object.assign(pkg.devDependencies, {
@@ -85,7 +106,7 @@ jobs:
           node --input-type=module <<'NODE'
           import { planProjectAsync } from './dist/nodeApm.js';
 
-          const rootPath = new URL('./.consumer/studio/apps/studio/', import.meta.url).pathname;
+          const rootPath = new URL('./.consumer/generated-app/', import.meta.url).pathname;
           const exact = (name, version, manifestRange) => ({
             selector: { name, installRootId: '.', ownerPath: 'package.json' },
             target: { kind: 'version', version, manifestRange },
