@@ -6,6 +6,7 @@ import type {
   ApmPlanResolutionRequest,
   ApmPlanResolutionResult,
 } from '../../../../types/plan.js';
+import type { ApmStatusDiagnostic } from '../../../../types/status.js';
 import type {
   ApmPackageManagerPlanCommand,
   ApmPlanCommandResult,
@@ -63,8 +64,15 @@ async function resolveStagedPlanAsync(
   if (reconciliationFailure !== undefined) {
     return commandFailureResolution(request, reconciliationFailure);
   }
-  const root = await inspectStagedPlanInventoryAsync(request, stage);
-  if (root === undefined) return failedResolution(request, [stagedInventoryBlocker(request)]);
+  const inspection = await inspectStagedPlanInventoryAsync(request, stage);
+  if (inspection.root === undefined) {
+    return failedResolution(
+      request,
+      [stagedInventoryBlocker(request, inspection.diagnostics)],
+      inspection.diagnostics,
+    );
+  }
+  const { root } = inspection;
   const fileChanges = await collectStagedPlanFileChangesAsync(request, stage, manifestExpectations);
   const graph = toPlanResolutionGraph(root, request.installRootId);
   const blockers = [
@@ -153,6 +161,7 @@ function resolutionEffects(): ApmPlanResolutionResult['effects'] {
 function failedResolution(
   request: ApmPlanResolutionRequest,
   blockers: readonly ApmPlanBlocker[],
+  diagnostics: readonly ApmStatusDiagnostic[] = [],
 ): ApmPlanResolutionResult {
   return {
     installRootId: request.installRootId,
@@ -166,18 +175,25 @@ function failedResolution(
     artifacts: [],
     effects: resolutionEffects(),
     blockers,
-    diagnostics: [],
+    diagnostics,
   };
 }
 
-/*** Report a staged graph that cannot be parsed through the already supported status adapter matrix. */
-function stagedInventoryBlocker(request: ApmPlanResolutionRequest): ApmPlanBlocker {
+/*** Report a staged graph that cannot be parsed while retaining bounded root-cause diagnostics. */
+function stagedInventoryBlocker(
+  request: ApmPlanResolutionRequest,
+  diagnostics: readonly ApmStatusDiagnostic[],
+): ApmPlanBlocker {
+  const [primary] = diagnostics;
   return {
     code: 'plan.resolution-failed',
     scope: { kind: 'install-root', id: request.installRootId, path: request.installRootPath },
-    evidence: [request.manager],
+    evidence: [request.manager, ...diagnostics.slice(0, 5).map(({ code }) => code)],
     reason:
-      'Native package-manager output could not be re-inspected as a complete supported lock graph.',
-    nextAction: 'Use a supported lockfile/linker mode before applying updates.',
+      primary === undefined
+        ? 'Native package-manager output could not be re-inspected as a complete supported lock graph.'
+        : `Native package-manager output is incomplete: ${primary.reason}`,
+    nextAction:
+      primary?.nextAction ?? 'Use a supported lockfile/linker mode before applying updates.',
   };
 }
