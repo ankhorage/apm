@@ -5,7 +5,7 @@ import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
 import { valid } from 'semver';
 
-import type { ApmLockedPackageEvidence } from '../../../../types/status.js';
+import type { ApmLockedPackageEvidence, ApmStatusDiagnostic } from '../../../../types/status.js';
 import type {
   ApmManagerInspectionInput,
   ApmManagerLockEvidence,
