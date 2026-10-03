@@ -113,16 +113,101 @@ function toBunLockEvidence(
     lockedPackages,
     directResolutions,
     complete: lockedPackages.length === Object.keys(lock.packages).length,
-    diagnostics: Object.keys(lock.packages)
-      .filter((key) => !lockedPackages.some((pkg) => pkg.id === `bun:${key}`))
-      .map((key) => ({
-        code: 'status.lockfile.bun.invalid-instance',
-        severity: 'error' as const,
-        scope: { kind: 'install-root' as const, id: input.root.id, path: lockPath },
-        evidence: [key],
-        reason: 'Bun lock instance has an unsupported locator or unsafe placement key.',
-      })),
+    diagnostics: Object.entries(lock.packages).flatMap(([key, value]) =>
+      lockedPackages.some((pkg) => pkg.id === `bun:${key}`)
+        ? []
+        : [invalidBunPackageDiagnostic(input.root.id, lockPath, key, value)],
+    ),
   };
+}
+
+/*** Explain why one Bun lock package entry could not become lossless package evidence. */
+function invalidBunPackageDiagnostic(
+  rootId: string,
+  lockPath: string,
+  key: string,
+  value: unknown,
+): ApmStatusDiagnostic {
+  const rejection = describeInvalidBunPackage(key, value);
+  return {
+    code: 'status.lockfile.bun.invalid-instance',
+    severity: 'error',
+    scope: { kind: 'install-root', id: rootId, path: lockPath },
+    evidence: [key, ...rejection.evidence],
+    reason: rejection.reason,
+  };
+}
+
+interface BunPackageRejection {
+  readonly reason: string;
+  readonly evidence: readonly string[];
+}
+
+/*** Classify unsupported Bun tuple, locator, version or placement evidence without guessing identity. */
+function describeInvalidBunPackage(key: string, value: unknown): BunPackageRejection {
+  if (!Array.isArray(value)) {
+    return {
+      reason: 'Bun lock instance is not encoded as a package tuple.',
+      evidence: ['tuple:not-array'],
+    };
+  }
+  const [locator] = value;
+  if (typeof locator !== 'string') {
+    return {
+      reason: 'Bun lock instance tuple does not start with a string locator.',
+      evidence: [`locator-type:${typeof locator}`],
+    };
+  }
+  const locatorIssue = describeInvalidBunLocator(locator);
+  if (locatorIssue !== undefined) return locatorIssue;
+  if (parseBunPackagePath(key) === undefined) {
+    return {
+      reason: 'Bun lock instance placement key is unsafe or unsupported.',
+      evidence: ['placement:unsupported', boundedLocatorEvidence(locator)],
+    };
+  }
+  return {
+    reason: 'Bun lock instance could not be represented losslessly.',
+    evidence: ['instance:unsupported', boundedLocatorEvidence(locator)],
+  };
+}
+
+/*** Classify malformed or non-semver Bun locators while preserving bounded non-secret evidence. */
+function describeInvalidBunLocator(locator: string): BunPackageRejection | undefined {
+  const match = /^(@[^/]+\/[^@]+|[^@]+)@(.+)$/u.exec(locator);
+  if (match === null) {
+    return {
+      reason: 'Bun lock instance locator format is unsupported.',
+      evidence: ['locator:unsupported', boundedLocatorEvidence(locator)],
+    };
+  }
+  const [, name, raw] = match;
+  if (name === undefined || raw === undefined) {
+    return {
+      reason: 'Bun lock instance locator identity is incomplete.',
+      evidence: ['locator:incomplete'],
+    };
+  }
+  const source = bunSource(raw);
+  const peerIndex = source === 'registry' ? raw.indexOf('+') : -1;
+  const versionOrSource = peerIndex < 0 ? raw : raw.slice(0, peerIndex);
+  if (source === 'registry' && valid(versionOrSource) === null) {
+    return {
+      reason: 'Bun registry locator contains a non-semver version.',
+      evidence: [
+        'registry-version:unsupported',
+        `package:${name}`,
+        boundedLocatorEvidence(locator),
+      ],
+    };
+  }
+  return undefined;
+}
+
+/*** Bound Bun locator evidence so diagnostics remain actionable without unbounded lockfile output. */
+function boundedLocatorEvidence(locator: string): string {
+  const maximumLength = 160;
+  return `locator:${locator.length <= maximumLength ? locator : `${locator.slice(0, maximumLength)}…`}`;
 }
 
 /*** Narrow parsed JSONC to the text-lock versions APM understands. */
