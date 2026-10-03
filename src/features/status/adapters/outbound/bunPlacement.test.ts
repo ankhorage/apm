@@ -106,9 +106,10 @@ test('rejects unsafe or malformed Bun lock placements without reading outside th
       const diagnostic = result.diagnostics.find(
         ({ code }) => code === 'status.lockfile.bun.invalid-instance',
       );
-      expect(diagnostic?.reason).toBe(
+      expect(diagnostic?.reason).toContain(
         'Bun lock instance placement key is unsafe or unsupported.',
       );
+      expect(diagnostic?.reason).toContain(`Instance: ${key}.`);
       expect(diagnostic?.evidence).toContain('placement:unsupported');
     }
     await writeFixtureAsync(root, { dep: ['dep@not-semver', '', {}] });
@@ -117,9 +118,10 @@ test('rejects unsafe or malformed Bun lock placements without reading outside th
     const versionDiagnostic = invalidVersion.diagnostics.find(
       ({ code }) => code === 'status.lockfile.bun.invalid-instance',
     );
-    expect(versionDiagnostic?.reason).toBe(
+    expect(versionDiagnostic?.reason).toContain(
       'Bun registry locator contains a non-semver version.',
     );
+    expect(versionDiagnostic?.reason).toContain('Instance: dep.');
     expect(versionDiagnostic?.evidence).toContain('registry-version:unsupported');
     expect(versionDiagnostic?.evidence).toContain('locator:dep@not-semver');
 
@@ -129,7 +131,10 @@ test('rejects unsafe or malformed Bun lock placements without reading outside th
     const tupleDiagnostic = invalidTuple.diagnostics.find(
       ({ code }) => code === 'status.lockfile.bun.invalid-instance',
     );
-    expect(tupleDiagnostic?.reason).toBe('Bun lock instance is not encoded as a package tuple.');
+    expect(tupleDiagnostic?.reason).toContain(
+      'Bun lock instance is not encoded as a package tuple.',
+    );
+    expect(tupleDiagnostic?.reason).toContain('Instance: dep.');
     expect(tupleDiagnostic?.evidence).toContain('tuple:not-array');
   });
 });
