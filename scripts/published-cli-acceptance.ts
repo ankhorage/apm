@@ -9,8 +9,8 @@ import { promisify } from 'node:util';
 import { isRecord, readOwnProperty } from '@ankhorage/utility/object';
 
 const execFileAsync = promisify(execFile);
-const APM_VERSION = '0.8.4';
-const ANKH_VERSION = '0.8.13';
+const APM_VERSION = await resolveLatestPublishedVersionAsync('@ankhorage/apm');
+const ANKH_VERSION = await resolveLatestPublishedVersionAsync('@ankhorage/ankh');
 const DEPENDENCY_NAME = 'semver';
 const INITIAL_DEPENDENCY_VERSION = '7.7.1';
 const DEPENDENCY_RANGE = '^7.7.1';
@@ -150,6 +150,20 @@ async function runJsonCommandAsync(
   );
   const value: unknown = JSON.parse(extractJson(stdout));
   if (!isRecord(value)) throw new Error(`Expected object JSON from ${input.command}.`);
+  return value;
+}
+
+/*** Resolve npm's current stable package version so published acceptance cannot silently drift behind production. */
+async function resolveLatestPublishedVersionAsync(packageName: string): Promise<string> {
+  const stdout = await runCommandAsync(
+    'npm',
+    ['view', packageName, 'version', '--json'],
+    process.cwd(),
+  );
+  const value: unknown = JSON.parse(stdout);
+  if (typeof value !== 'string' || !/^\d+\.\d+\.\d+$/u.test(value)) {
+    throw new Error(`Published version discovery returned no stable version for ${packageName}.`);
+  }
   return value;
 }
 
