@@ -37,28 +37,73 @@ jobs:
           ref: deeebb9ea58bf928f3518a85a63d2e0487ab97d5
           path: .consumer/studio
 
-      - name: Install pinned consumer graph
-        run: bun install --cwd .consumer/studio/apps/studio --frozen-lockfile --ignore-scripts
-
-      - name: Plan pinned consumer with current APM
+      - name: Materialize the generated-app direct dependency baseline
         run: |
-          set +e
-          node dist/cli/runAsync.js plan .consumer/studio/apps/studio --json > "${RUNNER_TEMP}/apm-plan.json"
-          status=$?
-          set -e
-          node - "${RUNNER_TEMP}/apm-plan.json" <<'NODE'
-          const { readFileSync } = require('node:fs');
-          const source = readFileSync(process.argv[2], 'utf8');
-          const start = source.indexOf('{');
-          const end = source.lastIndexOf('}');
-          if (start < 0 || end < start) {
-            console.error(source);
-            process.exit(1);
-          }
-          const plan = JSON.parse(source.slice(start, end + 1));
+          node <<'NODE'
+          const { readFileSync, writeFileSync } = require('node:fs');
+          const path = '.consumer/studio/apps/studio/package.json';
+          const pkg = JSON.parse(readFileSync(path, 'utf8'));
+          Object.assign(pkg.dependencies, {
+            '@ankhorage/contracts': '22.8.101',
+            '@ankhorage/data-sources': '2.0.33',
+            '@ankhorage/supabase-auth': '1.2.33',
+            '@ankhorage/utility': '1.9.84',
+          });
+          Object.assign(pkg.devDependencies, {
+            '@ankhorage/devtools': '2.1.9',
+          });
+          writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
+          NODE
+          bun install --cwd .consumer/studio/apps/studio --ignore-scripts
+
+      - name: Restore reviewed manifest ranges without changing the installed lock graph
+        run: |
+          node <<'NODE'
+          const { readFileSync, writeFileSync } = require('node:fs');
+          const path = '.consumer/studio/apps/studio/package.json';
+          const pkg = JSON.parse(readFileSync(path, 'utf8'));
+          Object.assign(pkg.dependencies, {
+            '@ankhorage/contracts': '^22.8.101',
+            '@ankhorage/data-sources': '^2.0.33',
+            '@ankhorage/supabase-auth': '^1.2.33',
+            '@ankhorage/utility': '^1.9.84',
+          });
+          Object.assign(pkg.devDependencies, {
+            '@ankhorage/devtools': '^2.1.9',
+          });
+          writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
+          NODE
+
+      - name: Plan the exact generated-app update set with current APM
+        run: |
+          node --input-type=module <<'NODE'
+          import { planProjectAsync } from './dist/nodeApm.js';
+
+          const rootPath = new URL('./.consumer/studio/apps/studio/', import.meta.url).pathname;
+          const exact = (name, version, manifestRange) => ({
+            selector: { name, installRootId: '.', ownerPath: 'package.json' },
+            target: { kind: 'version', version, manifestRange },
+          });
+          const plan = await planProjectAsync({
+            rootPath,
+            availability: 'refresh',
+            policy: {
+              dependencyUpdates: 'selected',
+              selections: [
+                exact('@ankhorage/contracts', '22.8.102', '^22.8.101'),
+                exact('@ankhorage/data-sources', '2.0.34', '^2.0.33'),
+                exact('@ankhorage/devtools', '2.1.10', '^2.1.9'),
+                exact('@ankhorage/supabase-auth', '1.2.34', '^1.2.33'),
+                exact('@ankhorage/utility', '1.9.85', '^1.9.84'),
+              ],
+              repairInstallations: true,
+              repairProjections: true,
+              maxGeneratorIterations: 4,
+            },
+          });
           console.log(JSON.stringify({
             complete: plan.complete,
-            targets: plan.targets?.map(({ name, currentVersion, targetVersion }) => ({
+            targets: plan.targets.map(({ name, currentVersion, targetVersion }) => ({
               name,
               currentVersion,
               targetVersion,
@@ -68,4 +113,3 @@ jobs:
           }, null, 2));
           if (!plan.complete) process.exit(2);
           NODE
-          exit "$status"
