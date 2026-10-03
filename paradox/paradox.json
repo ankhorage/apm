@@ -14,7 +14,7 @@
     {
       "id": "npm",
       "label": "npm",
-      "value": "v0.8.13",
+      "value": "v0.8.14",
       "color": "cb3837"
     },
     {
@@ -1016,6 +1016,7 @@
         "src/features/plan/adapters/outbound/validateStagedPlanTargets.ts",
         "src/types/plan-staging.ts",
         "src/types/plan.ts",
+        "src/types/status.ts",
         "src/utils/runPackageManagerCommandAsync.ts"
       ],
       "exports": [
@@ -1051,6 +1052,7 @@
         "src/types/status.ts"
       ],
       "exports": [
+        "ApmStagedPlanInventoryInspection",
         "inspectStagedPlanInventoryAsync"
       ]
     },
@@ -11469,7 +11471,7 @@
       "modulePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 27,
+        "line": 28,
         "column": 1
       },
       "exportPaths": [
@@ -14196,7 +14198,7 @@
       "description": "Create the Node native package-manager resolution adapter used by headless project planning.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 27,
+        "line": 28,
         "column": 1
       }
     },
@@ -14205,7 +14207,7 @@
       "description": "Own disposable staging lifecycle independently from native resolution semantics.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 32,
+        "line": 33,
         "column": 1
       }
     },
@@ -14214,7 +14216,16 @@
       "description": "Resolve one already-staged install root and return only reviewed serializable evidence.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 44,
+        "line": 45,
+        "column": 1
+      }
+    },
+    {
+      "name": "finalizeStagedResolutionAsync",
+      "description": "Convert re-inspected staged graph evidence into the final reviewed native resolution.",
+      "sourceLocation": {
+        "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
+        "line": 71,
         "column": 1
       }
     },
@@ -14223,7 +14234,7 @@
       "description": "Reconcile lockfile metadata with reviewed manifests after exact temporary solver constraints.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 97,
+        "line": 115,
         "column": 1
       }
     },
@@ -14232,7 +14243,7 @@
       "description": "Execute native resolver commands sequentially and return the first command failure with identity intact.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 106,
+        "line": 124,
         "column": 1
       }
     },
@@ -14241,7 +14252,7 @@
       "description": "Convert one failed native command into a bounded incomplete resolution.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 118,
+        "line": 136,
         "column": 1
       }
     },
@@ -14250,7 +14261,7 @@
       "description": "Build the manager-version command as stable non-secret blocker evidence.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 128,
+        "line": 146,
         "column": 1
       }
     },
@@ -14259,7 +14270,7 @@
       "description": "Preserve the actual resolver version observed from the staging command.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 133,
+        "line": 151,
         "column": 1
       }
     },
@@ -14268,7 +14279,7 @@
       "description": "Return the declared planning effects for native lockfile-only resolution.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 143,
+        "line": 161,
         "column": 1
       }
     },
@@ -14277,16 +14288,16 @@
       "description": "Build one incomplete native result without leaking subprocess output or mutating project state.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 153,
+        "line": 171,
         "column": 1
       }
     },
     {
       "name": "stagedInventoryBlocker",
-      "description": "Report a staged graph that cannot be parsed through the already supported status adapter matrix.",
+      "description": "Report a staged graph that cannot be parsed while retaining bounded root-cause diagnostics.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
-        "line": 174,
+        "line": 193,
         "column": 1
       }
     },
@@ -14304,7 +14315,7 @@
       "description": "Create one isolated Bun staging fixture with an explicit text lock version.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/inspectStagedPlanInventoryAsync.test.ts",
-        "line": 36,
+        "line": 44,
         "column": 1
       }
     },
@@ -14313,7 +14324,7 @@
       "description": "Build the plan resolution request used by staged Bun reinspection tests.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/inspectStagedPlanInventoryAsync.test.ts",
-        "line": 67,
+        "line": 75,
         "column": 1
       }
     },
@@ -14322,7 +14333,7 @@
       "description": "Re-inspect the staged native lock graph using the same tested status adapters as project status.",
       "sourceLocation": {
         "filePath": "src/features/plan/adapters/outbound/inspectStagedPlanInventoryAsync.ts",
-        "line": 11,
+        "line": 16,
         "column": 1
       }
     },
@@ -22725,6 +22736,11 @@
       },
       {
         "fromPath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
+        "toPath": "src/types/status.ts",
+        "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
+      },
+      {
+        "fromPath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts",
         "toPath": "src/utils/runPackageManagerCommandAsync.ts",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
@@ -30671,42 +30687,54 @@
       },
       {
         "fromSymbol": "resolveStagedPlanAsync",
+        "toSymbol": "finalizeStagedResolutionAsync",
+        "callExpression": "finalizeStagedResolutionAsync",
+        "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
+      },
+      {
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "inspectStagedPlanInventoryAsync",
         "callExpression": "inspectStagedPlanInventoryAsync",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
       {
-        "fromSymbol": "resolveStagedPlanAsync",
+        "fromSymbol": "finalizeStagedResolutionAsync",
+        "toSymbol": "failedResolution",
+        "callExpression": "failedResolution",
+        "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
+      },
+      {
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "stagedInventoryBlocker",
         "callExpression": "stagedInventoryBlocker",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
       {
-        "fromSymbol": "resolveStagedPlanAsync",
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "collectStagedPlanFileChangesAsync",
         "callExpression": "collectStagedPlanFileChangesAsync",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
       {
-        "fromSymbol": "resolveStagedPlanAsync",
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "toPlanResolutionGraph",
         "callExpression": "toPlanResolutionGraph",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
       {
-        "fromSymbol": "resolveStagedPlanAsync",
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "validateStagedPlanTargets",
         "callExpression": "validateStagedPlanTargets",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
       {
-        "fromSymbol": "resolveStagedPlanAsync",
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "managerVersion",
         "callExpression": "managerVersion",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"
       },
       {
-        "fromSymbol": "resolveStagedPlanAsync",
+        "fromSymbol": "finalizeStagedResolutionAsync",
         "toSymbol": "resolutionEffects",
         "callExpression": "resolutionEffects",
         "sourcePath": "src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts"

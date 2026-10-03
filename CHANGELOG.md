@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.14
+
+### Patch Changes
+
+- be92535: Preserve actionable staged package-manager diagnostics when native plan reinspection cannot produce a complete supported lock graph.
+
 ## 0.8.13
 
 ### Patch Changes

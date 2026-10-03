@@ -2400,7 +2400,7 @@ Create the thin Ankh command provider over the same standalone APM command adapt
 
 Kind: `function`
 Module: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts`
-Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:27:1`
+Source: `src/features/plan/adapters/outbound/createNativePlanResolutionPort.ts:28:1`
 
 Create the Node native package-manager resolution adapter used by headless project planning.
 
