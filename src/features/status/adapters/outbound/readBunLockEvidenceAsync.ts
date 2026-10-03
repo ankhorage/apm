@@ -5,7 +5,10 @@ import { isRecord } from '@ankhorage/utility/object';
 import { parse as parseJsonc, type ParseError } from 'jsonc-parser';
 import { valid } from 'semver';
 
-import type { ApmLockedPackageEvidence, ApmStatusDiagnostic } from '../../../../types/status.js';
+import type {
+  ApmLockedPackageEvidence,
+  ApmStatusDiagnostic,
+} from '../../../../types/status.js';
 import type {
   ApmManagerInspectionInput,
   ApmManagerLockEvidence,
@@ -214,7 +217,9 @@ function boundedInstanceKey(key: string): string {
 /*** Bound Bun locator evidence so diagnostics remain actionable without unbounded lockfile output. */
 function boundedLocatorEvidence(locator: string): string {
   const maximumLength = 160;
-  return `locator:${locator.length <= maximumLength ? locator : `${locator.slice(0, maximumLength)}…`}`;
+  const bounded =
+    locator.length <= maximumLength ? locator : `${locator.slice(0, maximumLength)}…`;
+  return `locator:${bounded}`;
 }
 
 /*** Narrow parsed JSONC to the text-lock versions APM understands. */
