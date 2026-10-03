@@ -1,0 +1,121 @@
+name: Bun consumer plan acceptance
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  bun-consumer-plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout APM
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install and build APM
+        run: |
+          bun install --frozen-lockfile
+          bun run build
+
+      - name: Checkout pinned Bun v2 consumer graph
+        uses: actions/checkout@v4
+        with:
+          repository: ankhorage/studio
+          ref: deeebb9ea58bf928f3518a85a63d2e0487ab97d5
+          path: .consumer/studio
+
+      - name: Materialize the generated-app direct dependency baseline
+        run: |
+          node <<'NODE'
+          const { readFileSync, writeFileSync } = require('node:fs');
+          const path = '.consumer/studio/apps/studio/package.json';
+          const pkg = JSON.parse(readFileSync(path, 'utf8'));
+          Object.assign(pkg.dependencies, {
+            '@ankhorage/contracts': '22.8.101',
+            '@ankhorage/data-sources': '2.0.33',
+            '@ankhorage/supabase-auth': '1.2.33',
+            '@ankhorage/supabase-storage': '0.2.108',
+            '@ankhorage/utility': '1.9.84',
+          });
+          pkg.overrides = {
+            ...(pkg.overrides ?? {}),
+            '@ankhorage/contracts': '$@ankhorage/contracts',
+          };
+          Object.assign(pkg.devDependencies, {
+            '@ankhorage/devtools': '2.1.9',
+          });
+          writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
+          NODE
+          bun install --cwd .consumer/studio/apps/studio --ignore-scripts
+
+      - name: Restore reviewed manifest ranges without changing the installed lock graph
+        run: |
+          node <<'NODE'
+          const { readFileSync, writeFileSync } = require('node:fs');
+          const path = '.consumer/studio/apps/studio/package.json';
+          const pkg = JSON.parse(readFileSync(path, 'utf8'));
+          Object.assign(pkg.dependencies, {
+            '@ankhorage/contracts': '^22.8.101',
+            '@ankhorage/data-sources': '^2.0.33',
+            '@ankhorage/supabase-auth': '^1.2.33',
+            '@ankhorage/supabase-storage': '^0.2.108',
+            '@ankhorage/utility': '^1.9.84',
+          });
+          Object.assign(pkg.devDependencies, {
+            '@ankhorage/devtools': '^2.1.9',
+          });
+          writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
+          NODE
+
+      - name: Plan the exact generated-app update set with current APM
+        run: |
+          node --input-type=module <<'NODE'
+          import { planProjectAsync } from './dist/nodeApm.js';
+
+          const rootPath = new URL('./.consumer/studio/apps/studio/', import.meta.url).pathname;
+          const exact = (name, version, manifestRange) => ({
+            selector: { name, installRootId: '.', ownerPath: 'package.json' },
+            target: { kind: 'version', version, manifestRange },
+          });
+          const plan = await planProjectAsync({
+            rootPath,
+            availability: 'refresh',
+            policy: {
+              dependencyUpdates: 'selected',
+              selections: [
+                exact('@ankhorage/contracts', '22.8.102', '^22.8.101'),
+                exact('@ankhorage/data-sources', '2.0.34', '^2.0.33'),
+                exact('@ankhorage/devtools', '2.1.10', '^2.1.9'),
+                exact('@ankhorage/supabase-auth', '1.2.34', '^1.2.33'),
+                exact('@ankhorage/utility', '1.9.85', '^1.9.84'),
+              ],
+              repairInstallations: true,
+              repairProjections: true,
+              maxGeneratorIterations: 4,
+            },
+          });
+          console.log(JSON.stringify({
+            complete: plan.complete,
+            targets: plan.targets.map(({ name, currentVersion, targetVersion }) => ({
+              name,
+              currentVersion,
+              targetVersion,
+            })),
+            blockers: plan.blockers,
+            diagnostics: plan.diagnostics,
+          }, null, 2));
+          if (!plan.complete) process.exit(2);
+          NODE
