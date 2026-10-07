@@ -11,6 +11,7 @@ import type {
   ApmManagerInspectionInput,
   ApmManagerLockEvidence,
 } from '../../../../types/status-inventory.js';
+import { parseBunPackagePath } from '../../domain/parseBunPackagePath.js';
 import { isBunPackageOptionalOnCurrentHost } from './isBunPackageOptionalOnCurrentHost.js';
 import { parseBunPackageIdentity } from './parseBunPackageIdentity.js';
 import { readBunDirectResolutions } from './readBunDirectResolutions.js';
@@ -160,7 +161,7 @@ function readBunPackage(
   packages: Record<string, unknown>,
 ): ParsedBunPackage | undefined {
   const parsedIdentity = parseBunPackageIdentity(key, value);
-  if (parsedIdentity.state === 'rejected') return undefined;
+  if (parsedIdentity.state === 'rejected' || !Array.isArray(value)) return undefined;
   const { identity, names } = parsedIdentity;
   const metadata = isRecord(value[1]) ? value[1] : isRecord(value[2]) ? value[2] : {};
   const requiredDependencies = dependencyEdges(
