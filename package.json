@@ -105,10 +105,10 @@
     "@ankhorage/ankh": "^0.10.84",
     "@ankhorage/devtools": "^2.1.6",
     "@ankhorage/paradox": "^0.1.26",
-    "@types/bun": "^1.4.2",
+    "@types/bun": "^1.4.3",
     "@types/node": "^26.6.5",
     "@types/semver": "^7.8.0",
     "typescript": "~6.0.3"
   },
-  "packageManager": "bun@1.4.2"
+  "packageManager": "bun@1.4.3"
 }
