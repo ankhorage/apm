@@ -1,5 +1,7 @@
 import type { AnkhRuntimeCommandProvider } from '@ankhorage/ankh';
+import type { Capability } from '@ankhorage/contracts/capability';
 
+import { CAPABILITIES } from '../capabilities/index.js';
 import { apply } from './commands/apply.js';
 import { plan } from './commands/plan.js';
 import { status } from './commands/status.js';
@@ -14,10 +16,10 @@ export function createCliProvider(version: string): AnkhRuntimeCommandProvider {
     id: '@ankhorage/apm',
     category: 'apm',
     version,
-    capabilities: commands.map((command) => command.capability),
+    capabilities: CAPABILITIES,
     commands: commands.map((command) => ({
       path: command.path,
-      capability: command.capability,
+      capability: command.capability satisfies Capability['id'],
       summary: command.summary,
     })),
     handlers: commands.map((command) => ({

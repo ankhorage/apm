@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
+import { CAPABILITIES } from '../capabilities/index.js';
 import { createCliProvider } from './createCliProvider.js';
 
 describe('createCliProvider', () => {
@@ -8,6 +9,7 @@ describe('createCliProvider', () => {
 
     expect(provider.id).toBe('@ankhorage/apm');
     expect(provider.category).toBe('apm');
+    expect(provider.capabilities).toEqual(CAPABILITIES);
     expect(provider.commands.map((command) => command.path.join(' '))).toEqual([
       'status',
       'plan',
