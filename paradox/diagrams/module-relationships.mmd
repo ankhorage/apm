@@ -3,6 +3,8 @@ graph LR
   module_package_json["package.json"]
   module_paradox_config_ts["paradox.config.ts"]
   module_src_apm_ts["src/apm.ts"]
+  module_src_capabilities_index_test_ts["src/capabilities/index.test.ts"]
+  module_src_capabilities_index_ts["src/capabilities/index.ts"]
   module_src_cli_commands_apply_ts["src/cli/commands/apply.ts"]
   module_src_cli_commands_plan_ts["src/cli/commands/plan.ts"]
   module_src_cli_commands_status_ts["src/cli/commands/status.ts"]
@@ -217,6 +219,7 @@ graph LR
   module_src_utils_runPackageManagerCommandAsync_ts["src/utils/runPackageManagerCommandAsync.ts"]
   module_examples_basic_usage_status_ts --> module_dist_apm_d_ts
   module_examples_basic_usage_status_ts --> module_dist_nodeApm_d_ts
+  module_src_capabilities_index_test_ts --> module_src_capabilities_index_ts
   module_src_cli_commands_apply_ts --> module_src_features_apply_composition_applyProjectAsync_ts
   module_src_cli_commands_apply_ts --> module_src_features_plan_domain_parsePlanResult_ts
   module_src_cli_commands_apply_ts --> module_src_types_apply_ts
@@ -228,7 +231,9 @@ graph LR
   module_src_cli_commands_verify_ts --> module_src_features_verify_composition_verifyProjectAsync_ts
   module_src_cli_commands_verify_ts --> module_src_types_cli_ts
   module_src_cli_commands_verify_ts --> module_src_types_verify_ts
+  module_src_cli_createCliProvider_test_ts --> module_src_capabilities_index_ts
   module_src_cli_createCliProvider_test_ts --> module_src_cli_createCliProvider_ts
+  module_src_cli_createCliProvider_ts --> module_src_capabilities_index_ts
   module_src_cli_createCliProvider_ts --> module_src_cli_commands_apply_ts
   module_src_cli_createCliProvider_ts --> module_src_cli_commands_plan_ts
   module_src_cli_createCliProvider_ts --> module_src_cli_commands_status_ts

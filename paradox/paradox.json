@@ -14,7 +14,7 @@
     {
       "id": "npm",
       "label": "npm",
-      "value": "v0.8.14",
+      "value": "v0.8.15",
       "color": "cb3837"
     },
     {
@@ -291,6 +291,22 @@
       ]
     },
     {
+      "path": "src/capabilities/index.test.ts",
+      "isEntrypoint": false,
+      "dependencies": [
+        "src/capabilities/index.ts"
+      ],
+      "exports": []
+    },
+    {
+      "path": "src/capabilities/index.ts",
+      "isEntrypoint": false,
+      "dependencies": [],
+      "exports": [
+        "CAPABILITIES"
+      ]
+    },
+    {
       "path": "src/cli/commands/apply.ts",
       "isEntrypoint": false,
       "dependencies": [
@@ -341,6 +357,7 @@
       "path": "src/cli/createCliProvider.test.ts",
       "isEntrypoint": false,
       "dependencies": [
+        "src/capabilities/index.ts",
         "src/cli/createCliProvider.ts"
       ],
       "exports": []
@@ -349,6 +366,7 @@
       "path": "src/cli/createCliProvider.ts",
       "isEntrypoint": true,
       "dependencies": [
+        "src/capabilities/index.ts",
         "src/cli/commands/apply.ts",
         "src/cli/commands/plan.ts",
         "src/cli/commands/status.ts",
@@ -11437,7 +11455,7 @@
       "modulePath": "src/cli/createCliProvider.ts",
       "sourceLocation": {
         "filePath": "src/cli/createCliProvider.ts",
-        "line": 10,
+        "line": 12,
         "column": 1
       },
       "exportPaths": [
@@ -12299,7 +12317,7 @@
       "description": "Create the thin Ankh command provider over the same standalone APM command adapter.",
       "sourceLocation": {
         "filePath": "src/cli/createCliProvider.ts",
-        "line": 10,
+        "line": 12,
         "column": 1
       }
     },
@@ -20185,9 +20203,24 @@
         "sourcePath": "examples/basic-usage/status.ts"
       },
       {
+        "fromPath": "src/capabilities/index.test.ts",
+        "toPath": "src/capabilities/index.ts",
+        "sourcePath": "src/capabilities/index.test.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.test.ts",
+        "toPath": "src/capabilities/index.ts",
+        "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
         "fromPath": "src/cli/createCliProvider.test.ts",
         "toPath": "src/cli/createCliProvider.ts",
         "sourcePath": "src/cli/createCliProvider.test.ts"
+      },
+      {
+        "fromPath": "src/cli/createCliProvider.ts",
+        "toPath": "src/capabilities/index.ts",
+        "sourcePath": "src/cli/createCliProvider.ts"
       },
       {
         "fromPath": "src/cli/createCliProvider.ts",
@@ -23448,6 +23481,42 @@
         "toSymbol": "statusProjectAsync",
         "callExpression": "statusProjectAsync",
         "sourcePath": "examples/basic-usage/status.ts"
+      },
+      {
+        "fromSymbol": "src/capabilities/index.test.ts",
+        "toSymbol": "describe",
+        "callExpression": "describe",
+        "sourcePath": "src/capabilities/index.test.ts"
+      },
+      {
+        "fromSymbol": "src/capabilities/index.test.ts",
+        "toSymbol": "test",
+        "callExpression": "test",
+        "sourcePath": "src/capabilities/index.test.ts"
+      },
+      {
+        "fromSymbol": "src/capabilities/index.test.ts",
+        "toSymbol": "readFile",
+        "callExpression": "readFile",
+        "sourcePath": "src/capabilities/index.test.ts"
+      },
+      {
+        "fromSymbol": "src/capabilities/index.test.ts",
+        "toSymbol": "expect",
+        "callExpression": "expect",
+        "sourcePath": "src/capabilities/index.test.ts"
+      },
+      {
+        "fromSymbol": "src/capabilities/index.test.ts",
+        "toSymbol": "isCapabilityCatalog",
+        "callExpression": "isCapabilityCatalog",
+        "sourcePath": "src/capabilities/index.test.ts"
+      },
+      {
+        "fromSymbol": "src/capabilities/index.test.ts",
+        "toSymbol": "areCapabilityCatalogsEqual",
+        "callExpression": "areCapabilityCatalogsEqual",
+        "sourcePath": "src/capabilities/index.test.ts"
       },
       {
         "fromSymbol": "src/cli/createCliProvider.test.ts",

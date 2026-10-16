@@ -1,5 +1,11 @@
 # @ankhorage/apm
 
+## 0.8.15
+
+### Patch Changes
+
+- a32d80b: Publish the canonical APM capability catalog and synchronize package metadata.
+
 ## 0.8.14
 
 ### Patch Changes

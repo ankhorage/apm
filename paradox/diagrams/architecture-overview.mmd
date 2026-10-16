@@ -15,6 +15,11 @@ graph TD
   module_paradox_config_ts["paradox.config.ts"]
   package__ankhorage_apm -.-> module_paradox_config_ts
   module_src_apm_ts["src/apm.ts"]
+  module_src_capabilities_index_test_ts["src/capabilities/index.test.ts"]
+  package__ankhorage_apm -.-> module_src_capabilities_index_test_ts
+  module_src_capabilities_index_test_ts --> module_src_capabilities_index_ts
+  module_src_capabilities_index_ts["src/capabilities/index.ts"]
+  package__ankhorage_apm -.-> module_src_capabilities_index_ts
   module_src_cli_commands_apply_ts["src/cli/commands/apply.ts"]
   package__ankhorage_apm -.-> module_src_cli_commands_apply_ts
   module_src_cli_commands_apply_ts --> module_src_features_apply_composition_applyProjectAsync_ts
@@ -36,8 +41,10 @@ graph TD
   module_src_cli_commands_verify_ts --> module_src_types_verify_ts
   module_src_cli_createCliProvider_test_ts["src/cli/createCliProvider.test.ts"]
   package__ankhorage_apm -.-> module_src_cli_createCliProvider_test_ts
+  module_src_cli_createCliProvider_test_ts --> module_src_capabilities_index_ts
   module_src_cli_createCliProvider_test_ts --> module_src_cli_createCliProvider_ts
   module_src_cli_createCliProvider_ts["src/cli/createCliProvider.ts"]
+  module_src_cli_createCliProvider_ts --> module_src_capabilities_index_ts
   module_src_cli_createCliProvider_ts --> module_src_cli_commands_apply_ts
   module_src_cli_createCliProvider_ts --> module_src_cli_commands_plan_ts
   module_src_cli_createCliProvider_ts --> module_src_cli_commands_status_ts

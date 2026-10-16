@@ -1,6 +1,6 @@
 {
   "name": "@ankhorage/apm",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "type": "module",
   "description": "Headless project update analysis, planning, execution, recovery, and verification for Ankhorage tooling.",
   "license": "MIT",

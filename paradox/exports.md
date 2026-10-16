@@ -2386,7 +2386,7 @@ Compose durable Node execution/recovery adapters behind the shared headless appl
 
 Kind: `function`
 Module: `src/cli/createCliProvider.ts`
-Source: `src/cli/createCliProvider.ts:10:1`
+Source: `src/cli/createCliProvider.ts:12:1`
 
 Create the thin Ankh command provider over the same standalone APM command adapter.
 
