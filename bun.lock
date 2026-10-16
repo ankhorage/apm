@@ -5,7 +5,6 @@
     "": {
       "name": "@ankhorage/apm",
       "dependencies": {
-        "@ankhorage/capability": "^0.2.1",
         "@ankhorage/contracts": "^26.0.0",
         "@ankhorage/project-detector": "^0.1.0",
         "@ankhorage/utility": "^1.4.0",
@@ -15,6 +14,7 @@
       },
       "devDependencies": {
         "@ankhorage/ankh": "^0.13.1",
+        "@ankhorage/capability": "^0.2.1",
         "@ankhorage/devtools": "^2.3.18",
         "@ankhorage/paradox": "^0.1.26",
         "@types/bun": "^1.4.2",
