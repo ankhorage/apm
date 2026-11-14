@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "tooling",
+  "title": "Ankhorage APM",
+  "summary": "Analyzes, plans, applies, recovers, and verifies evidence-based project dependency updates through headless APIs and CLI capabilities.",
+  "purpose": "Provide reviewable and recoverable project updates without executing inspected project code or hiding uncertainty in dependency evidence.",
+  "domain": "project update management",
+  "responsibilities": [
+    "Inspect project manifests, lockfiles, installation state, and registry availability across supported package managers.",
+    "Produce deterministic update plans with reviewed file diffs, prerequisites, fingerprints, and owner-provided migration or projection steps.",
+    "Apply still-valid plans with recovery semantics and verify the resulting dependency graph and required checks.",
+    "Expose headless, Node, CLI, and Ankh capability entrypoints."
+  ],
+  "boundaries": [
+    "Does not execute inspected project lifecycle hooks or arbitrary project configuration.",
+    "Does not treat unsupported ecosystems, lockfile modes, registry failures, or incomplete installation evidence as a successful current state.",
+    "Does not own project detection or package-specific migration semantics supplied through explicit boundaries."
+  ],
+  "audience": [
+    "Tooling hosts that need programmatic project update workflows.",
+    "Maintainers reviewing and applying dependency updates from the CLI or Ankh capabilities."
+  ],
+  "useCases": [
+    "Inspect whether a project dependency graph is current and complete.",
+    "Plan dependency changes without mutating the inspected project.",
+    "Apply a saved still-valid plan with recovery evidence.",
+    "Verify the applied graph, migrations, projections, and project checks."
+  ],
+  "architecture": {
+    "role": "A headless update engine with pure planning evidence, explicit filesystem and registry ports, and thin CLI/capability adapters.",
+    "invariants": [
+      "Status and plan are read-only with respect to the inspected project.",
+      "Unknown or incomplete evidence remains explicit and cannot become a green result.",
+      "Apply revalidates the saved plan fingerprint and executor instead of silently resolving a new plan.",
+      "Package-manager resolution runs in disposable staging with lifecycle scripts disabled."
+    ]
+  },
+  "constraints": {
+    "platforms": [
+      "Node.js 24 or newer",
+      "npm package-lock v2/v3",
+      "pnpm lockfile v9",
+      "Yarn Berry metadata v8",
+      "Bun text lockfile v1/v2"
+    ],
+    "security": [
+      "Inspected project code and lifecycle hooks are not executed; registry credentials remain at the HTTP boundary."
+    ],
+    "limitations": ["Unsupported ecosystems and lockfile modes remain inspection-only or unknown."]
+  }
+}
