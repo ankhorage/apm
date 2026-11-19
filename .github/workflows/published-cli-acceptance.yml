@@ -9,6 +9,11 @@ permissions:
 
 jobs:
   published-cli:
+    if: >-
+      github.event_name != 'pull_request' ||
+      !contains(fromJSON('["renovate[bot]","ankhorage-renovate-sync[bot]"]'), github.event.pull_request.user.login) ||
+      !startsWith(github.head_ref, 'renovate/patch-') ||
+      !contains(github.event.pull_request.labels.*.name, 'renovate:patch')
     name: ${{ matrix.manager }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
