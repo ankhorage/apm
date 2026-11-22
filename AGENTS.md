@@ -6,7 +6,40 @@
 
 Package: `@ankhorage/apm`
 
-Headless project update analysis, planning, execution, recovery, and verification for Ankhorage tooling.
+Title: Ankhorage APM
+
+Analyzes, plans, applies, recovers, and verifies evidence-based project dependency updates through headless APIs and CLI capabilities.
+
+Purpose: Provide reviewable and recoverable project updates without executing inspected project code or hiding uncertainty in dependency evidence.
+
+Audience:
+
+- Tooling hosts that need programmatic project update workflows.
+- Maintainers reviewing and applying dependency updates from the CLI or Ankh capabilities.
+
+## Scope and boundaries
+
+Responsibilities:
+
+- Inspect project manifests, lockfiles, installation state, and registry availability across supported package managers.
+- Produce deterministic update plans with reviewed file diffs, prerequisites, fingerprints, and owner-provided migration or projection steps.
+- Apply still-valid plans with recovery semantics and verify the resulting dependency graph and required checks.
+- Expose headless, Node, CLI, and Ankh capability entrypoints.
+
+Boundaries:
+
+- Does not execute inspected project lifecycle hooks or arbitrary project configuration.
+- Does not treat unsupported ecosystems, lockfile modes, registry failures, or incomplete installation evidence as a successful current state.
+- Does not own project detection or package-specific migration semantics supplied through explicit boundaries.
+
+Architecture role: A headless update engine with pure planning evidence, explicit filesystem and registry ports, and thin CLI/capability adapters.
+
+Architectural invariants:
+
+- Status and plan are read-only with respect to the inspected project.
+- Unknown or incomplete evidence remains explicit and cannot become a green result.
+- Apply revalidates the saved plan fingerprint and executor instead of silently resolving a new plan.
+- Package-manager resolution runs in disposable staging with lifecycle scripts disabled.
 
 ## Current architecture only
 
@@ -64,6 +97,26 @@ Paradox `/*** ... */` comments in `src` and leading `@usage` comments in real
 `examples/<example>/...` source files, plus any repository-owned manual documentation outside the
 generated output. The managed release workflow runs `bun run docs` after the package version bump
 and commits the regenerated artifacts in the release commit.
+
+## GitHub task lifecycle and workspace cleanup
+
+- **Start.** Treat each issue implementation, PR implementation, review, and change request (CR)
+  as an independent task. Fetch the current remote default branch and read the applicable issue,
+  PR, HEAD, review feedback, and CI state. Use a fresh, uniquely named task checkout or worktree.
+  Concurrent tasks must have distinct writable checkout, temporary, build, and cache paths.
+- **CRs.** Fetch and check out the current remote PR branch in the new workspace. Preserve PR
+  history and scope. Push corrections to the existing PR branch.
+- **Delivery.** Run applicable checks. Commit and push all intended changes, then verify that
+  GitHub has the intended commit on the correct remote branch. Report the exact HEAD, checks, CI,
+  findings, and blockers. Report acceptance that was not run as unverified. Read-only reviews hand
+  off their findings without creating a commit. Merge requires explicit authorization.
+- **Cleanup.** After handoff, resolve every candidate path and remove only task-owned directories
+  whose resolved paths are strictly under the resolved system path for `/tmp` (`/private/tmp` on
+  macOS). Refuse candidates that resolve outside that boundary, including through a symlink. Use
+  Git-aware removal for worktrees. Preserve workspaces outside the boundary, shared directories,
+  other tasks' directories, uncommitted changes, and unpushed commits. If blocked, persist
+  recoverable work first and document what must be retained. Report whether cleanup succeeded, was
+  skipped, or was blocked.
 
 ## Pull requests
 
